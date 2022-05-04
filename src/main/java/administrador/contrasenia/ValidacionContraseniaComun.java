@@ -13,6 +13,9 @@ public class ValidacionContraseniaComun extends Validacion {
 
   @Override
   public boolean condicion(String password) {
+    /*
+    Devuelve true si la contraseña no está en la lista de contraseñas comunes
+    */
 
     try {
       File file = new File("/home/juli/Documents/utn/dds/2022-tpa-ju-ma-grupo-05/src/main/java/administrador/contrasenia/common-passwords.txt");

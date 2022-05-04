@@ -3,12 +3,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import administrador.contrasenia.*;
 import administrador.contrasenia.excepciones.*;
-//import administrador.contrasenia.ValidacionLongitud;
-//import administrador.contrasenia.excepciones.ExcepcionLongitudContrasenia;
-import dominio.organizacionymiembros.Miembro;
-import dominio.organizacionymiembros.Organizacion;
-import dominio.organizacionymiembros.Sector;
-import dominio.organizacionymiembros.TipoOrganizacion;
+
+import dominio.organizacionymiembros.*;
 
 import dominio.trayecto.Tramo;
 import dominio.trayecto.Trayecto;
@@ -16,6 +12,7 @@ import dominio.trayecto.transporte.Linea;
 import dominio.trayecto.transporte.Parada;
 import dominio.trayecto.transporte.TipoTransportePublico;
 import dominio.trayecto.transporte.TransportePublico;
+
 import org.junit.jupiter.api.Test;
 
 import javax.sound.sampled.Line;
@@ -51,15 +48,33 @@ public class ValidacionTest {
   // Tests contraseña
 
   @Test
-  public void dragonballzNoEsUnaClaveSegura() {
+  public void validacionContraseniaComunTest() {
     ValidacionContraseniaComun contraseniaComun = new ValidacionContraseniaComun();
     assertThrows(ExcepcionContraseniaComun.class, () -> contraseniaComun.validarContrasenia("dragonballz"));
   }
 
   @Test
-  public void messiEsUnaContraseniaMuyCorta() {
+  public void validacionLongitudTest() {
     ValidacionLongitud contraseniaCorta = new ValidacionLongitud();
     assertThrows(ExcepcionLongitudContrasenia.class, () -> contraseniaCorta.validarContrasenia("messi"));
+  }
+
+  @Test
+  public void testValidacionMinusculas() {
+    ValidacionMinusculas contraseniaSinMinusculas = new ValidacionMinusculas();
+    assertThrows(ExcepcionContraseniaNoContieneMinusculas.class, () -> contraseniaSinMinusculas.validarContrasenia("TODOMAYUSCULA"));
+  }
+
+  @Test
+  public void testValidacionMayusculas() {
+    ValidacionMayusculas contraseniaSinMayusculas = new ValidacionMayusculas();
+    assertThrows(ExcepcionContraseniaNoContieneMayusculas.class, () -> contraseniaSinMayusculas.validarContrasenia("todominuscula"));
+  }
+
+  @Test
+  public void testValidacionNumeros() {
+    ValidacionNumeros contraseniaQueNoTieneNumeros = new ValidacionNumeros();
+    assertThrows(ExcepcionContraseniaEsNumerica.class, () -> contraseniaQueNoTieneNumeros.validarContrasenia("hola"));
   }
 
 }

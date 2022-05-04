@@ -6,6 +6,9 @@ public class ValidacionLongitud extends Validacion {
 
   @Override
   public boolean condicion(String password) {
+    /*
+    Devuelve true si la contraseña tiene longitud mayor a 8
+     */
     return password.length() >= 8;
   }
 
