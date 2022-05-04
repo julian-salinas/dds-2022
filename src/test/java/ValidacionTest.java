@@ -1,13 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import administrador.contrasenia.ValidacionContraseniaComun;
-import administrador.contrasenia.ValidacionLongitud;
-import administrador.contrasenia.ValidacionMayusculas;
-import administrador.contrasenia.ValidacionMinusculas;
-import administrador.contrasenia.excepciones.ExcepcionContraseniaComun;
-import administrador.contrasenia.excepciones.ExcepcionContraseniaNoContieneMayusculas;
-import administrador.contrasenia.excepciones.ExcepcionContraseniaNoContieneMinusculas;
-import administrador.contrasenia.excepciones.ExcepcionLongitudContrasenia;
+import administrador.contrasenia.*;
+import administrador.contrasenia.excepciones.*;
 import org.junit.jupiter.api.Test;
 
 public class ValidacionTest {
@@ -33,6 +27,12 @@ public class ValidacionTest {
   public void testValidacionMayusculas() {
     ValidacionMayusculas contraseniaSinMayusculas = new ValidacionMayusculas();
     assertThrows(ExcepcionContraseniaNoContieneMayusculas.class, () -> contraseniaSinMayusculas.validarContrasenia("todominuscula"));
+  }
+
+  @Test
+  public void testValidacionNumeros() {
+    ValidacionNumeros contraseniaQueNoTieneNumeros = new ValidacionNumeros();
+    assertThrows(ExcepcionContraseniaEsNumerica.class, () -> contraseniaQueNoTieneNumeros.validarContrasenia("hola"));
   }
 
 }

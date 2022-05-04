@@ -7,7 +7,7 @@ public class ValidacionMayusculas extends Validacion{
 
   @Override
   public boolean condicion(String password) {
-    // devuelve true si una contraseña no contiene mayusculas
+    // devuelve true si una contraseña contiene al menos una mayuscula
     return password.matches(".*[A-Z].*");
   }
 
