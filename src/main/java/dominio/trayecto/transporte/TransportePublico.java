@@ -11,4 +11,6 @@ public class TransportePublico extends MedioPublico {
     this.paradaFin = paradaFin;
   }
 
+  // Probablemente ahi debamos agregar una exception si los datos tipo y paradas no se corresponden con la linea.
+
 }

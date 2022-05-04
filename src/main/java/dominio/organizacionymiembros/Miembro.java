@@ -26,6 +26,7 @@ public class Miembro {
   public void agregarTrabajo(TrabajoMiembro trabajo){
     this.trabajos.add(trabajo);
   }
+
   /* Puede que lo quieran asi. No se si el addAll funciona con esto.
   public void registrarTrayectos(List<Trayecto> trayectos){
     this.trayectos.addAll(trayectos);
@@ -51,7 +52,7 @@ public class Miembro {
         .filter(job -> job.organizacion == org).findAny();
     if(trabajo.isPresent()){
       this.posiblesTrabajos.remove(trabajo.get());
-      this.trabajos.add(trabajo.get());
+      this.agregarTrabajo(trabajo.get());
       trabajo.get().sector.agregarMiembro(this);
     }
     else
