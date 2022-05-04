@@ -7,6 +7,7 @@ public class Organizacion {
   String razonSocial;
   TipoOrganizacion tipo;
   String ubicacion;
+  List<Miembro> miembrosParaAceptar = new ArrayList<>();
   List<Sector> sectores = new ArrayList<>();
   String clasificacion; // podria ser una class para evitar errores
 
@@ -19,7 +20,21 @@ public class Organizacion {
   }
 
   public void agregarSector(Sector sector){
-    sectores.add(sector);
+    this.sectores.add(sector);
+  }
+
+  public void requestAgregarMiembro(Miembro miembro){
+    this.miembrosParaAceptar.add(miembro);
+  }
+
+  public void aceptarVinculacionDeTrabajador(Miembro miembro){
+    if(this.miembrosParaAceptar.contains(miembro)) {
+      this.miembrosParaAceptar.remove(miembro);
+      miembro.aceptadoPorOrganizacion(this);
+    }
+    else{
+      // throw error
+    }
   }
 
 }
