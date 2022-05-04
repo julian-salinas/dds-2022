@@ -1,6 +1,4 @@
-package com;
-
-import com.sun.org.apache.xpath.internal.operations.Or;
+package dominio.organizacionymiembros;
 
 public class TrabajoMiembro {
   Organizacion organizacion;

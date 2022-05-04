@@ -1,6 +1,6 @@
-package com;
+package dominio.trayecto.transporte;
 
-public class VehiculoParticular extends MedioNoPublico{
+public class VehiculoParticular extends MedioNoPublico {
   TipoDeVehiculo tipoVehiculo;
   TipoDeCombustible tipoCombustible;
 

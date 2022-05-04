@@ -1,4 +1,4 @@
-package com;
+package dominio.organizacionymiembros;
 
 import java.util.ArrayList;
 import java.util.List;

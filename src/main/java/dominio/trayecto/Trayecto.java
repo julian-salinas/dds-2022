@@ -1,4 +1,4 @@
-package com;
+package dominio.trayecto;
 
 import java.util.ArrayList;
 import java.util.List;

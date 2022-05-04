@@ -1,4 +1,6 @@
-package com;
+package dominio.trayecto;
+
+import dominio.trayecto.transporte.MedioDeTransporte;
 
 public class Tramo {
   MedioDeTransporte medio;

@@ -1,6 +1,6 @@
-package com;
+package dominio.trayecto.transporte;
 
-public class TransportePublico extends MedioPublico{
+public class TransportePublico extends MedioPublico {
   TipoTransportePublico tipo;
   Linea linea;
 

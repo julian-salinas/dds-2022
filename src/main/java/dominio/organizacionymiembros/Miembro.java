@@ -1,4 +1,6 @@
-package com;
+package dominio.organizacionymiembros;
+
+import dominio.trayecto.Trayecto;
 
 import java.util.ArrayList;
 import java.util.List;

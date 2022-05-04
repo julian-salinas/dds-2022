@@ -1,4 +1,4 @@
-package com;
+package dominio.trayecto.transporte;
 
 public class TipoServicioContratado {
   String nombre;

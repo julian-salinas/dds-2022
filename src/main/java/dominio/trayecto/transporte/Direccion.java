@@ -1,4 +1,4 @@
-package com;
+package dominio.trayecto.transporte;
 
 public class Direccion {
   String calle; // para mas presicion puede ser una clase

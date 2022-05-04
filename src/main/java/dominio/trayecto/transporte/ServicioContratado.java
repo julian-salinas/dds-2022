@@ -1,6 +1,6 @@
-package com;
+package dominio.trayecto.transporte;
 
-public class ServicioContratado extends MedioNoPublico{
+public class ServicioContratado extends MedioNoPublico {
   TipoServicioContratado tipo;
 
   public ServicioContratado(TipoServicioContratado tipo, Direccion direccionInicio, Direccion direccionFin){
