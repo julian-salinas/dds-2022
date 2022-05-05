@@ -23,6 +23,10 @@ public class Organizacion {
     this.sectores.add(sector);
   }
 
+  public List<Sector> getSectores(){
+    return sectores;
+  }
+
   public void requestAgregarMiembro(Miembro miembro){
     this.miembrosParaAceptar.add(miembro);
   }

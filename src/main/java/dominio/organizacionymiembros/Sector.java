@@ -10,4 +10,9 @@ public class Sector {
     listaDeMiembros.add(miembro);
   }
 
+  public List<Miembro> getListaDeMiembros(){
+    return listaDeMiembros;
+  }
 }
+
+

@@ -21,8 +21,11 @@ import java.util.List;
 
 public class ValidacionTest {
   Organizacion organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, "Rosario", "Ministerio");
+
   Sector sectorDefault = new Sector();
+  Sector sectorParaAgregar = new Sector();
   Miembro miembroDefault = new Miembro("Juan", "Martin", "Crack?", "43-208-556");
+  Miembro miembroError = new Miembro("Pedro", "Gonzales", "Crack?", "43-218-556");
 
   Trayecto trayectoDefault = new Trayecto();
   Parada paradaDefault1 = new Parada("Carabobo");
@@ -42,8 +45,25 @@ public class ValidacionTest {
   @Test
   public void unMiembroSePuedeVincularAunaOrgYestaLoPuedeAceptar(){
     // Test principal
+    miembroDefault.vincularTrabajadorConOrg(organizacionDefault,sectorDefault);
+    organizacionDefault.aceptarVinculacionDeTrabajador(miembroDefault);
+    assertTrue(sectorDefault.getListaDeMiembros().contains(miembroDefault));
   }
 
+  @Test
+  public void sePuedeAgregarUnSectorAUnaOrganizacion(){
+    List<Sector> sectoresPrueba = new ArrayList<>();
+    sectoresPrueba.add(sectorDefault);
+    organizacionDefault.agregarSector(sectorDefault);
+    assertEquals(organizacionDefault.getSectores(),sectoresPrueba);
+
+  }
+
+  @Test
+  public void agregoParadaAUnaLinea(){
+    lineaDefault.agregarParada(paradaDefault1);
+    assertTrue(lineaDefault.getParadas().contains(paradaDefault1));
+  }
 
   // Tests contraseña
 

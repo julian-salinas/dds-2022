@@ -14,6 +14,9 @@ public class Linea {
     this.tipo = tipo;
   }
 
+  public List<Parada> getParadas(){
+    return paradas;
+  }
   public void agregarParada(Parada parada){
     paradas.add(parada);
   }

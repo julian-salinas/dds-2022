@@ -23,6 +23,10 @@ public class Miembro {
     this.nroDeDocumento = nroDeDocumento;
   }
 
+  public List<TrabajoMiembro> getTrabajos(){
+    return trabajos;
+  }
+
   public void agregarTrabajo(TrabajoMiembro trabajo){
     this.trabajos.add(trabajo);
   }
