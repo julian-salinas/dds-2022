@@ -42,7 +42,7 @@ public class Miembro {
 
   public void vincularTrabajadorConOrg(Organizacion org, Sector sector){
     this.posiblesTrabajos.add(new TrabajoMiembro(org, sector));
-    org.requestAgregarMiembro(this);
+    org.requestAgregarMiembro(this, sector);
   }
 
   public void aceptadoPorOrganizacion(Organizacion org){

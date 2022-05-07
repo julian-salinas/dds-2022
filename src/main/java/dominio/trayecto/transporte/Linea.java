@@ -17,6 +17,11 @@ public class Linea {
   public List<Parada> getParadas(){
     return paradas;
   }
+
+  public TipoTransportePublico getTipo(){
+    return tipo;
+  }
+
   public void agregarParada(Parada parada){
     paradas.add(parada);
   }

@@ -1,5 +1,9 @@
 package dominio.organizacionymiembros;
 
+import dominio.organizacionymiembros.excepcionesOrgMiembros.ClasificacionOrganizacion;
+import dominio.organizacionymiembros.excepcionesOrgMiembros.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
+import dominio.organizacionymiembros.excepcionesOrgMiembros.ExcepcionNoExisteElSectorEnLaOrganizacion;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +13,9 @@ public class Organizacion {
   String ubicacion;
   List<Miembro> miembrosParaAceptar = new ArrayList<>();
   List<Sector> sectores = new ArrayList<>();
-  String clasificacion; // podria ser una class para evitar errores
+  ClasificacionOrganizacion clasificacion; // podria ser una class para evitar errores
 
-  public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacion, String clasificacion){
+  public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacion, ClasificacionOrganizacion clasificacion){
     this.razonSocial = razonSocial;
     this.tipo = tipo;
     this.ubicacion = ubicacion;
@@ -27,8 +31,14 @@ public class Organizacion {
     return sectores;
   }
 
-  public void requestAgregarMiembro(Miembro miembro){
-    this.miembrosParaAceptar.add(miembro);
+  public void requestAgregarMiembro(Miembro miembro, Sector sector){
+    if (this.sectores.contains(sector)) {
+      this.miembrosParaAceptar.add(miembro);
+    }
+    else{
+      // throw exception "El sector al que se quiere unir no existe"
+      throw new ExcepcionNoExisteElSectorEnLaOrganizacion();
+    }
   }
 
   public void aceptarVinculacionDeTrabajador(Miembro miembro){
@@ -37,7 +47,8 @@ public class Organizacion {
       miembro.aceptadoPorOrganizacion(this);
     }
     else{
-      // throw error
+      // throw exception "Se trato de aceptar a un miembro que no pidio vincularse o no existe"
+      throw new ExcepcionNoExisteElMiembroAacptarEnLaOrg();
     }
   }
 
