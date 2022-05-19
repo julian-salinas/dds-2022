@@ -6,7 +6,7 @@ import java.util.List;
 public class Trayecto {
   List<Tramo> tramos = new ArrayList<>();
 
-  public void agregarTramo(Tramo tramo){
+  public void agregarTramo(Tramo tramo) {
     tramos.add(tramo);
   }
 

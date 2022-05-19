@@ -6,17 +6,17 @@ import administrador.contrasenia.excepciones.*;
 
 import dominio.organizacionymiembros.*;
 
-import dominio.organizacionymiembros.excepcionesOrgMiembros.ClasificacionOrganizacion;
-import dominio.organizacionymiembros.excepcionesOrgMiembros.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
-import dominio.organizacionymiembros.excepcionesOrgMiembros.ExcepcionNoExisteElSectorEnLaOrganizacion;
+import dominio.organizacionymiembros.ClasificacionOrganizacion;
+import dominio.organizacionymiembros.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
+import dominio.organizacionymiembros.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import dominio.trayecto.Trayecto;
 import dominio.trayecto.transporte.Linea;
 import dominio.trayecto.transporte.Parada;
 import dominio.trayecto.transporte.TipoTransportePublico;
 import dominio.trayecto.transporte.TransportePublico;
 
-import dominio.trayecto.transporte.excepcionesTransporte.ExcepcionParadasTransporteNoIncluidasEnLinea;
-import dominio.trayecto.transporte.excepcionesTransporte.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
+import dominio.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
+import dominio.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

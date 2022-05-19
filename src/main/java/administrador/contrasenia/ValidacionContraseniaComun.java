@@ -1,7 +1,6 @@
 package administrador.contrasenia;
 
 import administrador.contrasenia.excepciones.ExcepcionContraseniaComun;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,22 +17,17 @@ public class ValidacionContraseniaComun extends Validacion {
     */
 
     try {
-      File file = new File("/home/juli/Documents/utn/dds/2022-tpa-ju-ma-grupo-05/src/main/java/administrador/contrasenia/common-passwords.txt");
+      File file = new File("common-passwords.txt");
       List<String> passwords = Files.readAllLines(file.toPath(), Charset.forName("UTF-8"));
       return !passwords.stream().anyMatch(pass -> pass.equals(password));
-    }
-
-    catch (FileNotFoundException exception) {
+    } catch (FileNotFoundException exception) {
       exception.printStackTrace();
       return false;
-    }
-
-    catch (IOException exception) {
+    } catch (IOException exception) {
       exception.printStackTrace();
       return false;
     }
   }
-
 
   @Override
   public RuntimeException error() {
