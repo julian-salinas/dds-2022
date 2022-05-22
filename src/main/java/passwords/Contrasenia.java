@@ -27,6 +27,10 @@ public class Contrasenia {
 
   }
 
+  public String getContrasenia() {
+    return this.contrasenia;
+  }
+
   public void setContrasenia(String contrasenia) {
 
     validarContrasenia(contrasenia);

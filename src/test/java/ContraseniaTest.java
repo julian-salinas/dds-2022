@@ -38,7 +38,8 @@ public class ContraseniaTest {
     contrasenia.setValidaciones(validacionContraseniaComun, validacionLongitud, validacionMayusculas,
         validacionMinusculas, validacionNumeros);
 
-    assertDoesNotThrow(() -> contrasenia.validarContrasenia("MarmotaSalvaje917"));
+    assertDoesNotThrow(() -> contrasenia.setContrasenia("MarmotaSalvaje917"));
+
   }
 
   @Test
@@ -46,7 +47,7 @@ public class ContraseniaTest {
     Contrasenia contraseniaComun = new Contrasenia();
     contraseniaComun.setValidaciones(validacionContraseniaComun);
 
-    assertThrows(ContraseniaComunException.class, () -> contraseniaComun.validarContrasenia("dragonballz"));
+    assertThrows(ContraseniaComunException.class, () -> contraseniaComun.setContrasenia("dragonballz"));
   }
 
   @Test
@@ -56,7 +57,7 @@ public class ContraseniaTest {
     altaContrasenia.setValidaciones(validacionContraseniaComun, validacionLongitud, validacionMayusculas,
         validacionMinusculas, validacionNumeros);
 
-    assertThrows(LongitudException.class, () -> altaContrasenia.validarContrasenia("Ds1S"));
+    assertThrows(LongitudException.class, () -> altaContrasenia.setContrasenia("Ds1S"));
   }
 
   @Test
@@ -66,7 +67,7 @@ public class ContraseniaTest {
     altaContrasenia.setValidaciones(validacionContraseniaComun, validacionLongitud, validacionMayusculas,
         validacionMinusculas, validacionNumeros);
 
-    assertThrows(NumerosException.class, () -> altaContrasenia.validarContrasenia("MarmotaSalvaje"));
+    assertThrows(NumerosException.class, () -> altaContrasenia.setContrasenia("MarmotaSalvaje"));
   }
 
   @Test
@@ -76,7 +77,7 @@ public class ContraseniaTest {
     altaContrasenia.setValidaciones(validacionContraseniaComun, validacionLongitud, validacionMayusculas,
         validacionMinusculas, validacionNumeros);
 
-    assertThrows(MayusculasException.class, () -> altaContrasenia.validarContrasenia("marmotasalvaje917"));
+    assertThrows(MayusculasException.class, () -> altaContrasenia.setContrasenia("marmotasalvaje917"));
   }
 
   @Test
@@ -86,7 +87,7 @@ public class ContraseniaTest {
     altaContrasenia.setValidaciones(validacionContraseniaComun, validacionLongitud, validacionMayusculas,
         validacionMinusculas, validacionNumeros);
 
-    assertThrows(MinusculasException.class, () -> altaContrasenia.validarContrasenia("MARMOTASALVAJE917"));
+    assertThrows(MinusculasException.class, () -> altaContrasenia.setContrasenia("MARMOTASALVAJE917"));
   }
 
 }
