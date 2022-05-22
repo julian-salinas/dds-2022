@@ -1,57 +1,36 @@
-/*
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import administrador.contrasenia.*;
-import administrador.contrasenia.excepciones.*;
-
-import dominio.organizacionymiembros.*;
-
-import domain.miembros.ClasificacionOrganizacion;
-import dominio.organizacionymiembros.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
-import dominio.organizacionymiembros.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.trayecto.Trayecto;
 import domain.trayecto.transporte.Linea;
 import domain.trayecto.transporte.Parada;
 import domain.trayecto.transporte.TipoTransportePublico;
 import domain.trayecto.transporte.TransportePublico;
-
 import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
 import domain.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidacionTest {
-  ClasificacionOrganizacion ministerio = new ClasificacionOrganizacion("ministerio");
-  ClasificacionOrganizacion universidad = new ClasificacionOrganizacion("universidad");
-  ClasificacionOrganizacion escuela = new ClasificacionOrganizacion("escuela");
+import static org.junit.jupiter.api.Assertions.*;
 
-  Organizacion organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, "Rosario", ministerio);
+public class TrayectoTest {
 
-  Sector sectorDefault = new Sector();
-  Sector sectorParaAgregar = new Sector();
-  Miembro miembroDefault = new Miembro("Juan", "Martin", "Crack?", "43-208-556");
-  Miembro miembroError = new Miembro("Pedro", "Gonzales", "Crack?", "43-218-556");
+  Linea lineaDefault;
+  Parada paradaDefault1, paradaDefault2;
+  Trayecto trayectoDefault;
+  List<Parada> paradasLineaA;
 
-  Trayecto trayectoDefault = new Trayecto();
-  Parada paradaDefault1 = new Parada("Carabobo");
-  Parada paradaDefault2 = new Parada("Puan");
-  List<Parada> paradasLineaA = new ArrayList<>();
-  // En los tests agregar paradaDefault1 y paradaDefault2 a paradasLineaA. (si se piensa usar)
-  Linea lineaDefault = new Linea("A", paradasLineaA, TipoTransportePublico.SUBTE);
-  //Tramo tramoTransportePublico = new Tramo(subteLineaA);
-  // En los tests agregar tramoTransportePublico a trayectoDefault. (si se piensa usar)
+  @BeforeEach
+  void init() {
+    paradasLineaA = new ArrayList<>();
 
-  // sumar tramos de otros tipos de transporte.
+    lineaDefault = new Linea("A", paradasLineaA, TipoTransportePublico.SUBTE);
 
+    paradaDefault1 = new Parada("Carabobo");
+    paradaDefault2 = new Parada("Puan");
 
-  // Tests generales
-
-
-
-
+    trayectoDefault = new Trayecto();
+  }
 
   @Test
   public void agregoParadaAUnaLinea(){
@@ -83,7 +62,4 @@ public class ValidacionTest {
     // Nunca los agrego a lineaDefault
     assertThrows(ExcepcionParadasTransporteNoIncluidasEnLinea.class, () -> new TransportePublico(TipoTransportePublico.SUBTE, lineaDefault, paradaError1, paradaError2));
   }
-
-
 }
-*/
