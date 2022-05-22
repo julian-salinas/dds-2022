@@ -4,7 +4,6 @@ import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.miembros.ClasificacionOrganizacion;
 import domain.miembros.Miembro;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package domain.organizaciones;
 
 import domain.miembros.Miembro;
-
 import java.util.ArrayList;
 import java.util.List;
 

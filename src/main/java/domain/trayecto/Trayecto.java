@@ -1,7 +1,5 @@
 package domain.trayecto;
 
-import domain.trayecto.Tramo;
-
 import java.util.ArrayList;
 import java.util.List;
 
