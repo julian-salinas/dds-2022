@@ -1,14 +1,14 @@
 package administrador;
 
-import administrador.contrasenia.Validacion;
+import passwords.Contrasenia;
 
 public class Administrador {
   String user;
-  Validacion password;
+  Contrasenia contrasenia;
 
-  public Administrador(String user, Validacion password) {
+  public Administrador(String user, Contrasenia contrasenia) {
     this.user = user;
-    this.password = password;
+    this.contrasenia = contrasenia;
   }
 
 }

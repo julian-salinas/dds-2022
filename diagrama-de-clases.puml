@@ -1,0 +1,297 @@
+@startuml diagrama-de-clases
+
+@startuml tp-qmp
+'https://plantuml.com/class-diagram
+' - private
+' + public
+
+' Part 1: Organizaciones y Miembros
+
+enum TipoOrganizacion {
+    GUBERNAMENTAL
+    ONG
+    EMPRESA
+    INSTITUCION
+}
+
+class ClasificacionOrganizacion{
+    - String nombre
+}
+
+class Organizacion {
+    - String razonSocial
+    - TipoOrganizacion tipo
+    - String ubicacion
+    - List<Sector> sectores
+    - ClasificacionOrganizacion clasificacion
+
+    +  void aceptarVinculacionDeTrabajador(miembro)
+    +  void agregarSector(sector)
+}
+
+class Sector{
+    - List<Miembro> miembros
+}
+
+class TrabajoMiembro{
+    - Organizacion organizacion
+    - Sector sector
+}
+
+class Miembro {
+    - String nombre
+    - String apellido
+    - String tipo
+    - String nroDocumento
+    - List<TrabajoMiembro> trabajos
+    - List<Trayecto> trayectos
+
+    + void registrarTrayecto(trayecto)
+    + void vincularTrabajadorConOrg(organizacion, sector)
+}
+
+Organizacion --> "1" TipoOrganizacion
+Organizacion --> "1" ClasificacionOrganizacion
+Organizacion --> "*" Sector
+Sector --> "*" Miembro
+Miembro --> "*" TrabajoMiembro
+TrabajoMiembro --> "1" Organizacion
+TrabajoMiembro --> "1" Sector
+
+' Part 2: Registro de Trayectos
+
+class Trayecto{
+    - List<Tramo> tramos
+}
+
+class Tramo{
+    - MedioDeTransporte medioDeTransporte
+}
+'--------------------------------------------------
+interface MedioDeTransporte{
+
+}
+
+abstract class MedioPublico implements MedioDeTransporte{
+    - Parada paradaInicio
+    - Parada paradaFin
+}
+
+abstract class MedioNoPublico implements MedioDeTransporte{
+    - Direccion direccionInicio
+    - Direccion direccionFin
+}
+'----------------------------------------------------
+
+class VehiculoParticular extends MedioNoPublico{
+    - TipoDeVehiculo tipoDeVehiculo
+    - TipoDeCombustible tipoDeCombustible
+}
+
+class TransportePublico extends MedioPublico{
+    - TipoTransportePublico tipoTransportePublico
+    - Linea linea
+}
+
+class ServivioContratado extends MedioNoPublico{
+    - TipoServicioContratado tipoServicioContratado
+}
+
+class Bicicleta extends MedioNoPublico{
+
+}
+
+class A_Pie extends MedioNoPublico{
+
+}
+
+enum TipoDeVehiculo{
+    MOTO
+    AUTO
+    CAMIONETA
+}
+
+enum TipoDeCombustible{
+    GNC
+    NAFTA
+    ELECTRICO
+    GASOIL
+}
+
+enum TipoTransportePublico{
+    TREN
+    SUBTE
+    COLECTIVO
+}
+
+class Direccion{
+    - String calle
+    - int altura
+}
+
+class Parada{
+    - String nombre
+}
+
+class Linea{
+    - String nombre
+    - List<Parada> paradas
+    - TipoTransportePublico tipoTransportePublico
+
+    + void agregarParada(parada)
+}
+
+class TipoServicioContratado{
+    - String nombre
+}
+
+Miembro --> "*" Trayecto
+Trayecto --> "*" Tramo
+Tramo --> "1" MedioDeTransporte
+VehiculoParticular --> "1" TipoDeVehiculo
+VehiculoParticular --> "1" TipoDeCombustible
+TransportePublico --> "1" TipoTransportePublico
+TransportePublico --> "1" Linea
+ServivioContratado --> "1" TipoServicioContratado
+MedioPublico --> "2" Parada
+MedioNoPublico --> "2" Direccion
+Linea --> "*" Parada
+Linea --> "1" TipoTransportePublico
+
+
+/'
+
+Requerimientos generales:
+
+1.   Se debe permitir el alta de Organizaciones y de sectores dentro de cada una de éstas.
+
+    Organizacion org = new Organizacion(//Todas las cosas)
+    Sector sector = new Sector(//Lista de miembros)
+    org.agregarSector(sector)
+
+2.   Se debe permitir que un Miembro se vincule con un sector de la organización. Las Organizaciones
+    deben aceptar esta vinculación para que las mediciones brindadas por dicho miembro (como los
+    trayectos) tengan impacto en la Organización.
+
+    Miembro miembro = new Miembro(//Todas las cosas)
+    miembro.vincularCon(org, sector)
+
+3.   Se debe permitir el alta de trayectos teniendo en cuenta que cada uno de éstos puede contener
+    varios tramos.
+
+    Tramo tramo1 = new Tramo(//Toda la salsa)
+    Tramo tramo2 = new Tramo(//Toda la salsa)
+    ...
+    Trayecto trayecto = new Trayecto(//Lista de tramos con tramo1, tramo2,etc.)
+
+4.   Se debe permitir el alta de nuevas líneas férreas, subterráneas y de colectivos; así como también el
+    alta de paradas/estaciones de cada una de ellas.
+
+    Parada sanPedrito = new Parada("San Pedrito")
+    Linea lineaA = new Linea("Linea A", [sanPedrito], SUBTE)
+    Parada flores = new Parada("Flores")
+    lineaA.agregarParada(flores)
+
+    Al hablar de que hizo un tramo por transporte publico
+    medioDeTransporte = new TransportePublico(SUBTE, lineaA, sanPedrito, flores)
+
+
+5.   Se debe permitir el alta de nuevos servicios de transporte contratados.
+
+    TipoServicioContratado taxi = new TipoServicioContratado("Taxi")
+
+Requerimientos de seguridad
+
+6.   Registrar administradores
+7.   Por el momento, sólo se requiere guardar usuario y contraseña.
+8.   Siguiendo las recomendaciones del OWASP (Proyecto Abierto de Seguridad en Aplicaciones
+    Web)2, que se ha constituido en un estándar de facto para la seguridad, se pide:
+        - No utilice credenciales por defecto en su software, particularmente en el caso de
+        administradores.
+        - Implemente controles contra contraseñas débiles. Cuando el usuario ingrese una nueva clave,
+        la misma puede verificarse contra la lista del Top 10.000 de peores contraseñas.
+        - Alinear la política de longitud, complejidad y rotación de contraseñas con las recomendaciones
+        de la Sección 5.1.1 para Secretos Memorizados de la Guía NIST3 800-634.5
+'/
+
+' Ahora lo de validar contraseñas
+
+class Contrasenia {
+    - List<Validacion> validaciones;
+    - String contrasenia;
+
+    + validarContrasenia(String contrasenia);
+    + setContrasenia(String contrasenia);
+    + setValidaciones(Validacion ...validaciones);
+    + getCantidadValidaciones();
+}
+
+class RuntimeException{}
+
+abstract class Validacion{
+    + void validarContrasenia(String contrasenia)
+    + abstract boolean condicion(String contrasenia)
+    + abstract RuntimeException error()
+}
+
+Contrasenia "1" --> "*" Validacion
+
+class ValidacionLongitud extends Validacion{
+    + boolean condicion(contrasenia)
+    + RuntimeException error()
+}
+
+class ExcepcionLongitudContrasenia extends RuntimeException{
+    + ExcepcionLongitudContrasenia()
+}
+
+class ValidacionMayusculas extends Validacion{
+    + boolean condicion(contrasenia)
+    + RuntimeException error()
+}
+
+class ExcepcionContraseniaNoContieneMayusculas extends RuntimeException{
+    + ExcepcionContraseniaNoContieneMayusculas()
+}
+
+class ValidacionMinusculas extends Validacion{
+    + boolean condicion(contrasenia)
+    + RuntimeException error()
+}
+
+class ExcepcionContraseniaNoContieneMinusculas extends RuntimeException{
+    + ExcepcionContraseniaNoContieneMinusculas()
+}
+
+class ValidacionNumeros extends Validacion{
+    + boolean condicion(contrasenia)
+    + RuntimeException error()
+}
+
+class ExcepcionContraseniaEsNumerica extends RuntimeException{
+    + ExcepcionContraseniaEsNumerica()
+}
+
+class ValidacionContraseniaComun extends Validacion{
+    + boolean condicion(contrasenia)
+    + RuntimeException error()
+}
+
+class ExcepcionContraseniaComun extends RuntimeException{
+    + ExcepcionContraseniaComun()
+}
+
+ValidacionContraseniaComun --> "1" ExcepcionContraseniaComun
+ValidacionNumeros --> "1" ExcepcionContraseniaEsNumerica
+ValidacionMinusculas --> "1" ExcepcionContraseniaNoContieneMinusculas
+ValidacionMayusculas --> "1" ExcepcionContraseniaNoContieneMayusculas
+ValidacionLongitud --> "1" ExcepcionLongitudContrasenia
+
+class Administrador {
+    - String nombreDeUsuario
+    - Contrasenia contrasenia
+}
+
+Administrador "1" --> "1" Contrasenia
+
+@enduml

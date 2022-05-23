@@ -1,0 +1,11 @@
+package domain.trayecto.transporte;
+
+public class TipoServicioContratado {
+
+  String nombre;
+
+  public TipoServicioContratado(String nombre) {
+    this.nombre = nombre;
+  }
+
+}
