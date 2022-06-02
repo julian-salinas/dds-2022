@@ -1,5 +1,5 @@
 import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
-import domain.miembros.ClasificacionOrganizacion;
+import domain.organizaciones.ClasificacionOrganizacion;
 import domain.miembros.Miembro;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.Sector;

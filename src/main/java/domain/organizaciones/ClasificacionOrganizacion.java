@@ -1,4 +1,4 @@
-package domain.miembros;
+package domain.organizaciones;
 
 public class ClasificacionOrganizacion {
   String nombre;
