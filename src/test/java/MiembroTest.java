@@ -18,21 +18,27 @@ public class MiembroTest {
   @BeforeEach
   void init() {
     ministerio = new ClasificacionOrganizacion("ministerio");
-
     organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, "Rosario", ministerio);
-
     sectorDefault = new Sector();
-
     miembroDefault = new Miembro("Juan", "Martin", "Crack?", "43-208-556");
+  }
 
+  @Test
+  public void unMiembroSePuedeVincularAunaOrganizacion(){
+    organizacionDefault.agregarSector(sectorDefault);
+    miembroDefault.vincularTrabajadorConOrg(organizacionDefault, sectorDefault);
+    assertTrue(sectorDefault.containsMiembroParaAceptar(miembroDefault));
+    assertFalse(sectorDefault.containsMiembro(miembroDefault));
   }
 
   @Test
   public void unMiembroSePuedeVincularAunaOrganizacionYestaLoPuedeAceptar(){
     organizacionDefault.agregarSector(sectorDefault);
-    miembroDefault.vincularTrabajadorConOrg(organizacionDefault,sectorDefault);
-    organizacionDefault.aceptarVinculacionDeTrabajador(miembroDefault);
-    assertTrue(sectorDefault.getListaDeMiembros().contains(miembroDefault));
+    miembroDefault.vincularTrabajadorConOrg(organizacionDefault, sectorDefault);
+    organizacionDefault.aceptarVinculacionDeTrabajador(miembroDefault, sectorDefault);
+    assertTrue(sectorDefault.containsMiembro(miembroDefault));
+    assertFalse(sectorDefault.containsMiembroParaAceptar(miembroDefault));
+    assertEquals(miembroDefault.getSectorDondeTrabaja(), sectorDefault);
   }
 
   @Test

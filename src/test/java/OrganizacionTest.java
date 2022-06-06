@@ -19,26 +19,22 @@ public class OrganizacionTest {
   @BeforeEach
   void init() {
     ministerio = new ClasificacionOrganizacion("ministerio");
-
     organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, "Rosario", ministerio);
-
     sectorDefault = new Sector();
-
     miembroDefault = new Miembro("Juan", "Martin", "Crack?", "43-208-556");
-
   }
 
   @Test
   public void noSePuedeAceptarAunMiembroEnUnaOrgSiEsteNoPidioVincularse(){
-    // Test principal
     // Existe la org y el miembro, sin embargo el miembro NUNCA pidio vincularse a la org.
     assertThrows(ExcepcionNoExisteElMiembroAacptarEnLaOrg.class,
-        () -> organizacionDefault.aceptarVinculacionDeTrabajador(miembroDefault));
+        () -> organizacionDefault.aceptarVinculacionDeTrabajador(miembroDefault, sectorDefault));
   }
 
   @Test
   public void sePuedeAgregarUnSectorAUnaOrganizacion(){
     organizacionDefault.agregarSector(sectorDefault);
-    assertTrue(organizacionDefault.getSectores().contains(sectorDefault));
+    assertTrue(organizacionDefault.containsSector(sectorDefault));
+    assertEquals(sectorDefault.getOrgAlaQuePertenezco(), organizacionDefault);
   }
 }
