@@ -5,7 +5,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface GeoDdsService {
+public interface RetrofitGeoDds {
 
   @GET("paises")
   Call<ListadoDePaises> paises(@Query("offset") int offset);

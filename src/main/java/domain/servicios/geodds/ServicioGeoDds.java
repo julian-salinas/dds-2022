@@ -33,7 +33,7 @@ public class ServicioGeoDds {
   }
 
   public ListadoDePaises listadoDePaises(int offset) throws IOException {
-    GeoDdsService geoDdsService = this.retrofit.create(GeoDdsService.class);
+    RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
     Call<ListadoDePaises> requestPaises = geoDdsService.paises(offset);
     Response<ListadoDePaises> responsePaises = requestPaises.execute();
@@ -42,7 +42,7 @@ public class ServicioGeoDds {
   }
 
   public ListadoDeProvincias listadoDeProvincias(int offset) throws IOException {
-    GeoDdsService geoDdsService = this.retrofit.create(GeoDdsService.class);
+    RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
     Call<ListadoDeProvincias> requestProvincias = geoDdsService.provincias(offset);
     Response<ListadoDeProvincias> responseProvincias = requestProvincias.execute();
@@ -51,7 +51,7 @@ public class ServicioGeoDds {
   }
 
   public ListadoDeProvincias listadoDeProvincias(int offset, int paisId) throws IOException {
-    GeoDdsService geoDdsService = this.retrofit.create(GeoDdsService.class);
+    RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
     Call<ListadoDeProvincias> requestProvincias = geoDdsService.provincias(offset, paisId);
     Response<ListadoDeProvincias> responseProvincias = requestProvincias.execute();
@@ -60,7 +60,7 @@ public class ServicioGeoDds {
   }
 
   public ListadoDeMunicipios listadoDeMunicipios(int offset) throws IOException {
-    GeoDdsService geoDdsService = this.retrofit.create(GeoDdsService.class);
+    RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
     Call<ListadoDeMunicipios> requestMunicipios = geoDdsService.municipios(offset);
     Response<ListadoDeMunicipios> responseMunicipios = requestMunicipios.execute();
@@ -69,7 +69,7 @@ public class ServicioGeoDds {
   }
 
   public ListadoDeMunicipios listadoDeMunicipios(int offset, int provinciaId) throws IOException {
-    GeoDdsService geoDdsService = this.retrofit.create(GeoDdsService.class);
+    RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
     Call<ListadoDeMunicipios> requestMunicipios = geoDdsService.municipios(offset, provinciaId);
     Response<ListadoDeMunicipios> responseMunicipios = requestMunicipios.execute();
@@ -83,9 +83,9 @@ public class ServicioGeoDds {
                                              int localidadDestinoId,
                                              String calleDestino,
                                              int alturaDestino) throws IOException {
-    GeoDdsService geoDdsService = this.retrofit.create(GeoDdsService.class);
+    RetrofitGeoDds retrofitGeoDds = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<Distancia> requestDistancia = geoDdsService.distancia(localidadOrigenId, calleOrigen, alturaOrigen,
+    Call<Distancia> requestDistancia = retrofitGeoDds.distancia(localidadOrigenId, calleOrigen, alturaOrigen,
                                                                 localidadDestinoId, calleDestino, alturaDestino);
 
     Response<Distancia> responseDistancia = requestDistancia.execute();
