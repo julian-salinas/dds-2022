@@ -2,6 +2,11 @@ package domain.organizaciones;
 
 import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.miembros.Miembro;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +16,8 @@ public class Organizacion {
   private String ubicacion;
   private final List<Sector> sectores = new ArrayList<>();
   private ClasificacionOrganizacion clasificacion;
+
+  List<List<String>> datosActividades = new ArrayList<>();
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo,
                       String ubicacion, ClasificacionOrganizacion clasificacion) {
@@ -38,4 +45,35 @@ public class Organizacion {
     }
   }
 
+  // No me gusta la implementacion pero es lo primero que se me ocurrio se puede cambiar si hay una mejor
+  // Funciona si se piensa que cada carga de medicion reemplaza la que estaba anteriormente,
+  // no me parece mal, pienso que si quieren cargar mediciones se van a cargar incluyendo tambien las anteriores
+  // en el mismo archivo dado que seguramente se tengan en un excel
+  public void cargarMediciones(String pathCSV) {
+    String linea;
+    List<String> tipoDeConsumo = new ArrayList<>();
+    List<String> valor = new ArrayList<>();
+    List<String> periodicidad = new ArrayList<>();
+    List<String> periodoImputacion = new ArrayList<>();
+    datosActividades.clear();
+
+    try {
+      BufferedReader buffer = new BufferedReader(new FileReader(pathCSV));
+
+      while((linea = buffer.readLine()) != null) {
+        String[] fila = linea.split(";");
+        tipoDeConsumo.add(fila[0]);
+        valor.add(fila[1]);
+        periodicidad.add(fila[2]);
+        periodoImputacion.add(fila[3]);
+      }
+      datosActividades.add(tipoDeConsumo);
+      datosActividades.add(valor);
+      datosActividades.add(periodicidad);
+      datosActividades.add(periodoImputacion);
+
+    } catch (IOException exception) {
+      exception.printStackTrace();
+    }
+  }
 }
