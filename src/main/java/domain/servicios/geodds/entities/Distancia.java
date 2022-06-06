@@ -1,4 +1,4 @@
-package domain.ubicaciones.services.geodds.entities;
+package domain.servicios.geodds.entities;
 
 public class Distancia {
   public double valor;

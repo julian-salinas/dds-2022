@@ -1,6 +1,6 @@
-package domain.ubicaciones.services.geodds;
+package domain.servicios.geodds;
 
-import domain.ubicaciones.services.geodds.entities.*;
+import domain.servicios.geodds.entities.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

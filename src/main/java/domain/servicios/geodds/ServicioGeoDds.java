@@ -1,9 +1,9 @@
-package domain.ubicaciones.services.geodds;
+package domain.servicios.geodds;
 
-import domain.ubicaciones.services.geodds.entities.Distancia;
-import domain.ubicaciones.services.geodds.entities.ListadoDeMunicipios;
-import domain.ubicaciones.services.geodds.entities.ListadoDePaises;
-import domain.ubicaciones.services.geodds.entities.ListadoDeProvincias;
+import domain.servicios.geodds.entities.Distancia;
+import domain.servicios.geodds.entities.ListadoDeMunicipios;
+import domain.servicios.geodds.entities.ListadoDePaises;
+import domain.servicios.geodds.entities.ListadoDeProvincias;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
