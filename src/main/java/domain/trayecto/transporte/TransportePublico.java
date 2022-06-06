@@ -10,6 +10,18 @@ public class TransportePublico implements MedioDeTransporte {
   private TipoTransportePublico tipo;
   private Linea linea;
 
+  private void validacionesTransportePublico(TipoTransportePublico tipo, Linea linea,
+                                             Parada paradaInicio, Parada paradaFin) {
+
+    if (!tipoYtipoDeLaLineaSonIguales(tipo, linea)) {
+      throw new ExcepcionTipoTransporteNoIgualAtipoDeLinea();
+
+    } else if (!paradasIncluidasEnLaLinea(paradaInicio, paradaFin, linea)) {
+      throw new ExcepcionParadasTransporteNoIncluidasEnLinea();
+
+    }
+  }
+
   private boolean tipoYtipoDeLaLineaSonIguales(TipoTransportePublico tipo, Linea linea) {
     return linea.isTipo(tipo);
   }
@@ -20,20 +32,13 @@ public class TransportePublico implements MedioDeTransporte {
 
   public TransportePublico(TipoTransportePublico tipo, Linea linea,
                            Parada paradaInicio, Parada paradaFin) {
-    if (tipoYtipoDeLaLineaSonIguales(tipo, linea)
-        && paradasIncluidasEnLaLinea(paradaInicio, paradaFin, linea)) {
 
-      this.tipo = tipo;
-      this.linea = linea;
-      this.paradaInicio = paradaInicio;
-      this.paradaFin = paradaFin;
+    validacionesTransportePublico(tipo, linea, paradaInicio, paradaFin);
+    this.tipo = tipo;
+    this.linea = linea;
+    this.paradaInicio = paradaInicio;
+    this.paradaFin = paradaFin;
 
-    } else if (!tipoYtipoDeLaLineaSonIguales(tipo, linea)) {
-      throw new ExcepcionTipoTransporteNoIgualAtipoDeLinea();
-
-    } else if (!paradasIncluidasEnLaLinea(paradaInicio, paradaFin, linea)) {
-      throw new ExcepcionParadasTransporteNoIncluidasEnLinea();
-    }
   }
 
 }
