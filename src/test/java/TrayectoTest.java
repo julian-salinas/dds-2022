@@ -26,8 +26,8 @@ public class TrayectoTest {
 
     lineaDefault = new Linea("A", paradasLineaA, TipoTransportePublico.SUBTE);
 
-    paradaDefault1 = new Parada("Carabobo");
-    paradaDefault2 = new Parada("Puan");
+    paradaDefault1 = new Parada("Carabobo", 4);
+    paradaDefault2 = new Parada("Puan", 5);
 
     trayectoDefault = new Trayecto();
   }
@@ -58,8 +58,8 @@ public class TrayectoTest {
   public void crearUnTransportePublicoCuyasParadasNoEstenEnLaLineaTiraError(){
     lineaDefault.agregarParada(paradaDefault1);
     lineaDefault.agregarParada(paradaDefault2);
-    Parada paradaError1 = new Parada("Acoyte");
-    Parada paradaError2 = new Parada("Castro Barros");
+    Parada paradaError1 = new Parada("Acoyte", 7);
+    Parada paradaError2 = new Parada("Castro Barros", 6);
     // Nunca los agrego a lineaDefault
     assertThrows(ExcepcionParadasTransporteNoIncluidasEnLinea.class, () -> new TransportePublico(TipoTransportePublico.SUBTE, lineaDefault, paradaError1, paradaError2));
   }

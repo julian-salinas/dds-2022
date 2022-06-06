@@ -13,4 +13,9 @@ public class ServicioContratado implements MedioDeTransporte {
     this.direccionFin = direccionFin;
   }
 
+  public int getDistancia() {
+    // TODO
+    return 0;
+  }
+
 }

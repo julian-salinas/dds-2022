@@ -10,4 +10,8 @@ public class Tramo {
     this.medio = medio;
   }
 
+  public int distancia() {
+    return medio.getDistancia();
+  }
+
 }

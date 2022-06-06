@@ -1,11 +1,13 @@
 package domain.trayecto.transporte;
 
+import lombok.Getter;
+
 import java.util.List;
 
 public class Linea {
 
   private String nombre;
-  private List<Parada> paradas;
+  @Getter private List<Parada> paradas; // [ini,...,fin] --> fin->ini (circular)
   private TipoTransportePublico tipo;
 
   public Linea(String nombre, List<Parada> paradas, TipoTransportePublico tipo) {

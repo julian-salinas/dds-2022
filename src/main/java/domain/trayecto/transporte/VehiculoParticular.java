@@ -15,4 +15,9 @@ public class VehiculoParticular implements MedioDeTransporte {
     this.direccionFin = direccionFin;
   }
 
+  public int getDistancia() {
+    // TODO
+    return 0;
+  }
+
 }
