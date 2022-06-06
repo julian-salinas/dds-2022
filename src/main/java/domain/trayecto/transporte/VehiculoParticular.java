@@ -1,9 +1,11 @@
 package domain.trayecto.transporte;
 
-public class VehiculoParticular extends MedioNoPublico {
+public class VehiculoParticular implements MedioDeTransporte {
 
-  TipoDeVehiculo tipoVehiculo;
-  TipoDeCombustible tipoCombustible;
+  private Direccion direccionInicio;
+  private Direccion direccionFin;
+  private final TipoDeVehiculo tipoVehiculo;
+  private TipoDeCombustible tipoCombustible;
 
   public VehiculoParticular(TipoDeVehiculo tipoVehiculo, TipoDeCombustible tipoCombustible,
                             Direccion direccionInicio, Direccion direccionFin) {

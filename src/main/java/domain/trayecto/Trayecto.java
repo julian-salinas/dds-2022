@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Trayecto {
 
-  List<Tramo> tramos = new ArrayList<>();
+  private final List<Tramo> tramos = new ArrayList<>();
 
   public void agregarTramo(Tramo tramo) {
     tramos.add(tramo);

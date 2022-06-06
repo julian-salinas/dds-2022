@@ -1,13 +1,12 @@
 package domain.trayecto.transporte;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Linea {
 
-  String nombre;
-  List<Parada> paradas;
-  TipoTransportePublico tipo;
+  private String nombre;
+  private List<Parada> paradas;
+  private TipoTransportePublico tipo;
 
   public Linea(String nombre, List<Parada> paradas, TipoTransportePublico tipo) {
     this.nombre = nombre;
@@ -15,12 +14,12 @@ public class Linea {
     this.tipo = tipo;
   }
 
-  public List<Parada> getParadas() {
-    return paradas;
+  public boolean isTipo(TipoTransportePublico otroTipo) {
+    return tipo.equals(otroTipo);
   }
 
-  public TipoTransportePublico getTipo() {
-    return tipo;
+  public boolean containsParadas(Parada parada) {
+    return paradas.contains(parada);
   }
 
   public void agregarParada(Parada parada) {

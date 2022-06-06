@@ -35,7 +35,7 @@ public class TrayectoTest {
   @Test
   public void agregoParadaAUnaLinea(){
     lineaDefault.agregarParada(paradaDefault1);
-    assertTrue(lineaDefault.getParadas().contains(paradaDefault1));
+    assertTrue(lineaDefault.containsParadas(paradaDefault1));
   }
 
   @Test
@@ -47,9 +47,10 @@ public class TrayectoTest {
 
   @Test
   public void crearUnTransportePublicoCuyoTipoYtipoDeLineaNoCoincidenTiraError(){
-    // lineaDefault.tipo es SUBTE
     lineaDefault.agregarParada(paradaDefault1);
     lineaDefault.agregarParada(paradaDefault2);
+    // lineaDefault.tipo es SUBTE
+    // nuevoTransportePublico.tipo es TREN, aunque implementa lineaDefault
     assertThrows(ExcepcionTipoTransporteNoIgualAtipoDeLinea.class, () -> new TransportePublico(TipoTransportePublico.TREN, lineaDefault, paradaDefault1, paradaDefault2));
   }
 

@@ -1,8 +1,10 @@
 package domain.trayecto.transporte;
 
-public class ServicioContratado extends MedioNoPublico {
+public class ServicioContratado implements MedioDeTransporte {
 
-  TipoServicioContratado tipo;
+  private Direccion direccionInicio;
+  private Direccion direccionFin;
+  private final TipoServicioContratado tipo;
 
   public ServicioContratado(TipoServicioContratado tipo,
                             Direccion direccionInicio, Direccion direccionFin) {

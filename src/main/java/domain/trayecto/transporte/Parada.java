@@ -2,7 +2,7 @@ package domain.trayecto.transporte;
 
 public class Parada {
 
-  String nombre;
+  private String nombre;
 
   public Parada(String nombre) {
     this.nombre = nombre;
