@@ -1,4 +1,4 @@
-package passwords.exceptions;
+package domain.passwords.exceptions;
 
 public class LongitudException extends RuntimeException {
   public LongitudException() {

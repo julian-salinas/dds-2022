@@ -1,6 +1,6 @@
-package passwords.validaciones;
+package domain.passwords.validaciones;
 
-import passwords.exceptions.NumerosException;
+import domain.passwords.exceptions.NumerosException;
 
 public class ValidacionNumeros extends Validacion {
   @Override

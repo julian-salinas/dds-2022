@@ -1,4 +1,4 @@
-package passwords.validaciones;
+package domain.passwords.validaciones;
 
 public abstract class Validacion {
 

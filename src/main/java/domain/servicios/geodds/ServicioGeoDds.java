@@ -1,15 +1,17 @@
 package domain.servicios.geodds;
 
-import domain.servicios.geodds.entities.Distancia;
-import domain.servicios.geodds.entities.ListadoDeMunicipios;
-import domain.servicios.geodds.entities.ListadoDePaises;
-import domain.servicios.geodds.entities.ListadoDeProvincias;
+import domain.servicios.geodds.entidades.*;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.net.URLEncoder.encode;
 
 public class ServicioGeoDds {
   // Clase Singleton
@@ -32,47 +34,47 @@ public class ServicioGeoDds {
     return instancia;
   }
 
-  public ListadoDePaises listadoDePaises(int offset) throws IOException {
+  public List<Pais> listadoDePaises(int offset) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<ListadoDePaises> requestPaises = geoDdsService.paises(offset);
-    Response<ListadoDePaises> responsePaises = requestPaises.execute();
+    Call<List<Pais>> requestPaises = geoDdsService.paises(offset);
+    Response<List<Pais>> responsePaises = requestPaises.execute();
 
     return responsePaises.body();
   }
 
-  public ListadoDeProvincias listadoDeProvincias(int offset) throws IOException {
+  public List<Provincia> listadoDeProvincias(int offset) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<ListadoDeProvincias> requestProvincias = geoDdsService.provincias(offset);
-    Response<ListadoDeProvincias> responseProvincias = requestProvincias.execute();
+    Call<List<Provincia>> requestProvincias = geoDdsService.provincias(offset);
+    Response<List<Provincia>> responseProvincias = requestProvincias.execute();
 
     return responseProvincias.body();
   }
 
-  public ListadoDeProvincias listadoDeProvincias(int offset, int paisId) throws IOException {
+  public List<Provincia> listadoDeProvincias(int offset, int paisId) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<ListadoDeProvincias> requestProvincias = geoDdsService.provincias(offset, paisId);
-    Response<ListadoDeProvincias> responseProvincias = requestProvincias.execute();
+    Call<List<Provincia>> requestProvincias = geoDdsService.provincias(offset, paisId);
+    Response<List<Provincia>> responseProvincias = requestProvincias.execute();
 
     return responseProvincias.body();
   }
 
-  public ListadoDeMunicipios listadoDeMunicipios(int offset) throws IOException {
+  public List<Municipio> listadoDeMunicipios(int offset) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<ListadoDeMunicipios> requestMunicipios = geoDdsService.municipios(offset);
-    Response<ListadoDeMunicipios> responseMunicipios = requestMunicipios.execute();
+    Call<List<Municipio>> requestMunicipios = geoDdsService.municipios(offset);
+    Response<List<Municipio>> responseMunicipios = requestMunicipios.execute();
 
     return responseMunicipios.body();
   }
 
-  public ListadoDeMunicipios listadoDeMunicipios(int offset, int provinciaId) throws IOException {
+  public List<Municipio> listadoDeMunicipios(int offset, int provinciaId) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<ListadoDeMunicipios> requestMunicipios = geoDdsService.municipios(offset, provinciaId);
-    Response<ListadoDeMunicipios> responseMunicipios = requestMunicipios.execute();
+    Call<List<Municipio>> requestMunicipios = geoDdsService.municipios(offset, provinciaId);
+    Response<List<Municipio>> responseMunicipios = requestMunicipios.execute();
 
     return responseMunicipios.body();
   }
@@ -83,6 +85,10 @@ public class ServicioGeoDds {
                                              int localidadDestinoId,
                                              String calleDestino,
                                              int alturaDestino) throws IOException {
+
+    calleOrigen = encode(calleOrigen, "UTF-8");
+    calleDestino = encode(calleDestino, "UTF-8");
+
     RetrofitGeoDds retrofitGeoDds = this.retrofit.create(RetrofitGeoDds.class);
 
     Call<Distancia> requestDistancia = retrofitGeoDds.distancia(localidadOrigenId, calleOrigen, alturaOrigen,
@@ -91,5 +97,65 @@ public class ServicioGeoDds {
     Response<Distancia> responseDistancia = requestDistancia.execute();
 
     return responseDistancia.body();
+  }
+
+  /* =============== Métodos para mapear =============== */
+
+  public Map<String, Integer> mapPaises(int offset) throws  IOException {
+    /**
+     * @DESC: Mapea todos los paises que tiene disponibles la api
+     * @return Map<Nombre, ID> del país
+     */
+    List<Pais> listadoDePaises = this.listadoDePaises(offset);
+
+    return listadoDePaises
+        .stream()
+        .collect(Collectors.toMap(Pais::getNombre, Pais::getId));
+  }
+
+  public Map<String, Provincia> mapProvincias(int offset) throws IOException {
+    List<Provincia> listadoDeProvincias = this.listadoDeProvincias(offset);
+
+    return listadoDeProvincias
+        .stream()
+        .collect(Collectors.toMap(Provincia::getNombre, Provincia::getItself));
+  }
+
+  /* =================== Métodos para verificar existencia =================== */
+  public void validarId(Integer id, String mensajeError) {
+    /**
+     * @DESC: Lanza una excepción en caso de que el id sea null (la api no tenga registrado X valor)
+     */
+    if (id == null) {
+      throw new RuntimeException(mensajeError);
+    }
+  }
+
+  public int verificarNombrePais(String nombrePais) throws RuntimeException, IOException {
+    /**
+     * @DESC: Verifica que un país exista y retorna el ID del mismo.
+     * @param nombrePais: Nombre del país que se está queriendo validar.
+     * @return: ID del país en caso de que exista.
+     */
+    Map<String, Integer> paises = this.mapPaises(1); // Siempre se usa con offset 1 en este caso
+    Integer id = paises.get(nombrePais.toUpperCase());
+
+    this.validarId(id, "No se pudo encontrar el país");
+
+    return id;
+  }
+
+  public Provincia verificarNombreProvincia(String nombreProvincia) throws RuntimeException, IOException {
+    /**
+     * @DESC: Verifica que una provincia exista y retorna el ID de la misma.
+     * @param nombreProvincia: nombre de la provincia que se está queriendo validar.
+     * @return: Map que contiene el id de la provincia
+     */
+    Map<String, Provincia> provincias = this.mapProvincias(1);
+    Integer id = provincias.get(nombreProvincia.toUpperCase()).getId();
+
+    this.validarId(id, "No se pudo encontrar la provincia");
+
+    return provincias.get(nombreProvincia.toUpperCase());
   }
 }

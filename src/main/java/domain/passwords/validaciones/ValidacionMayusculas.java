@@ -1,6 +1,6 @@
-package passwords.validaciones;
+package domain.passwords.validaciones;
 
-import passwords.exceptions.MayusculasException;
+import domain.passwords.exceptions.MayusculasException;
 
 public class ValidacionMayusculas extends Validacion {
 

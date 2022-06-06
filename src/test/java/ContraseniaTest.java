@@ -1,8 +1,8 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import passwords.Contrasenia;
-import passwords.exceptions.*;
-import passwords.validaciones.*;
+import domain.passwords.Contrasenia;
+import domain.passwords.exceptions.*;
+import domain.passwords.validaciones.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 

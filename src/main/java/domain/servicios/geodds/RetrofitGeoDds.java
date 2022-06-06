@@ -1,33 +1,76 @@
 package domain.servicios.geodds;
 
-import domain.servicios.geodds.entities.*;
+import domain.servicios.geodds.entidades.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Query;
+import java.util.Properties;
+import java.util.List;
 
 public interface RetrofitGeoDds {
 
+  @Headers({
+      "Accept: application/json",
+      "Content-Type: application/json",
+      "Authorization: Bearer INXPj19d4ui6pZ6aAcXs5FyFmtLtwa72qk+13NESOWA="
+  })
   @GET("paises")
-  Call<ListadoDePaises> paises(@Query("offset") int offset);
+  Call<List<Pais>> paises(@Query("offset") int offset);
 
+  @Headers({
+      "Accept: application/json",
+      "Content-Type: application/json",
+      "Authorization: Bearer INXPj19d4ui6pZ6aAcXs5FyFmtLtwa72qk+13NESOWA="
+  })
   @GET("provincias")
-  Call<ListadoDeProvincias> provincias(@Query("offset") int offset);
+  Call<List<Provincia>> provincias(@Query("offset") int offset);
 
+  @Headers({
+      "Accept: application/json",
+      "Content-Type: application/json",
+      "Authorization: Bearer INXPj19d4ui6pZ6aAcXs5FyFmtLtwa72qk+13NESOWA="
+  })
   @GET("provincias")
-  Call<ListadoDeProvincias> provincias(@Query("offset") int offset, @Query("paisId") int paisId);
+  Call<List<Provincia>> provincias(@Query("offset") int offset, @Query("paisId") int paisId);
 
+  @Headers({
+      "Accept: application/json",
+      "Content-Type: application/json",
+      "Authorization: Bearer INXPj19d4ui6pZ6aAcXs5FyFmtLtwa72qk+13NESOWA="
+  })
   @GET("localidades")
-  Call<ListadoDeLocalidades> localidades(@Query("offset") int offset);
+  Call<List<Localidad>> localidades(@Query("offset") int offset);
 
+  @Headers({
+      "Accept: application/json",
+      "Content-Type: application/json",
+      "Authorization: Bearer INXPj19d4ui6pZ6aAcXs5FyFmtLtwa72qk+13NESOWA="
+  })
   @GET("localidades")
-  Call<ListadoDeLocalidades> localidades(@Query("offset") int offset, @Query("municipioId") int municipioId);
+  Call<List<Localidad>> localidades(@Query("offset") int offset, @Query("municipioId") int municipioId);
 
+  @Headers({
+      "Accept: application/json",
+      "Content-Type: application/json",
+      "Authorization: Bearer INXPj19d4ui6pZ6aAcXs5FyFmtLtwa72qk+13NESOWA="
+  })
   @GET("municipios")
-  Call<ListadoDeMunicipios> municipios(@Query("offset") int offset);
+  Call<List<Municipio>> municipios(@Query("offset") int offset);
 
+  @Headers({
+      "Accept: application/json",
+      "Content-Type: application/json",
+      "Authorization: Bearer INXPj19d4ui6pZ6aAcXs5FyFmtLtwa72qk+13NESOWA="
+  })
   @GET("municipios")
-  Call<ListadoDeMunicipios> municipios(@Query("offset") int offset, @Query("provinciaId") int provinciaId);
+  Call<List<Municipio>> municipios(@Query("offset") int offset, @Query("provinciaId") int provinciaId);
 
+  @Headers({
+      "Accept: application/json",
+      "Content-Type: application/json",
+      "Authorization: Bearer INXPj19d4ui6pZ6aAcXs5FyFmtLtwa72qk+13NESOWA="
+  })
   @GET("distancia")
   Call<Distancia> distancia(@Query("LocalidadOrigenId") int localidadOrigenId,
                             @Query("calleOrigen") String calleOrigen,

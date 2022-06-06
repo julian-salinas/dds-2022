@@ -1,4 +1,4 @@
-package passwords.validaciones;
+package domain.passwords.validaciones;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.List;
-import passwords.exceptions.ContraseniaComunException;
+import domain.passwords.exceptions.ContraseniaComunException;
 
 public class ValidacionContraseniaComun extends Validacion {
 
@@ -20,7 +20,7 @@ public class ValidacionContraseniaComun extends Validacion {
 
       String pathToFile = new File(".")
           .getCanonicalPath()
-          .concat("/src/main/java/passwords/validaciones/common-passwords.txt");
+          .concat("/src/main/java/domain/passwords/validaciones/common-passwords.txt");
 
       File file = new File(pathToFile);
       List<String> passwords = Files.readAllLines(file.toPath(), Charset.forName("UTF-8"));
