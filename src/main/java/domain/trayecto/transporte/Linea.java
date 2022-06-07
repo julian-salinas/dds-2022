@@ -20,7 +20,7 @@ public class Linea {
     return tipo.equals(otroTipo);
   }
 
-  public boolean containsParadas(Parada parada) {
+  public boolean containsParada(Parada parada) {
     return paradas.contains(parada);
   }
 

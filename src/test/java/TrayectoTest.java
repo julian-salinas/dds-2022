@@ -35,7 +35,7 @@ public class TrayectoTest {
   @Test
   public void agregoParadaAUnaLinea(){
     lineaDefault.agregarParada(paradaDefault1);
-    assertTrue(lineaDefault.containsParadas(paradaDefault1));
+    assertTrue(lineaDefault.containsParada(paradaDefault1));
   }
 
   @Test

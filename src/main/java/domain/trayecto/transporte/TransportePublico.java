@@ -27,7 +27,7 @@ public class TransportePublico implements MedioDeTransporte {
   }
 
   private boolean paradasIncluidasEnLaLinea(Parada paradaInicio, Parada paradaFin, Linea linea) {
-    return linea.containsParadas(paradaInicio) && linea.containsParadas(paradaFin);
+    return linea.containsParada(paradaInicio) && linea.containsParada(paradaFin);
   }
 
   public TransportePublico(TipoTransportePublico tipo, Linea linea,
