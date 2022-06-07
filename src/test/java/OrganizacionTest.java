@@ -4,8 +4,15 @@ import domain.miembros.Miembro;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.Sector;
 import domain.organizaciones.TipoOrganizacion;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,5 +43,16 @@ public class OrganizacionTest {
     organizacionDefault.agregarSector(sectorDefault);
     assertTrue(organizacionDefault.containsSector(sectorDefault));
     assertEquals(sectorDefault.getOrgAlaQuePertenezco(), organizacionDefault);
+  }
+
+  @Test
+  public void sePuedeCargarUnArchivoCSVCorrectamente(){
+    organizacionDefault.cargarMediciones("C:\\Users\\Luciano\\Documents\\archivo-prueba.csv"); //Hay que arreglar este path
+    List<List<String>> datosActividadesExpected = new ArrayList<>();
+    datosActividadesExpected.add(Arrays.asList("Gas Natural", "Electricidad", "Nafta"));
+    datosActividadesExpected.add(Arrays.asList("1234", "567", "89"));
+    datosActividadesExpected.add(Arrays.asList("Mensual", "Anual", "Mensual"));
+    datosActividadesExpected.add(Arrays.asList("04/2020", "1905", "05/2021"));
+    Assertions.assertEquals(datosActividadesExpected, organizacionDefault.getDatosActividades());
   }
 }

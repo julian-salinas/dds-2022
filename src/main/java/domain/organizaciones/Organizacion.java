@@ -4,7 +4,6 @@ import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.miembros.Miembro;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,8 +15,8 @@ public class Organizacion {
   private String ubicacion;
   private final List<Sector> sectores = new ArrayList<>();
   private ClasificacionOrganizacion clasificacion;
+  private List<List<String>> datosActividades = new ArrayList<>();
 
-  List<List<String>> datosActividades = new ArrayList<>();
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo,
                       String ubicacion, ClasificacionOrganizacion clasificacion) {
@@ -55,11 +54,12 @@ public class Organizacion {
     List<String> valor = new ArrayList<>();
     List<String> periodicidad = new ArrayList<>();
     List<String> periodoImputacion = new ArrayList<>();
-    datosActividades.clear();
 
+    datosActividades.clear();
     try {
       BufferedReader buffer = new BufferedReader(new FileReader(pathCSV));
-
+      buffer.readLine();
+      buffer.readLine(); //Para saltear las dos primeras lineas
       while((linea = buffer.readLine()) != null) {
         String[] fila = linea.split(";");
         tipoDeConsumo.add(fila[0]);
@@ -70,10 +70,14 @@ public class Organizacion {
       datosActividades.add(tipoDeConsumo);
       datosActividades.add(valor);
       datosActividades.add(periodicidad);
-      datosActividades.add(periodoImputacion);
+      datosActividades.add(periodoImputacion); // Se puede agregar todo esto en una sola linea ?
 
     } catch (IOException exception) {
       exception.printStackTrace();
     }
+  }
+
+  public List<List<String>> getDatosActividades() {
+    return datosActividades;
   }
 }
