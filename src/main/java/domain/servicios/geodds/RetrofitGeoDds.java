@@ -1,12 +1,15 @@
 package domain.servicios.geodds;
 
-import domain.servicios.geodds.entidades.*;
+import domain.servicios.geodds.entidades.Distancia;
+import domain.servicios.geodds.entidades.Localidad;
+import domain.servicios.geodds.entidades.Municipio;
+import domain.servicios.geodds.entidades.Pais;
+import domain.servicios.geodds.entidades.Provincia;
+import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
-import java.util.Properties;
-import java.util.List;
 
 public interface RetrofitGeoDds {
 
@@ -48,7 +51,8 @@ public interface RetrofitGeoDds {
       "Authorization: Bearer INXPj19d4ui6pZ6aAcXs5FyFmtLtwa72qk+13NESOWA="
   })
   @GET("localidades")
-  Call<List<Localidad>> localidades(@Query("offset") int offset, @Query("municipioId") int municipioId);
+  Call<List<Localidad>> localidades(@Query("offset") int offset,
+                                    @Query("municipioId") int municipioId);
 
   @Headers({
       "Accept: application/json",
@@ -64,7 +68,8 @@ public interface RetrofitGeoDds {
       "Authorization: Bearer INXPj19d4ui6pZ6aAcXs5FyFmtLtwa72qk+13NESOWA="
   })
   @GET("municipios")
-  Call<List<Municipio>> municipios(@Query("offset") int offset, @Query("provinciaId") int provinciaId);
+  Call<List<Municipio>> municipios(@Query("offset") int offset,
+                                   @Query("provinciaId") int provinciaId);
 
   @Headers({
       "Accept: application/json",

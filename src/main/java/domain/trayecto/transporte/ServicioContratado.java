@@ -1,7 +1,9 @@
 package domain.trayecto.transporte;
+
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.servicios.geodds.entidades.Distancia;
 import domain.ubicaciones.Ubicacion;
+import java.io.IOException;
 
 public class ServicioContratado implements MedioDeTransporte {
 
@@ -17,15 +19,23 @@ public class ServicioContratado implements MedioDeTransporte {
   }
 
   public int getDistancia() {
-    // TODO
     ServicioGeoDds api = ServicioGeoDds.getInstancia();
     Distancia distancia;
-    // distanciaEntreUbicaciones tira IOException dice, y me quiere forzar a q getDistancia() haga lo mismo
-    // y no me pinta
-    distancia = api.distanciaEntreUbicaciones(direccionInicio.getLocalidad(), direccionInicio.getCalle(),
-        direccionInicio.getAltura(), direccionFin.getLocalidad(), direccionInicio.getCalle(), direccionFin.getAltura());
-    // Podemos cambiar a que devuelva Double, o incluso Distancia
-    return (int) distancia.valor;
+    try {
+      distancia = api.distanciaEntreUbicaciones(
+          direccionInicio.getLocalidad(),
+          direccionInicio.getCalle(),
+          direccionInicio.getAltura(),
+          direccionFin.getLocalidad(),
+          direccionFin.getCalle(),
+          direccionFin.getAltura()
+      );
+      // Podemos cambiar a que devuelva Double, o incluso Distancia
+      return (int) distancia.valor;
+    } catch (IOException e) {
+      // bruh
+      return -1;
+    }
   }
 
 }

@@ -13,11 +13,13 @@ public class Provincia {
     this.apiClient = ServicioGeoDds.getInstancia();
 
     // Hago esta cosa rara para obtener una provincia pero de la clase de la entidad provincia
-    domain.servicios.geodds.entidades.Provincia responseProvincia = apiClient.verificarNombreProvincia(nombre);
+    domain.servicios.geodds.entidades.Provincia responseProvincia =
+        apiClient.verificarNombreProvincia(nombre);
 
     this.id = responseProvincia.getId();
     this.nombre = nombre.toUpperCase();
-    this.pais = new Pais(responseProvincia.getPais().getNombre().toUpperCase(), responseProvincia.getPais().getId());
+    this.pais = new Pais(responseProvincia.getPais().getNombre().toUpperCase(),
+        responseProvincia.getPais().getId());
   }
 
 }

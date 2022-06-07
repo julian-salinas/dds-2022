@@ -1,17 +1,20 @@
 package domain.servicios.geodds;
 
-import domain.servicios.geodds.entidades.*;
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import static java.net.URLEncoder.encode;
 
+import domain.servicios.geodds.entidades.Distancia;
+import domain.servicios.geodds.entidades.Localidad;
+import domain.servicios.geodds.entidades.Municipio;
+import domain.servicios.geodds.entidades.Pais;
+import domain.servicios.geodds.entidades.Provincia;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static java.net.URLEncoder.encode;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServicioGeoDds {
   // Clase Singleton
@@ -91,8 +94,12 @@ public class ServicioGeoDds {
 
     RetrofitGeoDds retrofitGeoDds = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<Distancia> requestDistancia = retrofitGeoDds.distancia(localidadOrigenId, calleOrigen, alturaOrigen,
-                                                                localidadDestinoId, calleDestino, alturaDestino);
+    Call<Distancia> requestDistancia = retrofitGeoDds.distancia(localidadOrigenId,
+        calleOrigen,
+        alturaOrigen,
+        localidadDestinoId,
+        calleDestino,
+        alturaDestino);
 
     Response<Distancia> responseDistancia = requestDistancia.execute();
 
@@ -101,11 +108,12 @@ public class ServicioGeoDds {
 
   /* =============== Métodos para mapear =============== */
 
+  /**
+   * Mapea todos los paises que tiene disponibles la api
+   *
+   * @return Map (Nombre, ID) del país
+   */
   public Map<String, Integer> mapPaises(int offset) throws  IOException {
-    /**
-     * @DESC: Mapea todos los paises que tiene disponibles la api
-     * @return Map<Nombre, ID> del país
-     */
     List<Pais> listadoDePaises = this.listadoDePaises(offset);
 
     return listadoDePaises
@@ -122,21 +130,23 @@ public class ServicioGeoDds {
   }
 
   /* =================== Métodos para verificar existencia =================== */
+
+
   public void validarId(Integer id, String mensajeError) {
-    /**
-     * @DESC: Lanza una excepción en caso de que el id sea null (la api no tenga registrado X valor)
-     */
     if (id == null) {
       throw new RuntimeException(mensajeError);
     }
   }
 
+
+  /**
+   * Verifica que un país exista y retorna el ID del mismo.
+   *
+   * @param nombrePais Nombre del país que se está queriendo validar
+   * @return ID del país en caso de que exista.
+   */
   public int verificarNombrePais(String nombrePais) throws RuntimeException, IOException {
-    /**
-     * @DESC: Verifica que un país exista y retorna el ID del mismo.
-     * @param nombrePais: Nombre del país que se está queriendo validar.
-     * @return: ID del país en caso de que exista.
-     */
+
     Map<String, Integer> paises = this.mapPaises(1); // Siempre se usa con offset 1 en este caso
     Integer id = paises.get(nombrePais.toUpperCase());
 
@@ -145,12 +155,15 @@ public class ServicioGeoDds {
     return id;
   }
 
-  public Provincia verificarNombreProvincia(String nombreProvincia) throws RuntimeException, IOException {
-    /**
-     * @DESC: Verifica que una provincia exista y retorna el ID de la misma.
-     * @param nombreProvincia: nombre de la provincia que se está queriendo validar.
-     * @return: Map que contiene el id de la provincia
-     */
+  /**
+   * Verifica que una provincia exista y retorna el ID de la misma.
+   *
+   * @param nombreProvincia nombre de la provincia que se está queriendo validar.
+   * @return provincia
+   */
+  public Provincia verificarNombreProvincia(String nombreProvincia)
+      throws RuntimeException, IOException {
+
     Map<String, Provincia> provincias = this.mapProvincias(1);
     Integer id = provincias.get(nombreProvincia.toUpperCase()).getId();
 

@@ -11,7 +11,7 @@ public class Trayecto {
     tramos.add(tramo);
   }
 
-  public int distanciaTotal(){
+  public int distanciaTotal() {
     return tramos.stream().mapToInt(Tramo::distancia).sum();
   }
 

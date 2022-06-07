@@ -1,9 +1,9 @@
 package domain.passwords;
 
+import domain.passwords.validaciones.Validacion;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import domain.passwords.validaciones.Validacion;
 
 public class Contrasenia {
   private List<Validacion> validaciones;

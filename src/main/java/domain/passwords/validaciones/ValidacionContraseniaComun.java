@@ -1,12 +1,12 @@
 package domain.passwords.validaciones;
 
+import domain.passwords.exceptions.ContraseniaComunException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.List;
-import domain.passwords.exceptions.ContraseniaComunException;
 
 public class ValidacionContraseniaComun extends Validacion {
 

@@ -1,8 +1,7 @@
 package domain.trayecto.transporte;
 
-import lombok.Getter;
-
 import java.util.List;
+import lombok.Getter;
 
 public class Linea {
 
