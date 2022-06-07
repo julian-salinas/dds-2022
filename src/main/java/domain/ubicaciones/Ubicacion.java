@@ -1,5 +1,8 @@
 package domain.ubicaciones;
 
+import lombok.Getter;
+
+@Getter
 public class Ubicacion {
   String calle;
   int altura;
