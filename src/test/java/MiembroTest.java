@@ -4,6 +4,7 @@ import domain.miembros.Miembro;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.Sector;
 import domain.organizaciones.TipoOrganizacion;
+import domain.ubicaciones.Ubicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ public class MiembroTest {
   @BeforeEach
   void init() {
     ministerio = new ClasificacionOrganizacion("ministerio");
-    organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, "Rosario", ministerio);
+    organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, new Ubicacion(), ministerio);
     sectorDefault = new Sector();
     miembroDefault = new Miembro("Juan", "Martin", "Crack?", "43-208-556");
   }
