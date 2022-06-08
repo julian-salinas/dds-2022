@@ -2,14 +2,12 @@ package domain.servicios.geodds;
 
 import static java.net.URLEncoder.encode;
 
-import domain.servicios.geodds.entidades.Distancia;
-import domain.servicios.geodds.entidades.Localidad;
-import domain.servicios.geodds.entidades.Municipio;
-import domain.servicios.geodds.entidades.Pais;
-import domain.servicios.geodds.entidades.Provincia;
-import java.io.IOException;
+import domain.servicios.geodds.entidades.*;
+
+import java.io.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.stream.Collectors;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -21,12 +19,28 @@ public class ServicioGeoDds {
   private static ServicioGeoDds instancia = null;
   private static final String urlAPI = "https://ddstpa.com.ar/api/";
   private Retrofit retrofit;
+  private String apiKey;
 
   private ServicioGeoDds() {
     this.retrofit = new Retrofit.Builder()
         .baseUrl(urlAPI)
         .addConverterFactory(GsonConverterFactory.create())
         .build();
+
+    // set apiKey value from local.properties
+    try{
+      InputStream input = new FileInputStream("src/main/java/domain/servicios/geodds/local.properties");
+      Properties properties = new Properties();
+      properties.load(input);
+      this.apiKey = "Bearer " + properties.getProperty("apiKey");
+    }
+    catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+
   }
 
   public static ServicioGeoDds getInstancia() {
@@ -40,7 +54,7 @@ public class ServicioGeoDds {
   public List<Pais> listadoDePaises(int offset) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<List<Pais>> requestPaises = geoDdsService.paises(offset);
+    Call<List<Pais>> requestPaises = geoDdsService.paises(this.apiKey, offset);
     Response<List<Pais>> responsePaises = requestPaises.execute();
 
     return responsePaises.body();
@@ -49,7 +63,7 @@ public class ServicioGeoDds {
   public List<Provincia> listadoDeProvincias(int offset) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<List<Provincia>> requestProvincias = geoDdsService.provincias(offset);
+    Call<List<Provincia>> requestProvincias = geoDdsService.provincias(this.apiKey, offset);
     Response<List<Provincia>> responseProvincias = requestProvincias.execute();
 
     return responseProvincias.body();
@@ -58,7 +72,7 @@ public class ServicioGeoDds {
   public List<Provincia> listadoDeProvincias(int offset, int paisId) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<List<Provincia>> requestProvincias = geoDdsService.provincias(offset, paisId);
+    Call<List<Provincia>> requestProvincias = geoDdsService.provincias(this.apiKey, offset, paisId);
     Response<List<Provincia>> responseProvincias = requestProvincias.execute();
 
     return responseProvincias.body();
@@ -67,7 +81,7 @@ public class ServicioGeoDds {
   public List<Municipio> listadoDeMunicipios(int offset) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<List<Municipio>> requestMunicipios = geoDdsService.municipios(offset);
+    Call<List<Municipio>> requestMunicipios = geoDdsService.municipios(this.apiKey, offset);
     Response<List<Municipio>> responseMunicipios = requestMunicipios.execute();
 
     return responseMunicipios.body();
@@ -76,7 +90,7 @@ public class ServicioGeoDds {
   public List<Municipio> listadoDeMunicipios(int offset, int provinciaId) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<List<Municipio>> requestMunicipios = geoDdsService.municipios(offset, provinciaId);
+    Call<List<Municipio>> requestMunicipios = geoDdsService.municipios(this.apiKey, offset, provinciaId);
     Response<List<Municipio>> responseMunicipios = requestMunicipios.execute();
 
     return responseMunicipios.body();
@@ -94,7 +108,8 @@ public class ServicioGeoDds {
 
     RetrofitGeoDds retrofitGeoDds = this.retrofit.create(RetrofitGeoDds.class);
 
-    Call<Distancia> requestDistancia = retrofitGeoDds.distancia(localidadOrigenId,
+    Call<Distancia> requestDistancia = retrofitGeoDds.distancia(this.apiKey,
+        localidadOrigenId,
         calleOrigen,
         alturaOrigen,
         localidadDestinoId,
@@ -129,15 +144,13 @@ public class ServicioGeoDds {
         .collect(Collectors.toMap(Provincia::getNombre, Provincia::getItself));
   }
 
-  /* =================== Métodos para verificar existencia =================== */
-
+  /** =================== Métodos para verificar existencia =================== **/
 
   public void validarId(Integer id, String mensajeError) {
     if (id == null) {
       throw new RuntimeException(mensajeError);
     }
   }
-
 
   /**
    * Verifica que un país exista y retorna el ID del mismo.
@@ -171,4 +184,6 @@ public class ServicioGeoDds {
 
     return provincias.get(nombreProvincia.toUpperCase());
   }
+
+
 }
