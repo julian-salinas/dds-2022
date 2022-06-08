@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
+
+import domain.ubicaciones.Ubicacion;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -117,12 +119,16 @@ public class ServicioGeoDds {
     return responseLocalidades.body();
   }
 
-  public Distancia distanciaEntreUbicaciones(int localidadOrigenId,
-                                             String calleOrigen,
-                                             int alturaOrigen,
-                                             int localidadDestinoId,
-                                             String calleDestino,
-                                             int alturaDestino) throws IOException {
+  public Distancia distanciaEntreUbicaciones(Ubicacion origen, Ubicacion destino) throws IOException {
+
+    String calleOrigen = origen.getCalle();
+    String calleDestino = destino.getCalle();
+
+    int alturaOrigen = origen.getAltura();
+    int alturaDestino = destino.getAltura();
+
+    int localidadOrigenId = verificarNombreLocalidad(origen.getLocalidad().getNombre());
+    int localidadDestinoId = verificarNombreLocalidad(destino.getLocalidad().getNombre());
 
     calleOrigen = encode(calleOrigen, "UTF-8");
     calleDestino = encode(calleDestino, "UTF-8");
