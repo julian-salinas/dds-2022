@@ -5,14 +5,14 @@ import domain.organizaciones.consumos.tipos.*;
 public class DatosActividades {
 
   TipoDeConsumo tipoDeConsumo;
-  String valor;
+  int valor;
   String periodicidad;
   String periodoImputacion;
 
   public DatosActividades (String tipo, String valor, String periodicidad, String periodoImputacion ){
 
     this.tipoDeConsumo = encontrarTipo(tipo);
-    this.valor = valor;
+    this.valor = Integer.parseInt(valor);
     this.periodicidad = periodicidad;
     this.periodoImputacion = periodoImputacion;
 
@@ -52,6 +52,8 @@ public class DatosActividades {
       }
      return null;
    }
+
+
 }
 
 
