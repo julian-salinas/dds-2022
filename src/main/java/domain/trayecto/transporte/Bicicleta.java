@@ -1,10 +1,14 @@
 package domain.trayecto.transporte;
 
-public class Bicicleta implements MedioDeTransporte {
-  private Direccion direccionInicio;
-  private Direccion direccionFin;
+import domain.ubicaciones.Ubicacion;
+import lombok.Getter;
 
-  public Bicicleta(Direccion direccionInicio, Direccion direccionFin) {
+public class Bicicleta extends MedioNoPublico {
+  @Getter private Ubicacion direccionInicio;
+  @Getter private Ubicacion direccionFin;
+  @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.BICICLETA;
+
+  public Bicicleta(Ubicacion direccionInicio, Ubicacion direccionFin) {
     this.direccionInicio = direccionInicio;
     this.direccionFin = direccionFin;
   }

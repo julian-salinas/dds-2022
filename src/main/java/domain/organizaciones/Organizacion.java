@@ -2,7 +2,7 @@ package domain.organizaciones;
 
 import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.miembros.Miembro;
-
+import domain.ubicaciones.Ubicacion;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,14 +12,14 @@ import java.util.List;
 public class Organizacion {
   private final String razonSocial;
   private TipoOrganizacion tipo;
-  private String ubicacion;
+  private Ubicacion ubicacion;
   private final List<Sector> sectores = new ArrayList<>();
   private ClasificacionOrganizacion clasificacion;
   private List<DatosActividades> datosActividades = new ArrayList<>();
 
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo,
-                      String ubicacion, ClasificacionOrganizacion clasificacion) {
+                      Ubicacion ubicacion, ClasificacionOrganizacion clasificacion) {
     this.razonSocial = razonSocial;
     this.tipo = tipo;
     this.ubicacion = ubicacion;

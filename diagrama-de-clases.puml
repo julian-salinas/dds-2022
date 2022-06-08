@@ -25,17 +25,21 @@ class Organizacion {
     - List<Sector> sectores
     - ClasificacionOrganizacion clasificacion
 
-    +  void aceptarVinculacionDeTrabajador(miembro)
-    +  void agregarSector(sector)
+    + boolean containsSector(sector)
+    + void agregarSector(sector)
+    + void aceptarVinculacionDeTrabajador(miembro, sector)
 }
 
 class Sector{
+    - Organizacion orgAlaQuePertenezco
     - List<Miembro> miembros
-}
+    - List<Miembro> miembrosParaAceptar
 
-class TrabajoMiembro{
-    - Organizacion organizacion
-    - Sector sector
+    + boolean containsMiembro(miembro)
+    + void agregarMiembro(miembro)
+    + boolean containsMiembroParaAceptar(miembro)
+    + void agregarMiembroParaAceptar(miembro)
+    + void sacarMiembroParaAceptar(miembro)
 }
 
 class Miembro {
@@ -43,7 +47,7 @@ class Miembro {
     - String apellido
     - String tipo
     - String nroDocumento
-    - List<TrabajoMiembro> trabajos
+    - Sector sectorDondeTrabaja
     - List<Trayecto> trayectos
 
     + void registrarTrayecto(trayecto)
@@ -53,56 +57,67 @@ class Miembro {
 Organizacion --> "1" TipoOrganizacion
 Organizacion --> "1" ClasificacionOrganizacion
 Organizacion --> "*" Sector
+Sector --> "1" Organizacion
 Sector --> "*" Miembro
-Miembro --> "*" TrabajoMiembro
-TrabajoMiembro --> "1" Organizacion
-TrabajoMiembro --> "1" Sector
+Miembro ---> "1" Sector
 
 ' Part 2: Registro de Trayectos
 
 class Trayecto{
     - List<Tramo> tramos
+
+    + void agregarTramo(tramo)
+    + int distanciaTotal(void) 
 }
 
 class Tramo{
     - MedioDeTransporte medioDeTransporte
+
+    + int distancia(void)
 }
-'--------------------------------------------------
+
 interface MedioDeTransporte{
-
+    + int getDistancia(void)
 }
 
-abstract class MedioPublico implements MedioDeTransporte{
-    - Parada paradaInicio
-    - Parada paradaFin
-}
-
-abstract class MedioNoPublico implements MedioDeTransporte{
-    - Direccion direccionInicio
-    - Direccion direccionFin
-}
-'----------------------------------------------------
-
-class VehiculoParticular extends MedioNoPublico{
-    - TipoDeVehiculo tipoDeVehiculo
-    - TipoDeCombustible tipoDeCombustible
-}
-
-class TransportePublico extends MedioPublico{
+class TransportePublico Implements MedioDeTransporte{
     - TipoTransportePublico tipoTransportePublico
     - Linea linea
+    - Parada paradaInicio
+    - Parada paradaFin
+    
+    + int getDistancia(void)
 }
 
-class ServivioContratado extends MedioNoPublico{
+class VehiculoParticular Implements MedioDeTransporte{
+    - Direccion direccionInicio
+    - Direccion direccionFin
+    - TipoDeVehiculo tipoDeVehiculo
+    - TipoDeCombustible tipoDeCombustible
+
+    + int getDistancia(void)
+}
+
+class ServivioContratado Implements MedioDeTransporte{
+    - Direccion direccionInicio
+    - Direccion direccionFin
     - TipoServicioContratado tipoServicioContratado
+
+    + int getDistancia(void)
 }
 
-class Bicicleta extends MedioNoPublico{
+class Bicicleta Implements MedioDeTransporte{
+    - Direccion direccionInicio
+    - Direccion direccionFin
 
+    + int getDistancia(void)
 }
 
-class A_Pie extends MedioNoPublico{
+class Pie Implements MedioDeTransporte{
+    - Direccion direccionInicio
+    - Direccion direccionFin
 
+    + int getDistancia(void)
 }
 
 enum TipoDeVehiculo{
@@ -131,6 +146,9 @@ class Direccion{
 
 class Parada{
     - String nombre
+    - Int distAproximaParada
+
+    + int getDistAproximaParada(void)
 }
 
 class Linea{
@@ -138,6 +156,8 @@ class Linea{
     - List<Parada> paradas
     - TipoTransportePublico tipoTransportePublico
 
+    + boolean isTipo(tipo)
+    + boolean containsParada(parada)
     + void agregarParada(parada)
 }
 
@@ -148,13 +168,16 @@ class TipoServicioContratado{
 Miembro --> "*" Trayecto
 Trayecto --> "*" Tramo
 Tramo --> "1" MedioDeTransporte
-VehiculoParticular --> "1" TipoDeVehiculo
-VehiculoParticular --> "1" TipoDeCombustible
 TransportePublico --> "1" TipoTransportePublico
 TransportePublico --> "1" Linea
+VehiculoParticular --> "1" TipoDeVehiculo
+VehiculoParticular --> "1" TipoDeCombustible
 ServivioContratado --> "1" TipoServicioContratado
-MedioPublico --> "2" Parada
-MedioNoPublico --> "2" Direccion
+TransportePublico --> "2" Parada
+VehiculoParticular --> "2" Direccion
+ServivioContratado --> "2" Direccion
+Bicicleta --> "2" Direccion
+Pie --> "2" Direccion
 Linea --> "*" Parada
 Linea --> "1" TipoTransportePublico
 
@@ -218,74 +241,41 @@ Requerimientos de seguridad
 
 class Contrasenia {
     - List<Validacion> validaciones;
-    - String contrasenia;
 
     + validarContrasenia(String contrasenia);
-    + setContrasenia(String contrasenia);
     + setValidaciones(Validacion ...validaciones);
-    + getCantidadValidaciones();
 }
 
 class RuntimeException{}
 
-abstract class Validacion{
-    + void validarContrasenia(String contrasenia)
-    + abstract boolean condicion(String contrasenia)
-    + abstract RuntimeException error()
+interface Validacion {
+    + boolean condicion(String contrasenia)
+    + PasswordException error()
+}
+
+class PasswordException extends RuntimeException {
+    + PasswordException()
 }
 
 Contrasenia "1" --> "*" Validacion
+Validacion --> PasswordException
 
-class ValidacionLongitud extends Validacion{
-    + boolean condicion(contrasenia)
-    + RuntimeException error()
+
+
+class ValidacionLongitud implements Validacion{
 }
 
-class ExcepcionLongitudContrasenia extends RuntimeException{
-    + ExcepcionLongitudContrasenia()
+class ValidacionMayusculas implements Validacion{
 }
 
-class ValidacionMayusculas extends Validacion{
-    + boolean condicion(contrasenia)
-    + RuntimeException error()
+class ValidacionMinusculas implements Validacion {
 }
 
-class ExcepcionContraseniaNoContieneMayusculas extends RuntimeException{
-    + ExcepcionContraseniaNoContieneMayusculas()
+class ValidacionNumeros implements Validacion {
 }
 
-class ValidacionMinusculas extends Validacion{
-    + boolean condicion(contrasenia)
-    + RuntimeException error()
+class ValidacionContraseniaComun implements Validacion {
 }
-
-class ExcepcionContraseniaNoContieneMinusculas extends RuntimeException{
-    + ExcepcionContraseniaNoContieneMinusculas()
-}
-
-class ValidacionNumeros extends Validacion{
-    + boolean condicion(contrasenia)
-    + RuntimeException error()
-}
-
-class ExcepcionContraseniaEsNumerica extends RuntimeException{
-    + ExcepcionContraseniaEsNumerica()
-}
-
-class ValidacionContraseniaComun extends Validacion{
-    + boolean condicion(contrasenia)
-    + RuntimeException error()
-}
-
-class ExcepcionContraseniaComun extends RuntimeException{
-    + ExcepcionContraseniaComun()
-}
-
-ValidacionContraseniaComun --> "1" ExcepcionContraseniaComun
-ValidacionNumeros --> "1" ExcepcionContraseniaEsNumerica
-ValidacionMinusculas --> "1" ExcepcionContraseniaNoContieneMinusculas
-ValidacionMayusculas --> "1" ExcepcionContraseniaNoContieneMayusculas
-ValidacionLongitud --> "1" ExcepcionLongitudContrasenia
 
 class Administrador {
     - String nombreDeUsuario

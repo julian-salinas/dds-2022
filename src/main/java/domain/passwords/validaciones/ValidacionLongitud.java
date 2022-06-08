@@ -1,8 +1,8 @@
 package domain.passwords.validaciones;
 
-import domain.passwords.exceptions.LongitudException;
+import domain.passwords.exceptions.PasswordException;
 
-public class ValidacionLongitud extends Validacion {
+public class ValidacionLongitud implements Validacion {
 
   @Override
   public boolean condicion(String password) {
@@ -13,7 +13,7 @@ public class ValidacionLongitud extends Validacion {
   }
 
   @Override
-  public RuntimeException error() {
-    return new LongitudException();
+  public PasswordException error() {
+    return new PasswordException("Tu contraseña es muy corta, recordá que la cantidad mínima es de 8 caracteres");
   }
 }

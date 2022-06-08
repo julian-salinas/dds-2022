@@ -4,15 +4,16 @@ import domain.miembros.Miembro;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.Sector;
 import domain.organizaciones.TipoOrganizacion;
+import domain.ubicaciones.Ubicacion;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,11 +23,17 @@ public class OrganizacionTest {
   private Sector sectorDefault;
   private Miembro miembroDefault;
   private ClasificacionOrganizacion ministerio;
+  private Ubicacion ubicacionDefault;
 
   @BeforeEach
   void init() {
+    try {
+      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI ");
+    } catch (IOException e) {
+      //xd
+    }
     ministerio = new ClasificacionOrganizacion("ministerio");
-    organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, "Rosario", ministerio);
+    organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, ubicacionDefault, ministerio);
     sectorDefault = new Sector();
     miembroDefault = new Miembro("Juan", "Martin", "Crack?", "43-208-556");
   }
