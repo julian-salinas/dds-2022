@@ -44,15 +44,7 @@ public class TransportePublico implements MedioDeTransporte {
   }
 
   public int getDistancia() {
-    int indiceInicial = linea.getParadas().indexOf(paradaInicio);
-    int indiceFinal = linea.getParadas().indexOf(paradaFin);
-    return linea
-        .getParadas()
-        .stream()
-        .filter(parada -> linea.getParadas().indexOf(parada) >= indiceInicial
-        && linea.getParadas().indexOf(parada) < indiceFinal)
-        .mapToInt(Parada::getDistAproximaParada)
-        .sum();
+    return linea.distanciaEntreParadas(paradaInicio, paradaFin);
   }
 
 }

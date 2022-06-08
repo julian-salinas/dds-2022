@@ -27,4 +27,19 @@ public class Linea {
     paradas.add(parada);
   }
 
+  private boolean isInRange(Parada parada, int indiceInicial, int indiceFinal) {
+    return paradas.indexOf(parada) >= indiceInicial
+        && paradas.indexOf(parada) < indiceFinal;
+  }
+
+  public int distanciaEntreParadas(Parada paradaInicio, Parada paradaFin) {
+    int indiceInicial = paradas.indexOf(paradaInicio);
+    int indiceFinal = paradas.indexOf(paradaFin);
+    return paradas
+        .stream()
+        .filter(parada -> isInRange(parada, indiceInicial, indiceFinal))
+        .mapToInt(Parada::getDistAproximaParada)
+        .sum();
+  }
+
 }
