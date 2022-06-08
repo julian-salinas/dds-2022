@@ -8,13 +8,22 @@ import java.util.List;
 
 public class TrayectoCompartido extends Trayecto{
 
-  List<Miembro> miembrosQueCompartieron = new ArrayList<>();
+  private List<Miembro> miembrosConLosQueComparto = new ArrayList<>();
   private List<Tramo> tramos = new ArrayList<>();
+  private Miembro miembroQueMeCargo;
 
   public TrayectoCompartido(List<Miembro> miembros, List<Tramo> tramos) {
     tramos.forEach(this::validacionTrayectoCompartido);
-    this.miembrosQueCompartieron = miembros;
+    validacionMiembrosQueComparten(miembros);
+    this.miembrosConLosQueComparto = miembros;
     this.tramos = tramos;
+  }
+
+  private void validacionMiembrosQueComparten(List<Miembro> miembros) {
+    if(miembros.contains(miembroQueMeCargo)) {
+      throw new RuntimeException("En los miembros que comparten el trayecto conmigo "
+          + "no puedo estar yo");
+    }
   }
 
   private void validacionTrayectoCompartido(Tramo tramo) {
@@ -23,6 +32,16 @@ public class TrayectoCompartido extends Trayecto{
       throw new RuntimeException("No se puede hacer un trayecto compartido que no sea "
           + "de tipo Servico Contratado o Vehiculo Particular");
     }
+  }
+
+  @Override
+  public List<Miembro> getMiembrosQueMeCargaron() {
+    List<Miembro> miembrosQueMeCargaron = new ArrayList<>();
+    List<Miembro> miembroQueMeCargoList = new ArrayList<>();
+    miembroQueMeCargoList.add(miembroQueMeCargo);
+    miembrosQueMeCargaron.addAll(miembroQueMeCargoList);
+    miembrosQueMeCargaron.addAll(miembrosConLosQueComparto);
+    return miembrosQueMeCargaron;
   }
 
   @Override
