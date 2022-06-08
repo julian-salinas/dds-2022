@@ -1,10 +1,14 @@
 package domain.trayecto.transporte;
 
-public class Pie implements MedioDeTransporte {
-  private Direccion direccionInicio;
-  private Direccion direccionFin;
+import domain.ubicaciones.Ubicacion;
+import lombok.Getter;
 
-  public Pie(Direccion direccionInicio, Direccion direccionFin) {
+public class Pie extends MedioNoPublico {
+  @Getter private Ubicacion direccionInicio;
+  @Getter private Ubicacion direccionFin;
+  @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.PIE;
+
+  public Pie(Ubicacion direccionInicio, Ubicacion direccionFin) {
     this.direccionInicio = direccionInicio;
     this.direccionFin = direccionFin;
   }

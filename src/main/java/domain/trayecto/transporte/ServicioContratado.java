@@ -1,13 +1,17 @@
 package domain.trayecto.transporte;
 
-public class ServicioContratado implements MedioDeTransporte {
+import domain.ubicaciones.Ubicacion;
+import lombok.Getter;
 
-  private Direccion direccionInicio;
-  private Direccion direccionFin;
+public class ServicioContratado extends MedioNoPublico {
+
+  @Getter private Ubicacion direccionInicio;
+  @Getter private Ubicacion direccionFin;
   private final TipoServicioContratado tipo;
+  @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.SERVICIO_CONTRATADO;
 
   public ServicioContratado(TipoServicioContratado tipo,
-                            Direccion direccionInicio, Direccion direccionFin) {
+                            Ubicacion direccionInicio, Ubicacion direccionFin) {
     this.tipo = tipo;
     this.direccionInicio = direccionInicio;
     this.direccionFin = direccionFin;

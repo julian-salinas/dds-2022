@@ -17,7 +17,4 @@ public class Provincia {
     return pais;
   }
 
-  public Provincia getItself() {
-    return this;
-  }
 }

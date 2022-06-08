@@ -1,8 +1,8 @@
 package domain.passwords.validaciones;
 
-import domain.passwords.exceptions.NumerosException;
+import domain.passwords.exceptions.PasswordException;
 
-public class ValidacionNumeros extends Validacion {
+public class ValidacionNumeros implements Validacion {
   @Override
   public boolean condicion(String password) {
     // devuelve true si una contraseña contiene al menos un numero
@@ -10,7 +10,7 @@ public class ValidacionNumeros extends Validacion {
   }
 
   @Override
-  protected RuntimeException error() {
-    return new NumerosException();
+  public PasswordException error() {
+    return new PasswordException("Tu contraseña debe tener numeros");
   }
 }
