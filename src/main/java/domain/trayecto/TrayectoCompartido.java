@@ -14,16 +14,8 @@ public class TrayectoCompartido extends Trayecto{
 
   public TrayectoCompartido(List<Miembro> miembros, List<Tramo> tramos) {
     tramos.forEach(this::validacionTrayectoCompartido);
-    validacionMiembrosQueComparten(miembros);
     this.miembrosConLosQueComparto = miembros;
     this.tramos = tramos;
-  }
-
-  private void validacionMiembrosQueComparten(List<Miembro> miembros) {
-    if(miembros.contains(miembroQueMeCargo)) {
-      throw new RuntimeException("En los miembros que comparten el trayecto conmigo "
-          + "no puedo estar yo");
-    }
   }
 
   private void validacionTrayectoCompartido(Tramo tramo) {
@@ -36,12 +28,20 @@ public class TrayectoCompartido extends Trayecto{
 
   @Override
   public List<Miembro> getMiembrosQueMeCargaron() {
-    List<Miembro> miembrosQueMeCargaron = new ArrayList<>();
-    List<Miembro> miembroQueMeCargoList = new ArrayList<>();
-    miembroQueMeCargoList.add(miembroQueMeCargo);
-    miembrosQueMeCargaron.addAll(miembroQueMeCargoList);
-    miembrosQueMeCargaron.addAll(miembrosConLosQueComparto);
-    return miembrosQueMeCargaron;
+    if(miembroQueMeCargo!=null && !miembrosConLosQueComparto.contains(miembroQueMeCargo)) {
+      // Junto al miembro que registro con los que compartio
+      List<Miembro> miembrosQueMeCargaron = new ArrayList<>();
+      List<Miembro> miembroQueMeCargoList = new ArrayList<>();
+      miembroQueMeCargoList.add(miembroQueMeCargo);
+      miembrosQueMeCargaron.addAll(miembroQueMeCargoList);
+      miembrosQueMeCargaron.addAll(miembrosConLosQueComparto);
+      return miembrosQueMeCargaron;
+    } else if(miembroQueMeCargo==null) {
+      throw new RuntimeException("Todavia no se registro trayecto");
+    }
+    // Si por alguna razon, el que registro el trayecto esta incluido en los que compartieron,
+    // devolve los que compartierion directamente
+    return miembrosConLosQueComparto;
   }
 
   @Override

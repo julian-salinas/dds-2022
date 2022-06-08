@@ -1,7 +1,9 @@
 package domain.ubicaciones;
 
 import java.io.IOException;
+import lombok.Getter;
 
+@Getter
 public class Ubicacion {
   String calle;
   int altura;

@@ -8,6 +8,8 @@ import domain.ubicaciones.Ubicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OrganizacionTest {
@@ -16,11 +18,17 @@ public class OrganizacionTest {
   private Sector sectorDefault;
   private Miembro miembroDefault;
   private ClasificacionOrganizacion ministerio;
+  private Ubicacion ubicacionDefault;
 
   @BeforeEach
   void init() {
+    try {
+      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI ");
+    } catch (IOException e) {
+      //xd
+    }
     ministerio = new ClasificacionOrganizacion("ministerio");
-    organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, new Ubicacion(), ministerio);
+    organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, ubicacionDefault, ministerio);
     sectorDefault = new Sector();
     miembroDefault = new Miembro("Juan", "Martin", "Crack?", "43-208-556");
   }

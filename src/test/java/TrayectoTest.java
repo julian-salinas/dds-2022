@@ -9,6 +9,7 @@ import domain.ubicaciones.Ubicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +21,15 @@ public class TrayectoTest {
   Parada paradaDefault1, paradaDefault2;
   //Trayecto trayectoDefault;
   List<Parada> paradasLineaA;
+  Ubicacion ubicacionDefault;
 
   @BeforeEach
   void init() {
+    try {
+      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI ");
+    } catch (IOException e) {
+      //xd
+    }
     paradasLineaA = new ArrayList<>();
 
     lineaDefault = new Linea("A", paradasLineaA, TipoTransportePublico.SUBTE);
@@ -69,11 +76,12 @@ public class TrayectoTest {
   public void trayectosCompartidosOK(){
     Miembro miembro = new Miembro("", "", "", "");
     Miembro miembro2 = new Miembro("", "", "", "");
+    Miembro miembro3 = new Miembro("", "", "", "");
     List<Miembro> miembros = new ArrayList<>();
-    miembros.add(miembro);
     miembros.add(miembro2);
-    Tramo tramo = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), new Ubicacion(), new Ubicacion()));
-    Tramo tramo2 = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), new Ubicacion(), new Ubicacion()));
+    miembros.add(miembro3);
+    Tramo tramo = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), ubicacionDefault, ubicacionDefault));
+    Tramo tramo2 = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), ubicacionDefault, ubicacionDefault));
     List<Tramo> tramos = new ArrayList<>();
     tramos.add(tramo);
     tramos.add(tramo2);

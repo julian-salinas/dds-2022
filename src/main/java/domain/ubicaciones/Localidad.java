@@ -2,9 +2,10 @@ package domain.ubicaciones;
 
 import domain.servicios.geodds.ServicioGeoDds;
 import java.io.IOException;
+import lombok.Getter;
 
 public class Localidad {
-  private int id;
+  @Getter private int id;
   private String nombre;
   private ServicioGeoDds apiClient;
 
