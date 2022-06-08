@@ -17,5 +17,4 @@ public class TipoDeConsumo {
       throw new NoCoincidenUnidadesFEYTC();
     }
   }
-
 }

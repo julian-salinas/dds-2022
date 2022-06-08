@@ -4,6 +4,12 @@ import domain.miembros.Miembro;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.Sector;
 import domain.organizaciones.TipoOrganizacion;
+import domain.organizaciones.consumos.Unidad;
+import domain.organizaciones.consumos.tipos.FactorEmision;
+import domain.organizaciones.consumos.tipos.GasNatural;
+import domain.organizaciones.consumos.tipos.NoCoincidenUnidadesFEYTC;
+import domain.organizaciones.consumos.tipos.TipoDeConsumo;
+import domain.passwords.exceptions.LongitudException;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,10 +55,17 @@ public class OrganizacionTest {
   public void sePuedeCargarUnArchivoCSVCorrectamente(){
     organizacionDefault.cargarMediciones("C:\\Users\\Luciano\\Documents\\archivo-prueba.csv"); //Hay que arreglar este path
     List<List<String>> datosActividadesExpected = new ArrayList<>();
-    datosActividadesExpected.add(Arrays.asList("Gas Natural", "Electricidad", "Nafta"));
-    datosActividadesExpected.add(Arrays.asList("1234", "567", "89"));
-    datosActividadesExpected.add(Arrays.asList("Mensual", "Anual", "Mensual"));
-    datosActividadesExpected.add(Arrays.asList("04/2020", "1905", "05/2021"));
+    datosActividadesExpected.add(Arrays.asList("Gas Natural", "Electricidad", "Nafta")); // Primera columna
+    datosActividadesExpected.add(Arrays.asList("1234", "567", "89")); // Segunda columna
+    datosActividadesExpected.add(Arrays.asList("Mensual", "Anual", "Mensual")); // Tercera columna
+    datosActividadesExpected.add(Arrays.asList("04/2020", "1905", "05/2021")); // Cuarta columna
     Assertions.assertEquals(datosActividadesExpected, organizacionDefault.getDatosActividades());
+  }
+
+  @Test
+  public void noSePuedeCargarUnFEConUnidadDiferenteAlTC(){
+    TipoDeConsumo gasNatural = new GasNatural();
+    FactorEmision fe = new FactorEmision(2, Unidad.LT);
+    assertThrows(NoCoincidenUnidadesFEYTC.class, () -> gasNatural.cargarFactorEmision(fe));
   }
 }

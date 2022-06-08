@@ -17,7 +17,6 @@ public class Organizacion {
   private ClasificacionOrganizacion clasificacion;
   private List<List<String>> datosActividades = new ArrayList<>();
 
-
   public Organizacion(String razonSocial, TipoOrganizacion tipo,
                       String ubicacion, ClasificacionOrganizacion clasificacion) {
     this.razonSocial = razonSocial;
@@ -62,6 +61,7 @@ public class Organizacion {
       buffer.readLine(); //Para saltear las dos primeras lineas
       while((linea = buffer.readLine()) != null) {
         String[] fila = linea.split(";");
+
         tipoDeConsumo.add(fila[0]);
         valor.add(fila[1]);
         periodicidad.add(fila[2]);
