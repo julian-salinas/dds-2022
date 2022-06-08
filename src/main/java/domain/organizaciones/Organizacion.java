@@ -6,6 +6,7 @@ import domain.miembros.Miembro;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,11 +68,7 @@ public class Organizacion {
         periodicidad.add(fila[2]);
         periodoImputacion.add(fila[3]);
       }
-      datosActividades.add(tipoDeConsumo);
-      datosActividades.add(valor);
-      datosActividades.add(periodicidad);
-      datosActividades.add(periodoImputacion); // Se puede agregar todo esto en una sola linea ?
-
+      Collections.addAll(datosActividades,tipoDeConsumo,valor,periodicidad,periodoImputacion);
     } catch (IOException exception) {
       exception.printStackTrace();
     }
