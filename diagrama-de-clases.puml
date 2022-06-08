@@ -241,74 +241,41 @@ Requerimientos de seguridad
 
 class Contrasenia {
     - List<Validacion> validaciones;
-    - String contrasenia;
 
     + validarContrasenia(String contrasenia);
-    + setContrasenia(String contrasenia);
     + setValidaciones(Validacion ...validaciones);
-    + getCantidadValidaciones();
 }
 
 class RuntimeException{}
 
-abstract class Validacion{
-    + void validarContrasenia(String contrasenia)
-    + abstract boolean condicion(String contrasenia)
-    + abstract RuntimeException error()
+interface Validacion {
+    + boolean condicion(String contrasenia)
+    + PasswordException error()
+}
+
+class PasswordException extends RuntimeException {
+    + PasswordException()
 }
 
 Contrasenia "1" --> "*" Validacion
+Validacion --> PasswordException
 
-class ValidacionLongitud extends Validacion{
-    + boolean condicion(contrasenia)
-    + RuntimeException error()
+
+
+class ValidacionLongitud implements Validacion{
 }
 
-class ExcepcionLongitudContrasenia extends RuntimeException{
-    + ExcepcionLongitudContrasenia()
+class ValidacionMayusculas implements Validacion{
 }
 
-class ValidacionMayusculas extends Validacion{
-    + boolean condicion(contrasenia)
-    + RuntimeException error()
+class ValidacionMinusculas implements Validacion {
 }
 
-class ExcepcionContraseniaNoContieneMayusculas extends RuntimeException{
-    + ExcepcionContraseniaNoContieneMayusculas()
+class ValidacionNumeros implements Validacion {
 }
 
-class ValidacionMinusculas extends Validacion{
-    + boolean condicion(contrasenia)
-    + RuntimeException error()
+class ValidacionContraseniaComun implements Validacion {
 }
-
-class ExcepcionContraseniaNoContieneMinusculas extends RuntimeException{
-    + ExcepcionContraseniaNoContieneMinusculas()
-}
-
-class ValidacionNumeros extends Validacion{
-    + boolean condicion(contrasenia)
-    + RuntimeException error()
-}
-
-class ExcepcionContraseniaEsNumerica extends RuntimeException{
-    + ExcepcionContraseniaEsNumerica()
-}
-
-class ValidacionContraseniaComun extends Validacion{
-    + boolean condicion(contrasenia)
-    + RuntimeException error()
-}
-
-class ExcepcionContraseniaComun extends RuntimeException{
-    + ExcepcionContraseniaComun()
-}
-
-ValidacionContraseniaComun --> "1" ExcepcionContraseniaComun
-ValidacionNumeros --> "1" ExcepcionContraseniaEsNumerica
-ValidacionMinusculas --> "1" ExcepcionContraseniaNoContieneMinusculas
-ValidacionMayusculas --> "1" ExcepcionContraseniaNoContieneMayusculas
-ValidacionLongitud --> "1" ExcepcionLongitudContrasenia
 
 class Administrador {
     - String nombreDeUsuario

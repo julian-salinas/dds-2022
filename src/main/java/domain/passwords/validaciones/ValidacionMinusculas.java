@@ -1,8 +1,8 @@
 package domain.passwords.validaciones;
 
-import domain.passwords.exceptions.MinusculasException;
+import domain.passwords.exceptions.PasswordException;
 
-public class ValidacionMinusculas extends Validacion {
+public class ValidacionMinusculas implements Validacion {
 
   @Override
   public boolean condicion(String password) {
@@ -11,7 +11,7 @@ public class ValidacionMinusculas extends Validacion {
   }
 
   @Override
-  protected RuntimeException error() {
-    return new MinusculasException();
+  public PasswordException error() {
+    return new PasswordException("Tu contraseña debe contener minusculas");
   }
 }
