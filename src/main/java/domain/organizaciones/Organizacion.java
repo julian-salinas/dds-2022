@@ -6,7 +6,6 @@ import domain.miembros.Miembro;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class Organizacion {
   private String ubicacion;
   private final List<Sector> sectores = new ArrayList<>();
   private ClasificacionOrganizacion clasificacion;
-  private List<List<String>> datosActividades = new ArrayList<>();
+  private List<DatosActividades> datosActividades = new ArrayList<>();
 
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo,
@@ -63,18 +62,16 @@ public class Organizacion {
       buffer.readLine(); //Para saltear las dos primeras lineas
       while((linea = buffer.readLine()) != null) {
         String[] fila = linea.split(";");
-        tipoDeConsumo.add(fila[0]);
-        valor.add(fila[1]);
-        periodicidad.add(fila[2]);
-        periodoImputacion.add(fila[3]);
+        datosActividades.add(new DatosActividades(fila[0],fila[1],fila[2],fila[3]));
+
       }
-      Collections.addAll(datosActividades,tipoDeConsumo,valor,periodicidad,periodoImputacion);
+
     } catch (IOException exception) {
       exception.printStackTrace();
     }
   }
 
-  public List<List<String>> getDatosActividades() {
+  public List<DatosActividades> getDatosActividades() {
     return datosActividades;
   }
 }
