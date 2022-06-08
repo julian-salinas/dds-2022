@@ -127,8 +127,10 @@ public class ServicioGeoDds {
     int alturaOrigen = origen.getAltura();
     int alturaDestino = destino.getAltura();
 
-    int localidadOrigenId = verificarNombreLocalidad(origen.getLocalidad().getNombre());
-    int localidadDestinoId = verificarNombreLocalidad(destino.getLocalidad().getNombre());
+    //int localidadOrigenId = verificarNombreLocalidad(origen.getLocalidad().getNombre());
+    int localidadOrigenId = origen.getLocalidad().getId(); // La Ubic. ya tiene una Localidad con su id
+    //int localidadDestinoId = verificarNombreLocalidad(destino.getLocalidad().getNombre());
+    int localidadDestinoId = destino.getLocalidad().getId();
 
     calleOrigen = encode(calleOrigen, "UTF-8");
     calleDestino = encode(calleDestino, "UTF-8");
