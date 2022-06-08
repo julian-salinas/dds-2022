@@ -1,6 +1,7 @@
 package domain.trayecto;
 
 import domain.trayecto.transporte.MedioDeTransporte;
+import domain.trayecto.transporte.TipoDeTransporte;
 
 public class Tramo {
 
@@ -12,6 +13,10 @@ public class Tramo {
 
   public int distancia() {
     return medio.getDistancia();
+  }
+
+  public TipoDeTransporte getTipo() {
+    return medio.getTipoBase();
   }
 
 }

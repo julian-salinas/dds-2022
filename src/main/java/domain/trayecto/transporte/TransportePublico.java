@@ -2,6 +2,7 @@ package domain.trayecto.transporte;
 
 import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
 import domain.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
+import lombok.Getter;
 
 public class TransportePublico implements MedioDeTransporte {
 
@@ -9,6 +10,7 @@ public class TransportePublico implements MedioDeTransporte {
   private Parada paradaFin;
   private TipoTransportePublico tipo;
   private Linea linea;
+  @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.PUBLICO;
 
   private void validacionesTransportePublico(TipoTransportePublico tipo, Linea linea,
                                              Parada paradaInicio, Parada paradaFin) {

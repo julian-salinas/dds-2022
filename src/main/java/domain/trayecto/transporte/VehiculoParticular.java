@@ -9,6 +9,7 @@ public class VehiculoParticular extends MedioNoPublico {
   @Getter private Ubicacion direccionFin;
   private final TipoDeVehiculo tipoVehiculo;
   private TipoDeCombustible tipoCombustible;
+  @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.VEHICULO_PARTICULAR;
 
   public VehiculoParticular(TipoDeVehiculo tipoVehiculo, TipoDeCombustible tipoCombustible,
                             Ubicacion direccionInicio, Ubicacion direccionFin) {

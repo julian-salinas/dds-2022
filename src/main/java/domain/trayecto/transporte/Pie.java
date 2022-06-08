@@ -6,6 +6,7 @@ import lombok.Getter;
 public class Pie extends MedioNoPublico {
   @Getter private Ubicacion direccionInicio;
   @Getter private Ubicacion direccionFin;
+  @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.PIE;
 
   public Pie(Ubicacion direccionInicio, Ubicacion direccionFin) {
     this.direccionInicio = direccionInicio;

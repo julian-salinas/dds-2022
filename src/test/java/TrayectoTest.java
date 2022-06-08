@@ -1,10 +1,11 @@
+import domain.miembros.Miembro;
+import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
-import domain.trayecto.transporte.Linea;
-import domain.trayecto.transporte.Parada;
-import domain.trayecto.transporte.TipoTransportePublico;
-import domain.trayecto.transporte.TransportePublico;
+import domain.trayecto.TrayectoCompartido;
+import domain.trayecto.transporte.*;
 import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
 import domain.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
+import domain.ubicaciones.Ubicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ public class TrayectoTest {
 
   Linea lineaDefault;
   Parada paradaDefault1, paradaDefault2;
-  Trayecto trayectoDefault;
+  //Trayecto trayectoDefault;
   List<Parada> paradasLineaA;
 
   @BeforeEach
@@ -29,7 +30,7 @@ public class TrayectoTest {
     paradaDefault1 = new Parada("Carabobo", 4);
     paradaDefault2 = new Parada("Puan", 5);
 
-    trayectoDefault = new Trayecto();
+    //trayectoDefault = new Trayecto();
   }
 
   @Test
@@ -63,4 +64,22 @@ public class TrayectoTest {
     // Nunca los agrego a lineaDefault
     assertThrows(ExcepcionParadasTransporteNoIncluidasEnLinea.class, () -> new TransportePublico(TipoTransportePublico.SUBTE, lineaDefault, paradaError1, paradaError2));
   }
+
+  @Test
+  public void trayectosCompartidosOK(){
+    Miembro miembro = new Miembro("", "", "", "");
+    Miembro miembro2 = new Miembro("", "", "", "");
+    List<Miembro> miembros = new ArrayList<>();
+    miembros.add(miembro);
+    miembros.add(miembro2);
+    Tramo tramo = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), new Ubicacion(), new Ubicacion()));
+    Tramo tramo2 = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), new Ubicacion(), new Ubicacion()));
+    List<Tramo> tramos = new ArrayList<>();
+    tramos.add(tramo);
+    tramos.add(tramo2);
+    TrayectoCompartido tcomp = new TrayectoCompartido(miembros, tramos);
+    miembro.registrarTrayecto(tcomp);
+    assertTrue(miembro.getTrayectos().contains(tcomp));
+  }
+
 }
