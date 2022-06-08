@@ -16,12 +16,8 @@ public abstract class MedioNoPublico implements MedioDeTransporte {
     Distancia distancia;
     try {
       distancia = api.distanciaEntreUbicaciones(
-          this.getDireccionInicio().getLocalidad().getId(),
-          this.getDireccionInicio().getCalle(),
-          this.getDireccionInicio().getAltura(),
-          this.getDireccionFin().getLocalidad().getId(),
-          this.getDireccionFin().getCalle(),
-          this.getDireccionFin().getAltura()
+          this.getDireccionInicio(),
+          this.getDireccionFin()
       );
       // Podemos cambiar a que devuelva Double, o incluso Distancia
       return (int) distancia.valor;
