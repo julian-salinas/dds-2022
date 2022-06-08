@@ -26,6 +26,7 @@ public class Miembro {
 
   public void registrarTrayecto(Trayecto trayecto) {
     // Puede que tenga que ser con muchos trayectos en vez de uno
+    trayecto.setMiembroQueMeCargo(this);
     trayectos.add(trayecto);
   }
 
