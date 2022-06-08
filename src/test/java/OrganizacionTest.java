@@ -1,9 +1,6 @@
 import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
-import domain.organizaciones.ClasificacionOrganizacion;
+import domain.organizaciones.*;
 import domain.miembros.Miembro;
-import domain.organizaciones.Organizacion;
-import domain.organizaciones.Sector;
-import domain.organizaciones.TipoOrganizacion;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,12 +44,15 @@ public class OrganizacionTest {
 
   @Test
   public void sePuedeCargarUnArchivoCSVCorrectamente(){
-    organizacionDefault.cargarMediciones("C:\\Users\\Luciano\\Documents\\archivo-prueba.csv"); //Hay que arreglar este path
-    List<List<String>> datosActividadesExpected = new ArrayList<>();
-    datosActividadesExpected.add(Arrays.asList("Gas Natural", "Electricidad", "Nafta"));
-    datosActividadesExpected.add(Arrays.asList("1234", "567", "89"));
-    datosActividadesExpected.add(Arrays.asList("Mensual", "Anual", "Mensual"));
-    datosActividadesExpected.add(Arrays.asList("04/2020", "1905", "05/2021"));
-    Assertions.assertEquals(datosActividadesExpected, organizacionDefault.getDatosActividades());
+
+    organizacionDefault.cargarMediciones("D:\\UTN Santiago\\UTN\\3ER AÑO\\Diseño de Sistemas\\2022-K3003\\2022-tpa-ju-ma-grupo-05\\src\\test\\java\\archivo-prueba.csv"); //Hay que arreglar este path
+    List<DatosActividades> datosActividadesExpected = new ArrayList<>();
+    List<DatosActividades> datosActividadesLeidos = new ArrayList<>();
+    datosActividadesExpected.add(new DatosActividades("Gas Natural", "1234", "Mensual","04/2020"));
+    datosActividadesExpected.add(new DatosActividades("Electricidad", "567", "Anual","1905"));
+    datosActividadesExpected.add(new DatosActividades("Nafta", "89", "Mensual","05/2021"));;
+    datosActividadesLeidos = organizacionDefault.getDatosActividades();
+    Assertions.assertEquals(datosActividadesExpected.get(0).getValor(), datosActividadesLeidos.get(0).getValor());
+
   }
 }

@@ -1,7 +1,9 @@
 package domain.organizaciones;
 
 import domain.organizaciones.consumos.tipos.*;
+import lombok.Getter;
 
+@Getter
 public class DatosActividades {
 
   TipoDeConsumo tipoDeConsumo;
