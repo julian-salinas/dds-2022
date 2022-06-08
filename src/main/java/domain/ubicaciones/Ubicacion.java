@@ -1,11 +1,15 @@
 package domain.ubicaciones;
 
-import lombok.Getter;
-import domain.servicios.geodds.entidades.Localidad;
+import java.io.IOException;
 
-@Getter
 public class Ubicacion {
   String calle;
   int altura;
   Localidad localidad;
+
+  public Ubicacion(String calle, int altura, String nombreLocalidad) throws IOException, RuntimeException {
+    this.calle = calle;
+    this.altura = altura;
+    this.localidad = new Localidad(nombreLocalidad);
+  }
 }

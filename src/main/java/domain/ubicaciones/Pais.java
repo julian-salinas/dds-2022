@@ -14,15 +14,4 @@ public class Pais {
     this.nombre = nombre.toUpperCase();
   }
 
-  /**
-   * Este método tiene el objetivo de crear un país sin hacer un request a la api, solo debe usarse
-   * cuando el ID del país y el nombre son conocidos.
-   */
-  public Pais(String nombre, int id) {
-    this.apiClient = ServicioGeoDds.getInstancia();
-    this.id = id;
-    this.nombre = nombre;
-  }
-
-
 }

@@ -2,6 +2,7 @@ package domain.servicios.geodds;
 
 import static java.net.URLEncoder.encode;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import domain.servicios.geodds.entidades.*;
 
 import java.io.*;
@@ -51,6 +52,8 @@ public class ServicioGeoDds {
     return instancia;
   }
 
+  /** =============== Métodos para hacer Request a API GeoDds =============== **/
+
   public List<Pais> listadoDePaises(int offset) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
 
@@ -96,6 +99,24 @@ public class ServicioGeoDds {
     return responseMunicipios.body();
   }
 
+  public List<Localidad> listadoDeLocalidades(int offset) throws IOException {
+    RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
+
+    Call<List<Localidad>> requestLocalidades = geoDdsService.localidades(this.apiKey, offset);
+    Response<List<Localidad>> responseLocalidades = requestLocalidades.execute();
+
+    return responseLocalidades.body();
+  }
+
+  public List<Localidad> listadoDeLocalidades(int offset, int idMunicipio) throws IOException {
+    RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
+
+    Call<List<Localidad>> requestLocalidades = geoDdsService.localidades(this.apiKey, offset, idMunicipio);
+    Response<List<Localidad>> responseLocalidades = requestLocalidades.execute();
+
+    return responseLocalidades.body();
+  }
+
   public Distancia distanciaEntreUbicaciones(int localidadOrigenId,
                                              String calleOrigen,
                                              int alturaOrigen,
@@ -121,12 +142,12 @@ public class ServicioGeoDds {
     return responseDistancia.body();
   }
 
-  /* =============== Métodos para mapear =============== */
+  /** =============== Métodos para mapear =============== **/
 
   /**
    * Mapea todos los paises que tiene disponibles la api
    *
-   * @return Map (Nombre, ID) del país
+   * @return Map (Nombre, ID) con los países
    */
   public Map<String, Integer> mapPaises(int offset) throws  IOException {
     List<Pais> listadoDePaises = this.listadoDePaises(offset);
@@ -136,12 +157,44 @@ public class ServicioGeoDds {
         .collect(Collectors.toMap(Pais::getNombre, Pais::getId));
   }
 
-  public Map<String, Provincia> mapProvincias(int offset) throws IOException {
+  /**
+   * Mapea todos los paises que tiene disponibles la api
+   *
+   * @return Map (Nombre, ID) con las provincias
+   */
+  public Map<String, Integer> mapProvincias(int offset) throws IOException {
     List<Provincia> listadoDeProvincias = this.listadoDeProvincias(offset);
 
     return listadoDeProvincias
         .stream()
-        .collect(Collectors.toMap(Provincia::getNombre, Provincia::getItself));
+        .collect(Collectors.toMap(Provincia::getNombre, Provincia::getId));
+  }
+
+  /**
+   * Mapea todos los municipios que tiene disponibles la api
+   *
+   * @return Map (Nombre, ID) de los municipios
+   */
+  public Map<String, Integer> mapMunicipios(int offset) throws  IOException {
+    List<Municipio> listadoDeMunicipios = this.listadoDeMunicipios(offset);
+
+    return listadoDeMunicipios
+        .stream()
+        .collect(Collectors.toMap(Municipio::getNombre, Municipio::getId));
+  }
+
+
+  /**
+   * Mapea todas las localidades que tiene disponibles la api
+   *
+   * @return Map (Nombre, ID) de las localidades
+   */
+  public Map<String, Integer> mapLocalidades(int offset) throws IOException {
+    List<Localidad> listadoDeLocalidades = this.listadoDeLocalidades(offset);
+
+    return listadoDeLocalidades
+        .stream()
+        .collect(Collectors.toMap(Localidad::getNombre, Localidad::getId));
   }
 
   /** =================== Métodos para verificar existencia =================== **/
@@ -172,18 +225,45 @@ public class ServicioGeoDds {
    * Verifica que una provincia exista y retorna el ID de la misma.
    *
    * @param nombreProvincia nombre de la provincia que se está queriendo validar.
-   * @return provincia
+   * @return ID de la provincia
    */
-  public Provincia verificarNombreProvincia(String nombreProvincia)
-      throws RuntimeException, IOException {
+  public int verificarNombreProvincia(String nombreProvincia)  throws RuntimeException, IOException {
 
-    Map<String, Provincia> provincias = this.mapProvincias(1);
-    Integer id = provincias.get(nombreProvincia.toUpperCase()).getId();
+    Map<String, Integer> provincias = this.mapProvincias(1);
+    Integer id = provincias.get(nombreProvincia.toUpperCase());
 
     this.validarId(id, "No se pudo encontrar la provincia");
 
-    return provincias.get(nombreProvincia.toUpperCase());
+    return id;
   }
 
+  /**
+   * Verifica que un municipio exista y retorna el ID de la misma.
+   *
+   * @param nombreMunicipio nombre del municipio que se está queriendo validar.
+   * @return ID del municipio
+   */
+  public int verificarNombreMunicipio(String nombreMunicipio) throws  RuntimeException, IOException {
+    Map<String, Integer> municipios = this.mapMunicipios(1);
+    Integer id = municipios.get(nombreMunicipio.toUpperCase());
 
+    this.validarId(id, "No se encontró el municipio");
+
+    return id;
+  }
+
+  /**
+   * Verifica que una provincia exista y retorna el ID de la misma.
+   *
+   * @param nombreLocalidad nombre de la localidad que se está queriendo validar.
+   * @return ID de la localidad
+   */
+  public int verificarNombreLocalidad(String nombreLocalidad) throws RuntimeException, IOException {
+    Map<String, Integer> localidades = this.mapLocalidades(1);
+    Integer id = localidades.get(nombreLocalidad.toUpperCase());
+
+    this.validarId(id, "No se pudo encontrar la localidad");
+
+    return id;
+  }
 }
