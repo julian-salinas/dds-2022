@@ -1,18 +1,10 @@
 import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.organizaciones.*;
 import domain.miembros.Miembro;
-<<<<<<< HEAD
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-=======
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.Sector;
 import domain.organizaciones.TipoOrganizacion;
 import domain.ubicaciones.Ubicacion;
->>>>>>> 3f1681cb2da6e80af4643981e3ac9b3ebe4c4061
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
