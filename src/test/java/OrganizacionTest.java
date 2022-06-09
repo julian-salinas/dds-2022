@@ -4,7 +4,9 @@ import domain.miembros.Miembro;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.Sector;
 import domain.organizaciones.TipoOrganizacion;
+
 import domain.ubicaciones.Ubicacion;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +56,6 @@ public class OrganizacionTest {
 
   @Test
   public void sePuedeCargarUnArchivoCSVCorrectamente(){
-
     organizacionDefault.cargarMediciones("D:\\UTN Santiago\\UTN\\3ER AÑO\\Diseño de Sistemas\\2022-K3003\\2022-tpa-ju-ma-grupo-05\\src\\test\\java\\archivo-prueba.csv"); //Hay que arreglar este path
     List<DatosActividades> datosActividadesExpected = new ArrayList<>();
     List<DatosActividades> datosActividadesLeidos = new ArrayList<>();
@@ -63,6 +64,12 @@ public class OrganizacionTest {
     datosActividadesExpected.add(new DatosActividades("Nafta", "89", "Mensual","05/2021"));;
     datosActividadesLeidos = organizacionDefault.getDatosActividades();
     Assertions.assertEquals(datosActividadesExpected.get(0).getValor(), datosActividadesLeidos.get(0).getValor());
+  }
 
+  @Test
+  public void noSePuedeCargarUnFEConUnidadDiferenteAlTC(){
+    TipoDeConsumo gasNatural = new GasNatural();
+    FactorEmision fe = new FactorEmision(2, Unidad.LT);
+    assertThrows(NoCoincidenUnidadesFEYTC.class, () -> gasNatural.cargarFactorEmision(fe));
   }
 }
