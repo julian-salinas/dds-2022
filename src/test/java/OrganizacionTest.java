@@ -5,6 +5,11 @@ import domain.organizaciones.Organizacion;
 import domain.organizaciones.Sector;
 import domain.organizaciones.TipoOrganizacion;
 
+import domain.organizaciones.consumos.Unidad;
+import domain.organizaciones.consumos.tipos.FactorEmision;
+import domain.organizaciones.consumos.tipos.GasNatural;
+import domain.organizaciones.consumos.tipos.NoCoincidenUnidadesFEYTC;
+import domain.organizaciones.consumos.tipos.TipoDeConsumo;
 import domain.ubicaciones.Ubicacion;
 
 import java.io.File;
@@ -56,13 +61,12 @@ public class OrganizacionTest {
 
   @Test
   public void sePuedeCargarUnArchivoCSVCorrectamente(){
-    organizacionDefault.cargarMediciones("D:\\UTN Santiago\\UTN\\3ER AÑO\\Diseño de Sistemas\\2022-K3003\\2022-tpa-ju-ma-grupo-05\\src\\test\\java\\archivo-prueba.csv"); //Hay que arreglar este path
+    organizacionDefault.cargarMediciones("src/test/java/archivo-prueba.csv");
     List<DatosActividades> datosActividadesExpected = new ArrayList<>();
-    List<DatosActividades> datosActividadesLeidos = new ArrayList<>();
+    List<DatosActividades> datosActividadesLeidos = organizacionDefault.getDatosActividades();
     datosActividadesExpected.add(new DatosActividades("Gas Natural", "1234", "Mensual","04/2020"));
     datosActividadesExpected.add(new DatosActividades("Electricidad", "567", "Anual","1905"));
-    datosActividadesExpected.add(new DatosActividades("Nafta", "89", "Mensual","05/2021"));;
-    datosActividadesLeidos = organizacionDefault.getDatosActividades();
+    datosActividadesExpected.add(new DatosActividades("Nafta", "89", "Mensual","05/2021"));
     Assertions.assertEquals(datosActividadesExpected.get(0).getValor(), datosActividadesLeidos.get(0).getValor());
   }
 
