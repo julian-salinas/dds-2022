@@ -2,6 +2,7 @@ package domain.trayecto.transporte;
 
 import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
 import domain.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
+import lombok.Getter;
 
 public class TransportePublico implements MedioDeTransporte {
 
@@ -9,6 +10,7 @@ public class TransportePublico implements MedioDeTransporte {
   private Parada paradaFin;
   private TipoTransportePublico tipo;
   private Linea linea;
+  @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.PUBLICO;
 
   private void validacionesTransportePublico(TipoTransportePublico tipo, Linea linea,
                                              Parada paradaInicio, Parada paradaFin) {
@@ -27,7 +29,7 @@ public class TransportePublico implements MedioDeTransporte {
   }
 
   private boolean paradasIncluidasEnLaLinea(Parada paradaInicio, Parada paradaFin, Linea linea) {
-    return linea.containsParadas(paradaInicio) && linea.containsParadas(paradaFin);
+    return linea.containsParada(paradaInicio) && linea.containsParada(paradaFin);
   }
 
   public TransportePublico(TipoTransportePublico tipo, Linea linea,
@@ -39,6 +41,10 @@ public class TransportePublico implements MedioDeTransporte {
     this.paradaInicio = paradaInicio;
     this.paradaFin = paradaFin;
 
+  }
+
+  public int getDistancia() {
+    return linea.distanciaEntreParadas(paradaInicio, paradaFin);
   }
 
 }

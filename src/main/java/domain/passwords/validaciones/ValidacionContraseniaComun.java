@@ -1,14 +1,16 @@
 package domain.passwords.validaciones;
 
+import domain.passwords.exceptions.PasswordException;
+import sun.security.util.Password;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.List;
-import domain.passwords.exceptions.ContraseniaComunException;
 
-public class ValidacionContraseniaComun extends Validacion {
+public class ValidacionContraseniaComun implements Validacion {
 
   @Override
   public boolean condicion(String password) {
@@ -41,7 +43,7 @@ public class ValidacionContraseniaComun extends Validacion {
   }
 
   @Override
-  public RuntimeException error() {
-    return new ContraseniaComunException();
+  public PasswordException error() {
+    return new PasswordException("Tu contraseña se encuentra en el top 1000 peores contraseñas");
   }
 }

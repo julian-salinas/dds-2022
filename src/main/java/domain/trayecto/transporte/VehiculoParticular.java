@@ -1,14 +1,18 @@
 package domain.trayecto.transporte;
 
-public class VehiculoParticular implements MedioDeTransporte {
+import domain.ubicaciones.Ubicacion;
+import lombok.Getter;
 
-  private Direccion direccionInicio;
-  private Direccion direccionFin;
+public class VehiculoParticular extends MedioNoPublico {
+
+  @Getter private Ubicacion direccionInicio;
+  @Getter private Ubicacion direccionFin;
   private final TipoDeVehiculo tipoVehiculo;
   private TipoDeCombustible tipoCombustible;
+  @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.VEHICULO_PARTICULAR;
 
   public VehiculoParticular(TipoDeVehiculo tipoVehiculo, TipoDeCombustible tipoCombustible,
-                            Direccion direccionInicio, Direccion direccionFin) {
+                            Ubicacion direccionInicio, Ubicacion direccionFin) {
     this.tipoVehiculo = tipoVehiculo;
     this.tipoCombustible = tipoCombustible;
     this.direccionInicio = direccionInicio;

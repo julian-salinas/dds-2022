@@ -1,14 +1,10 @@
 package domain.passwords.validaciones;
 
-public abstract class Validacion {
+import domain.passwords.exceptions.PasswordException;
 
-  public void validarContrasenia(String contrasenia) {
-    if (!condicion(contrasenia)) {
-      throw error();
-    }
-  }
+public interface Validacion {
 
-  protected abstract boolean condicion(String contrasenia);
+  boolean condicion(String contrasenia);
 
-  protected abstract RuntimeException error();
+  PasswordException error();
 }

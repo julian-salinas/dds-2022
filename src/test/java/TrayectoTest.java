@@ -1,13 +1,15 @@
+import domain.miembros.Miembro;
+import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
-import domain.trayecto.transporte.Linea;
-import domain.trayecto.transporte.Parada;
-import domain.trayecto.transporte.TipoTransportePublico;
-import domain.trayecto.transporte.TransportePublico;
+import domain.trayecto.TrayectoCompartido;
+import domain.trayecto.transporte.*;
 import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
 import domain.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
+import domain.ubicaciones.Ubicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,25 +19,31 @@ public class TrayectoTest {
 
   Linea lineaDefault;
   Parada paradaDefault1, paradaDefault2;
-  Trayecto trayectoDefault;
+  //Trayecto trayectoDefault;
   List<Parada> paradasLineaA;
+  Ubicacion ubicacionDefault;
 
   @BeforeEach
   void init() {
+    try {
+      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI ");
+    } catch (IOException e) {
+      //xd
+    }
     paradasLineaA = new ArrayList<>();
 
     lineaDefault = new Linea("A", paradasLineaA, TipoTransportePublico.SUBTE);
 
-    paradaDefault1 = new Parada("Carabobo");
-    paradaDefault2 = new Parada("Puan");
+    paradaDefault1 = new Parada("Carabobo", 4);
+    paradaDefault2 = new Parada("Puan", 5);
 
-    trayectoDefault = new Trayecto();
+    //trayectoDefault = new Trayecto();
   }
 
   @Test
   public void agregoParadaAUnaLinea(){
     lineaDefault.agregarParada(paradaDefault1);
-    assertTrue(lineaDefault.containsParadas(paradaDefault1));
+    assertTrue(lineaDefault.containsParada(paradaDefault1));
   }
 
   @Test
@@ -58,9 +66,28 @@ public class TrayectoTest {
   public void crearUnTransportePublicoCuyasParadasNoEstenEnLaLineaTiraError(){
     lineaDefault.agregarParada(paradaDefault1);
     lineaDefault.agregarParada(paradaDefault2);
-    Parada paradaError1 = new Parada("Acoyte");
-    Parada paradaError2 = new Parada("Castro Barros");
+    Parada paradaError1 = new Parada("Acoyte", 7);
+    Parada paradaError2 = new Parada("Castro Barros", 6);
     // Nunca los agrego a lineaDefault
     assertThrows(ExcepcionParadasTransporteNoIncluidasEnLinea.class, () -> new TransportePublico(TipoTransportePublico.SUBTE, lineaDefault, paradaError1, paradaError2));
   }
+
+  @Test
+  public void trayectosCompartidosOK(){
+    Miembro miembro = new Miembro("", "", "", "");
+    Miembro miembro2 = new Miembro("", "", "", "");
+    Miembro miembro3 = new Miembro("", "", "", "");
+    List<Miembro> miembros = new ArrayList<>();
+    miembros.add(miembro2);
+    miembros.add(miembro3);
+    Tramo tramo = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), ubicacionDefault, ubicacionDefault));
+    Tramo tramo2 = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), ubicacionDefault, ubicacionDefault));
+    List<Tramo> tramos = new ArrayList<>();
+    tramos.add(tramo);
+    tramos.add(tramo2);
+    TrayectoCompartido tcomp = new TrayectoCompartido(miembros, tramos);
+    miembro.registrarTrayecto(tcomp);
+    assertTrue(miembro.getTrayectos().contains(tcomp));
+  }
+
 }

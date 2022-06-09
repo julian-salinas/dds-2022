@@ -15,7 +15,7 @@ public class Miembro {
   private String tipo; // no se especifica nada
   private String nroDeDocumento; // podria ser int
   @Setter @Getter private Sector sectorDondeTrabaja;
-  private final List<Trayecto> trayectos = new ArrayList<>();
+  @Getter private final List<Trayecto> trayectos = new ArrayList<>();
 
   public Miembro(String nombre, String apellido, String tipo, String nroDeDocumento) {
     this.nombre = nombre;
@@ -26,6 +26,7 @@ public class Miembro {
 
   public void registrarTrayecto(Trayecto trayecto) {
     // Puede que tenga que ser con muchos trayectos en vez de uno
+    trayecto.setMiembroQueMeCargo(this);
     trayectos.add(trayecto);
   }
 
