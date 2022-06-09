@@ -11,9 +11,12 @@ public abstract class MedioNoPublico implements MedioDeTransporte {
   abstract Ubicacion getDireccionInicio();
   abstract Ubicacion getDireccionFin();
 
+
   public int getDistancia() {
     ServicioGeoDds api = ServicioGeoDds.getInstancia();
     Distancia distancia;
+    return 1;
+    /* TODO: FIX DE ESTE ERROR
     try {
       distancia = api.distanciaEntreUbicaciones(
           this.getDireccionInicio(),
@@ -24,6 +27,6 @@ public abstract class MedioNoPublico implements MedioDeTransporte {
     } catch (IOException e) {
       // bruh
       return -1;
-    }
+    } */
   }
 }

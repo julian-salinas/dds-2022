@@ -21,14 +21,93 @@ class ClasificacionOrganizacion{
 class Organizacion {
     - String razonSocial
     - TipoOrganizacion tipo
-    - String ubicacion
+    - Ubicacion ubicacion
     - List<Sector> sectores
     - ClasificacionOrganizacion clasificacion
+    - List<DatosActividades> datosActividades
 
     + boolean containsSector(sector)
     + void agregarSector(sector)
     + void aceptarVinculacionDeTrabajador(miembro, sector)
+    + void cargarMediciones(String pathCSV)
+    + List<DatosActividades> getDatosActividades()
 }
+
+class DatosActividades {
+    - TipoDeConsumo tipoDeConsumo
+    - int valor
+    - String periodicidad
+    - String periodoImputacion
+
+    + TipoDeConsumo encontrarTipo(String tipo)
+}
+
+class TipoDeConsumo {
+  - Unidad unidad;
+  - Actividad actividad;
+  - Alcance alcance;
+  - FactorEmision fe;
+
+  + void cargarFactorEmision(FactorEmision fe)
+} 
+
+DatosActividades --> "1" TipoDeConsumo
+
+class NoCoincidenUnidadesFEYTC extends RuntimeException {}
+
+class CombustibleConsumidoGasoil extends TipoDeConsumo {}
+
+class CombustibleConsumidoNafta extends TipoDeConsumo {}
+
+class Diesel extends TipoDeConsumo{}
+
+class DistanciaRecorrida extends TipoDeConsumo {}
+
+class Electricidad extends TipoDeConsumo {}
+
+class GasNatural extends TipoDeConsumo {}
+
+class Transporte extends TipoDeConsumo {}
+
+class Nafta extends TipoDeConsumo {}
+
+class Carbon extends TipoDeConsumo {}
+
+TipoDeConsumo --> NoCoincidenUnidadesFEYTC
+
+class FactorEmision {
+  - int valor;
+  - Unidad unidad;
+
+  + FactorEmision(int valor, Unidad unidad)
+  + Unidad getUnidad() 
+}
+
+enum Unidad {
+    M3,
+    LT,
+    KG,
+    KWH,
+    KM
+}
+
+enum Alcance {
+  DIRECTAS, 
+  INDIRECTAS_ELECTRICIDAD, 
+  INDIRECTAS_EXTERNAS
+}
+
+enum Actividad {
+  COMBUSTION_FIJA, 
+  COMBUSTION_MOVIL, 
+  ELECTRICIDAD, 
+  LOGISTICA_PRODUCTOS_RESIDUOS
+}
+
+TipoDeConsumo --> "1" Alcance
+TipoDeConsumo --> "1" Unidad
+TipoDeConsumo --> "1" Actividad
+TipoDeConsumo --> "1" FactorEmision
 
 class Sector{
     - Organizacion orgAlaQuePertenezco
@@ -45,8 +124,8 @@ class Sector{
 class Miembro {
     - String nombre
     - String apellido
-    - String tipo
-    - String nroDocumento
+    - TipoDeDocumento tipo
+    - Integer nroDocumento
     - Sector sectorDondeTrabaja
     - List<Trayecto> trayectos
 
@@ -54,70 +133,110 @@ class Miembro {
     + void vincularTrabajadorConOrg(organizacion, sector)
 }
 
+enum TipoDeDocumento {
+    DNI,
+    LE,
+    LC,
+    CI
+}
+
+Miembro --> "1" TipoDeDocumento
 Organizacion --> "1" TipoOrganizacion
 Organizacion --> "1" ClasificacionOrganizacion
 Organizacion --> "*" Sector
+Organizacion --> "*" DatosActividades
+
 Sector --> "1" Organizacion
 Sector --> "*" Miembro
 Miembro ---> "1" Sector
 
-' Part 2: Registro de Trayectos
 
 class Trayecto{
     - List<Tramo> tramos
+    - Miembro miembroQueMeCargo
 
     + void agregarTramo(tramo)
-    + int distanciaTotal(void) 
+    + int distanciaTotal(void)
+    + List<Miembro> getMiembrosQueMeCargaron()
 }
+
+class TrayectoCompartido extends Trayecto {
+  - List<Miembro> miembrosConLosQueComparto
+  - List<Tramo> tramos
+  - Miembro miembroQueMeCargo
+
+  - void validacionTrayectoCompartido(Tramo tramo)
+  + List<Miembro> getMiembrosQueMeCargaron()
+  + void agregarTramo(Tramo tramo)
+}
+
+TrayectoCompartido --> "*" Miembro
+TrayectoCompartido --> "*" Tramo
 
 class Tramo{
     - MedioDeTransporte medioDeTransporte
 
     + int distancia(void)
+    + TipoDeTransporte getTipo()
 }
 
-interface MedioDeTransporte{
+interface MedioDeTransporte {
     + int getDistancia(void)
+    + TipoDeTransporte getTipoBase()
 }
 
-class TransportePublico Implements MedioDeTransporte{
-    - TipoTransportePublico tipoTransportePublico
-    - Linea linea
-    - Parada paradaInicio
-    - Parada paradaFin
+class TransportePublico implements MedioDeTransporte{
+  - Parada paradaInicio;
+  - Parada paradaFin;
+  - TipoTransportePublico tipo;
+  - Linea linea;
+  - TipoDeTransporte tipoBase
     
-    + int getDistancia(void)
+  + boolean tipoYtipoDeLaLineaSonIguales(TipoTransportePublico tipo, Linea linea)
+  + boolean paradasIncluidasEnLaLinea(Parada paradaInicio, Parada paradaFin, Linea linea)
+  + void validacionesTransportePublico(TipoTransportePublico tipo, Linea linea, Parada paradaInicio, Parada paradaFin);
+  + int getDistancia()
 }
 
-class VehiculoParticular Implements MedioDeTransporte{
-    - Direccion direccionInicio
-    - Direccion direccionFin
-    - TipoDeVehiculo tipoDeVehiculo
-    - TipoDeCombustible tipoDeCombustible
+TransportePublico --> "1" TipoDeTransporte
 
-    + int getDistancia(void)
+class VehiculoParticular extends MedioNoPublico {
+
+  - Ubicacion direccionInicio
+  - Ubicacion direccionFin
+  - TipoDeVehiculo tipoVehiculo
+  - TipoDeCombustible tipoCombustible
+  - TipoDeTransporte tipoBase
+
 }
 
-class ServivioContratado Implements MedioDeTransporte{
-    - Direccion direccionInicio
-    - Direccion direccionFin
-    - TipoServicioContratado tipoServicioContratado
+MedioNoPublico --> "1" TipoDeTransporte
 
-    + int getDistancia(void)
+class ServicioContratado extends MedioNoPublico{
+  -Ubicacion direccionInicio
+  - Ubicacion direccionFin
+  - TipoServicioContratado tipo
+  - TipoDeTransporte tipoBase
 }
 
-class Bicicleta Implements MedioDeTransporte{
-    - Direccion direccionInicio
-    - Direccion direccionFin
 
-    + int getDistancia(void)
+abstract class MedioNoPublico implements MedioDeTransporte {
+  + Ubicacion getDireccionInicio()
+  + Ubicacion getDireccionFin()
+  + int getDistancia()
 }
 
-class Pie Implements MedioDeTransporte{
-    - Direccion direccionInicio
-    - Direccion direccionFin
+class Bicicleta extends MedioNoPublico{
+  - Ubicacion direccionInicio;
+  - Ubicacion direccionFin;
+  - TipoDeTransporte tipoBase
+}
 
-    + int getDistancia(void)
+
+class Pie extends MedioNoPublico {
+    - Ubicacion direccionInicio
+    - Ubicacion direccionFin
+    - TipoDeTransporte tipoBase
 }
 
 enum TipoDeVehiculo{
@@ -126,10 +245,18 @@ enum TipoDeVehiculo{
     CAMIONETA
 }
 
+enum TipoDeTransporte {
+  PUBLICO,
+  PIE,
+  BICICLETA,
+  SERVICIO_CONTRATADO,
+  VEHICULO_PARTICULAR
+}
+
 enum TipoDeCombustible{
-    GNC
-    NAFTA
-    ELECTRICO
+    GNC,
+    NAFTA,
+    ELECTRICO,
     GASOIL
 }
 
@@ -139,11 +266,6 @@ enum TipoTransportePublico{
     COLECTIVO
 }
 
-class Direccion{
-    - String calle
-    - int altura
-}
-
 class Parada{
     - String nombre
     - Int distAproximaParada
@@ -151,93 +273,34 @@ class Parada{
     + int getDistAproximaParada(void)
 }
 
-class Linea{
-    - String nombre
-    - List<Parada> paradas
-    - TipoTransportePublico tipoTransportePublico
+class Linea {
 
-    + boolean isTipo(tipo)
-    + boolean containsParada(parada)
-    + void agregarParada(parada)
+  - String nombre
+  - List<Parada> paradas
+  - TipoTransportePublico tipo
+  + boolean isTipo(TipoTransportePublico otroTipo)
+  + boolean containsParada(Parada parada)
+  + void agregarParada(Parada parada)
+  + int distanciaEntreParadas(Parada paradaInicio, Parada paradaFin)
 }
 
 class TipoServicioContratado{
     - String nombre
 }
 
-Miembro --> "*" Trayecto
+ServicioContratado --> "1" TipoServicioContratado
+
+Miembro  "1" --> "*" Trayecto
 Trayecto --> "*" Tramo
 Tramo --> "1" MedioDeTransporte
 TransportePublico --> "1" TipoTransportePublico
 TransportePublico --> "1" Linea
 VehiculoParticular --> "1" TipoDeVehiculo
 VehiculoParticular --> "1" TipoDeCombustible
-ServivioContratado --> "1" TipoServicioContratado
 TransportePublico --> "2" Parada
-VehiculoParticular --> "2" Direccion
-ServivioContratado --> "2" Direccion
-Bicicleta --> "2" Direccion
-Pie --> "2" Direccion
 Linea --> "*" Parada
 Linea --> "1" TipoTransportePublico
 
-
-/'
-
-Requerimientos generales:
-
-1.   Se debe permitir el alta de Organizaciones y de sectores dentro de cada una de éstas.
-
-    Organizacion org = new Organizacion(//Todas las cosas)
-    Sector sector = new Sector(//Lista de miembros)
-    org.agregarSector(sector)
-
-2.   Se debe permitir que un Miembro se vincule con un sector de la organización. Las Organizaciones
-    deben aceptar esta vinculación para que las mediciones brindadas por dicho miembro (como los
-    trayectos) tengan impacto en la Organización.
-
-    Miembro miembro = new Miembro(//Todas las cosas)
-    miembro.vincularCon(org, sector)
-
-3.   Se debe permitir el alta de trayectos teniendo en cuenta que cada uno de éstos puede contener
-    varios tramos.
-
-    Tramo tramo1 = new Tramo(//Toda la salsa)
-    Tramo tramo2 = new Tramo(//Toda la salsa)
-    ...
-    Trayecto trayecto = new Trayecto(//Lista de tramos con tramo1, tramo2,etc.)
-
-4.   Se debe permitir el alta de nuevas líneas férreas, subterráneas y de colectivos; así como también el
-    alta de paradas/estaciones de cada una de ellas.
-
-    Parada sanPedrito = new Parada("San Pedrito")
-    Linea lineaA = new Linea("Linea A", [sanPedrito], SUBTE)
-    Parada flores = new Parada("Flores")
-    lineaA.agregarParada(flores)
-
-    Al hablar de que hizo un tramo por transporte publico
-    medioDeTransporte = new TransportePublico(SUBTE, lineaA, sanPedrito, flores)
-
-
-5.   Se debe permitir el alta de nuevos servicios de transporte contratados.
-
-    TipoServicioContratado taxi = new TipoServicioContratado("Taxi")
-
-Requerimientos de seguridad
-
-6.   Registrar administradores
-7.   Por el momento, sólo se requiere guardar usuario y contraseña.
-8.   Siguiendo las recomendaciones del OWASP (Proyecto Abierto de Seguridad en Aplicaciones
-    Web)2, que se ha constituido en un estándar de facto para la seguridad, se pide:
-        - No utilice credenciales por defecto en su software, particularmente en el caso de
-        administradores.
-        - Implemente controles contra contraseñas débiles. Cuando el usuario ingrese una nueva clave,
-        la misma puede verificarse contra la lista del Top 10.000 de peores contraseñas.
-        - Alinear la política de longitud, complejidad y rotación de contraseñas con las recomendaciones
-        de la Sección 5.1.1 para Secretos Memorizados de la Guía NIST3 800-634.5
-'/
-
-' Ahora lo de validar contraseñas
 
 class Contrasenia {
     - List<Validacion> validaciones;
@@ -283,5 +346,70 @@ class Administrador {
 }
 
 Administrador "1" --> "1" Contrasenia
+
+class Ubicacion {
+  - String calle
+  - int altura
+  - Localidad localidad
+  - ServicioGeoDds apiClient
+  + Distancia calcularDistanciaA(Ubicacion otraUbicacion)
+}
+
+class Localidad {
+  - int id
+  - String nombre
+  - ServicioGeoDds apiClient
+}
+
+Ubicacion --> "1" Localidad
+Organizacion --> "1" Ubicacion
+Organizacion --> "1" Ubicacion
+MedioNoPublico --> "*" Ubicacion
+ServicioContratado --> "*" Ubicacion
+VehiculoParticular --> "*" Ubicacion
+Bicicleta --> "*" Ubicacion
+Pie --> "*" Ubicacion
+
+
+interface RetrofitGeoDds {
+  + Call<List<Pais>> paises(String token, int offset);
+  + Call<List<Provincia>> provincias(String token, int offset);
+  + Call<List<Provincia>> provincias(String token, int offset, int paisId);
+  + Call<List<Localidad>> localidades(String token, int offset);
+  + Call<List<Localidad>> localidades(String token, int offset, int municipioId);
+  + Call<List<Municipio>> municipios(String token, int offset);
+  + Call<List<Municipio>> municipios(String token, int offset, int provinciaId);
+  + Call<Distancia> distancia(String token, int localidadOrigenId, String calleOrigen, int alturaOrigen, int localidadDestinoId, String calleDestino, int alturaDestino);
+}
+
+class ServicioGeoDds {
+  - ServicioGeoDds instancia
+  - String urlAPI
+  - Retrofit retrofit
+  - String apiKey
+
+  + ServicioGeoDds getInstancia()
+  + List<Pais> listadoDePaises(int offset)
+  + List<Provincia> listadoDeProvincias(int offset)
+  + List<Provincia> listadoDeProvincias(int offset, int paisId)
+  + List<Municipio> listadoDeMunicipios(int offset)
+  + List<Municipio> listadoDeMunicipios(int offset, int provinciaId)
+  + List<Localidad> listadoDeLocalidades(int offset)
+  + List<Localidad> listadoDeLocalidades(int offset, int idMunicipio)
+  + distanciaEntreUbicaciones(Ubicacion origen, Ubicacion destino)
+  + Map<String, Integer> mapPaises(int offset)
+  + Map<String, Integer> mapProvincias(int offset)
+  + Map<String, Integer> mapMunicipios(int offset)
+  + Map<String, Integer> mapLocalidades(int offset)
+  + void validarId(Integer id, String mensajeError)
+  + int verificarNombrePais(String nombrePais)
+  + int verificarNombreProvincia(String nombreProvincia)
+  + int verificarNombreMunicipio(String nombreMunicipio)
+  + int verificarNombreLocalidad(String nombreLocalidad)
+}
+
+ServicioGeoDds --> "1" RetrofitGeoDds
+Ubicacion --> "1" ServicioGeoDds
+Localidad --> "1" ServicioGeoDds
 
 @enduml

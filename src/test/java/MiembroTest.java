@@ -1,4 +1,5 @@
 import domain.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
+import domain.miembros.TipoDeDocumento;
 import domain.organizaciones.ClasificacionOrganizacion;
 import domain.miembros.Miembro;
 import domain.organizaciones.Organizacion;
@@ -29,7 +30,7 @@ public class MiembroTest {
     ministerio = new ClasificacionOrganizacion("ministerio");
     organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, ubicacionDefault, ministerio);
     sectorDefault = new Sector();
-    miembroDefault = new Miembro("Juan", "Martin", "Crack?", "43-208-556");
+    miembroDefault = new Miembro("Juan", "Martin", TipoDeDocumento.DNI, 43208556);
   }
 
   @Test

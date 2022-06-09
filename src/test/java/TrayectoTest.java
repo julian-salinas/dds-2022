@@ -1,4 +1,5 @@
 import domain.miembros.Miembro;
+import domain.miembros.TipoDeDocumento;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import domain.trayecto.TrayectoCompartido;
@@ -74,9 +75,9 @@ public class TrayectoTest {
 
   @Test
   public void trayectosCompartidosOK(){
-    Miembro miembro = new Miembro("", "", "", "");
-    Miembro miembro2 = new Miembro("", "", "", "");
-    Miembro miembro3 = new Miembro("", "", "", "");
+    Miembro miembro = new Miembro("", "", TipoDeDocumento.DNI, 0);
+    Miembro miembro2 = new Miembro("", "", TipoDeDocumento.DNI, 0);
+    Miembro miembro3 = new Miembro("", "", TipoDeDocumento.DNI, 0);
     List<Miembro> miembros = new ArrayList<>();
     miembros.add(miembro2);
     miembros.add(miembro3);

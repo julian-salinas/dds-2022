@@ -12,15 +12,15 @@ import lombok.Setter;
 public class Miembro {
   private final String nombre;
   private final String apellido;
-  private String tipo; // no se especifica nada
-  private String nroDeDocumento; // podria ser int
+  private TipoDeDocumento tipoDeDocumento; // no se especifica nada
+  private Integer nroDeDocumento;
   @Setter @Getter private Sector sectorDondeTrabaja;
   @Getter private final List<Trayecto> trayectos = new ArrayList<>();
 
-  public Miembro(String nombre, String apellido, String tipo, String nroDeDocumento) {
+  public Miembro(String nombre, String apellido, TipoDeDocumento tipoDeDocumento, Integer nroDeDocumento) {
     this.nombre = nombre;
     this.apellido = apellido;
-    this.tipo = tipo;
+    this.tipoDeDocumento = tipoDeDocumento;
     this.nroDeDocumento = nroDeDocumento;
   }
 

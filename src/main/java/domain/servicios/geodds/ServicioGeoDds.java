@@ -2,15 +2,12 @@ package domain.servicios.geodds;
 
 import static java.net.URLEncoder.encode;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import domain.servicios.geodds.entidades.*;
-
 import java.io.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
-
 import domain.ubicaciones.Ubicacion;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -119,7 +116,7 @@ public class ServicioGeoDds {
     return responseLocalidades.body();
   }
 
-  public Distancia distanciaEntreUbicaciones(Ubicacion origen, Ubicacion destino) throws IOException {
+  public double distanciaEntreUbicaciones(Ubicacion origen, Ubicacion destino) throws IOException {
 
     String calleOrigen = origen.getCalle();
     String calleDestino = destino.getCalle();
@@ -147,7 +144,7 @@ public class ServicioGeoDds {
 
     Response<Distancia> responseDistancia = requestDistancia.execute();
 
-    return responseDistancia.body();
+    return responseDistancia.body().valor;
   }
 
   /** =============== Métodos para mapear =============== **/
@@ -207,7 +204,7 @@ public class ServicioGeoDds {
 
   /** =================== Métodos para verificar existencia =================== **/
 
-  public void validarId(Integer id, String mensajeError) {
+  public void validarId(Integer id, String mensajeError) throws RuntimeException {
     if (id == null) {
       throw new RuntimeException(mensajeError);
     }

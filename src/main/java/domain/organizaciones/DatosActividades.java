@@ -47,7 +47,7 @@ public class DatosActividades {
 
       case "Camion de carga":
       case "Utilitario liviano":
-        return new MedioDeTransporte();
+        return new Transporte();
 
       case "Distancia media":
         return new DistanciaRecorrida();
