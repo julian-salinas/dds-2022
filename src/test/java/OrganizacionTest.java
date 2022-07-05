@@ -7,10 +7,7 @@ import domain.organizaciones.Sector;
 import domain.organizaciones.TipoOrganizacion;
 
 import domain.organizaciones.consumos.Unidad;
-import domain.organizaciones.consumos.tipos.FactorEmision;
-import domain.organizaciones.consumos.tipos.GasNatural;
-import domain.organizaciones.consumos.tipos.NoCoincidenUnidadesFEYTC;
-import domain.organizaciones.consumos.tipos.TipoDeConsumo;
+import domain.organizaciones.consumos.tipos.*;
 import domain.ubicaciones.Ubicacion;
 
 import java.io.File;
@@ -73,7 +70,7 @@ public class OrganizacionTest {
 
   @Test
   public void noSePuedeCargarUnFEConUnidadDiferenteAlTC(){
-    TipoDeConsumo gasNatural = new GasNatural();
+    TipoDeConsumo gasNatural = TipoDeConsumoFactory.instance().buildTipoDeConsumo("Gas Natural");
     FactorEmision fe = new FactorEmision(2, Unidad.LT);
     assertThrows(NoCoincidenUnidadesFEYTC.class, () -> gasNatural.cargarFactorEmision(fe));
   }

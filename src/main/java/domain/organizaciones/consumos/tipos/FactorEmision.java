@@ -7,8 +7,8 @@ public class FactorEmision {
   private Unidad unidad;
 
   public FactorEmision(int valor, Unidad unidad){
-    valor = valor;
-    unidad = unidad;
+    this.valor = valor;
+    this.unidad = unidad;
   }
 
   public Unidad getUnidad() {

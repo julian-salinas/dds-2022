@@ -13,13 +13,13 @@ public class DatosActividades {
 
   public DatosActividades (String tipo, String valor, String periodicidad, String periodoImputacion ){
 
-    this.tipoDeConsumo = encontrarTipo(tipo);
+    this.tipoDeConsumo = TipoDeConsumoFactory.instance().buildTipoDeConsumo(tipo);
     this.valor = Integer.parseInt(valor);
     this.periodicidad = periodicidad;
     this.periodoImputacion = periodoImputacion;
 
     }
-
+/*
    private TipoDeConsumo encontrarTipo(String tipo){
 
     switch (tipo){
@@ -54,7 +54,7 @@ public class DatosActividades {
       }
      return null;
    }
-
+*/
 
 }
 
