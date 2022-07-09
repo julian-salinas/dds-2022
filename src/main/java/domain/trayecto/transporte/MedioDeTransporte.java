@@ -1,6 +1,8 @@
 package domain.trayecto.transporte;
 
+import domain.ubicaciones.Distancia;
+
 public interface MedioDeTransporte {
-  int getDistancia();
+  Distancia getDistancia();
   TipoDeTransporte getTipoBase();
 }

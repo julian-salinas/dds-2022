@@ -316,9 +316,11 @@ interface Validacion {
     + PasswordException error()
 }
 
-class PasswordException extends RuntimeException {
+class PasswordException extends RuntimeException_ {
     + PasswordException()
 }
+
+class RuntimeException_ {}
 
 Contrasenia "1" --> "*" Validacion
 Validacion --> PasswordException

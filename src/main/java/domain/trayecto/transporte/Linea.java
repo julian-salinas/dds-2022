@@ -1,6 +1,9 @@
 package domain.trayecto.transporte;
 
 import java.util.List;
+
+import domain.ubicaciones.Distancia;
+import domain.ubicaciones.UnidadDeDistancia;
 import lombok.Getter;
 
 public class Linea {
@@ -32,14 +35,17 @@ public class Linea {
         && paradas.indexOf(parada) < indiceFinal;
   }
 
-  public int distanciaEntreParadas(Parada paradaInicio, Parada paradaFin) {
+  public Distancia distanciaEntreParadas(Parada paradaInicio, Parada paradaFin) {
     int indiceInicial = paradas.indexOf(paradaInicio);
     int indiceFinal = paradas.indexOf(paradaFin);
-    return paradas
+
+    double distanciaEnMetros =  paradas
         .stream()
         .filter(parada -> isInRange(parada, indiceInicial, indiceFinal))
-        .mapToInt(Parada::getDistAproximaParada)
+        .mapToDouble(parada -> parada.getDistAproximaParada().valorEnMetros())
         .sum();
+
+    return new Distancia(distanciaEnMetros, UnidadDeDistancia.MTS);
   }
 
 }

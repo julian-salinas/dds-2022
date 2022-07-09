@@ -3,7 +3,11 @@ package domain.trayecto;
 import domain.miembros.Miembro;
 import java.util.ArrayList;
 import java.util.List;
+
+import domain.ubicaciones.Distancia;
 import lombok.Setter;
+
+import static domain.ubicaciones.UnidadDeDistancia.MTS;
 
 public class Trayecto {
 
@@ -20,8 +24,9 @@ public class Trayecto {
     return miembroQueMeCargoList;
   }
 
-  public int distanciaTotal() {
-    return tramos.stream().mapToInt(Tramo::distancia).sum();
+  public Distancia distanciaTotal() {
+    double distancia = tramos.stream().mapToDouble(tramo -> tramo.distancia().valorEnMetros()).sum();
+    return new Distancia(distancia, MTS);
   }
 
 }

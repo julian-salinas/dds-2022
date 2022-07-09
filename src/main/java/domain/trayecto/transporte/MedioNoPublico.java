@@ -1,10 +1,12 @@
 package domain.trayecto.transporte;
 
 import domain.servicios.geodds.ServicioGeoDds;
-import domain.servicios.geodds.entidades.Distancia;
+import domain.ubicaciones.Distancia;
 import domain.ubicaciones.Ubicacion;
 
 import java.io.IOException;
+
+import static domain.ubicaciones.UnidadDeDistancia.MTS;
 
 public abstract class MedioNoPublico implements MedioDeTransporte {
 
@@ -12,21 +14,19 @@ public abstract class MedioNoPublico implements MedioDeTransporte {
   abstract Ubicacion getDireccionFin();
 
 
-  public int getDistancia() {
+  public Distancia getDistancia() {
     ServicioGeoDds api = ServicioGeoDds.getInstancia();
-    Distancia distancia;
-    return 1;
-    /* TODO: FIX DE ESTE ERROR
+
     try {
-      distancia = api.distanciaEntreUbicaciones(
+      double distanciaAPI = api.distanciaEntreUbicaciones(
           this.getDireccionInicio(),
           this.getDireccionFin()
       );
       // Podemos cambiar a que devuelva Double, o incluso Distancia
-      return (int) distancia.valor;
+      return new Distancia(distanciaAPI, MTS);
     } catch (IOException e) {
       // bruh
-      return -1;
-    } */
+      return new Distancia(-1.0, MTS);
+    }
   }
 }
