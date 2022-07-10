@@ -19,12 +19,21 @@
   </properties>
 
   <dependencies>
+    <!-- Tests -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>5.7.0</version>
       <scope>test</scope>
     </dependency>
+    <!-- Mock -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>3.10.0</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- Getters y Setters -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -32,28 +41,37 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Agrego para uso de APIs - Agrego retrofit y jersey porque voy a estar probando ambos -->
+    <!-- APIs REST -->
+    <!-- Si Jersey no se usa, sacar -->
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-client</artifactId>
       <version>1.8</version>
     </dependency>
-
+    <!-- Retrofit -->
     <!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit -->
     <dependency>
       <groupId>com.squareup.retrofit2</groupId>
       <artifactId>retrofit</artifactId>
       <version>2.9.0</version>
     </dependency>
-
     <dependency>
       <groupId>com.squareup.retrofit2</groupId>
       <artifactId>converter-gson</artifactId>
       <version>2.9.0</version>
     </dependency>
-
-    <!-- FIN DE DEPENDENCIAS PARA API -->
-
+    <!-- Scheduler -->
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz</artifactId>
+      <version>2.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz-jobs</artifactId>
+      <version>2.2.1</version>
+    </dependency>
+    <!-- Fin -->
   </dependencies>
 
   <build>
