@@ -9,7 +9,6 @@ import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import domain.notificaciones.NotificacionAdapter;
 import domain.organizaciones.Contacto;
-
 import java.io.IOException;
 
 public class EmailAdapter implements NotificacionAdapter {

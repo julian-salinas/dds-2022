@@ -1,7 +1,6 @@
 package domain.organizaciones;
 
 import domain.notificaciones.Notificacion;
-import domain.notificaciones.TipoDeNotificacion;
 
 import java.util.ArrayList;
 import java.util.Collections;
