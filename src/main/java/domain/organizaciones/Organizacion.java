@@ -82,6 +82,7 @@ public class Organizacion {
   }
 
   public double calculoHC(){
+    this.cargarDATransladoMiembros();
     return datosActividades.stream().mapToDouble(DatosActividades::impactoHC).sum();
   }
 }

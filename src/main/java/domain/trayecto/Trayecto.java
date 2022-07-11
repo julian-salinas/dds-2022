@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.ubicaciones.Distancia;
+import lombok.Getter;
 import lombok.Setter;
 
 import static domain.ubicaciones.UnidadDeDistancia.MTS;
 
 public class Trayecto {
 
-  private final List<Tramo> tramos = new ArrayList<>();
+  @Getter private final List<Tramo> tramos = new ArrayList<>();
   @Setter private Miembro miembroQueMeCargo;
 
   public void agregarTramo(Tramo tramo) {

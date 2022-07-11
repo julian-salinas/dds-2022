@@ -20,4 +20,8 @@ public class Tramo {
     return medio.getTipoBase();
   }
 
+  public double combustibleUtilizado(){
+    return medio.getCombustibleConsumidoPorKM() * this.distancia().valorEnMetros() * 1000;
+  }
+
 }
