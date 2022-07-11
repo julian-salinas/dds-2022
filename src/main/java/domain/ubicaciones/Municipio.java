@@ -4,7 +4,7 @@ import domain.servicios.geodds.ServicioGeoDds;
 
 import java.io.IOException;
 
-public class Municipio {
+public class Municipio implements SectorTerritorial{
   private int id;
   private String nombre;
   private ServicioGeoDds apiClient;

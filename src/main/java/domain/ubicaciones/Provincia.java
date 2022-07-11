@@ -3,7 +3,7 @@ package domain.ubicaciones;
 import domain.servicios.geodds.ServicioGeoDds;
 import java.io.IOException;
 
-public class Provincia {
+public class Provincia implements SectorTerritorial{
   private int id;
   private String nombre;
   private ServicioGeoDds apiClient;
