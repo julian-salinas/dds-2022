@@ -6,7 +6,7 @@ import domain.organizaciones.Organizacion;
 public class Notificador {
   private static Notificador notificador = null;
 
-  public static Notificador getInstance() {
+  public static Notificador getInstancia() {
     if (notificador == null) {
       notificador = new Notificador();
     }
