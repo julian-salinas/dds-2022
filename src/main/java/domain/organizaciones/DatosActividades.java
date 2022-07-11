@@ -19,6 +19,10 @@ public class DatosActividades {
     this.periodoImputacion = periodoImputacion;
 
     }
+
+    public double impactoHC(){
+      return valor * tipoDeConsumo.getFe().getValor();
+    }
 /*
    private TipoDeConsumo encontrarTipo(String tipo){
 

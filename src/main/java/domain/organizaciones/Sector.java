@@ -32,6 +32,11 @@ public class Sector {
     miembrosParaAceptar.remove(miembro);
   }
 
+  public double calculoHC(){
+    return miembros.stream().mapToDouble(miembro -> miembro.calculoHC()).sum();
+    // Hay que cambiarlo para que no tome todos los trayectos compartidos
+  }
+
 }
 
 

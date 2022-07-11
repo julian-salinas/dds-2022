@@ -25,4 +25,8 @@ public class TipoDeConsumo {
       throw new NoCoincidenUnidadesFEYTC();
     }
   }
+
+  public FactorEmision getFe() {
+    return fe;
+  }
 }

@@ -43,9 +43,6 @@ public class Organizacion {
     }
   }
 
-  // Funciona si se piensa que cada carga de medicion reemplaza la que estaba anteriormente,
-  // no me parece mal, pienso que si quieren cargar mediciones se van a cargar incluyendo tambien las anteriores
-  // en el mismo archivo dado que seguramente se tengan en un excel
   public void cargarMediciones(String pathCSV) {
     String linea;
 
@@ -69,5 +66,13 @@ public class Organizacion {
 
   public List<Contacto> getContactos() {
     throw new UnsupportedOperationException("Funcionalidad a implementar");
+  }
+
+  public double calculoHC(){
+    double hcDatosActividad = datosActividades.stream().mapToDouble(datoActividad -> datoActividad.impactoHC()).sum();
+    double hcTransporteMiembros = sectores.stream().mapToDouble(sector -> sector.calculoHC()).sum();
+    //DatosActividades HCtransporteMiembros = new DatosActividades("Distancia media", distanciaRecorridadMiembros, );
+
+    return hcDatosActividad + hcTransporteMiembros;
   }
 }

@@ -6,6 +6,7 @@ import domain.organizaciones.Sector;
 import domain.trayecto.Trayecto;
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,4 +39,8 @@ public class Miembro {
     }
   }
 
+  public double calculoHC(){
+    return 1000 * trayectos.stream().mapToDouble(trayecto -> trayecto.distanciaTotal().valorEnMetros()).sum();
+    // distancia total en medio contaminantes?
+  }
 }
