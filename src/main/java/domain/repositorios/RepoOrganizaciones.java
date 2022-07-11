@@ -5,11 +5,11 @@ import domain.organizaciones.Organizacion;
 import java.util.Collections;
 import java.util.List;
 
-public class Organizaciones {
-  private static final Organizaciones INSTANCE = new Organizaciones();
+public class RepoOrganizaciones {
+  private static final RepoOrganizaciones INSTANCE = new RepoOrganizaciones();
   private List<Organizacion> organizaciones;
 
-  public static Organizaciones instance() {
+  public static RepoOrganizaciones instance() {
     return INSTANCE;
   }
 

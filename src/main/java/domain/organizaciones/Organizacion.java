@@ -63,6 +63,9 @@ public class Organizacion {
   public List<DatosActividades> getDatosActividades() {
     return datosActividades;
   }
+  public Ubicacion getUbicacion() {
+    return ubicacion;
+  }
 
   public List<Contacto> getContactos() {
     throw new UnsupportedOperationException("Funcionalidad a implementar");
