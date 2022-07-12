@@ -25,6 +25,10 @@ public class Trayecto {
     return ownerList;
   }
 
+  public Boolean ownerIs(Miembro miembro) {
+    return owner.equals(miembro);
+  }
+
   public Distancia distanciaTotal() {
     double distancia = tramos.stream().mapToDouble(tramo -> tramo.distancia().valorEnMetros()).sum();
     return new Distancia(distancia, MTS);

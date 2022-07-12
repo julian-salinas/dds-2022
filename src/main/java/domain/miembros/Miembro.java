@@ -27,9 +27,14 @@ public class Miembro {
     this.nroDeDocumento = nroDeDocumento;
   }
 
+  public void agregarTrayecto(Trayecto trayecto) {
+    // para probar unas cosas
+    trayectos.add(trayecto);
+  }
+
   public void registrarTrayecto(Trayecto trayecto) {
     // Puede que tenga que ser con muchos trayectos en vez de uno
-    trayecto.setMiembroQueMeCargo(this);
+    trayecto.setOwner(this);
     trayectos.add(trayecto);
   }
 

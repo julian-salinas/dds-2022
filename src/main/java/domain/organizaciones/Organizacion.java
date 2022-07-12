@@ -94,7 +94,7 @@ public class Organizacion {
 
   public HC calculoHC() {
     double hcDatosActividad = datosActividades.stream().mapToDouble(datoActividad -> datoActividad.impactoHC()).sum();
-    double hcTransporteMiembros = sectores.stream().mapToDouble(sector -> sector.calculoHC()).sum();
+    double hcTransporteMiembros = 2.0;//sectores.stream().mapToDouble(sector -> sector.calculoHC()).sum();
     //DatosActividades HCtransporteMiembros = new DatosActividades("Distancia media", distanciaRecorridadMiembros, );
 
     // Hacer q 'hcDatosActividad' y 'hcTransporteMiembros' se devuelvan en kgCO2.

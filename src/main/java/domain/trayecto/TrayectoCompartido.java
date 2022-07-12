@@ -17,6 +17,14 @@ public class TrayectoCompartido extends Trayecto{
     tramos.forEach(this::validacionTrayectoCompartido);
     this.miembros = miembros;
     this.tramos = tramos;
+    agregarTrayCompAmiembros(miembros);
+  }
+
+  private void agregarTrayCompAmiembros(List<Miembro> miembros) {
+    miembros
+        .stream()
+        .filter(miembro -> !miembro.equals(owner)) //Por las dudas
+        .forEach(miembro -> miembro.agregarTrayecto(this));
   }
 
   private void validacionTrayectoCompartido(Tramo tramo) {
