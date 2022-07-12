@@ -147,6 +147,24 @@ public class ServicioGeoDds {
     return responseDistancia.body().valor;
   }
 
+  // Para agarrar el Municipio de una Localidad, una Provincia de un Municipio, etc.
+
+  public String nombreMunicipio(int idLocalidad) throws IOException {
+    List<Localidad> listadoDeLocalidades = this.listadoDeLocalidades(1);
+    return listadoDeLocalidades
+        .stream()
+        .collect(Collectors.toMap(Localidad::getId, loc -> loc.getMunicipio().getNombre()))
+        .get(idLocalidad);
+  }
+
+  public String nombreProvincia(int idMunicipio) throws IOException {
+    List<Municipio> listadoDeMunicipios = this.listadoDeMunicipios(1);
+    return listadoDeMunicipios
+        .stream()
+        .collect(Collectors.toMap(Municipio::getId, mun -> mun.getProvincia().getNombre()))
+        .get(idMunicipio);
+  }
+
   /** =============== Métodos para mapear =============== **/
 
   /**
