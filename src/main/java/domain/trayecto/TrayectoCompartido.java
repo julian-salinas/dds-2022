@@ -2,19 +2,20 @@ package domain.trayecto;
 
 import domain.miembros.Miembro;
 import domain.trayecto.transporte.TipoDeTransporte;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrayectoCompartido extends Trayecto{
 
-  private List<Miembro> miembrosConLosQueComparto = new ArrayList<>();
+  private List<Miembro> miembros = new ArrayList<>();
   private List<Tramo> tramos = new ArrayList<>();
-  private Miembro miembroQueMeCargo;
+  @Getter private Miembro owner;
 
   public TrayectoCompartido(List<Miembro> miembros, List<Tramo> tramos) {
     tramos.forEach(this::validacionTrayectoCompartido);
-    this.miembrosConLosQueComparto = miembros;
+    this.miembros = miembros;
     this.tramos = tramos;
   }
 
@@ -27,21 +28,21 @@ public class TrayectoCompartido extends Trayecto{
   }
 
   @Override
-  public List<Miembro> getMiembrosQueMeCargaron() {
-    if(miembroQueMeCargo!=null && !miembrosConLosQueComparto.contains(miembroQueMeCargo)) {
+  public List<Miembro> miembros() {
+    if(owner!=null && !miembros.contains(owner)) {
       // Junto al miembro que registro con los que compartio
       List<Miembro> miembrosQueMeCargaron = new ArrayList<>();
-      List<Miembro> miembroQueMeCargoList = new ArrayList<>();
-      miembroQueMeCargoList.add(miembroQueMeCargo);
-      miembrosQueMeCargaron.addAll(miembroQueMeCargoList);
-      miembrosQueMeCargaron.addAll(miembrosConLosQueComparto);
+      List<Miembro> ownerList = new ArrayList<>();
+      ownerList.add(owner);
+      miembrosQueMeCargaron.addAll(ownerList);
+      miembrosQueMeCargaron.addAll(miembros);
       return miembrosQueMeCargaron;
-    } else if(miembroQueMeCargo==null) {
+    } else if(owner==null) {
       throw new RuntimeException("Todavia no se registro trayecto");
     }
     // Si por alguna razon, el que registro el trayecto esta incluido en los que compartieron,
     // devolve los que compartierion directamente
-    return miembrosConLosQueComparto;
+    return miembros;
   }
 
   @Override
