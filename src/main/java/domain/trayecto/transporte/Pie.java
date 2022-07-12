@@ -7,6 +7,7 @@ public class Pie extends MedioNoPublico {
   @Getter private Ubicacion direccionInicio;
   @Getter private Ubicacion direccionFin;
   @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.PIE;
+  @Getter private double combustibleConsumidoPorKM = 0;
 
   public Pie(Ubicacion direccionInicio, Ubicacion direccionFin) {
     this.direccionInicio = direccionInicio;

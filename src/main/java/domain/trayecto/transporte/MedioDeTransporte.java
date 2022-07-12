@@ -5,4 +5,6 @@ import domain.ubicaciones.Distancia;
 public interface MedioDeTransporte {
   Distancia getDistancia();
   TipoDeTransporte getTipoBase();
+
+  double getCombustibleConsumidoPorKM();
 }

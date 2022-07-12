@@ -3,6 +3,11 @@ package domain.organizaciones;
 import domain.miembros.Miembro;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import domain.trayecto.Trayecto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,9 +37,9 @@ public class Sector {
     miembrosParaAceptar.remove(miembro);
   }
 
-  public double calculoHC(){
-    return miembros.stream().mapToDouble(miembro -> miembro.calculoHC()).sum();
-    // Hay que cambiarlo para que no tome todos los trayectos compartidos
+  public double distanciaTransporteMiembros(){
+    Set<Trayecto> trayectos = miembros.stream().map(Miembro::getTrayectos).flatMap(List::stream).collect(Collectors.toSet());
+    return trayectos.stream().mapToDouble(trayecto -> trayecto.distanciaTotal().valorEnMetros()).sum();
   }
 
 }
