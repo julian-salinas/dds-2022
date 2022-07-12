@@ -2,6 +2,9 @@ package domain.organizaciones;
 
 import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.miembros.Miembro;
+import domain.ubicaciones.Localidad;
+import domain.ubicaciones.Municipio;
+import domain.ubicaciones.Provincia;
 import domain.ubicaciones.Ubicacion;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -63,19 +66,30 @@ public class Organizacion {
   public List<DatosActividades> getDatosActividades() {
     return datosActividades;
   }
+
   public Ubicacion getUbicacion() {
     return ubicacion;
+  }
+  public Localidad sectorLocalidad() {
+    return ubicacion.getLocalidad();
+  }
+  public Municipio sectorMunicipio() {
+    return ubicacion.getLocalidad().getMunicipio();
+  }
+  public Provincia sectorProvincia() {
+    return ubicacion.getLocalidad().getMunicipio().getProvincia();
   }
 
   public List<Contacto> getContactos() {
     throw new UnsupportedOperationException("Funcionalidad a implementar");
   }
 
-  public double calculoHC(){
+  public HC calculoHC(){
     double hcDatosActividad = datosActividades.stream().mapToDouble(datoActividad -> datoActividad.impactoHC()).sum();
     double hcTransporteMiembros = sectores.stream().mapToDouble(sector -> sector.calculoHC()).sum();
     //DatosActividades HCtransporteMiembros = new DatosActividades("Distancia media", distanciaRecorridadMiembros, );
 
-    return hcDatosActividad + hcTransporteMiembros;
+    // Hacer q 'hcDatosActividad' y 'hcTransporteMiembros' se devuelvan en kgCO2.
+    return new HC(hcDatosActividad + hcTransporteMiembros, UnidadHC.kgCO2);
   }
 }

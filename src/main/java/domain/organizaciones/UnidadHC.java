@@ -1,5 +1,5 @@
 package domain.organizaciones;
 
-enum UnidadHCauxiliar {
+enum UnidadHC {
   gCO2, kgCO2, tnCO2
 }

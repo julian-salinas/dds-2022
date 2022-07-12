@@ -4,6 +4,7 @@ public class AgenteSectorial {
   SectorTerritorial sector;
 
   public double calcularHuellaSectorial() {
-    return sector.organizacionesDelSector().stream().mapToDouble(organizacion -> organizacion.calculoHC()).sum();
+    // return sector.organizacionesDelSector().stream().mapToDouble(organizacion -> organizacion.calculoHC()).sum();
+    return 0.0;
   }
 }
