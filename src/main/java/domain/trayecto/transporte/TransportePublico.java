@@ -11,7 +11,6 @@ public class TransportePublico implements MedioDeTransporte {
   private Parada paradaFin;
   private TipoTransportePublico tipo;
   private Linea linea;
-  @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.PUBLICO;
   @Getter private double combustibleConsumidoPorKM = 0;
 
   private void validacionesTransportePublico(TipoTransportePublico tipo, Linea linea,
@@ -47,6 +46,11 @@ public class TransportePublico implements MedioDeTransporte {
 
   public Distancia getDistancia() {
     return linea.distanciaEntreParadas(paradaInicio, paradaFin);
+  }
+
+  @Override
+  public Boolean admiteTrayectoCompartido() {
+    return false;
   }
 
 }

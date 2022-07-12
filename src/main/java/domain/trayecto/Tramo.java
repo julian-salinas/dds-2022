@@ -1,7 +1,6 @@
 package domain.trayecto;
 
 import domain.trayecto.transporte.MedioDeTransporte;
-import domain.trayecto.transporte.TipoDeTransporte;
 import domain.ubicaciones.Distancia;
 
 public class Tramo {
@@ -16,8 +15,8 @@ public class Tramo {
     return medio.getDistancia();
   }
 
-  public TipoDeTransporte getTipo() {
-    return medio.getTipoBase();
+  public Boolean admiteTrayectoCompartido() {
+    return medio.admiteTrayectoCompartido();
   }
 
   public double combustibleUtilizado(){

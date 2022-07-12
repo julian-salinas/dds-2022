@@ -1,7 +1,6 @@
 package domain.trayecto;
 
 import domain.miembros.Miembro;
-import domain.trayecto.transporte.TipoDeTransporte;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -20,19 +19,18 @@ public class TrayectoCompartido extends Trayecto{
     agregarTrayCompAmiembros(miembros);
   }
 
+  private void validacionTrayectoCompartido(Tramo tramo) {
+    if(!tramo.admiteTrayectoCompartido()) {
+      throw new RuntimeException("No se puede hacer un trayecto compartido que no sea "
+          + "de tipo Servico Contratado o Vehiculo Particular");
+    }
+  }
+
   private void agregarTrayCompAmiembros(List<Miembro> miembros) {
     miembros
         .stream()
         .filter(miembro -> !miembro.equals(owner)) //Por las dudas
         .forEach(miembro -> miembro.agregarTrayecto(this));
-  }
-
-  private void validacionTrayectoCompartido(Tramo tramo) {
-    if(!(tramo.getTipo().equals(TipoDeTransporte.VEHICULO_PARTICULAR) ||
-        tramo.getTipo().equals(TipoDeTransporte.SERVICIO_CONTRATADO))) {
-      throw new RuntimeException("No se puede hacer un trayecto compartido que no sea "
-          + "de tipo Servico Contratado o Vehiculo Particular");
-    }
   }
 
   @Override
