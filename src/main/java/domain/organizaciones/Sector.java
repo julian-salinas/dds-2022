@@ -37,9 +37,9 @@ public class Sector {
     miembrosParaAceptar.remove(miembro);
   }
 
-  public double distanciaTransporteMiembros(){
+  public double combustibleConsumidoTransporteMiembros(){
     Set<Trayecto> trayectos = miembros.stream().map(Miembro::getTrayectos).flatMap(List::stream).collect(Collectors.toSet());
-    return trayectos.stream().mapToDouble(trayecto -> trayecto.distanciaTotal().valorEnMetros()).sum();
+    return trayectos.stream().mapToDouble(Trayecto::combustibleTotalUtilizado).sum();
   }
 
 }

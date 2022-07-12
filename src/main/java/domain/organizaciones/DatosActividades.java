@@ -21,7 +21,11 @@ public class DatosActividades {
     }
 
     public double impactoHC(){
-      return valor * tipoDeConsumo.getFe().getValor();
+      if (this.periodicidad.equals("Anual")){
+        return (valor * tipoDeConsumo.getFe().getValor())/12.0;
+      } else {
+        return valor * tipoDeConsumo.getFe().getValor();
+      }
     }
 /*
    private TipoDeConsumo encontrarTipo(String tipo){

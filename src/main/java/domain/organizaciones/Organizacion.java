@@ -86,27 +86,26 @@ public class Organizacion {
     throw new UnsupportedOperationException("Funcionalidad a implementar");
   }
 
-  public HC calculoHC() {
-    double hcDatosActividad = datosActividades.stream().mapToDouble(datoActividad -> datoActividad.impactoHC()).sum();
-    double hcTransporteMiembros = sectores.stream().mapToDouble(sector -> sector.calculoHC()).sum();
-    //DatosActividades HCtransporteMiembros = new DatosActividades("Distancia media", distanciaRecorridadMiembros, );
-
-    // Hacer q 'hcDatosActividad' y 'hcTransporteMiembros' se devuelvan en kgCO2.
-    return new HC(hcDatosActividad + hcTransporteMiembros, UnidadHC.kgCO2);
-  }
-    /*
-  public void cargarDATransladoMiembros(){
-    double distanciaTransporteMiembros = 30 * sectores.stream().mapToDouble(sector -> sector.distanciaTransporteMiembros()).sum();
-    datosActividades.add(new DatosActividades("Translado de Miembros de la Organizacion",
-        String.valueOf(distanciaTransporteMiembros),
+  private void cargarDATransladoMiembros(){
+    double combustibleTransporteMiembros = 30 * sectores.stream().mapToDouble(Sector::combustibleConsumidoTransporteMiembros).sum(); // Multiplico por 30, para obtener el valor mensual
+    datosActividades.add(new DatosActividades("Distancia media",
+        String.valueOf(combustibleTransporteMiembros),
         "Mensual",
         new SimpleDateFormat("MM/yyyy").format(LocalDate.now())));
   }
 
-  public double calculoHC(){
+  private double calculoHCMensual(){
     this.cargarDATransladoMiembros();
     return datosActividades.stream().mapToDouble(DatosActividades::impactoHC).sum();
   }
-  */
 
+  public HC HCMensual(){
+    double hcDatosActividad = calculoHCMensual();
+    return new HC(hcDatosActividad, UnidadHC.kgCO2);
+  }
+
+  public HC HCAnual(){
+    double hcDatosActividad = calculoHCMensual() * 12;
+    return new HC(hcDatosActividad, UnidadHC.kgCO2);
+  }
 }
