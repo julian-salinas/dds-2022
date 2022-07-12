@@ -46,8 +46,8 @@ public class Miembro {
     }
   }
 
-  public double calculoHC(FactorEmision fe){
-    return fe.getValor() * trayectos.stream().map(Trayecto::getTramos).flatMap(List::stream).mapToDouble(Tramo::combustibleUtilizado).sum();
+  public double calculoHCPersonal(FactorEmision fe){
+    return fe.getValor() * trayectos.stream().mapToDouble(Trayecto::combustibleTotalUtilizado).sum();
   }
 
 }

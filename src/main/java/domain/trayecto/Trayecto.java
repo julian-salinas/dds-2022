@@ -34,4 +34,8 @@ public class Trayecto {
     return new Distancia(distancia, MTS);
   }
 
+  public double combustibleTotalUtilizado(){
+    return tramos.stream().mapToDouble(Tramo::combustibleUtilizado).sum();
+  }
+
 }
