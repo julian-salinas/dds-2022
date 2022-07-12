@@ -13,16 +13,20 @@ import static domain.ubicaciones.UnidadDeDistancia.MTS;
 public class Trayecto {
 
   @Getter private final List<Tramo> tramos = new ArrayList<>();
-  @Setter private Miembro miembroQueMeCargo;
+  @Getter @Setter private Miembro owner;
 
   public void agregarTramo(Tramo tramo) {
     tramos.add(tramo);
   }
 
-  public List<Miembro> getMiembrosQueMeCargaron() {
-    List<Miembro> miembroQueMeCargoList = new ArrayList<>();
-    miembroQueMeCargoList.add(miembroQueMeCargo);
-    return miembroQueMeCargoList;
+  public List<Miembro> miembros() {
+    List<Miembro> ownerList = new ArrayList<>();
+    ownerList.add(owner);
+    return ownerList;
+  }
+
+  public Boolean ownerIs(Miembro miembro) {
+    return owner.equals(miembro);
   }
 
   public Distancia distanciaTotal() {

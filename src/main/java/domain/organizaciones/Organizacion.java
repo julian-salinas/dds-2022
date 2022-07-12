@@ -30,6 +30,8 @@ public class Organizacion {
     this.clasificacion = clasificacion;
   }
 
+  // ------------- 1era entrega ---------------------------------
+
   public boolean containsSector(Sector sector) {
     return sectores.contains(sector);
   }
@@ -47,6 +49,8 @@ public class Organizacion {
       throw new ExcepcionNoExisteElMiembroAacptarEnLaOrg();
     }
   }
+
+  // ------------- 2da entrega ---------------------------------
 
   public void cargarMediciones(String pathCSV) {
     String linea;
@@ -68,6 +72,8 @@ public class Organizacion {
   public List<DatosActividades> getDatosActividades() {
     return datosActividades;
   }
+
+  // ------------- 3era entrega ---------------------------------
 
   public Ubicacion getUbicacion() {
     return ubicacion;

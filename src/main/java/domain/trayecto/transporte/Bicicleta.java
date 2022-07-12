@@ -6,7 +6,6 @@ import lombok.Getter;
 public class Bicicleta extends MedioNoPublico {
   @Getter private Ubicacion direccionInicio;
   @Getter private Ubicacion direccionFin;
-  @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.BICICLETA;
   @Getter private double combustibleConsumidoPorKM = 0;
 
   public Bicicleta(Ubicacion direccionInicio, Ubicacion direccionFin) {

@@ -6,9 +6,12 @@ import domain.trayecto.TrayectoCompartido;
 import domain.trayecto.transporte.*;
 import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
 import domain.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
+import domain.ubicaciones.Distancia;
 import domain.ubicaciones.Ubicacion;
+import domain.ubicaciones.UnidadDeDistancia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,17 +29,19 @@ public class TrayectoTest {
 
   @BeforeEach
   void init() {
-    try {
-      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI ");
+    /*try {
+      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI");
     } catch (IOException e) {
       //xd
-    }
+    }*/
+    ubicacionDefault = mock(Ubicacion.class);
+
     paradasLineaA = new ArrayList<>();
 
     lineaDefault = new Linea("A", paradasLineaA, TipoTransportePublico.SUBTE);
 
-    paradaDefault1 = new Parada("Carabobo", 4);
-    paradaDefault2 = new Parada("Puan", 5);
+    paradaDefault1 = new Parada("Carabobo", new Distancia(4, UnidadDeDistancia.KM));
+    paradaDefault2 = new Parada("Puan", new Distancia(5, UnidadDeDistancia.KM));
 
     //trayectoDefault = new Trayecto();
   }
@@ -67,8 +72,8 @@ public class TrayectoTest {
   public void crearUnTransportePublicoCuyasParadasNoEstenEnLaLineaTiraError(){
     lineaDefault.agregarParada(paradaDefault1);
     lineaDefault.agregarParada(paradaDefault2);
-    Parada paradaError1 = new Parada("Acoyte", 7);
-    Parada paradaError2 = new Parada("Castro Barros", 6);
+    Parada paradaError1 = new Parada("Acoyte", new Distancia(700, UnidadDeDistancia.MTS));
+    Parada paradaError2 = new Parada("Castro Barros", new Distancia(6, UnidadDeDistancia.MTS));
     // Nunca los agrego a lineaDefault
     assertThrows(ExcepcionParadasTransporteNoIncluidasEnLinea.class, () -> new TransportePublico(TipoTransportePublico.SUBTE, lineaDefault, paradaError1, paradaError2));
   }
@@ -89,6 +94,7 @@ public class TrayectoTest {
     TrayectoCompartido tcomp = new TrayectoCompartido(miembros, tramos);
     miembro.registrarTrayecto(tcomp);
     assertTrue(miembro.getTrayectos().contains(tcomp));
+    assertTrue(tcomp.ownerIs(miembro));
   }
 
 }

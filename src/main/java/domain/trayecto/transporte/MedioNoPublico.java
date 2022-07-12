@@ -13,6 +13,10 @@ public abstract class MedioNoPublico implements MedioDeTransporte {
   abstract Ubicacion getDireccionInicio();
   abstract Ubicacion getDireccionFin();
 
+  @Override
+  public Boolean admiteTrayectoCompartido() {
+    return false;
+  }
 
   public Distancia getDistancia() {
     ServicioGeoDds api = ServicioGeoDds.getInstancia();

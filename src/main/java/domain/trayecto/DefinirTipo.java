@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class DefinirTipo {
+  /*
   List<TiposDeConsumo> tipos = new List<TiposDeConsumo>();
 
   public DefinirTipo() {}
@@ -18,7 +19,6 @@ public class DefinirTipo {
     TipoDeConsumo tipoDeConsumo = tipos.filter(x -> tipo.equals(x.getNombre() )).getFirst();
     return tipoDeConsumo;
   }
-
+  */
 
 }
-z
