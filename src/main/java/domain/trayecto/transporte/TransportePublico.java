@@ -12,6 +12,7 @@ public class TransportePublico implements MedioDeTransporte {
   private TipoTransportePublico tipo;
   private Linea linea;
   @Getter private final TipoDeTransporte tipoBase = TipoDeTransporte.PUBLICO;
+  @Getter private double combustibleConsumidoPorKM = 0;
 
   private void validacionesTransportePublico(TipoTransportePublico tipo, Linea linea,
                                              Parada paradaInicio, Parada paradaFin) {

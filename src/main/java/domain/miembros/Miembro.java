@@ -3,6 +3,8 @@ package domain.miembros;
 import domain.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.Sector;
+import domain.organizaciones.consumos.tipos.FactorEmision;
+import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +41,8 @@ public class Miembro {
     }
   }
 
-  public double calculoHC(){
-    return 1000 * trayectos.stream().mapToDouble(trayecto -> trayecto.distanciaTotal().valorEnMetros()).sum();
-    // distancia total en medio contaminantes?
+  public double calculoHC(FactorEmision fe){
+    return fe.getValor() * trayectos.stream().map(Trayecto::getTramos).flatMap(List::stream).mapToDouble(Tramo::combustibleUtilizado).sum();
   }
+
 }

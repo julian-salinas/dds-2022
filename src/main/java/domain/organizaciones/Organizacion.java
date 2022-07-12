@@ -6,6 +6,8 @@ import domain.ubicaciones.Ubicacion;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,11 +73,16 @@ public class Organizacion {
     throw new UnsupportedOperationException("Funcionalidad a implementar");
   }
 
-  public double calculoHC(){
-    double hcDatosActividad = datosActividades.stream().mapToDouble(datoActividad -> datoActividad.impactoHC()).sum();
-    double hcTransporteMiembros = sectores.stream().mapToDouble(sector -> sector.calculoHC()).sum();
-    //DatosActividades HCtransporteMiembros = new DatosActividades("Distancia media", distanciaRecorridadMiembros, );
+  public void cargarDATransladoMiembros(){
+    double distanciaTransporteMiembros = 30 * sectores.stream().mapToDouble(sector -> sector.distanciaTransporteMiembros()).sum();
+    datosActividades.add(new DatosActividades("Translado de Miembros de la Organizacion",
+        String.valueOf(distanciaTransporteMiembros),
+        "Mensual",
+        new SimpleDateFormat("MM/yyyy").format(LocalDate.now())));
+  }
 
-    return hcDatosActividad + hcTransporteMiembros;
+  public double calculoHC(){
+    this.cargarDATransladoMiembros();
+    return datosActividades.stream().mapToDouble(DatosActividades::impactoHC).sum();
   }
 }
