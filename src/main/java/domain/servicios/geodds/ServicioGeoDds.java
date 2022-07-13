@@ -29,10 +29,10 @@ public class ServicioGeoDds {
 
     // set apiKey value from local.properties
     try{
-      InputStream input = new FileInputStream("src/main/java/domain/servicios/geodds/local.properties");
+      InputStream input = new FileInputStream("src/main/java/domain/local.properties");
       Properties properties = new Properties();
       properties.load(input);
-      this.apiKey = "Bearer " + properties.getProperty("apiKey");
+      this.apiKey = "Bearer " + properties.getProperty("GEO_DDS_API_KEY");
     }
     catch (FileNotFoundException e) {
       e.printStackTrace();
