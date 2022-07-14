@@ -1,6 +1,5 @@
 @startuml diagrama-de-clases
 
-@startuml tp-qmp
 'https://plantuml.com/class-diagram
 ' - private
 ' + public
@@ -25,7 +24,8 @@ class Organizacion {
     - List<Sector> sectores
     - ClasificacionOrganizacion clasificacion
     - List<DatosActividades> datosActividades
-
+    - List<Contacto> contactos
+    
     + boolean containsSector(sector)
     + void agregarSector(sector)
     + void aceptarVinculacionDeTrabajador(miembro, sector)
@@ -417,18 +417,7 @@ class ServicioGeoDds {
   - String apiKey
 
   + ServicioGeoDds getInstancia()
-  + List<Pais> listadoDePaises(int offset)
-  + List<Provincia> listadoDeProvincias(int offset)
-  + List<Provincia> listadoDeProvincias(int offset, int paisId)
-  + List<Municipio> listadoDeMunicipios(int offset)
-  + List<Municipio> listadoDeMunicipios(int offset, int provinciaId)
-  + List<Localidad> listadoDeLocalidades(int offset)
-  + List<Localidad> listadoDeLocalidades(int offset, int idMunicipio)
   + distanciaEntreUbicaciones(Ubicacion origen, Ubicacion destino)
-  + Map<String, Integer> mapPaises(int offset)
-  + Map<String, Integer> mapProvincias(int offset)
-  + Map<String, Integer> mapMunicipios(int offset)
-  + Map<String, Integer> mapLocalidades(int offset)
   + void validarId(Integer id, String mensajeError)
   + int verificarNombrePais(String nombrePais)
   + int verificarNombreProvincia(String nombreProvincia)
@@ -485,14 +474,6 @@ class HC {
 
 HC --> UnidadHC
 
-class Contacto {
-  - String Email
-  - String whatsApp
-  - List<Notificaciones> suscripciones
-
-  + void agregarSuscripciones(Notificacion ... suscripciones)
-}
-
 class ValidadorDatoDeContacto {
   + boolean emailEsValido(String email)
   + boolean whatsAppEsValido(String whatsapp)
@@ -500,36 +481,52 @@ class ValidadorDatoDeContacto {
   + void validarWhatsapp(String whatsapp)
 }
 
-Contacto --> ValidadorDatoDeContacto
+' ENVÍO DE NOTIFICACIONES
 
-class Notificacion {
-  - NotificacionAdapter notifacionAdapter
-
-  + String getMensajeNotificacion()
-  + void enviar(Contacto contacto)
+interface Job {
+    + execute()
 }
 
-interface NotificacionAdapter {
-  + void enviar(Contacto contacto, String mensaje)
+class ObserverNotificaciones implements Job
+{
+  - notificador
 }
 
-class Notificador {
-  - List<Organizacion> orgnanizaciones
-
-  + void agregarOrganizacion(Organizacion ... nuevasOrganizaciones)
-  + notificarAUnContacto(Contacto contacto)
-  + notificarContactosDeOrganizacion(Organizacion organizacion)
-  + void notificarATodos()
+class Notificador
+{
+  - organizaciones
+  + getInstancia()
+  + agregarOrganizacion(Organizacion ... organizaciones)
+  + notificarATodos()
 }
 
-class ObserverNotificaciones {
-  + void execute(JobExecutionContext jobExecutionContext)
+interface NotificacionAdapter
+{
+  + enviar()
 }
 
-Notificacion --> NotificacionAdapter
-Notificador --> Organizacion
+class WhatsAppAdapter implements NotificacionAdapter {}
+
+class EmailAdapter implements NotificacionAdapter {}
+
+class Notificacion
+{
+  - notificacionAdapter
+  + enviar()
+}
+
+class Contacto {
+  - email
+  - whatsapp
+  - suscripciones
+  + agregarSuscripcion()
+}
+
 ObserverNotificaciones --> Notificador
-Notificador --> Notificacion
-
+Notificacion --> "1" NotificacionAdapter
+Notificador --> "*" Organizacion
+Contacto --> "*" Notificacion
+Organizacion --> "*" Contacto
+Contacto --> ValidadorDatoDeContacto
 
 @enduml
