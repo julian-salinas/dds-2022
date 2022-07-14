@@ -362,7 +362,7 @@ class Localidad {
   - Municipio municipio
 }
 
-class Municipio implements sectorTerritorial {
+class Municipio implements SectorTerritorial {
   - int id
   - String nombre
   - ServicioGeoDds apiClient
@@ -371,7 +371,7 @@ class Municipio implements sectorTerritorial {
   + List<Organizacion> orgsDentroDelSector()
 }
 
-class Provincia implements sectorTerritorial {
+class Provincia implements SectorTerritorial {
   - int id
   - String nombre
   - ServicioGeoDds apiClient
@@ -473,7 +473,9 @@ class HC {
 }
 
 HC --> UnidadHC
-
+Organizacion --> HC
+Miembro --> HC
+AgenteSectorial --> HC
 class ValidadorDatoDeContacto {
   + boolean emailEsValido(String email)
   + boolean whatsAppEsValido(String whatsapp)
