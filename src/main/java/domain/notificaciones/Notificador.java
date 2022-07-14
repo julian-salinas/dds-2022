@@ -2,9 +2,6 @@ package domain.notificaciones;
 
 import domain.organizaciones.Contacto;
 import domain.organizaciones.Organizacion;
-import domain.servicios.geodds.ServicioGeoDds;
-import sun.security.jgss.spnego.NegTokenInit;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,12 +22,12 @@ public class Notificador {
     Collections.addAll(organizaciones, nuevasOrganizaciones);
   }
 
-  private void notificarAUnContacto(Contacto contacto) {
+  public void notificarAUnContacto(Contacto contacto) {
     contacto.getSuscripciones().forEach(notificacion -> notificacion.enviar(contacto));
   }
 
-  private void notificarContactosDeOrganizacion(Organizacion organizacion) {
-    organizacion.getContactos().forEach(contacto -> notificarAUnContacto(contacto));
+  public void notificarContactosDeOrganizacion(Organizacion organizacion) {
+    organizacion.getContactos().stream().forEach(contacto -> notificarAUnContacto(contacto));
   }
 
   public void notificarATodos() {

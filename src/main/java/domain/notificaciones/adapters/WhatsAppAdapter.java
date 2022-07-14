@@ -17,8 +17,6 @@ public class WhatsAppAdapter implements NotificacionAdapter {
   private String TWILIO_PHONE_NUMBER;
 
   public WhatsAppAdapter() {
-    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-
     // set apiKey value from local.properties
     try{
       InputStream input = new FileInputStream("src/main/java/domain/local.properties");
@@ -34,12 +32,16 @@ public class WhatsAppAdapter implements NotificacionAdapter {
     catch (IOException e) {
       e.printStackTrace();
     }
+
+    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
   }
 
-  public void enviar(Contacto contacto, String mensaje) {
+  public int enviar(Contacto contacto, String mensaje) {
     Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
     Message message = Message.creator(new com.twilio.type.PhoneNumber("whatsapp:+" + contacto.getWhatsApp()),  // Ejemplo: "whatsapp:+5491152573517"
                                       new com.twilio.type.PhoneNumber("whatsapp:+" + this.TWILIO_PHONE_NUMBER),
                                       mensaje).create();
+
+    return message.getStatus().ordinal();
   }
 }
