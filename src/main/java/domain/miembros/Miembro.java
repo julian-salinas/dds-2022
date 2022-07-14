@@ -3,8 +3,10 @@ package domain.miembros;
 import domain.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.Sector;
+import domain.organizaciones.UnidadHC;
 import domain.organizaciones.consumos.tipos.FactorEmision;
 import domain.trayecto.Tramo;
+import domain.organizaciones.HC;
 import domain.trayecto.Trayecto;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +48,8 @@ public class Miembro {
     }
   }
 
-  public double calculoHCPersonal(FactorEmision fe){
-    return fe.getValor() * trayectos.stream().mapToDouble(Trayecto::combustibleTotalUtilizado).sum();
+  public HC calculoHCPersonal(FactorEmision fe){
+    return new HC(fe.getValor() * trayectos.stream().mapToDouble(Trayecto::combustibleTotalUtilizado).sum(), UnidadHC.kgCO2);
   }
 
 }

@@ -31,6 +31,14 @@ class Organizacion {
     + void aceptarVinculacionDeTrabajador(miembro, sector)
     + void cargarMediciones(String pathCSV)
     + List<DatosActividades> getDatosActividades()
+    + List<Contacto> getContactos()
+    + Localidad sectorLocalidad()
+    + Municipio sectorMunicipio()
+    + Provincia sectorProvincia()
+    + void cargarDATransladoMiembros()
+    + double calculoHCMensual()
+    + HC HCMensual()
+    + HC HCAnual()
 }
 
 class DatosActividades {
@@ -55,23 +63,11 @@ DatosActividades --> "1" TipoDeConsumo
 
 class NoCoincidenUnidadesFEYTC extends RuntimeException {}
 
-class CombustibleConsumidoGasoil extends TipoDeConsumo {}
+class TipoDeConsumoFactory{
+  + buildTipoDeConsumo(string tipo)
+}
 
-class CombustibleConsumidoNafta extends TipoDeConsumo {}
-
-class Diesel extends TipoDeConsumo{}
-
-class DistanciaRecorrida extends TipoDeConsumo {}
-
-class Electricidad extends TipoDeConsumo {}
-
-class GasNatural extends TipoDeConsumo {}
-
-class Transporte extends TipoDeConsumo {}
-
-class Nafta extends TipoDeConsumo {}
-
-class Carbon extends TipoDeConsumo {}
+TipoDeConsumoFactory --> TipoDeConsumo
 
 TipoDeConsumo --> NoCoincidenUnidadesFEYTC
 
@@ -119,6 +115,7 @@ class Sector{
     + boolean containsMiembroParaAceptar(miembro)
     + void agregarMiembroParaAceptar(miembro)
     + void sacarMiembroParaAceptar(miembro)
+    + double combustibleConsumidoTransporteMiembros()
 }
 
 class Miembro {
@@ -131,6 +128,7 @@ class Miembro {
 
     + void registrarTrayecto(trayecto)
     + void vincularTrabajadorConOrg(organizacion, sector)
+    + HC calculoHCPersonal(FactorEmision fe)
 }
 
 enum TipoDeDocumento {
@@ -153,20 +151,20 @@ Miembro ---> "1" Sector
 
 class Trayecto{
     - List<Tramo> tramos
-    - Miembro miembroQueMeCargo
+    - Miembro owner
 
     + void agregarTramo(tramo)
     + int distanciaTotal(void)
-    + List<Miembro> getMiembrosQueMeCargaron()
+    + List<Miembro> miembros()
 }
 
 class TrayectoCompartido extends Trayecto {
-  - List<Miembro> miembrosConLosQueComparto
+  - List<Miembro> miembros
   - List<Tramo> tramos
-  - Miembro miembroQueMeCargo
+  - Miembro owner
 
-  - void validacionTrayectoCompartido(Tramo tramo)
-  + List<Miembro> getMiembrosQueMeCargaron()
+  + void validacionTrayectoCompartido(Tramo tramo)
+  + List<Miembro> miembros()
   + void agregarTramo(Tramo tramo)
 }
 
@@ -361,9 +359,37 @@ class Localidad {
   - int id
   - String nombre
   - ServicioGeoDds apiClient
+  - Municipio municipio
+}
+
+class Municipio implements sectorTerritorial {
+  - int id
+  - String nombre
+  - ServicioGeoDds apiClient
+  - Provincia provincia
+
+  + List<Organizacion> orgsDentroDelSector()
+}
+
+class Provincia implements sectorTerritorial {
+  - int id
+  - String nombre
+  - ServicioGeoDds apiClient
+  - Pais pais
+
+  + List<Organizacion> orgsDentroDelSector()
+}
+
+class Pais {
+  - int id
+  - String nombre
+  - ServicioGeoDds apiClient
 }
 
 Ubicacion --> "1" Localidad
+Localidad --> "1" Municipio
+Municipio --> "1" Provincia
+Provincia --> "1" Pais
 Organizacion --> "1" Ubicacion
 Organizacion --> "1" Ubicacion
 MedioNoPublico --> "*" Ubicacion
@@ -373,16 +399,16 @@ Bicicleta --> "*" Ubicacion
 Pie --> "*" Ubicacion
 
 
-interface RetrofitGeoDds {
-  + Call<List<Pais>> paises(String token, int offset);
-  + Call<List<Provincia>> provincias(String token, int offset);
-  + Call<List<Provincia>> provincias(String token, int offset, int paisId);
-  + Call<List<Localidad>> localidades(String token, int offset);
-  + Call<List<Localidad>> localidades(String token, int offset, int municipioId);
-  + Call<List<Municipio>> municipios(String token, int offset);
-  + Call<List<Municipio>> municipios(String token, int offset, int provinciaId);
-  + Call<Distancia> distancia(String token, int localidadOrigenId, String calleOrigen, int alturaOrigen, int localidadDestinoId, String calleDestino, int alturaDestino);
-}
+' interface RetrofitGeoDds {
+'   + Call<List<Pais>> paises(String token, int offset);
+'   + Call<List<Provincia>> provincias(String token, int offset);
+'   + Call<List<Provincia>> provincias(String token, int offset, int paisId);
+'   + Call<List<Localidad>> localidades(String token, int offset);
+'   + Call<List<Localidad>> localidades(String token, int offset, int municipioId);
+'   + Call<List<Municipio>> municipios(String token, int offset);
+'   + Call<List<Municipio>> municipios(String token, int offset, int provinciaId);
+'   + Call<Distancia> distancia(String token, int localidadOrigenId, String calleOrigen, int alturaOrigen, int localidadDestinoId, String calleDestino, int alturaDestino);
+' }
 
 class ServicioGeoDds {
   - ServicioGeoDds instancia
@@ -413,5 +439,97 @@ class ServicioGeoDds {
 ServicioGeoDds --> "1" RetrofitGeoDds
 Ubicacion --> "1" ServicioGeoDds
 Localidad --> "1" ServicioGeoDds
+
+
+class AgenteSectorial{
+  - SectorTerritorial sectorTerritorial
+
+  + HC hc()
+}
+
+interface SectorTerritorial {
+  + List<Organizacion> orgsDentroDelSector()
+}
+
+AgenteSectorial --> SectorTerritorial
+
+
+class RepoOrganizaciones {
+  - List<Organizacion> organizaciones
+
+  + void agregarOrganizacion(Organizacion organizacion)
+  + List<Organizacion> getOrganizaciones()
+  + Boolean inMunicipio(Municipio municipio)
+  + Boolean inProvincia(Provincia provincia)
+}
+
+RepoOrganizaciones --> Organizacion
+Municipio --> RepoOrganizaciones
+Provincia --> RepoOrganizaciones
+
+
+enum UnidadHC {
+  gCO2,
+  kgCO2,
+  tnCO2
+}
+
+class HC {
+  - double valor
+  - UnidadHC unidad
+
+  + double enGCO2()
+  + double enKgCO2()
+  + double enTnCO2()
+}
+
+HC --> UnidadHC
+
+class Contacto {
+  - String Email
+  - String whatsApp
+  - List<Notificaciones> suscripciones
+
+  + void agregarSuscripciones(Notificacion ... suscripciones)
+}
+
+class ValidadorDatoDeContacto {
+  + boolean emailEsValido(String email)
+  + boolean whatsAppEsValido(String whatsapp)
+  + void validarEmail(String email)
+  + void validarWhatsapp(String whatsapp)
+}
+
+Contacto --> ValidadorDatoDeContacto
+
+class Notificacion {
+  - NotificacionAdapter notifacionAdapter
+
+  + String getMensajeNotificacion()
+  + void enviar(Contacto contacto)
+}
+
+interface NotificacionAdapter {
+  + void enviar(Contacto contacto, String mensaje)
+}
+
+class Notificador {
+  - List<Organizacion> orgnanizaciones
+
+  + void agregarOrganizacion(Organizacion ... nuevasOrganizaciones)
+  + notificarAUnContacto(Contacto contacto)
+  + notificarContactosDeOrganizacion(Organizacion organizacion)
+  + void notificarATodos()
+}
+
+class ObserverNotificaciones {
+  + void execute(JobExecutionContext jobExecutionContext)
+}
+
+Notificacion --> NotificacionAdapter
+Notificador --> Organizacion
+ObserverNotificaciones --> Notificador
+Notificador --> Notificacion
+
 
 @enduml
