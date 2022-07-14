@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Organizacion {
@@ -22,7 +21,6 @@ public class Organizacion {
   private final List<Sector> sectores = new ArrayList<>();
   private ClasificacionOrganizacion clasificacion;
   private List<DatosActividades> datosActividades = new ArrayList<>();
-  private List<Contacto> contactos = new ArrayList<>();
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo,
                       Ubicacion ubicacion, ClasificacionOrganizacion clasificacion) {
@@ -90,12 +88,8 @@ public class Organizacion {
     return ubicacion.getLocalidad().getMunicipio().getProvincia();
   }
 
-  public void agregarContactos(Contacto ... nuevosContactos) {
-    Collections.addAll(this.contactos, nuevosContactos);
-  }
-
   public List<Contacto> getContactos() {
-    return contactos;
+    throw new UnsupportedOperationException("Funcionalidad a implementar");
   }
 
   private void cargarDATransladoMiembros(){
