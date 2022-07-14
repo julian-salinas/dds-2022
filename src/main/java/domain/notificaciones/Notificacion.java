@@ -10,11 +10,11 @@ public class Notificacion {
     this.notificacionAdapter = notificacionAdapter;
   }
 
-  public String getMensajeNotificacion() {
+  private String getMensajeNotificacion() {
     return "Recordá chequear nuestra guía de recomendaciones cada tanto! <link>";
   }
 
-  public void enviar(Contacto contacto) {
-    this.notificacionAdapter.enviar(contacto, this.getMensajeNotificacion());
+  public int enviar(Contacto contacto) {
+    return this.notificacionAdapter.enviar(contacto, this.getMensajeNotificacion());
   }
 }
