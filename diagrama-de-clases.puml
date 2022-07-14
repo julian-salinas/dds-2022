@@ -149,12 +149,26 @@ Sector --> "*" Miembro
 Miembro ---> "1" Sector
 
 
+class Distancia {
+  - double valor
+  - UnidadDeDistancia unidad
+
+  + double valorEnMetros()
+}
+
+enum UnidadDeDistancia {
+  KM,
+  MTS
+} 
+
+Distancia --> UnidadDeDistancia
+
 class Trayecto{
     - List<Tramo> tramos
     - Miembro owner
 
     + void agregarTramo(tramo)
-    + int distanciaTotal(void)
+    + Distancia distanciaTotal(void)
     + List<Miembro> miembros()
 }
 
@@ -174,13 +188,14 @@ TrayectoCompartido --> "*" Tramo
 class Tramo{
     - MedioDeTransporte medioDeTransporte
 
-    + int distancia(void)
-    + TipoDeTransporte getTipo()
+    + Distancia distancia(void)
+    + boolean admiteTrayectoCompartido()
 }
 
 interface MedioDeTransporte {
-    + int getDistancia(void)
-    + TipoDeTransporte getTipoBase()
+    + Distancia getDistancia(void)
+    + boolean admiteTrayectoCompartido()
+    + double getCombustibleConsumidoPorKM()
 }
 
 class TransportePublico implements MedioDeTransporte{
@@ -188,15 +203,11 @@ class TransportePublico implements MedioDeTransporte{
   - Parada paradaFin;
   - TipoTransportePublico tipo;
   - Linea linea;
-  - TipoDeTransporte tipoBase
-    
-  + boolean tipoYtipoDeLaLineaSonIguales(TipoTransportePublico tipo, Linea linea)
-  + boolean paradasIncluidasEnLaLinea(Parada paradaInicio, Parada paradaFin, Linea linea)
-  + void validacionesTransportePublico(TipoTransportePublico tipo, Linea linea, Parada paradaInicio, Parada paradaFin);
-  + int getDistancia()
+  
+  + Distancia getDistancia()
+  + boolean admiteTrayectoCompartido()
+  + double getCombustibleConsumidoPorKM()
 }
-
-TransportePublico --> "1" TipoDeTransporte
 
 class VehiculoParticular extends MedioNoPublico {
 
@@ -204,51 +215,47 @@ class VehiculoParticular extends MedioNoPublico {
   - Ubicacion direccionFin
   - TipoDeVehiculo tipoVehiculo
   - TipoDeCombustible tipoCombustible
-  - TipoDeTransporte tipoBase
 
+  + boolean admiteTrayectoCompartido()
+  + double getCombustibleConsumidoPorKM()
 }
-
-MedioNoPublico --> "1" TipoDeTransporte
 
 class ServicioContratado extends MedioNoPublico{
   -Ubicacion direccionInicio
   - Ubicacion direccionFin
   - TipoServicioContratado tipo
-  - TipoDeTransporte tipoBase
+
+  + boolean admiteTrayectoCompartido()
+  + double getCombustibleConsumidoPorKM()
 }
 
 
 abstract class MedioNoPublico implements MedioDeTransporte {
   + Ubicacion getDireccionInicio()
   + Ubicacion getDireccionFin()
-  + int getDistancia()
+  + Distancia getDistancia()
+  + boolean admiteTrayectoCompartido()
 }
 
 class Bicicleta extends MedioNoPublico{
   - Ubicacion direccionInicio;
   - Ubicacion direccionFin;
-  - TipoDeTransporte tipoBase
+
+  + double getCombustibleConsumidoPorKM()
 }
 
 
 class Pie extends MedioNoPublico {
     - Ubicacion direccionInicio
     - Ubicacion direccionFin
-    - TipoDeTransporte tipoBase
+
+    + double getCombustibleConsumidoPorKM()
 }
 
 enum TipoDeVehiculo{
     MOTO
     AUTO
     CAMIONETA
-}
-
-enum TipoDeTransporte {
-  PUBLICO,
-  PIE,
-  BICICLETA,
-  SERVICIO_CONTRATADO,
-  VEHICULO_PARTICULAR
 }
 
 enum TipoDeCombustible{
