@@ -28,5 +28,3 @@ target/**
 # IJ files
 *.iml
 .idea/**
-
-*.properties
