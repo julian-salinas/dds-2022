@@ -10,10 +10,11 @@ public class Localidad {
   @Getter private Municipio municipio;
   private ServicioGeoDds apiClient;
 
-  public Localidad(String nombre) throws RuntimeException, IOException {
-    this.apiClient = ServicioGeoDds.getInstancia();
+  public Localidad(String nombre, ServicioGeoDds apiClient) throws RuntimeException, IOException {
+    //this.apiClient = ServicioGeoDds.getInstancia();
+    this.apiClient = apiClient;
     this.id = this.apiClient.verificarNombreLocalidad(nombre);
-    this.municipio = new Municipio(apiClient.nombreMunicipio(id));
+    this.municipio = new Municipio(apiClient.nombreMunicipio(id), apiClient);
     this.nombre = nombre.toUpperCase();
   }
 

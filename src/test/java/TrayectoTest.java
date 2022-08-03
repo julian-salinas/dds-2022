@@ -1,5 +1,6 @@
 import domain.miembros.Miembro;
 import domain.miembros.TipoDeDocumento;
+import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import domain.trayecto.TrayectoCompartido;
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TrayectoTest {
 
+  ServicioGeoDds apiClient;
   Linea lineaDefault;
   Parada paradaDefault1, paradaDefault2;
   //Trayecto trayectoDefault;
@@ -28,13 +30,20 @@ public class TrayectoTest {
   Ubicacion ubicacionDefault;
 
   @BeforeEach
-  void init() {
-    /*try {
-      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI");
+  void init() throws IOException {
+    apiClient = mock(ServicioGeoDds.class);
+    when(apiClient.verificarNombreLocalidad(anyString())).thenReturn(2);  //id Localidad = 2
+    when(apiClient.nombreMunicipio(2)).thenReturn("Valcheta");
+    when(apiClient.verificarNombreMunicipio("Valcheta")).thenReturn(2);   //id Municipio = 4
+    when(apiClient.nombreProvincia(4)).thenReturn("Rio Negro");
+    when(apiClient.verificarNombreProvincia("Rio Negro")).thenReturn(7);  //id Provincia = 7
+
+    try {
+      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
     } catch (IOException e) {
       //xd
-    }*/
-    ubicacionDefault = mock(Ubicacion.class);
+    }
+    //ubicacionDefault = mock(Ubicacion.class);
 
     paradasLineaA = new ArrayList<>();
 
@@ -86,8 +95,8 @@ public class TrayectoTest {
     List<Miembro> miembros = new ArrayList<>();
     miembros.add(miembro2);
     miembros.add(miembro3);
-    Tramo tramo = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), ubicacionDefault, ubicacionDefault));
-    Tramo tramo2 = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), ubicacionDefault, ubicacionDefault));
+    Tramo tramo = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), ubicacionDefault, ubicacionDefault, apiClient, 500.0));
+    Tramo tramo2 = new Tramo(new ServicioContratado(new TipoServicioContratado("Uber"), ubicacionDefault, ubicacionDefault, apiClient, 500.0));
     List<Tramo> tramos = new ArrayList<>();
     tramos.add(tramo);
     tramos.add(tramo2);

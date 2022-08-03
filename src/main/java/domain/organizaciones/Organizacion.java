@@ -1,6 +1,7 @@
 package domain.organizaciones;
 
 import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
+import domain.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.miembros.Miembro;
 import domain.ubicaciones.Localidad;
 import domain.ubicaciones.Municipio;
@@ -44,10 +45,12 @@ public class Organizacion {
   }
 
   public void aceptarVinculacionDeTrabajador(Miembro miembro, Sector sector) {
-    if (sector.containsMiembroParaAceptar(miembro)) {
+    if (sector.containsMiembroParaAceptar(miembro) && this.containsSector(sector)) {
       sector.sacarMiembroParaAceptar(miembro);
       sector.agregarMiembro(miembro);
-    } else {
+    } else if(!this.containsSector(sector)) {
+      throw new ExcepcionNoExisteElSectorEnLaOrganizacion();
+    } else { //if(!sector.containsMiembroParaAceptar(miembro))
       throw new ExcepcionNoExisteElMiembroAacptarEnLaOrg();
     }
   }

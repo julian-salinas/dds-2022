@@ -14,9 +14,9 @@ public class Provincia implements SectorTerritorial{
   //@Getter private Pais pais; <----------- no lo pongo por ahora porque no lo usamos
   private ServicioGeoDds apiClient;
 
-  public Provincia(String nombre) throws RuntimeException, IOException {
-    this.apiClient = ServicioGeoDds.getInstancia();
-
+  public Provincia(String nombre, ServicioGeoDds apiClient) throws RuntimeException, IOException {
+    //this.apiClient = ServicioGeoDds.getInstancia();
+    this.apiClient = apiClient;
     this.id = this.apiClient.verificarNombreProvincia(nombre);
     this.nombre = nombre.toUpperCase();
   }

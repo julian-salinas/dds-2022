@@ -10,6 +10,7 @@ import static domain.ubicaciones.UnidadDeDistancia.MTS;
 
 public abstract class MedioNoPublico implements MedioDeTransporte {
 
+  abstract ServicioGeoDds getApiClient();
   abstract Ubicacion getDireccionInicio();
   abstract Ubicacion getDireccionFin();
 
@@ -19,14 +20,13 @@ public abstract class MedioNoPublico implements MedioDeTransporte {
   }
 
   public Distancia getDistancia() {
-    ServicioGeoDds api = ServicioGeoDds.getInstancia();
+    //ServicioGeoDds apiClient = ServicioGeoDds.getInstancia();
 
     try {
-      double distanciaAPI = api.distanciaEntreUbicaciones(
+      double distanciaAPI = this.getApiClient().distanciaEntreUbicaciones(
           this.getDireccionInicio(),
           this.getDireccionFin()
       );
-      // Podemos cambiar a que devuelva Double, o incluso Distancia
       return new Distancia(distanciaAPI, MTS);
     } catch (IOException e) {
       // bruh

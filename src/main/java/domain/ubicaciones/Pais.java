@@ -8,8 +8,9 @@ public class Pais {
   private String nombre;
   private ServicioGeoDds apiClient;
 
-  public Pais(String nombre) throws RuntimeException, IOException {
-    this.apiClient = ServicioGeoDds.getInstancia();
+  public Pais(String nombre, ServicioGeoDds apiClient) throws RuntimeException, IOException {
+    //this.apiClient = ServicioGeoDds.getInstancia();
+    this.apiClient = apiClient;
     this.id = apiClient.verificarNombrePais(nombre);
     this.nombre = nombre.toUpperCase();
   }

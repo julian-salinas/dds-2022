@@ -15,7 +15,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServicioGeoDds {
-  // Clase Singleton
+  // Clase Singleton ----- A partir del 3/8/2022 ya no es Singleton
   private static ServicioGeoDds instancia = null;
   private static final String urlAPI = "https://ddstpa.com.ar/api/";
   private Retrofit retrofit;
@@ -43,13 +43,13 @@ public class ServicioGeoDds {
 
   }
 
-  public static ServicioGeoDds getInstancia() {
-    if (instancia == null) {
-      instancia = new ServicioGeoDds();
-    }
-
-    return instancia;
-  }
+  //  public static ServicioGeoDds getInstancia() {
+  //    if (instancia == null) {
+  //      instancia = new ServicioGeoDds();
+  //    }
+  //
+  //    return instancia;
+  //  }
 
   /** =============== Métodos para hacer Request a API GeoDds =============== **/
 

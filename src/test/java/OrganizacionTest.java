@@ -8,6 +8,7 @@ import domain.organizaciones.TipoOrganizacion;
 
 import domain.organizaciones.consumos.Unidad;
 import domain.organizaciones.consumos.tipos.*;
+import domain.servicios.geodds.ServicioGeoDds;
 import domain.ubicaciones.Ubicacion;
 
 import java.io.File;
@@ -21,9 +22,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class OrganizacionTest {
 
+  ServicioGeoDds apiClient;
   private Organizacion organizacionDefault;
   private Sector sectorDefault;
   private Miembro miembroDefault;
@@ -31,9 +36,16 @@ public class OrganizacionTest {
   private Ubicacion ubicacionDefault;
 
   @BeforeEach
-  void init() {
+  void init() throws IOException {
+    apiClient = mock(ServicioGeoDds.class);
+    when(apiClient.verificarNombreLocalidad(anyString())).thenReturn(2);  //id Localidad = 2
+    when(apiClient.nombreMunicipio(2)).thenReturn("Valcheta");
+    when(apiClient.verificarNombreMunicipio("Valcheta")).thenReturn(4);   //id Municipio = 4
+    when(apiClient.nombreProvincia(4)).thenReturn("Rio Negro");
+    when(apiClient.verificarNombreProvincia("Rio Negro")).thenReturn(7);  //id Provincia = 7
+
     try {
-      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI ");
+      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
     } catch (IOException e) {
       //xd
     }
@@ -41,13 +53,6 @@ public class OrganizacionTest {
     organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, ubicacionDefault, ministerio);
     sectorDefault = new Sector();
     miembroDefault = new Miembro("Juan", "Martin", TipoDeDocumento.DNI, 43208556);
-  }
-
-  @Test
-  public void noSePuedeAceptarAunMiembroEnUnaOrgSiEsteNoPidioVincularse(){
-    // Existe la org y el miembro, sin embargo el miembro NUNCA pidio vincularse a la org.
-    assertThrows(ExcepcionNoExisteElMiembroAacptarEnLaOrg.class,
-        () -> organizacionDefault.aceptarVinculacionDeTrabajador(miembroDefault, sectorDefault));
   }
 
   @Test
