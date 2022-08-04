@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Organizacion {
+  private String nombre;
   private final String razonSocial;
   private TipoOrganizacion tipo;
   private Ubicacion ubicacion;
@@ -25,8 +26,9 @@ public class Organizacion {
   private List<DatosActividades> datosActividades = new ArrayList<>();
   private List<Contacto> contactos = new ArrayList<>();
 
-  public Organizacion(String razonSocial, TipoOrganizacion tipo,
+  public Organizacion(String razonSocial, TipoOrganizacion tipo, String nombre,
                       Ubicacion ubicacion, ClasificacionOrganizacion clasificacion) {
+    this.nombre = nombre;
     this.razonSocial = razonSocial;
     this.tipo = tipo;
     this.ubicacion = ubicacion;

@@ -10,21 +10,20 @@ import domain.organizaciones.Sector;
 import domain.organizaciones.TipoOrganizacion;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.ubicaciones.Ubicacion;
+import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.mockito.Mockito.*;
-
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class VinculacionesTests {
   ServicioGeoDds apiClient;
-  private Organizacion organizacionDefault;
-  private Sector sectorDefault;
-  private Miembro miembroDefault;
-  private ClasificacionOrganizacion ministerio;
-  private Ubicacion ubicacionDefault;
+  Organizacion organizacionDefault;
+  Sector sectorDefault;
+  Miembro miembroDefault;
+  ClasificacionOrganizacion ministerio;
+  Ubicacion ubicacionDefault;
 
   @BeforeEach
   void init() throws IOException {
@@ -38,11 +37,11 @@ public class VinculacionesTests {
     try {
       ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
     } catch (IOException e) {
-      //xd
+      e.printStackTrace();
     }
     ministerio = new ClasificacionOrganizacion("ministerio");
 
-    organizacionDefault = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, ubicacionDefault, ministerio);
+    organizacionDefault = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, "Mc" ,ubicacionDefault, ministerio);
     sectorDefault = new Sector();
     miembroDefault = new Miembro("Juan", "Martin", TipoDeDocumento.DNI, 43208556);
   }

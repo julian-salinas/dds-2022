@@ -8,7 +8,7 @@ import domain.passwords.validaciones.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ContraseniaTest {
+public class ContraseniaTests {
   private ValidacionContraseniaComun validacionContraseniaComun;
   private ValidacionLongitud validacionLongitud;
   private ValidacionMayusculas validacionMayusculas;

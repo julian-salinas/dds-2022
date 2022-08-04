@@ -1,4 +1,4 @@
-package notificaciones;
+package entrega3;
 
 import domain.notificaciones.Notificacion;
 import domain.notificaciones.Notificador;
@@ -10,12 +10,10 @@ import domain.organizaciones.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.*;
 
-public class NotificacionesMockeadasTest {
+public class NotificacionesMockeadasTests {
 
   private ObserverNotificaciones observerNotificaciones;
   private Organizacion unaOrganizacion;
@@ -27,7 +25,7 @@ public class NotificacionesMockeadasTest {
 
   @BeforeEach
   void init() {
-    unaOrganizacion = new Organizacion("Organizacion Fake", null, null, null);
+    unaOrganizacion = new Organizacion("Organizacion Fake", null, null ,null, null);
 
     whatsAppAdapter = mock(WhatsAppAdapter.class);
     emailAdapter = mock(EmailAdapter.class);

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class TrayectoTest {
+public class TrayectoTests {
 
   ServicioGeoDds apiClient;
   Ubicacion ubicacionDefault;
@@ -33,7 +33,7 @@ public class TrayectoTest {
     try {
       ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
     } catch (IOException e) {
-      //xd
+      e.printStackTrace();
     }
 
   }

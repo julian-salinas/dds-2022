@@ -5,6 +5,7 @@ import domain.ubicaciones.Municipio;
 import domain.ubicaciones.Provincia;
 import domain.ubicaciones.SectorTerritorial;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class RepoOrganizaciones {
   private static final RepoOrganizaciones INSTANCE = new RepoOrganizaciones();
-  private List<Organizacion> organizaciones;
+  private List<Organizacion> organizaciones = new ArrayList<>();
 
   public static RepoOrganizaciones instance() {
     return INSTANCE;

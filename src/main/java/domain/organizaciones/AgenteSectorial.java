@@ -7,6 +7,10 @@ import java.util.List;
 public class AgenteSectorial {
   SectorTerritorial sectorTerritorial;
 
+  public AgenteSectorial(SectorTerritorial sectorTerritorial) {
+    this.sectorTerritorial = sectorTerritorial;
+  }
+
   public HC hC() {
     List<Organizacion>  orgDentroDeSectorT = sectorTerritorial.orgsDentroDeSector();
     double hcEnKgCO2 = orgDentroDeSectorT.stream().mapToDouble(org -> org.HCMensual().enKgCO2()).sum();

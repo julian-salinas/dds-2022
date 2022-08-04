@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 
 // Lo de aca se deberia mover a otros archivos de tests en el futuro
 
-public class OrganizacionTest {
+public class OrganizacionTests {
 
   ServicioGeoDds apiClient;
   private Organizacion organizacionDefault;
@@ -51,7 +51,7 @@ public class OrganizacionTest {
       //xd
     }
     ministerio = new ClasificacionOrganizacion("ministerio");
-    organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, ubicacionDefault, ministerio);
+    organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, "Manaos", ubicacionDefault, ministerio);
     sectorDefault = new Sector();
     miembroDefault = new Miembro("Juan", "Martin", TipoDeDocumento.DNI, 43208556);
   }
