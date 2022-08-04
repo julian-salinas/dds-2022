@@ -1,4 +1,4 @@
-package base;
+package entrega1;
 
 import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;

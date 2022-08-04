@@ -1,4 +1,4 @@
-package administrador;
+package domain.administrador;
 
 import domain.passwords.Contrasenia;
 

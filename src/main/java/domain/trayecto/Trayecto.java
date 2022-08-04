@@ -26,7 +26,7 @@ public class Trayecto {
   }
 
   public Boolean ownerIs(Miembro miembro) {
-    return owner.equals(miembro);
+    return this.getOwner().equals(miembro);
   }
 
   public Distancia distanciaTotal() {

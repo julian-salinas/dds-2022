@@ -1,4 +1,5 @@
-import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
+package entrega1;
+
 import domain.miembros.TipoDeDocumento;
 import domain.organizaciones.*;
 import domain.miembros.Miembro;
@@ -11,12 +12,10 @@ import domain.organizaciones.consumos.tipos.*;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.ubicaciones.Ubicacion;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import lombok.SneakyThrows;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +24,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+// Lo de aca se deberia mover a otros archivos de tests en el futuro
 
 public class OrganizacionTest {
 
@@ -53,13 +54,6 @@ public class OrganizacionTest {
     organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, ubicacionDefault, ministerio);
     sectorDefault = new Sector();
     miembroDefault = new Miembro("Juan", "Martin", TipoDeDocumento.DNI, 43208556);
-  }
-
-  @Test
-  public void sePuedeAgregarUnSectorAUnaOrganizacion(){
-    organizacionDefault.agregarSector(sectorDefault);
-    assertTrue(organizacionDefault.containsSector(sectorDefault));
-    assertEquals(sectorDefault.getOrgAlaQuePertenezco(), organizacionDefault);
   }
 
   @Test

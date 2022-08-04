@@ -2,7 +2,7 @@ package domain.trayecto;
 
 import domain.miembros.Miembro;
 import lombok.Getter;
-
+import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +10,7 @@ public class TrayectoCompartido extends Trayecto{
 
   private List<Miembro> miembros = new ArrayList<>();
   private List<Tramo> tramos = new ArrayList<>();
-  @Getter private Miembro owner;
+  @Getter @Setter private Miembro owner;
 
   public TrayectoCompartido(List<Miembro> miembros, List<Tramo> tramos) {
     tramos.forEach(this::validacionTrayectoCompartido);
@@ -44,7 +44,7 @@ public class TrayectoCompartido extends Trayecto{
       miembrosQueMeCargaron.addAll(miembros);
       return miembrosQueMeCargaron;
     } else if(owner==null) {
-      throw new RuntimeException("Todavia no se registro trayecto");
+      throw new RuntimeException("Todavia no se registro el trayecto");
     }
     // Si por alguna razon, el que registro el trayecto esta incluido en los que compartieron,
     // devolve los que compartierion directamente
