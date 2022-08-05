@@ -48,7 +48,7 @@ public class TrayectoTests {
     miembros.add(miembro);
     miembros.add(miembro2);
 
-    Bicicleta bici = new Bicicleta(ubicacionDefault, ubicacionDefault, apiClient, 0.0);
+    Bicicleta bici = new Bicicleta(ubicacionDefault, ubicacionDefault, apiClient);
     Tramo tramo = new Tramo(bici);
     List<Tramo> tramos = new ArrayList<>();
     tramos.add(tramo);

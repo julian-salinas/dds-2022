@@ -2,6 +2,7 @@ package domain.trayecto;
 
 import domain.miembros.Miembro;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import domain.ubicaciones.Distancia;
@@ -17,6 +18,10 @@ public class Trayecto {
 
   public void agregarTramo(Tramo tramo) {
     tramos.add(tramo);
+  }
+
+  public void agregarTramos(Tramo... tramos) {
+    Collections.addAll(this.tramos, tramos);
   }
 
   public List<Miembro> miembros() {
