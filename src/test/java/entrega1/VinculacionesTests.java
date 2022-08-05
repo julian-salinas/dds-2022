@@ -34,13 +34,9 @@ public class VinculacionesTests {
     when(apiClient.nombreProvincia(4)).thenReturn("Rio Negro");
     when(apiClient.verificarNombreProvincia("Rio Negro")).thenReturn(7);  //id Provincia = 7
 
-    try {
-      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    ministerio = new ClasificacionOrganizacion("ministerio");
+    ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
 
+    ministerio = new ClasificacionOrganizacion("ministerio");
     organizacionDefault = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, "Mc" ,ubicacionDefault, ministerio);
     sectorDefault = new Sector();
     miembroDefault = new Miembro("Juan", "Martin", TipoDeDocumento.DNI, 43208556);

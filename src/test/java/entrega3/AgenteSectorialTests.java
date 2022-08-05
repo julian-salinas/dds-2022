@@ -47,21 +47,9 @@ public class AgenteSectorialTests {
     when(apiClient.nombreProvincia(anyInt())).thenReturn("Rio Negro");
     when(apiClient.verificarNombreProvincia("Rio Negro")).thenReturn(7);     //id Provincia = 7
 
-    try {
-      ubicacion1 = new Ubicacion("Corrientes", 1200, "localidad", apiClient);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    try {
-      ubicacion2 = new Ubicacion("Corrientes", 1200, "localidad2", apiClient);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    try {
-      ubicacion3 = new Ubicacion("Corrientes", 1200, "localidad3", apiClient);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    ubicacion1 = new Ubicacion("Corrientes", 1200, "localidad", apiClient);
+    ubicacion2 = new Ubicacion("Corrientes", 1200, "localidad2", apiClient);
+    ubicacion3 = new Ubicacion("Corrientes", 1200, "localidad3", apiClient);
 
     org1 = crearOrg("McDonalds", ubicacion1);
     org2 = crearOrg("Filamentos Danjo", ubicacion2);

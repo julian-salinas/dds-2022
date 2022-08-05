@@ -10,6 +10,9 @@ import domain.ubicaciones.Ubicacion;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,12 +33,7 @@ public class TrayectoTests {
     when(apiClient.nombreProvincia(4)).thenReturn("Rio Negro");
     when(apiClient.verificarNombreProvincia("Rio Negro")).thenReturn(7);  //id Provincia = 7
 
-    try {
-      ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
+    ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
   }
 
   // Trayecto Compartido -> Solo Vehiculos Particulares (VP) o Servicios Contratados (SC)
@@ -44,14 +42,11 @@ public class TrayectoTests {
   public void noPuedoCrearUnTrayectoCompartidoQueNoSeaDeTipoVPoSC() {
     Miembro miembro = new Miembro("Crayon", "Lambert", TipoDeDocumento.DNI, 23666920);
     Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
-    List<Miembro> miembros = new ArrayList<>();
-    miembros.add(miembro);
-    miembros.add(miembro2);
+    List<Miembro> miembros = Stream.of(miembro, miembro2).collect(Collectors.toList());
 
     Bicicleta bici = new Bicicleta(ubicacionDefault, ubicacionDefault, apiClient);
     Tramo tramo = new Tramo(bici);
-    List<Tramo> tramos = new ArrayList<>();
-    tramos.add(tramo);
+    List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     assertThrows(RuntimeException.class, () -> new TrayectoCompartido(miembros, tramos));
   }
@@ -60,17 +55,14 @@ public class TrayectoTests {
   public void puedoCrearUnTrayectoCompartidoEntreDosPibes() {
     Miembro miembro = new Miembro("Crayon", "Lambert", TipoDeDocumento.DNI, 23666920);
     Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
-    List<Miembro> miembros = new ArrayList<>();
-    miembros.add(miembro);
-    miembros.add(miembro2);
+    List<Miembro> miembros = Stream.of(miembro, miembro2).collect(Collectors.toList());
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
         taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
-    List<Tramo> tramos = new ArrayList<>();
-    tramos.add(tramo);
+    List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     assertDoesNotThrow(() -> new TrayectoCompartido(miembros, tramos));
 
@@ -79,17 +71,14 @@ public class TrayectoTests {
   public void elOwnerDeUnTrayectoCompartidoEntreDosPibesEsElCorrecto() {
     Miembro miembro = new Miembro("Crayon", "Lambert", TipoDeDocumento.DNI, 23666920);
     Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
-    List<Miembro> miembros = new ArrayList<>();
-    miembros.add(miembro);
-    miembros.add(miembro2);
+    List<Miembro> miembros = Stream.of(miembro, miembro2).collect(Collectors.toList());
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
         taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
-    List<Tramo> tramos = new ArrayList<>();
-    tramos.add(tramo);
+    List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     TrayectoCompartido trayectoCompartido = new TrayectoCompartido(miembros, tramos);
 
@@ -104,17 +93,14 @@ public class TrayectoTests {
   public void UnTrayectoCompartidoEntreDosPibesFiguraEnAmbosPibes() {
     Miembro miembro = new Miembro("Crayon", "Lambert", TipoDeDocumento.DNI, 23666920);
     Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
-    List<Miembro> miembros = new ArrayList<>();
-    miembros.add(miembro);
-    miembros.add(miembro2);
+    List<Miembro> miembros = Stream.of(miembro, miembro2).collect(Collectors.toList());
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
         taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
-    List<Tramo> tramos = new ArrayList<>();
-    tramos.add(tramo);
+    List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     TrayectoCompartido trayectoCompartido = new TrayectoCompartido(miembros, tramos);
 
@@ -129,17 +115,15 @@ public class TrayectoTests {
   public void sePuedeRegistrarUnTrayectoCompartidoSinQueElOwnerEsteEntreLosMiembros() {
     Miembro miembro = new Miembro("Crayon", "Lambert", TipoDeDocumento.DNI, 23666920);
     Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
-    List<Miembro> miembros = new ArrayList<>();
-    //miembros.add(miembro);    -> Ahora en la lista SOLO esta el miembro con el q compartio
-    miembros.add(miembro2); //  -> 'miembro' compartio con este (miembro2) el trayecto
+    List<Miembro> miembros = Stream.of(miembro2).collect(Collectors.toList());
+    //Ahora en la lista SOLO esta el miembro con el q compartio, este seria 'miembro2'
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
         taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
-    List<Tramo> tramos = new ArrayList<>();
-    tramos.add(tramo);
+    List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     TrayectoCompartido trayectoCompartido = new TrayectoCompartido(miembros, tramos);
 
@@ -156,17 +140,14 @@ public class TrayectoTests {
   public void aUnTrayectoCompartidoSeLePuedenPedirLosMiembros() {
     Miembro miembro = new Miembro("Crayon", "Lambert", TipoDeDocumento.DNI, 23666920);
     Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
-    List<Miembro> miembros = new ArrayList<>();
-    miembros.add(miembro);
-    miembros.add(miembro2);
+    List<Miembro> miembros = Stream.of(miembro, miembro2).collect(Collectors.toList());
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
         taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
-    List<Tramo> tramos = new ArrayList<>();
-    tramos.add(tramo);
+    List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     TrayectoCompartido trayectoCompartido = new TrayectoCompartido(miembros, tramos);
 
@@ -180,17 +161,15 @@ public class TrayectoTests {
   public void aUnTrayectoCompartidoSeLePuedenPedirLosMiembrosAunSiElOwnerNoEstaEntreLosMiembros() {
     Miembro miembro = new Miembro("Crayon", "Lambert", TipoDeDocumento.DNI, 23666920);
     Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
-    List<Miembro> miembros = new ArrayList<>();
-    //miembros.add(miembro);    -> Ahora en la lista SOLO esta el miembro con el q compartio
-    miembros.add(miembro2); //  -> 'miembro' compartio con este (miembro2) el trayecto
+    List<Miembro> miembros = Stream.of(miembro2).collect(Collectors.toList());
+    //Ahora en la lista SOLO esta el miembro con el q compartio, este seria 'miembro2'
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
         taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
-    List<Tramo> tramos = new ArrayList<>();
-    tramos.add(tramo);
+    List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     TrayectoCompartido trayectoCompartido = new TrayectoCompartido(miembros, tramos);
 

@@ -144,6 +144,14 @@ public class ServicioGeoDds {
 
     Response<Distancia> responseDistancia = requestDistancia.execute();
 
+    //    if(responseDistancia.isSuccessful() && responseDistancia.body().unidad.equals("mts")) {
+    //      return responseDistancia.body().valor;
+    //    } else {
+    //      return responseDistancia.body().valor * 1000;
+    //    }
+
+    // Suponemos q siempre devuelve en metros. Si no es asi, aplicar lo de arriba ^
+
     return responseDistancia.body().valor;
   }
 

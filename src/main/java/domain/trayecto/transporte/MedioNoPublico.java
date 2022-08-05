@@ -19,7 +19,7 @@ public abstract class MedioNoPublico implements MedioDeTransporte {
     return false;
   }
 
-  public Distancia getDistancia() {
+  public Distancia distancia() {
     //ServicioGeoDds apiClient = ServicioGeoDds.getInstancia();
 
     try {
