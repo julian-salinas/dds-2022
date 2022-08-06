@@ -35,7 +35,7 @@ public class Trayecto {
   }
 
   public Distancia distanciaTotal() {
-    double distancia = tramos.stream().mapToDouble(tramo -> tramo.distancia().valorEnMetros()).sum();
+    double distancia = this.getTramos().stream().mapToDouble(tramo -> tramo.distancia().valorEnMetros()).sum();
     return new Distancia(distancia, MTS);
   }
 

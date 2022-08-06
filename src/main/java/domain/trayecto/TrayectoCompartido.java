@@ -1,15 +1,21 @@
 package domain.trayecto;
 
 import domain.miembros.Miembro;
+import domain.ubicaciones.Distancia;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static domain.ubicaciones.UnidadDeDistancia.MTS;
 
 public class TrayectoCompartido extends Trayecto{
 
   private List<Miembro> miembros = new ArrayList<>();
-  private List<Tramo> tramos = new ArrayList<>();
+  @Getter private List<Tramo> tramos = new ArrayList<>();
   @Getter @Setter private Miembro owner;
 
   public TrayectoCompartido(List<Miembro> miembros, List<Tramo> tramos) {
@@ -54,7 +60,14 @@ public class TrayectoCompartido extends Trayecto{
   @Override
   public void agregarTramo(Tramo tramo) {
     validacionTrayectoCompartido(tramo);
-    tramos.add(tramo);
+    this.tramos.add(tramo);
+  }
+
+  @Override
+  public void agregarTramos(Tramo... tramos) {
+    List<Tramo> listaDeTramos = Stream.of(tramos).collect(Collectors.toList());
+    listaDeTramos.forEach(this::validacionTrayectoCompartido);
+    Collections.addAll(this.tramos, tramos);
   }
 
 }

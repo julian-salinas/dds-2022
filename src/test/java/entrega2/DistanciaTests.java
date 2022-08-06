@@ -1,12 +1,16 @@
 package entrega2;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import domain.miembros.Miembro;
+import domain.miembros.TipoDeDocumento;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
+import domain.trayecto.TrayectoCompartido;
 import domain.trayecto.transporte.*;
 import domain.ubicaciones.Distancia;
 import domain.ubicaciones.Ubicacion;
@@ -21,45 +25,68 @@ public class DistanciaTests {
 
   ServicioGeoDds apiClient;
 
-  Parada sanPedrito;
-  Parada flores;
-  Parada carabobo;
-  Parada puan;
-  Linea  lineaA;
-  TransportePublico recorridoConLineaA;
-  Tramo  tramoLineaA;
 
-  Ubicacion ubicacionInicio;
-  Ubicacion ubicacionFin;
-  Ubicacion ubicacionInicio2;
-  Ubicacion ubicacionFin2;
-  Ubicacion ubicacionInicio3;
-  Ubicacion ubicacionFin3;
-  Ubicacion ubicacionInicio4;
-  Ubicacion ubicacionFin4;
+  Tramo tramoLineaA;
+  Tramo tramoAPie;
+  Tramo tramoEnBici;
+  Tramo tramoEnAuto;
+  Tramo tramoEnTaxi;
+
+  // VP -> Vehiculo Particular
+  // SC -> Servicio Contratado
+
+  Ubicacion ubicacionInicioPie;
+  Ubicacion ubicacionInicioBici;
+  Ubicacion ubicacionInicioVP;
+  Ubicacion ubicacionInicioSC;
+  Ubicacion ubicacionFinPie;
+  Ubicacion ubicacionFinBici;
+  Ubicacion ubicacionFinVP;
+  Ubicacion ubicacionFinSC;
 
   @BeforeEach
   public void init() throws IOException {
     apiClient = mock(ServicioGeoDds.class);
 
-    sanPedrito = new Parada("San Pedrito", distanciaMts(300.0));
-    flores     = new Parada("San Jose de Flores", distanciaMts(200.0));
-    carabobo   = new Parada("Carabobo", distanciaMts(150.0));
-    puan       = new Parada("Puan", distanciaMts(150.0));
-    List<Parada> paradasLineaA = Stream.of(sanPedrito, flores, carabobo, puan).collect(Collectors.toList());
-    lineaA = new Linea("Linea A", paradasLineaA, TipoTransportePublico.SUBTE);
+    Parada sanPedrito = new Parada("San Pedrito", distanciaMts(300.0));
+    Parada flores     = new Parada("San Jose de Flores", distanciaMts(200.0));
+    Parada carabobo   = new Parada("Carabobo", distanciaMts(150.0));
+    Parada puan       = new Parada("Puan", distanciaMts(150.0));
+    List<Parada> paradasLineaA = Stream.of(sanPedrito, flores, carabobo, puan)
+        .collect(Collectors.toList());
+
+    Linea lineaA = new Linea("Linea A", paradasLineaA, TipoTransportePublico.SUBTE);
+
     // Con un recorrido que es solo de San Pedrito a Carabobo
-    recorridoConLineaA = new TransportePublico(TipoTransportePublico.SUBTE, lineaA, sanPedrito, carabobo);
+    TransportePublico recorridoConLineaA = new TransportePublico(TipoTransportePublico.SUBTE,
+        lineaA, sanPedrito, carabobo);
     tramoLineaA = new Tramo(recorridoConLineaA);
 
-    ubicacionInicio   = crearUbicacion("Directorio", 1700);
-    ubicacionFin      = crearUbicacion("Yapeyu", 600);
-    ubicacionInicio2  = crearUbicacion("Directorio", 100);
-    ubicacionFin2     = crearUbicacion("Yapeyu", 200);
-    ubicacionInicio3  = crearUbicacion("Directorio", 2300);
-    ubicacionFin3     = crearUbicacion("Yapeyu", 2400);
-    ubicacionInicio4  = crearUbicacion("Directorio", 600);
-    ubicacionFin4     = crearUbicacion("Yapeyu", 700);
+    ubicacionInicioPie = crearUbicacion("Directorio", 1700);
+    ubicacionInicioBici = crearUbicacion("Directorio", 100);
+    ubicacionInicioVP = crearUbicacion("Directorio", 2300);
+    ubicacionInicioSC = crearUbicacion("Directorio", 600);
+    ubicacionFinPie = crearUbicacion("Yapeyu", 600);
+    ubicacionFinBici = crearUbicacion("Yapeyu", 200);
+    ubicacionFinVP = crearUbicacion("Yapeyu", 2400);
+    ubicacionFinSC = crearUbicacion("Yapeyu", 700);
+
+    Pie recorridoAPie = new Pie(ubicacionInicioPie, ubicacionFinPie, apiClient);
+    tramoAPie   = new Tramo(recorridoAPie);
+
+    Bicicleta recorridoEnBici = new Bicicleta(ubicacionInicioBici, ubicacionFinBici, apiClient);
+    tramoEnBici = new Tramo(recorridoEnBici);
+
+    VehiculoParticular recorridoEnAuto = new VehiculoParticular(TipoDeVehiculo.AUTO,
+        TipoDeCombustible.GASOIL,
+        ubicacionInicioVP, ubicacionFinVP,
+        apiClient, 400.0);
+    tramoEnAuto = new Tramo(recorridoEnAuto);
+
+    TipoServicioContratado taxi = new TipoServicioContratado("taxi");
+    ServicioContratado recorridoEnTaxi = new ServicioContratado(taxi, ubicacionInicioSC,
+        ubicacionFinSC, apiClient, 200.0);
+    tramoEnTaxi = new Tramo(recorridoEnTaxi);
 
   }
 
@@ -89,10 +116,8 @@ public class DistanciaTests {
 
   @Test
   public void laDistanciaDeUnTramoAPieSeCalculaBien() throws IOException {
-    Pie recorridoAPie = new Pie(ubicacionInicio, ubicacionFin, apiClient);
-    Tramo tramoAPie   = new Tramo(recorridoAPie);
 
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio, ubicacionFin))
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioPie, ubicacionFinPie))
         .thenReturn(73.6);
 
     assertEquals(73.6, tramoAPie.distancia().valorEnMetros());
@@ -100,10 +125,8 @@ public class DistanciaTests {
 
   @Test
   public void laDistanciaDeUnTramoEnBiciSeCalculaBien() throws IOException {
-    Bicicleta recorridoEnBici = new Bicicleta(ubicacionInicio2, ubicacionFin2, apiClient);
-    Tramo tramoEnBici = new Tramo(recorridoEnBici);
 
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio2, ubicacionFin2))
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioBici, ubicacionFinBici))
         .thenReturn(313.47);
 
     assertEquals(313.47, tramoEnBici.distancia().valorEnMetros());
@@ -111,14 +134,8 @@ public class DistanciaTests {
 
   @Test
   public void laDistanciaDeUnTramoEnVehiculoParticularSeCalculaBien() throws IOException {
-    VehiculoParticular recorridoEnAuto = new VehiculoParticular(TipoDeVehiculo.AUTO,
-        TipoDeCombustible.GASOIL,
-        ubicacionInicio3, ubicacionFin3,
-        apiClient, 400.0);
 
-    Tramo tramoEnAuto = new Tramo(recorridoEnAuto);
-
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio3, ubicacionFin3))
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioVP, ubicacionFinVP))
         .thenReturn(10002.2);
 
     assertEquals(10002.2, tramoEnAuto.distancia().valorEnMetros());
@@ -126,13 +143,8 @@ public class DistanciaTests {
 
   @Test
   public void laDistanciaDeUnTramoEnServicioContratadoSeCalculaBien() throws IOException {
-    TipoServicioContratado taxi = new TipoServicioContratado("taxi");
-    ServicioContratado recorridoEnTaxi = new ServicioContratado(taxi, ubicacionInicio4,
-        ubicacionFin4, apiClient, 200.0);
 
-    Tramo tramoEnTaxi = new Tramo(recorridoEnTaxi);
-
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio4, ubicacionFin4))
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioSC, ubicacionFinSC))
         .thenReturn(750.0);
 
     assertEquals(750.0, tramoEnTaxi.distancia().valorEnMetros());
@@ -141,86 +153,70 @@ public class DistanciaTests {
   @Test                                               //TP = Transporte Publico
   public void laDistanciaDeUnTrayectoDeTramosDeTodoMenosTPSeCalculaBien() throws IOException {
 
-    Pie recorridoAPie = new Pie(ubicacionInicio, ubicacionFin, apiClient);
-    Tramo tramoAPie   = new Tramo(recorridoAPie);
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio, ubicacionFin))
-        .thenReturn(73.0);
-
-    Bicicleta recorridoEnBici = new Bicicleta(ubicacionInicio2, ubicacionFin2, apiClient);
-    Tramo tramoEnBici = new Tramo(recorridoEnBici);
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio2, ubicacionFin2))
-        .thenReturn(313.0);
-
-    VehiculoParticular recorridoEnAuto = new VehiculoParticular(TipoDeVehiculo.AUTO,
-        TipoDeCombustible.GASOIL,
-        ubicacionInicio3, ubicacionFin3,
-        apiClient, 400.0);
-    Tramo tramoEnAuto = new Tramo(recorridoEnAuto);
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio3, ubicacionFin3))
-        .thenReturn(10002.0);
-
-    TipoServicioContratado taxi = new TipoServicioContratado("taxi");
-    ServicioContratado recorridoEnTaxi = new ServicioContratado(taxi,
-        ubicacionInicio4, ubicacionFin4,
-        apiClient, 200.0);
-    Tramo tramoEnTaxi = new Tramo(recorridoEnTaxi);
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio4, ubicacionFin4))
-        .thenReturn(750.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioPie, ubicacionFinPie)).thenReturn(73.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioBici, ubicacionFinBici)).thenReturn(313.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioVP, ubicacionFinVP)).thenReturn(10000.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioSC, ubicacionFinSC)).thenReturn(750.0);
 
     Trayecto trayecto = new Trayecto();
     trayecto.agregarTramos(tramoAPie, tramoEnBici, tramoEnAuto, tramoEnTaxi);
 
     // 73.0 + 313.0 + 10000.0 + 750.0 = 11136.0
-    assertTrue(trayecto.distanciaTotal().valorEnMetros() > 11120.0);
-    assertTrue(trayecto.distanciaTotal().valorEnMetros() < 11145.0);
-
-    // Haciendo este tests me di cuenta de q a Java 8 (min) le explota la cabeza al sumar doubles
-    // Nunca da exacto, es increible
-    // Esa es la razon de la, uno podria decir, ranciedad del test, aunque esta
-    // manera no esta tan mal.
+    assertEquals(11136.0, trayecto.distanciaTotal().valorEnMetros());
   }
 
   @Test
   public void laDistanciaDeUnTrayectoDeTramosDeTodosLosTiposSeCalculaBien() throws IOException {
 
-    Pie recorridoAPie = new Pie(ubicacionInicio, ubicacionFin, apiClient);
-    Tramo tramoAPie   = new Tramo(recorridoAPie);
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio, ubicacionFin))
-        .thenReturn(73.0);
-
-    Bicicleta recorridoEnBici = new Bicicleta(ubicacionInicio2, ubicacionFin2, apiClient);
-    Tramo tramoEnBici = new Tramo(recorridoEnBici);
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio2, ubicacionFin2))
-        .thenReturn(313.0);
-
-    VehiculoParticular recorridoEnAuto = new VehiculoParticular(TipoDeVehiculo.AUTO,
-        TipoDeCombustible.GASOIL,
-        ubicacionInicio3, ubicacionFin3,
-        apiClient, 400.0);
-    Tramo tramoEnAuto = new Tramo(recorridoEnAuto);
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio3, ubicacionFin3))
-        .thenReturn(10002.0);
-
-    TipoServicioContratado taxi = new TipoServicioContratado("taxi");
-    ServicioContratado recorridoEnTaxi = new ServicioContratado(taxi,
-        ubicacionInicio4, ubicacionFin4,
-        apiClient, 200.0);
-    Tramo tramoEnTaxi = new Tramo(recorridoEnTaxi);
-    when(apiClient.distanciaEntreUbicaciones(ubicacionInicio4, ubicacionFin4))
-        .thenReturn(750.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioPie, ubicacionFinPie)).thenReturn(73.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioBici, ubicacionFinBici)).thenReturn(313.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioVP, ubicacionFinVP)).thenReturn(10000.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioSC, ubicacionFinSC)).thenReturn(750.0);
 
     Trayecto trayecto = new Trayecto();
     trayecto.agregarTramos(tramoAPie, tramoEnBici, tramoEnAuto, tramoEnTaxi, tramoLineaA);
 
     // 73.0 + 313.0 + 10000.0 + 750.0 + 650.0 = 11786.0
-    assertTrue(trayecto.distanciaTotal().valorEnMetros() > 11770.0);
-    assertTrue(trayecto.distanciaTotal().valorEnMetros() < 11795.0);
-
-    // Haciendo este tests me di cuenta de q a Java 8 (min) le explota la cabeza al sumar doubles
-    // Nunca da exacto, es increible
-    // Esa es la razon de la, uno podria decir, ranciedad del test, aunque esta
-    // manera no esta tan mal.
+    assertEquals(11786.0, trayecto.distanciaTotal().valorEnMetros());
   }
+
+  @Test
+  public void laDistanciaDeUnTrayectoDeTramosDeTodosLosTiposMasDeUnaVezSeCalculaBien()
+      throws IOException {
+
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioPie, ubicacionFinPie)).thenReturn(73.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioBici, ubicacionFinBici)).thenReturn(313.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioVP, ubicacionFinVP)).thenReturn(10000.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioSC, ubicacionFinSC)).thenReturn(750.0);
+
+    Trayecto trayecto = new Trayecto();
+    trayecto.agregarTramos(tramoAPie, tramoEnBici, tramoEnAuto,
+        tramoEnTaxi, tramoLineaA, tramoAPie, tramoEnAuto);
+
+    // 73.0 + 313.0 + 10000.0 + 750.0 + 650.0 + 73.0 + 10000.0 = 21859.0
+    assertEquals(21859.0, trayecto.distanciaTotal().valorEnMetros());
+  }
+
+  @Test
+  public void laDistanciaDeUnTrayectoCompartidoDeTramosDeTodosLosTiposMasDeUnaVezSeCalculaBien()
+      throws IOException {
+
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioVP, ubicacionFinVP)).thenReturn(10000.0);
+    when(apiClient.distanciaEntreUbicaciones(ubicacionInicioSC, ubicacionFinSC)).thenReturn(750.0);
+
+    Miembro miembro = new Miembro("Crayon", "Lambert", TipoDeDocumento.DNI, 23666920);
+    Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
+    List<Miembro> miembros = Stream.of(miembro, miembro2).collect(Collectors.toList());
+
+    TrayectoCompartido trayecto = new TrayectoCompartido(miembros, new ArrayList<>());
+    trayecto.agregarTramos(tramoEnAuto,
+        tramoEnTaxi, tramoEnAuto);
+
+    // 10000.0 + 750.0 + 10000.0 = 20750.0
+    assertEquals(20750.0, trayecto.distanciaTotal().valorEnMetros());
+  }
+
+
 
   // Metodos aux.
 
