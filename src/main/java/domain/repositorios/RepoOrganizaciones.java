@@ -3,28 +3,30 @@ package domain.repositorios;
 import domain.organizaciones.Organizacion;
 import domain.ubicaciones.Municipio;
 import domain.ubicaciones.Provincia;
-import domain.ubicaciones.SectorTerritorial;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import lombok.Getter;
 
 public class RepoOrganizaciones {
   private static final RepoOrganizaciones INSTANCE = new RepoOrganizaciones();
-  private List<Organizacion> organizaciones = new ArrayList<>();
+  @Getter private List<Organizacion> organizaciones = new ArrayList<>();
 
   public static RepoOrganizaciones instance() {
     return INSTANCE;
   }
 
-  public void agregarOrganizacion(Organizacion ... organizaciones) {
+  public void agregarOrganizaciones(Organizacion ... organizaciones) {
     Collections.addAll(this.organizaciones, organizaciones);
   }
 
-  public List<Organizacion> getOrganizaciones() {
-    return this.organizaciones;
+  public void sacarOrganizaciones(Organizacion ... organizaciones) {
+    List<Organizacion> orgs = Stream.of(organizaciones).collect(Collectors.toList());
+    orgs.forEach(org -> this.organizaciones.remove(org));
   }
 
   public List<Organizacion> inMunicipio(Municipio municipio) {

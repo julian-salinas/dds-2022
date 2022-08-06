@@ -55,8 +55,6 @@ public class AgenteSectorialTests {
     org2 = crearOrg("Filamentos Danjo", ubicacion2);
     org3 = crearOrg("Pesquera Cantos", ubicacion3);
 
-    RepoOrganizaciones.instance().agregarOrganizacion(org1, org2, org3);
-
   }
 
   // Estos dos tests no van a hacer falta despues
@@ -64,18 +62,26 @@ public class AgenteSectorialTests {
 
   @Test
   public void sePuedenPedirLasOrgDentroDeUnMunicipioCorrectamente() {
-    assertEquals(org1, org1.sectorMunicipio().orgsDentroDeSector().get(0));
+    RepoOrganizaciones.instance().agregarOrganizaciones(org1, org2, org3);
+
     assertEquals(1, (long) org1.sectorMunicipio().orgsDentroDeSector().size());
+    assertEquals(org1, org1.sectorMunicipio().orgsDentroDeSector().get(0));
+
+    RepoOrganizaciones.instance().sacarOrganizaciones(org1, org2, org3);
   }
 
   @Test
   public void sePuedenPedirLasOrgDentroDeUnaProvinciaCorrectamente() {
+    RepoOrganizaciones.instance().agregarOrganizaciones(org1, org2, org3);
+
     List<Organizacion> todasLasOrgs = new ArrayList<>();
     todasLasOrgs.add(org1);
     todasLasOrgs.add(org2);
     todasLasOrgs.add(org3);
-    assertEquals(todasLasOrgs, org1.sectorProvincia().orgsDentroDeSector());
     assertEquals(3, (long) org1.sectorProvincia().orgsDentroDeSector().size());
+    assertEquals(todasLasOrgs, org1.sectorProvincia().orgsDentroDeSector());
+
+    RepoOrganizaciones.instance().sacarOrganizaciones(org1, org2, org3);
   }
   // <--
 
