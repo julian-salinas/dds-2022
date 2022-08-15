@@ -1,11 +1,19 @@
 package domain.notificaciones;
 
+import domain.repositorios.RepoNotificaciones;
 import org.quartz.*;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.CronScheduleBuilder.*;
 
-public class Planificador {
+public class Planificador implements Job {
+
+  @Override
+  public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    JobKey jobKey = jobExecutionContext.getJobDetail().getKey();
+    RepoNotificaciones.getInstancia().getNotificaciones().stream()
+        .forEach(notificacion -> notificacion.notificarOrganizaciones());
+  }
 
   public static void main(String args[]) throws SchedulerException {
 
@@ -15,13 +23,13 @@ public class Planificador {
 
     CronTrigger trigger = newTrigger()
         .withIdentity("trigger1", "group1")
-        .withSchedule(cronSchedule("0/6 * * * * ? *")) // Cada 6 segundos
+        .withSchedule(cronSchedule("0/10 * * * * ? *")) // Cada 6 segundos
         //.withSchedule(cronSchedule("0 0 12 1 1/1 ? *")) // Cada primer día del mes - 12:00 hs
         .forJob("job1", "group1")
         .startNow()
         .build();
 
-    JobDetail jobDetail = newJob(ObserverNotificaciones.class).withIdentity("job1", "group1").build();
+    JobDetail jobDetail = newJob(Planificador.class).withIdentity("job1", "group1").build();
 
     scheduler.start();
     scheduler.scheduleJob(jobDetail, trigger);
@@ -39,6 +47,7 @@ public class Planificador {
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }
+
     scheduler.shutdown(true);
     System.out.println("Apagando planificador...");
   }

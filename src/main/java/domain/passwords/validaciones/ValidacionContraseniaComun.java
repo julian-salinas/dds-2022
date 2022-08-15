@@ -1,8 +1,6 @@
 package domain.passwords.validaciones;
 
 import domain.passwords.exceptions.PasswordException;
-import sun.security.util.Password;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

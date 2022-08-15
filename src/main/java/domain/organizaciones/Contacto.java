@@ -1,26 +1,21 @@
 package domain.organizaciones;
 
-import domain.notificaciones.Notificacion;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import domain.notificaciones.Suscriptor;
 
-public class Contacto {
+public class Contacto implements Suscriptor {
   private String email;
   private String whatsApp;
-  private List<Notificacion> suscripciones;
 
   public Contacto(String email, String whatsApp) {
-    ValidadorDatoDeContacto validadorDatoDeContacto = ValidadorDatoDeContacto.getInstancia();
+    ValidadorDatoDeContacto validadorDatoDeContacto = new ValidadorDatoDeContacto();
     validadorDatoDeContacto.validarEmail(email);
     validadorDatoDeContacto.validarWhatsapp(whatsApp);
     this.email = email;
     this.whatsApp = whatsApp;
-    this.suscripciones = new ArrayList<>();
   }
 
   public Contacto(String datoDeContacto) {
-    ValidadorDatoDeContacto validador = ValidadorDatoDeContacto.getInstancia();
+    ValidadorDatoDeContacto validador = new ValidadorDatoDeContacto();
 
     if (validador.emailEsValido(datoDeContacto)) {
       this.email = datoDeContacto;
@@ -31,8 +26,6 @@ public class Contacto {
     else {
       throw new RuntimeException("Que me pasaste amigo?");
     }
-
-    this.suscripciones = new ArrayList<>();
   }
 
   public String getEmail() {
@@ -41,14 +34,6 @@ public class Contacto {
 
   public String getWhatsApp() {
     return whatsApp;
-  }
-
-  public List<Notificacion> getSuscripciones() {
-    return suscripciones;
-  }
-
-  public void agregarSuscripciones(Notificacion ... suscripciones) {
-    Collections.addAll(this.suscripciones, suscripciones);
   }
 
 }
