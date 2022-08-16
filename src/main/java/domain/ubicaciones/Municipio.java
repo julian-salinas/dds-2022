@@ -14,10 +14,11 @@ public class Municipio implements SectorTerritorial{
   @Getter private Provincia provincia;
   private ServicioGeoDds apiClient;
 
-  public Municipio(String nombre) throws IOException, RuntimeException {
-    this.apiClient = ServicioGeoDds.getInstancia();
+  public Municipio(String nombre, ServicioGeoDds apiClient) throws IOException, RuntimeException {
+    //this.apiClient = ServicioGeoDds.getInstancia();
+    this.apiClient = apiClient;
     this.id = this.apiClient.verificarNombreMunicipio(nombre);
-    this.provincia = new Provincia(apiClient.nombreProvincia(id));
+    this.provincia = new Provincia(apiClient.nombreProvincia(id), apiClient);
     this.nombre = nombre.toUpperCase();
   }
 

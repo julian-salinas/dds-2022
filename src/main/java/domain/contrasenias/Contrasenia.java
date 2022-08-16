@@ -1,6 +1,6 @@
-package domain.passwords;
+package domain.contrasenias;
 
-import domain.passwords.validaciones.Validacion;
+import domain.contrasenias.validaciones.Validacion;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

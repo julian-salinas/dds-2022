@@ -2,6 +2,7 @@ package domain.trayecto;
 
 import domain.miembros.Miembro;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import domain.ubicaciones.Distancia;
@@ -19,6 +20,10 @@ public class Trayecto {
     tramos.add(tramo);
   }
 
+  public void agregarTramos(Tramo... tramos) {
+    Collections.addAll(this.tramos, tramos);
+  }
+
   public List<Miembro> miembros() {
     List<Miembro> ownerList = new ArrayList<>();
     ownerList.add(owner);
@@ -26,11 +31,11 @@ public class Trayecto {
   }
 
   public Boolean ownerIs(Miembro miembro) {
-    return owner.equals(miembro);
+    return this.getOwner().equals(miembro);
   }
 
   public Distancia distanciaTotal() {
-    double distancia = tramos.stream().mapToDouble(tramo -> tramo.distancia().valorEnMetros()).sum();
+    double distancia = this.getTramos().stream().mapToDouble(tramo -> tramo.distancia().valorEnMetros()).sum();
     return new Distancia(distancia, MTS);
   }
 

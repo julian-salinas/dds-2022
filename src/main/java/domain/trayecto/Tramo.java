@@ -12,7 +12,7 @@ public class Tramo {
   }
 
   public Distancia distancia() {
-    return medio.getDistancia();
+    return medio.distancia();
   }
 
   public Boolean admiteTrayectoCompartido() {

@@ -44,7 +44,7 @@ public class TransportePublico implements MedioDeTransporte {
 
   }
 
-  public Distancia getDistancia() {
+  public Distancia distancia() {
     return linea.distanciaEntreParadas(paradaInicio, paradaFin);
   }
 

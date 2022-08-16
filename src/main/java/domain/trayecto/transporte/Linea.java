@@ -32,7 +32,7 @@ public class Linea {
 
   private boolean isInRange(Parada parada, int indiceInicial, int indiceFinal) {
     return paradas.indexOf(parada) >= indiceInicial
-        && paradas.indexOf(parada) < indiceFinal;
+        && paradas.indexOf(parada) <= indiceFinal;
   }
 
   public Distancia distanciaEntreParadas(Parada paradaInicio, Parada paradaFin) {

@@ -1,20 +1,27 @@
 package domain.notificaciones;
 
-import domain.organizaciones.Contacto;
+import domain.repositorios.RepoOrganizaciones;
 
 public class Notificacion {
 
-  private NotificacionAdapter notificacionAdapter;
+  private MensajeriaAdapter mensajeriaAdapter;
 
-  public Notificacion(NotificacionAdapter notificacionAdapter) {
-    this.notificacionAdapter = notificacionAdapter;
+  public Notificacion(MensajeriaAdapter mensajeriaAdapter) {
+    this.mensajeriaAdapter = mensajeriaAdapter;
   }
 
   private String getMensajeNotificacion() {
-    return "Recordá chequear nuestra guía de recomendaciones cada tanto! <link>";
+    return "<<<guia de recomendaciones>>>";
   }
 
-  public int enviar(Contacto contacto) {
-    return this.notificacionAdapter.enviar(contacto, this.getMensajeNotificacion());
+  public int notificar(Suscriptor suscriptor) {
+    int status_code = this.mensajeriaAdapter.enviar(suscriptor, this.getMensajeNotificacion());
+    return status_code;
   }
+
+  public void notificarOrganizaciones() {
+    RepoOrganizaciones.instance().getContactos().stream().forEach(contacto -> this.notificar(contacto));
+  }
+
 }
+

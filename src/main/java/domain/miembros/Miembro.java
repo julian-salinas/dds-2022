@@ -40,6 +40,10 @@ public class Miembro {
     trayectos.add(trayecto);
   }
 
+  public boolean containsTrayecto(Trayecto trayecto) {
+    return trayectos.contains(trayecto);
+  }
+
   public void vincularTrabajadorConOrg(Organizacion org, Sector sector) {
     if (org.containsSector(sector)) {
       sector.agregarMiembroParaAceptar(this);

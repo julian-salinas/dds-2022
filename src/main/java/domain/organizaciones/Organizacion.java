@@ -1,6 +1,7 @@
 package domain.organizaciones;
 
 import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
+import domain.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.miembros.Miembro;
 import domain.ubicaciones.Localidad;
 import domain.ubicaciones.Municipio;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Organizacion {
+  private String nombre;
   private final String razonSocial;
   private TipoOrganizacion tipo;
   private Ubicacion ubicacion;
@@ -24,8 +26,9 @@ public class Organizacion {
   private List<DatosActividades> datosActividades = new ArrayList<>();
   private List<Contacto> contactos = new ArrayList<>();
 
-  public Organizacion(String razonSocial, TipoOrganizacion tipo,
+  public Organizacion(String razonSocial, TipoOrganizacion tipo, String nombre,
                       Ubicacion ubicacion, ClasificacionOrganizacion clasificacion) {
+    this.nombre = nombre;
     this.razonSocial = razonSocial;
     this.tipo = tipo;
     this.ubicacion = ubicacion;
@@ -44,10 +47,12 @@ public class Organizacion {
   }
 
   public void aceptarVinculacionDeTrabajador(Miembro miembro, Sector sector) {
-    if (sector.containsMiembroParaAceptar(miembro)) {
+    if (sector.containsMiembroParaAceptar(miembro) && this.containsSector(sector)) {
       sector.sacarMiembroParaAceptar(miembro);
       sector.agregarMiembro(miembro);
-    } else {
+    } else if(!this.containsSector(sector)) {
+      throw new ExcepcionNoExisteElSectorEnLaOrganizacion();
+    } else { //if(!sector.containsMiembroParaAceptar(miembro))
       throw new ExcepcionNoExisteElMiembroAacptarEnLaOrg();
     }
   }

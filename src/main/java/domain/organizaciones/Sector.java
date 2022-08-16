@@ -38,7 +38,10 @@ public class Sector {
   }
 
   public double combustibleConsumidoTransporteMiembros(){
-    Set<Trayecto> trayectos = miembros.stream().map(Miembro::getTrayectos).flatMap(List::stream).collect(Collectors.toSet());
+    Set<Trayecto> trayectos = miembros
+        .stream()
+        .flatMap(miembro -> miembro.getTrayectos().stream())
+        .collect(Collectors.toSet());
     return trayectos.stream().mapToDouble(Trayecto::combustibleTotalUtilizado).sum();
   }
 

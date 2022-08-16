@@ -1,12 +1,14 @@
+package entrega1;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import domain.passwords.Contrasenia;
-import domain.passwords.exceptions.*;
-import domain.passwords.validaciones.*;
+import domain.contrasenias.Contrasenia;
+import domain.contrasenias.excepciones.*;
+import domain.contrasenias.validaciones.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ContraseniaTest {
+public class ContraseniaTests {
   private ValidacionContraseniaComun validacionContraseniaComun;
   private ValidacionLongitud validacionLongitud;
   private ValidacionMayusculas validacionMayusculas;

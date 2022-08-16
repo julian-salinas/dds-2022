@@ -1,0 +1,42 @@
+@startuml notificaciones
+
+class RepositorioOrganizaciones {}
+
+class Organizacion {}
+
+RepositorioOrganizaciones --> "*" Organizacion
+
+interface Suscriptor {
+    + recibirNotificacion()
+}
+
+class Contacto implements Suscriptor {
+    - email
+    - whatsapp
+    + recibirNotificacion()
+}
+
+Organizacion --> "*" Contacto
+
+class Notificacion {
+    + agregar(suscriptor)
+    + eliminar(suscriptor)
+    + notificar()
+}
+
+interface AdapterMensajeria {
+    + enviar()
+}
+
+class AdapterTwilio implements AdapterMensajeria {
+    + enviar()
+}
+
+class AdapterSendgrid implements AdapterMensajeria {
+    + enviar()
+}
+
+Notificacion --> RepositorioOrganizaciones
+Notificacion --> "1" AdapterMensajeria
+
+@enduml

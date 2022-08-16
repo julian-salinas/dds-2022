@@ -12,11 +12,13 @@ public class Ubicacion {
   Localidad localidad;
   ServicioGeoDds apiClient;
 
-  public Ubicacion(String calle, int altura, String nombreLocalidad) throws IOException, RuntimeException {
-    this.apiClient = ServicioGeoDds.getInstancia();
+  public Ubicacion(String calle, int altura, String nombreLocalidad, ServicioGeoDds apiClient)
+      throws IOException, RuntimeException {
+    //this.apiClient = ServicioGeoDds.getInstancia();
+    this.apiClient = apiClient;
     this.calle = calle;
     this.altura = altura;
-    this.localidad = new Localidad(nombreLocalidad);
+    this.localidad = new Localidad(nombreLocalidad, apiClient);
   }
 
   public String getCalle() {
