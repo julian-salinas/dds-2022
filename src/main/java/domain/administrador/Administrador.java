@@ -1,6 +1,6 @@
 package domain.administrador;
 
-import domain.passwords.Contrasenia;
+import domain.contrasenias.Contrasenia;
 
 public class Administrador {
   String user;

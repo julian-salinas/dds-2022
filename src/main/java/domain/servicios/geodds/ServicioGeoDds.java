@@ -1,7 +1,6 @@
 package domain.servicios.geodds;
 
 import static java.net.URLEncoder.encode;
-
 import domain.servicios.geodds.entidades.*;
 import java.io.*;
 import java.util.List;
@@ -15,7 +14,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServicioGeoDds {
-  // Clase Singleton ----- A partir del 3/8/2022 ya no es Singleton
   private static ServicioGeoDds instancia = null;
   private static final String urlAPI = "https://ddstpa.com.ar/api/";
   private Retrofit retrofit;
@@ -43,13 +41,13 @@ public class ServicioGeoDds {
 
   }
 
-  //  public static ServicioGeoDds getInstancia() {
-  //    if (instancia == null) {
-  //      instancia = new ServicioGeoDds();
-  //    }
-  //
-  //    return instancia;
-  //  }
+  public static ServicioGeoDds getInstancia() {
+    if (instancia == null) {
+      instancia = new ServicioGeoDds();
+    }
+
+    return instancia;
+  }
 
   /** =============== Métodos para hacer Request a API GeoDds =============== **/
 
@@ -230,6 +228,9 @@ public class ServicioGeoDds {
 
   /** =================== Métodos para verificar existencia =================== **/
 
+  /**
+   Este método se usa para validar la respuesta de la api al momento de solicitar un valor.
+   */
   public void validarId(Integer id, String mensajeError) throws RuntimeException {
     if (id == null) {
       throw new RuntimeException(mensajeError);
@@ -243,7 +244,6 @@ public class ServicioGeoDds {
    * @return ID del país en caso de que exista.
    */
   public int verificarNombrePais(String nombrePais) throws RuntimeException, IOException {
-
     Map<String, Integer> paises = this.mapPaises(1); // Siempre se usa con offset 1 en este caso
     Integer id = paises.get(nombrePais.toUpperCase());
 
@@ -259,7 +259,6 @@ public class ServicioGeoDds {
    * @return ID de la provincia
    */
   public int verificarNombreProvincia(String nombreProvincia)  throws RuntimeException, IOException {
-
     Map<String, Integer> provincias = this.mapProvincias(1);
     Integer id = provincias.get(nombreProvincia.toUpperCase());
 

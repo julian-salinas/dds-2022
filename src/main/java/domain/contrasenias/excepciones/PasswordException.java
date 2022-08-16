@@ -1,4 +1,4 @@
-package domain.passwords.exceptions;
+package domain.contrasenias.excepciones;
 
 public class PasswordException extends RuntimeException {
   public PasswordException(String message) {

@@ -1,6 +1,6 @@
-package domain.passwords.validaciones;
+package domain.contrasenias.validaciones;
 
-import domain.passwords.exceptions.PasswordException;
+import domain.contrasenias.excepciones.PasswordException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

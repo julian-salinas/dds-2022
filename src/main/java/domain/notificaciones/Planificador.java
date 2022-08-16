@@ -29,8 +29,10 @@ public class Planificador implements Job {
         .startNow()
         .build();
 
+    // Crear tarea calendarizada
     JobDetail jobDetail = newJob(Planificador.class).withIdentity("job1", "group1").build();
 
+    // Agendar tarea
     scheduler.start();
     scheduler.scheduleJob(jobDetail, trigger);
 
