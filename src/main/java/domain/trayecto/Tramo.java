@@ -20,7 +20,7 @@ public class Tramo {
   }
 
   public double combustibleUtilizado(){
-    return medio.getCombustibleConsumidoPorKM() * this.distancia().valorEnMetros() * 1000;
+    return medio.getCombustibleConsumidoPorKM() * (this.distancia().valorEnMetros() / 1000);
   }
 
 }

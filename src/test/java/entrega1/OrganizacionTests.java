@@ -61,8 +61,8 @@ public class OrganizacionTests {
     organizacionDefault.cargarMediciones("src/test/java/archivo-prueba.csv");
     List<DatosActividades> datosActividadesExpected = new ArrayList<>();
     List<DatosActividades> datosActividadesLeidos = organizacionDefault.getDatosActividades();
-    datosActividadesExpected.add(new DatosActividades("Gas Natural", "1234", "Mensual","04/2020"));
-    datosActividadesExpected.add(new DatosActividades("Electricidad", "567", "Anual","1905"));
+    datosActividadesExpected.add(new DatosActividades("Gas Natural", "1234", "Mensual","05/2021"));
+    datosActividadesExpected.add(new DatosActividades("Electricidad", "567", "Anual","2021"));
     datosActividadesExpected.add(new DatosActividades("Nafta", "89", "Mensual","05/2021"));
     Assertions.assertEquals(datosActividadesExpected.get(0).getValor(), datosActividadesLeidos.get(0).getValor());
   }

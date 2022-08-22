@@ -6,10 +6,10 @@ import lombok.Setter;
 
 @Getter
 public class FactorEmision {
-  @Setter private int valor;
+  @Setter private double valor;
   private Unidad unidad;
 
-  public FactorEmision(int valor, Unidad unidad){
+  public FactorEmision(double valor, Unidad unidad){
     this.valor = valor;
     this.unidad = unidad;
   }
