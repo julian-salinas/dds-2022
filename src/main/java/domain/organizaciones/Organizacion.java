@@ -10,7 +10,6 @@ import domain.ubicaciones.Ubicacion;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -120,12 +119,12 @@ public class Organizacion {
     return datosActividades.stream().mapToDouble(DatosActividades::impactoHC).sum();
   }
 
-  public HC HCMensual(){
+  public HC hcMensual(){
     double hcDatosActividad = calculoHCMensual();
     return new HC(hcDatosActividad, UnidadHC.kgCO2);
   }
 
-  public HC HCAnual(){
+  public HC hcAnual(){
     double hcDatosActividad = calculoHCMensual() * 12;
     return new HC(hcDatosActividad, UnidadHC.kgCO2);
   }
