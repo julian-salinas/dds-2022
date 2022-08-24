@@ -1,6 +1,6 @@
-package domain.passwords.validaciones;
+package domain.contrasenias.validaciones;
 
-import domain.passwords.exceptions.PasswordException;
+import domain.contrasenias.excepciones.PasswordException;
 
 public class ValidacionLongitud implements Validacion {
 

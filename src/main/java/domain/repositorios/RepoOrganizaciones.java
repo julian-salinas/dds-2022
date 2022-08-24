@@ -1,5 +1,6 @@
 package domain.repositorios;
 
+import domain.organizaciones.Contacto;
 import domain.organizaciones.Organizacion;
 import domain.ubicaciones.Municipio;
 import domain.ubicaciones.Provincia;
@@ -47,6 +48,16 @@ public class RepoOrganizaciones {
                 Objects.equals(org.sectorProvincia().getNombre(), provincia.getNombre()))
         )
         .collect(Collectors.toList());
+  }
+
+  /**
+   * Obtener todos los contactos de todas las organizaciones
+   */
+  public List<Contacto> getContactos() {
+    return this.organizaciones.stream()
+            .map(Organizacion::getContactos)
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
   }
 
 }

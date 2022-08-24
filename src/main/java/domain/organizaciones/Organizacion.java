@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -103,16 +104,19 @@ public class Organizacion {
     return contactos;
   }
 
-  private void cargarDATransladoMiembros(){
-    double combustibleTransporteMiembros = 30 * sectores.stream().mapToDouble(Sector::combustibleConsumidoTransporteMiembros).sum(); // Multiplico por 30, para obtener el valor mensual
+  public void cargarDATransladoMiembros(){
+    double combustibleTransporteMiembros = 30 * sectores.stream().mapToDouble(Sector::combustibleConsumidoTransporteMiembros).sum();
+    //SimpleDateFormat formatFecha = new SimpleDateFormat("MM/yyyy");
+    DateTimeFormatter formatFecha = DateTimeFormatter.ofPattern("MM/yyyy");
+    // Multiplico por 30, para obtener el valor mensual dado que el trayecto que recorren los miembros es a diario
     datosActividades.add(new DatosActividades("Distancia media",
         String.valueOf(combustibleTransporteMiembros),
         "Mensual",
-        new SimpleDateFormat("MM/yyyy").format(LocalDate.now())));
+        formatFecha.format(LocalDate.now())));
   }
 
   private double calculoHCMensual(){
-    this.cargarDATransladoMiembros();
+    //this.cargarDATransladoMiembros();
     return datosActividades.stream().mapToDouble(DatosActividades::impactoHC).sum();
   }
 
