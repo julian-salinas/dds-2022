@@ -25,8 +25,10 @@ public class DistanciaTests {
 
   ServicioGeoDds apiClient;
 
+  Linea lineaA;
 
   Tramo tramoLineaA;
+  Tramo tramoLineaAinverso;
   Tramo tramoAPie;
   Tramo tramoEnBici;
   Tramo tramoEnAuto;
@@ -55,12 +57,17 @@ public class DistanciaTests {
     List<Parada> paradasLineaA = Stream.of(sanPedrito, flores, carabobo, puan)
         .collect(Collectors.toList());
 
-    Linea lineaA = new Linea("Linea A", paradasLineaA, TipoTransportePublico.SUBTE);
+    lineaA = new Linea("Linea A", paradasLineaA, TipoTransportePublico.SUBTE);
 
-    // Con un recorrido que es solo de San Pedrito a Carabobo
+    // Creo un recorrido que es solo de San Pedrito a Carabobo
     TransportePublico recorridoConLineaA = new TransportePublico(TipoTransportePublico.SUBTE,
         lineaA, sanPedrito, carabobo);
     tramoLineaA = new Tramo(recorridoConLineaA);
+
+    // Con un recorrido que es solo de Carabobo a San Pedrito
+    TransportePublico recorridoConLineaAinverso = new TransportePublico(TipoTransportePublico.SUBTE,
+        lineaA, carabobo, sanPedrito);
+    tramoLineaAinverso = new Tramo(recorridoConLineaAinverso);
 
     ubicacionInicioPie = crearUbicacion("Directorio", 1700);
     ubicacionInicioBici = crearUbicacion("Directorio", 100);
@@ -92,9 +99,37 @@ public class DistanciaTests {
 
   // Tests con Transporte Publico (la dist. de cada tramo se indica a mano)
 
+  // Ida distinta de vuelta:
+  //  - Las paradas estan seteadas de forma circular (despues de la ultima esta la primera)
+  //  - Se circula solo en un sentido (para adelante)
+
+  // Ida igual a vuelta:
+  //  - Se circula en ambos sentidos
+
   @Test
-  public void laDistanciaDeUnTramoDeTransportePublicoSeCalculaBien() {
-    assertEquals(650.0, tramoLineaA.distancia().valorEnMetros());
+  public void laDistanciaDeUnTramoDeTransportePublicoIdaDistintaDeVueltaSeCalculaBien() {
+    //San Pedrito -> Carabobo, Ida distinta de vuelta
+    assertEquals(500.0, tramoLineaA.distancia().valorEnMetros());
+  }
+
+  @Test
+  public void laDistanciaDeUnTramoInversoDeTransportePublicoIdaDistintaDeVueltaSeCalculaBien() {
+    //Carabobo -> San Pedrito, Ida distinta de vuelta
+    assertEquals(300.0, tramoLineaAinverso.distancia().valorEnMetros());
+  }
+
+  @Test
+  public void laDistanciaDeUnTramoDeTransportePublicoIdaIgualAVueltaSeCalculaBien() {
+    //San Pedrito -> Carabobo, Ida igual a vuelta
+    lineaA.setIdaIgualAVuelta(true);
+    assertEquals(500.0, tramoLineaA.distancia().valorEnMetros());
+  }
+
+  @Test
+  public void laDistanciaDeUnTramoInversoDeTransportePublicoIdaIgualAVueltaSeCalculaBien() {
+    //Carabobo -> San Pedrito, Ida igual a vuelta
+    lineaA.setIdaIgualAVuelta(true);
+    assertEquals(500.0, tramoLineaAinverso.distancia().valorEnMetros());
   }
 
   @Test
@@ -109,7 +144,7 @@ public class DistanciaTests {
     Trayecto trayecto = new Trayecto();
     trayecto.agregarTramos(tramoLineaA, tramoCon132);
 
-    assertEquals(760.0, trayecto.distanciaTotal().valorEnMetros());
+    assertEquals(555.0, trayecto.distanciaTotal().valorEnMetros());
   }
 
   // Tests con los demas tipos de Transporte (la dist. de cada tramo se la indica la API)
@@ -176,8 +211,8 @@ public class DistanciaTests {
     Trayecto trayecto = new Trayecto();
     trayecto.agregarTramos(tramoAPie, tramoEnBici, tramoEnAuto, tramoEnTaxi, tramoLineaA);
 
-    // 73.0 + 313.0 + 10000.0 + 750.0 + 650.0 = 11786.0
-    assertEquals(11786.0, trayecto.distanciaTotal().valorEnMetros());
+    // 73.0 + 313.0 + 10000.0 + 750.0 + 500.0 = 11786.0
+    assertEquals(11636.0, trayecto.distanciaTotal().valorEnMetros());
   }
 
   @Test
@@ -193,8 +228,8 @@ public class DistanciaTests {
     trayecto.agregarTramos(tramoAPie, tramoEnBici, tramoEnAuto,
         tramoEnTaxi, tramoLineaA, tramoAPie, tramoEnAuto);
 
-    // 73.0 + 313.0 + 10000.0 + 750.0 + 650.0 + 73.0 + 10000.0 = 21859.0
-    assertEquals(21859.0, trayecto.distanciaTotal().valorEnMetros());
+    // 73.0 + 313.0 + 10000.0 + 750.0 + 500.0 + 73.0 + 10000.0 = 21859.0
+    assertEquals(21709.0, trayecto.distanciaTotal().valorEnMetros());
   }
 
   @Test
