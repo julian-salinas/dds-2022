@@ -68,7 +68,7 @@ public class AgenteSectorialTests {
     assertEquals(1, (long) org1.sectorMunicipio().orgsDentroDeSector().size());
     assertEquals(org1, org1.sectorMunicipio().orgsDentroDeSector().get(0));
 
-    RepoOrganizaciones.instance().sacarOrganizaciones(org1, org2, org3);
+    RepoOrganizaciones.instance().limpiar();
   }
 
   @Test
@@ -82,7 +82,7 @@ public class AgenteSectorialTests {
     assertEquals(3, (long) org1.sectorProvincia().orgsDentroDeSector().size());
     assertEquals(todasLasOrgs, org1.sectorProvincia().orgsDentroDeSector());
 
-    RepoOrganizaciones.instance().sacarOrganizaciones(org1, org2, org3);
+    RepoOrganizaciones.instance().limpiar();
   }
   // <--
 
@@ -111,7 +111,7 @@ public class AgenteSectorialTests {
 
     assertEquals(2010.325, valorHc);
 
-    RepoOrganizaciones.instance().sacarOrganizaciones(org1, org2, org3);
+    RepoOrganizaciones.instance().limpiar();
   }
 
   @Test
@@ -137,7 +137,7 @@ public class AgenteSectorialTests {
 
     assertEquals(24123.9, valorHc);
 
-    RepoOrganizaciones.instance().sacarOrganizaciones(org1, org2, org3);
+    RepoOrganizaciones.instance().limpiar();
   }
 
   @Test
@@ -162,7 +162,7 @@ public class AgenteSectorialTests {
 
     assertEquals(6030.975, valorHc);
 
-    RepoOrganizaciones.instance().sacarOrganizaciones(org1, org2, org3);
+    RepoOrganizaciones.instance().limpiar();
   }
 
   @Test
@@ -187,7 +187,7 @@ public class AgenteSectorialTests {
 
     assertEquals(72371, ((int) valorHc));
 
-    RepoOrganizaciones.instance().sacarOrganizaciones(org1, org2, org3);
+    RepoOrganizaciones.instance().limpiar();
   }
 
   @Test
@@ -221,7 +221,7 @@ public class AgenteSectorialTests {
 
     assertEquals(6030.975, valorHc);
 
-    RepoOrganizaciones.instance().sacarOrganizaciones(org1, org2, org3, org4);
+    RepoOrganizaciones.instance().limpiar();
   }
 
   private Organizacion crearOrg(String nombre, Ubicacion ubicacion) {

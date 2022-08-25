@@ -20,7 +20,7 @@ public class ValidacionContraseniaComun implements Validacion {
 
       String pathToFile = new File(".")
           .getCanonicalPath()
-          .concat("/src/main/java/domain/passwords/validaciones/common-passwords.txt");
+          .concat("/src/main/java/domain/contrasenias/validaciones/common-passwords.txt");
 
       File file = new File(pathToFile);
       List<String> passwords = Files.readAllLines(file.toPath(), Charset.forName("UTF-8"));

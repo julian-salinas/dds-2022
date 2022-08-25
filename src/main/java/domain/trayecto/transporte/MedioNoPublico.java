@@ -2,7 +2,6 @@ package domain.trayecto.transporte;
 
 import domain.ubicaciones.Distancia;
 import domain.ubicaciones.Ubicacion;
-
 import java.io.IOException;
 
 import static domain.ubicaciones.UnidadDeDistancia.MTS;

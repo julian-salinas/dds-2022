@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import lombok.Getter;
 
@@ -25,9 +24,8 @@ public class RepoOrganizaciones {
     Collections.addAll(this.organizaciones, organizaciones);
   }
 
-  public void sacarOrganizaciones(Organizacion ... organizaciones) {
-    List<Organizacion> orgs = Stream.of(organizaciones).collect(Collectors.toList());
-    orgs.forEach(org -> this.organizaciones.remove(org));
+  public void limpiar() {
+    organizaciones = new ArrayList<>();
   }
 
   public List<Organizacion> inMunicipio(Municipio municipio) {
