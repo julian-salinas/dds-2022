@@ -1,16 +1,23 @@
 package domain.trayecto.transporte;
 
-import java.util.List;
-
 import domain.ubicaciones.Distancia;
 import domain.ubicaciones.UnidadDeDistancia;
+import java.util.List;
 import lombok.Getter;
+
+// Unidireccional:
+//  - Las paradas estan seteadas de forma circular (despues de la ultima esta la primera)
+//  - Se circula solo en un sentido (para adelante)
+
+// Bidireccional:
+//  - Se circula en ambos sentidos
 
 public class Linea {
 
   private String nombre;
-  @Getter private List<Parada> paradas; // [ini,...,fin] --> fin->ini (circular)
+  @Getter private List<Parada> paradas;
   private TipoTransportePublico tipo;
+  private boolean bidireccional;// = false;
 
   public Linea(String nombre, List<Parada> paradas, TipoTransportePublico tipo) {
     this.nombre = nombre;
@@ -30,22 +37,61 @@ public class Linea {
     paradas.add(parada);
   }
 
+  public void setUnidireccional() {
+    bidireccional = false;
+  }
+
+  public void setBidireccional() {
+    bidireccional = true;
+  }
+
   private boolean isInRange(Parada parada, int indiceInicial, int indiceFinal) {
     return paradas.indexOf(parada) >= indiceInicial
-        && paradas.indexOf(parada) <= indiceFinal;
+        && paradas.indexOf(parada) < indiceFinal;
   }
 
   public Distancia distanciaEntreParadas(Parada paradaInicio, Parada paradaFin) {
     int indiceInicial = paradas.indexOf(paradaInicio);
     int indiceFinal = paradas.indexOf(paradaFin);
+    double distanciaEnMetros;
 
-    double distanciaEnMetros =  paradas
+    if(!bidireccional) {
+      boolean tieneQueCruzar = indiceFinal < indiceInicial;
+      if(!tieneQueCruzar){
+        distanciaEnMetros = distSentidoHaciaAdelante(indiceInicial, indiceFinal);
+      } else {
+        distanciaEnMetros = distSentidoHaciaAdelanteCruzando(indiceInicial, indiceFinal);
+      }
+    } else {
+      boolean esParaAtras = indiceFinal < indiceInicial;
+      if(!esParaAtras) {
+        distanciaEnMetros = distSentidoHaciaAdelante(indiceInicial, indiceFinal);
+      } else {
+        distanciaEnMetros = distSentidoHaciaAtras(indiceInicial, indiceFinal);
+      }
+    }
+    return new Distancia(distanciaEnMetros, UnidadDeDistancia.MTS);
+  }
+
+  private double distEntreIndices(int indiceInicial, int indiceFinal) {
+    return paradas
         .stream()
         .filter(parada -> isInRange(parada, indiceInicial, indiceFinal))
         .mapToDouble(parada -> parada.getDistAproximaParada().valorEnMetros())
         .sum();
+  }
 
-    return new Distancia(distanciaEnMetros, UnidadDeDistancia.MTS);
+  private double distSentidoHaciaAdelante(int indiceInicial, int indiceFinal) {
+    return distEntreIndices(indiceInicial, indiceFinal);
+  }
+
+  private double distSentidoHaciaAtras(int indiceInicial, int indiceFinal) {
+    return distEntreIndices(indiceFinal, indiceInicial);
+  }
+
+  private double distSentidoHaciaAdelanteCruzando(int indiceInicial, int indiceFinal) {
+    return distSentidoHaciaAdelante(indiceInicial, paradas.size())
+        + distSentidoHaciaAdelante(0, indiceFinal);
   }
 
 }

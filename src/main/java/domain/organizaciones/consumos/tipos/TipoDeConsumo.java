@@ -3,6 +3,7 @@ package domain.organizaciones.consumos.tipos;
 import domain.organizaciones.consumos.Actividad;
 import domain.organizaciones.consumos.Alcance;
 import domain.organizaciones.consumos.Unidad;
+import lombok.Getter;
 
 import java.util.Optional;
 
@@ -10,7 +11,7 @@ public class TipoDeConsumo {
   private Optional<Unidad> unidad;
   private Actividad actividad;
   private Alcance alcance;
-  private FactorEmision fe;
+  @Getter private FactorEmision fe;
 
   public TipoDeConsumo(Optional<Unidad> unidad, Actividad actividad, Alcance alcance) {
     this.unidad = unidad;
@@ -26,7 +27,4 @@ public class TipoDeConsumo {
     }
   }
 
-  public FactorEmision getFe() {
-    return fe;
-  }
 }
