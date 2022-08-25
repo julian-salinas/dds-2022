@@ -70,13 +70,13 @@ public class CalculoHcTests {
     datosActividades.get(1).getTipoDeConsumo().cargarFactorEmision(feElectricidad);
     datosActividades.get(2).getTipoDeConsumo().cargarFactorEmision(feNafta);
 
-    Pie tramoPie = new Pie(unaUbicacion, unaUbicacion, apiClient);
+    Pie tramoPie = new Pie(unaUbicacion, unaUbicacion);
     Tramo primerTramom1 = new Tramo(tramoPie);
     Trayecto trayecto1 = new Trayecto();
     trayecto1.agregarTramo(primerTramom1);
     miembro1.agregarTrayecto(trayecto1);
 
-    Bicicleta tramoBici = new Bicicleta(unaUbicacion, unaUbicacion, apiClient);
+    Bicicleta tramoBici = new Bicicleta(unaUbicacion, unaUbicacion);
     Tramo primerTramom2 = new Tramo(tramoBici);
     Trayecto trayecto2 = new Trayecto();
     trayecto2.agregarTramo(primerTramom2);
@@ -85,7 +85,7 @@ public class CalculoHcTests {
     List<Miembro> miembros = Stream.of(miembro2).collect(Collectors.toList());
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, unaUbicacion, unaUbicacion, apiClient, 0.15
+        taxi, unaUbicacion, unaUbicacion, 0.15
     );
     Tramo tramo = new Tramo(servicioContratado);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());

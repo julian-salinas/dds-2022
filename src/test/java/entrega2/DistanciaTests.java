@@ -79,21 +79,21 @@ public class DistanciaTests {
     ubicacionFinVP = crearUbicacion("Yapeyu", 2400);
     ubicacionFinSC = crearUbicacion("Yapeyu", 700);
 
-    Pie recorridoAPie = new Pie(ubicacionInicioPie, ubicacionFinPie, apiClient);
+    Pie recorridoAPie = new Pie(ubicacionInicioPie, ubicacionFinPie);
     tramoAPie   = new Tramo(recorridoAPie);
 
-    Bicicleta recorridoEnBici = new Bicicleta(ubicacionInicioBici, ubicacionFinBici, apiClient);
+    Bicicleta recorridoEnBici = new Bicicleta(ubicacionInicioBici, ubicacionFinBici);
     tramoEnBici = new Tramo(recorridoEnBici);
 
     VehiculoParticular recorridoEnAuto = new VehiculoParticular(TipoDeVehiculo.AUTO,
         TipoDeCombustible.GASOIL,
         ubicacionInicioVP, ubicacionFinVP,
-        apiClient, 400.0);
+        400.0);
     tramoEnAuto = new Tramo(recorridoEnAuto);
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado recorridoEnTaxi = new ServicioContratado(taxi, ubicacionInicioSC,
-        ubicacionFinSC, apiClient, 200.0);
+        ubicacionFinSC, 200.0);
     tramoEnTaxi = new Tramo(recorridoEnTaxi);
 
   }
@@ -268,14 +268,14 @@ public class DistanciaTests {
 
   private Ubicacion crearUbicacion(String calle, int altura) throws IOException {
     Ubicacion ubicacion;
-    ServicioGeoDds api = mock(ServicioGeoDds.class);
-    when(api.verificarNombreLocalidad(anyString())).thenReturn(2);  //id Localidad = 2
-    when(api.nombreMunicipio(2)).thenReturn("Valcheta");
-    when(api.verificarNombreMunicipio("Valcheta")).thenReturn(4);   //id Municipio = 4
-    when(api.nombreProvincia(4)).thenReturn("Rio Negro");
-    when(api.verificarNombreProvincia("Rio Negro")).thenReturn(7);  //id Provincia = 7
+    //ServicioGeoDds api = mock(ServicioGeoDds.class);
+    when(apiClient.verificarNombreLocalidad(anyString())).thenReturn(2);  //id Localidad = 2
+    when(apiClient.nombreMunicipio(2)).thenReturn("Valcheta");
+    when(apiClient.verificarNombreMunicipio("Valcheta")).thenReturn(4);   //id Municipio = 4
+    when(apiClient.nombreProvincia(4)).thenReturn("Rio Negro");
+    when(apiClient.verificarNombreProvincia("Rio Negro")).thenReturn(7);  //id Provincia = 7
 
-    ubicacion = new Ubicacion(calle, altura, "Chacabuco", api);
+    ubicacion = new Ubicacion(calle, altura, "Chacabuco", apiClient);
     return ubicacion;
   }
 

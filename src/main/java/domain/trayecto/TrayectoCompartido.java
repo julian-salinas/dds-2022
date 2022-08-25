@@ -70,7 +70,4 @@ public class TrayectoCompartido extends Trayecto{
     Collections.addAll(this.tramos, tramos);
   }
 
-  public double combustibleTotalUtilizado(){
-    return tramos.stream().mapToDouble(Tramo::combustibleUtilizado).sum();
-  }
 }

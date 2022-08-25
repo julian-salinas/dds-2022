@@ -44,7 +44,7 @@ public class TrayectoTests {
     Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
     List<Miembro> miembros = Stream.of(miembro, miembro2).collect(Collectors.toList());
 
-    Bicicleta bici = new Bicicleta(ubicacionDefault, ubicacionDefault, apiClient);
+    Bicicleta bici = new Bicicleta(ubicacionDefault, ubicacionDefault);
     Tramo tramo = new Tramo(bici);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
@@ -59,7 +59,7 @@ public class TrayectoTests {
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
+        taxi, ubicacionDefault, ubicacionDefault, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
@@ -75,7 +75,7 @@ public class TrayectoTests {
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
+        taxi, ubicacionDefault, ubicacionDefault, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
@@ -97,7 +97,7 @@ public class TrayectoTests {
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
+        taxi, ubicacionDefault, ubicacionDefault, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
@@ -120,7 +120,7 @@ public class TrayectoTests {
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
+        taxi, ubicacionDefault, ubicacionDefault, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
@@ -144,7 +144,7 @@ public class TrayectoTests {
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
+        taxi, ubicacionDefault, ubicacionDefault, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
@@ -166,7 +166,7 @@ public class TrayectoTests {
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, ubicacionDefault, ubicacionDefault, apiClient, 500.0
+        taxi, ubicacionDefault, ubicacionDefault, 500.0
     );
     Tramo tramo = new Tramo(servicioContratado);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
