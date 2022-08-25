@@ -58,6 +58,7 @@ public class DistanciaTests {
         .collect(Collectors.toList());
 
     lineaA = new Linea("Linea A", paradasLineaA, TipoTransportePublico.SUBTE);
+    lineaA.setUnidireccional();
 
     // Creo un recorrido que es solo de San Pedrito a Carabobo
     TransportePublico recorridoConLineaA = new TransportePublico(TipoTransportePublico.SUBTE,
@@ -99,36 +100,38 @@ public class DistanciaTests {
 
   // Tests con Transporte Publico (la dist. de cada tramo se indica a mano)
 
-  // Ida distinta de vuelta:
+  // Unidireccional:
   //  - Las paradas estan seteadas de forma circular (despues de la ultima esta la primera)
   //  - Se circula solo en un sentido (para adelante)
+  //  - Lo importante en este caso es ver si se tiene que pasar de la ultima a la primera (cruzar)
 
-  // Ida igual a vuelta:
+  // Bidireccional:
   //  - Se circula en ambos sentidos
+  //  - Lo importante en este caso es ver si se tiene que ir para atras (el sentido)
 
   @Test
   public void laDistanciaDeUnTramoDeTransportePublicoIdaDistintaDeVueltaSeCalculaBien() {
-    //San Pedrito -> Carabobo, Ida distinta de vuelta
+    //San Pedrito -> Carabobo, Unidireccional
     assertEquals(500.0, tramoLineaA.distancia().valorEnMetros());
   }
 
   @Test
   public void laDistanciaDeUnTramoInversoDeTransportePublicoIdaDistintaDeVueltaSeCalculaBien() {
-    //Carabobo -> San Pedrito, Ida distinta de vuelta
+    //Carabobo -> San Pedrito, Unidireccional
     assertEquals(300.0, tramoLineaAinverso.distancia().valorEnMetros());
   }
 
   @Test
   public void laDistanciaDeUnTramoDeTransportePublicoIdaIgualAVueltaSeCalculaBien() {
-    //San Pedrito -> Carabobo, Ida igual a vuelta
-    lineaA.setIdaIgualAVuelta(true);
+    //San Pedrito -> Carabobo, Bidireccional
+    lineaA.setBidireccional();
     assertEquals(500.0, tramoLineaA.distancia().valorEnMetros());
   }
 
   @Test
   public void laDistanciaDeUnTramoInversoDeTransportePublicoIdaIgualAVueltaSeCalculaBien() {
-    //Carabobo -> San Pedrito, Ida igual a vuelta
-    lineaA.setIdaIgualAVuelta(true);
+    //Carabobo -> San Pedrito, Bidireccional
+    lineaA.setBidireccional();
     assertEquals(500.0, tramoLineaAinverso.distancia().valorEnMetros());
   }
 
