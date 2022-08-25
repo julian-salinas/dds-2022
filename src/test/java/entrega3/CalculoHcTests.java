@@ -1,10 +1,5 @@
 package entrega3;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import domain.miembros.Miembro;
 import domain.miembros.TipoDeDocumento;
 import domain.organizaciones.*;
@@ -19,10 +14,16 @@ import domain.trayecto.transporte.Pie;
 import domain.trayecto.transporte.ServicioContratado;
 import domain.trayecto.transporte.TipoServicioContratado;
 import domain.ubicaciones.Ubicacion;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -49,6 +50,14 @@ public class CalculoHcTests {
   @BeforeEach
   public void init() throws IOException {
     apiClient = mock(ServicioGeoDds.class);
+
+    when(apiClient.verificarNombreLocalidad(anyString())).thenReturn(2);  //id Localidad = 2
+    when(apiClient.nombreMunicipio(2)).thenReturn("Valcheta");
+    when(apiClient.verificarNombreMunicipio("Valcheta")).thenReturn(4);   //id Municipio = 4
+    when(apiClient.nombreProvincia(4)).thenReturn("Rio Negro");
+    when(apiClient.verificarNombreProvincia("Rio Negro")).thenReturn(7);  //id Provincia = 7
+
+    unaUbicacion = new Ubicacion("Calle", 1200, "Juan", apiClient);
 
     clasificacion = new ClasificacionOrganizacion(" Empresa del sector secundario");
     organizacion = new Organizacion("RazonX", TipoOrganizacion.EMPRESA, "Cola-Coca", unaUbicacion, clasificacion);
@@ -93,7 +102,7 @@ public class CalculoHcTests {
 
     miembro1.registrarTrayecto(trayectoCompartido);
 
-    when(apiClient.distanciaEntreUbicaciones(unaUbicacion, unaUbicacion)).thenReturn(4000.0);
+    when(apiClient.distanciaEntreUbicaciones(any(Ubicacion.class), any(Ubicacion.class))).thenReturn(4000.0);
   }
 
   @Test

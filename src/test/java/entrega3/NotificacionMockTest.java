@@ -47,6 +47,8 @@ public class NotificacionMockTest {
 
     int status =  notificacionWhatsApp.notificar(unContacto);
     assertEquals(202, status);
+
+    RepoOrganizaciones.instance().limpiar();
   }
 
   @Test
@@ -55,6 +57,8 @@ public class NotificacionMockTest {
 
     int status = notificacionEmail.notificar(unContacto);
     assertEquals(202, status);
+
+    RepoOrganizaciones.instance().limpiar();
   }
 
   @Test
@@ -64,5 +68,7 @@ public class NotificacionMockTest {
 
     String[] args = new String[] {"123"};
     assertDoesNotThrow(() -> Planificador.main(args));
+
+    RepoOrganizaciones.instance().limpiar();
   }
 }
