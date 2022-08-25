@@ -15,11 +15,11 @@ public class Tramo {
     return medio.distancia();
   }
 
-  public Boolean admiteTrayectoCompartido() {
+  public boolean admiteTrayectoCompartido() {
     return medio.admiteTrayectoCompartido();
   }
 
-  public double combustibleUtilizado(){
+  public double combustibleUtilizado() {
     return medio.getCombustibleConsumidoPorKM() * (this.distancia().valorEnMetros() / 1000);
   }
 

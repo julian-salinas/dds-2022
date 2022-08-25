@@ -1,6 +1,5 @@
 package domain.trayecto.transporte;
 
-import domain.servicios.geodds.ServicioGeoDds;
 import domain.ubicaciones.Distancia;
 import domain.ubicaciones.Ubicacion;
 
@@ -10,7 +9,6 @@ import static domain.ubicaciones.UnidadDeDistancia.MTS;
 
 public abstract class MedioNoPublico implements MedioDeTransporte {
 
-  abstract ServicioGeoDds getApiClient();
   abstract Ubicacion getDireccionInicio();
   abstract Ubicacion getDireccionFin();
 
@@ -20,14 +18,8 @@ public abstract class MedioNoPublico implements MedioDeTransporte {
   }
 
   public Distancia distancia() {
-    //ServicioGeoDds apiClient = ServicioGeoDds.getInstancia();
-
     try {
-      double distanciaAPI = this.getApiClient().distanciaEntreUbicaciones(
-          this.getDireccionInicio(),
-          this.getDireccionFin()
-      );
-      return new Distancia(distanciaAPI, MTS);
+      return this.getDireccionInicio().calcularDistanciaA(this.getDireccionFin());
     } catch (IOException e) {
       // bruh
       return new Distancia(-1.0, MTS);

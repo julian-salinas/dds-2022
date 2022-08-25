@@ -1,11 +1,10 @@
 package domain.trayecto;
 
 import domain.miembros.Miembro;
+import domain.ubicaciones.Distancia;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import domain.ubicaciones.Distancia;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,8 +38,8 @@ public class Trayecto {
     return new Distancia(distancia, MTS);
   }
 
-  public double combustibleTotalUtilizado(){
-    return tramos.stream().mapToDouble(Tramo::combustibleUtilizado).sum();
+  public double combustibleTotalUtilizado() {
+    return this.getTramos().stream().mapToDouble(Tramo::combustibleUtilizado).sum();
   }
 
 }
