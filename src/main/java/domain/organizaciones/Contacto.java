@@ -3,8 +3,8 @@ package domain.organizaciones;
 import domain.notificaciones.Suscriptor;
 
 public class Contacto implements Suscriptor {
-  private String email;
-  private String whatsApp;
+  private String email = null;
+  private String whatsApp = null;
 
   public Contacto(String email, String whatsApp) {
     ValidadorDatoDeContacto validadorDatoDeContacto = new ValidadorDatoDeContacto();

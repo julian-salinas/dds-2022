@@ -22,6 +22,4 @@ public class Notificacion {
   public void notificarOrganizaciones() {
     RepoOrganizaciones.instance().getContactos().stream().forEach(contacto -> this.notificar(contacto));
   }
-
 }
-

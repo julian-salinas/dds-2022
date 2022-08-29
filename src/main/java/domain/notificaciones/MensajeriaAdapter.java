@@ -9,5 +9,4 @@ public interface MensajeriaAdapter {
    * @return status code.
    */
   int enviar(Suscriptor suscriptor, String mensaje);
-
 }

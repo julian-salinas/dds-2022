@@ -30,5 +30,4 @@ public class WhatsAppAdapter implements MensajeriaAdapter {
 
     return message.getStatus().ordinal();
   }
-
 }

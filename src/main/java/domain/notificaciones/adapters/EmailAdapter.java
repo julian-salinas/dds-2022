@@ -11,7 +11,6 @@ import domain.notificaciones.MensajeriaAdapter;
 import domain.notificaciones.Suscriptor;
 import java.io.IOException;
 
-
 public class EmailAdapter implements MensajeriaAdapter {
   private String SENDGRID_API_KEY;;
   private String EMAIL;
@@ -49,5 +48,4 @@ public class EmailAdapter implements MensajeriaAdapter {
   private Mail generarMail(String from, String subject, String to, String content) {
     return new Mail(new Email(from), subject, new Email(to), new Content("text/plain", content));
   }
-
 }
