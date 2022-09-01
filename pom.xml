@@ -19,6 +19,7 @@
   </properties>
 
   <dependencies>
+
     <!-- Tests -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -26,6 +27,7 @@
       <version>5.7.0</version>
       <scope>test</scope>
     </dependency>
+
     <!-- Mock -->
     <dependency>
       <groupId>org.mockito</groupId>
@@ -33,7 +35,8 @@
       <version>3.10.0</version>
       <scope>test</scope>
     </dependency>
-    <!-- Getters y Setters -->
+
+    <!-- Lombok (Getters y Setters) -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -41,7 +44,9 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Twilio -->
+    <!-- Notificaciones -->
+
+    <!-- Twilio (SMS) -->
     <!-- https://mvnrepository.com/artifact/com.twilio.sdk/twilio -->
     <dependency>
       <groupId>com.twilio.sdk</groupId>
@@ -49,20 +54,23 @@
       <version>8.32.0</version>
     </dependency>
 
-    <!-- Sendgrid -->
+    <!-- Sendgrid (Mails) -->
     <!-- https://mvnrepository.com/artifact/com.sendgrid/sendgrid-java -->
     <dependency>
       <groupId>com.sendgrid</groupId>
       <artifactId>sendgrid-java</artifactId>
       <version>4.9.3</version>
     </dependency>
+
     <!-- APIs REST -->
+
     <!-- Si Jersey no se usa, sacar -->
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-client</artifactId>
       <version>1.8</version>
     </dependency>
+
     <!-- Retrofit -->
     <!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit -->
     <dependency>
@@ -75,6 +83,7 @@
       <artifactId>converter-gson</artifactId>
       <version>2.9.0</version>
     </dependency>
+
     <!-- Scheduler -->
     <dependency>
       <groupId>org.quartz-scheduler</groupId>
@@ -86,6 +95,35 @@
       <artifactId>quartz-jobs</artifactId>
       <version>2.2.1</version>
     </dependency>
+
+    <!-- Base de datos -->
+
+    <!-- JPA Persistence -->
+    <dependency>
+      <groupId>org.uqbar-project</groupId>
+      <artifactId>jpa-java8-extras</artifactId>
+      <version>1.0-alpha-1</version>
+    </dependency>
+
+    <!-- drivers jdbc -->
+
+    <!-- mysql -->
+    <!--
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.17</version>
+    </dependency>
+    -->
+
+    <!-- hsqldb -->
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>2.4.0</version>
+      <scope>test</scope>
+    </dependency>
+
     <!-- Fin -->
   </dependencies>
 
