@@ -1,4 +1,6 @@
-package domain.notificaciones;
+package domain.notificaciones.adapters;
+
+import domain.notificaciones.Suscriptor;
 
 public interface MensajeriaAdapter {
 

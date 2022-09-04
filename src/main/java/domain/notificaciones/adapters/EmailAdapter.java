@@ -7,7 +7,6 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
-import domain.notificaciones.MensajeriaAdapter;
 import domain.notificaciones.Suscriptor;
 import java.io.IOException;
 

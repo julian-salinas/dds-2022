@@ -1,3 +1,5 @@
+' Link: https://plantuml.com/es/class-diagram
+
 @startuml
 
 ' Repos
@@ -42,21 +44,13 @@ class Ubicacion {
     + calcularDistanciaA(otraUbicacion): Distancia
 }
 
-class Localidad {
+class Localidad {}
 
-}
+class Municipio implements SectorTerritorial{}
 
-class Municipio implements SectorTerritorial{
+class Provincia implements SectorTerritorial{}
 
-}
-
-class Provincia implements SectorTerritorial{
-
-}
-
-class Pais {
-
-}
+class Pais {}
 
 interface SectorTerritorial {
     + List<Organizacion> orgsDentroDeSector()
@@ -96,9 +90,7 @@ class Trayecto {
     + combustibleTotalUtilizado(): double
 }
 
-class TrayectoCompartido extends Trayecto {
-
-}
+class TrayectoCompartido extends Trayecto {}
 
 class Tramo {
     + distancia(): Distancia
@@ -118,9 +110,7 @@ enum TipoTransportePublico {
   COLECTIVO
 }
 
-class TransportePublico implements MedioDeTransporte {
-    
-}
+class TransportePublico implements MedioDeTransporte {}
 
 class Linea {
     + setUnidireccional()
@@ -128,9 +118,7 @@ class Linea {
     + distanciaEntreParadas(paradaInicio, paradaFin): Distancia
 }
 
-class Parada {
-
-}
+class Parada {}
 
 abstract class MedioNoPublico implements MedioDeTransporte {
     getDireccionInicio(): Ubicacion
@@ -160,6 +148,54 @@ enum TipoDeCombustible {
   GASOIL
 }
 
+' API
+
+interface RetrofitGeoDds {}
+class ServicioGeoDds implements RetrofitGeoDds {}
+
+' Datos de Actividades
+
+class DatosActividades {
+  - valor: double
+  - periodicidad: String
+  - periodoImputacion: String
+
+  + impactoHC(): double
+}
+
+enum Actividad {
+  COMBUSTION_FIJA
+  COMBUSTION_MOVIL
+  ELECTRICIDAD
+  LOGISTICA_PRODUCTOS_RESIDUOS
+}
+
+enum Alcance {
+  DIRECTAS
+  INDIRECTAS_ELECTRICIDAD
+  INDIRECTAS_EXTERNAS
+}
+
+enum Unidad {
+  M3
+  LT
+  KG
+  KWH
+  KM
+}
+
+class FactorEmision {
+  + valor: double
+}
+
+class TipoDeConsumo {
+  + cargarFactorEmision(factorEmision)
+}
+
+class TipoDeConsumoFactory {
+  + instance()
+  + buildTipoDeConsumo(tipo: String): TipoDeConsumo
+}
 
 Organizacion <--> "*" Sector
 Sector <--> "*" Miembro
@@ -169,7 +205,7 @@ Tramo --> MedioDeTransporte
 
 
 RepoOrganizaciones -> "*" Organizacion
-Organizacion -> TipoOrganizacion
+TipoOrganizacion <-- Organizacion
 Organizacion ---> Ubicacion
 Miembro -> TipoDeDocumento
 TrayectoCompartido --> "*" Miembro
@@ -195,6 +231,16 @@ Municipio -> Provincia
 Provincia -> Pais
 AgenteSectorial --> SectorTerritorial
 
-HC -> UnidadHC
+Organizacion -> "*" DatosActividades
+DatosActividades -> TipoDeConsumo
+TipoDeConsumo --> Actividad
+TipoDeConsumo --> Alcance
+TipoDeConsumo --> Unidad
+TipoDeConsumo --> FactorEmision
+TipoDeConsumoFactory ..> TipoDeConsumo
+
+Organizacion ..> HC
+'HC <.... AgenteSectorial
+HC --> UnidadHC
 
 @enduml

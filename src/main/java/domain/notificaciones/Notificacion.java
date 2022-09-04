@@ -1,5 +1,6 @@
 package domain.notificaciones;
 
+import domain.notificaciones.adapters.MensajeriaAdapter;
 import domain.repositorios.RepoOrganizaciones;
 
 public class Notificacion {

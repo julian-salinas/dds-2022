@@ -1,6 +1,6 @@
 package entrega3;
 
-import domain.notificaciones.MensajeriaAdapter;
+import domain.notificaciones.adapters.MensajeriaAdapter;
 import domain.notificaciones.Notificacion;
 import domain.notificaciones.Planificador;
 import domain.notificaciones.adapters.EmailAdapter;

@@ -1,7 +1,6 @@
 package domain.notificaciones.adapters;
 
 import com.twilio.Twilio;
-import domain.notificaciones.MensajeriaAdapter;
 import com.twilio.rest.api.v2010.account.Message;
 import domain.notificaciones.Suscriptor;
 
