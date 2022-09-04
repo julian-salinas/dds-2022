@@ -1,14 +1,14 @@
 package domain.trayecto;
 
-import domain.miembros.Miembro;
-import domain.ubicaciones.Distancia;
+import domain.organizaciones.miembros.Miembro;
+import domain.ubicaciones.distancia.Distancia;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-import static domain.ubicaciones.UnidadDeDistancia.MTS;
+import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 
 public class Trayecto {
 

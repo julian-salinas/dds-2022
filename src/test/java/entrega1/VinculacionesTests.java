@@ -1,12 +1,12 @@
 package entrega1;
 
-import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
-import domain.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
-import domain.miembros.Miembro;
-import domain.miembros.TipoDeDocumento;
-import domain.organizaciones.ClasificacionOrganizacion;
+import domain.organizaciones.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
+import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
+import domain.organizaciones.miembros.Miembro;
+import domain.organizaciones.miembros.TipoDeDocumento;
+import domain.organizaciones.ClasificacionOrg;
 import domain.organizaciones.Organizacion;
-import domain.organizaciones.Sector;
+import domain.organizaciones.sectores.Sector;
 import domain.organizaciones.TipoOrganizacion;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.ubicaciones.Ubicacion;
@@ -22,7 +22,6 @@ public class VinculacionesTests {
   Organizacion organizacionDefault;
   Sector sectorDefault;
   Miembro miembroDefault;
-  ClasificacionOrganizacion ministerio;
   Ubicacion ubicacionDefault;
 
   @BeforeEach
@@ -36,8 +35,7 @@ public class VinculacionesTests {
 
     ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
 
-    ministerio = new ClasificacionOrganizacion("ministerio");
-    organizacionDefault = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, "Mc" ,ubicacionDefault, ministerio);
+    organizacionDefault = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, "Mc" ,ubicacionDefault, ClasificacionOrg.MINISTERIO);
     sectorDefault = new Sector();
     miembroDefault = new Miembro("Juan", "Martin", TipoDeDocumento.DNI, 43208556);
   }

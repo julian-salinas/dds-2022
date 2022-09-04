@@ -1,10 +1,13 @@
 package entrega3;
 
-import domain.miembros.Miembro;
-import domain.miembros.TipoDeDocumento;
+import domain.organizaciones.miembros.Miembro;
+import domain.organizaciones.miembros.TipoDeDocumento;
 import domain.organizaciones.*;
-import domain.organizaciones.consumos.Unidad;
-import domain.organizaciones.consumos.tipos.FactorEmision;
+import domain.organizaciones.datos.actividades.DatosActividades;
+import domain.organizaciones.datos.actividades.UnidadConsumo;
+import domain.organizaciones.hc.HC;
+import domain.organizaciones.datos.actividades.tipos.FactorEmision;
+import domain.organizaciones.sectores.Sector;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
@@ -33,7 +36,6 @@ public class CalculoHcTests {
   ServicioGeoDds apiClient;
 
   Ubicacion unaUbicacion;
-  ClasificacionOrganizacion clasificacion;
   Organizacion organizacion;
   Sector sectorDefault;
 
@@ -59,8 +61,7 @@ public class CalculoHcTests {
 
     unaUbicacion = new Ubicacion("Calle", 1200, "Juan", apiClient);
 
-    clasificacion = new ClasificacionOrganizacion(" Empresa del sector secundario");
-    organizacion = new Organizacion("RazonX", TipoOrganizacion.EMPRESA, "Cola-Coca", unaUbicacion, clasificacion);
+    organizacion = new Organizacion("RazonX", TipoOrganizacion.EMPRESA, "Cola-Coca", unaUbicacion, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
     sectorDefault = new Sector();
     organizacion.agregarSector(sectorDefault);
     miembro1 = new Miembro("Pepito", "Martinez", TipoDeDocumento.DNI, 45869305);
@@ -68,10 +69,10 @@ public class CalculoHcTests {
     sectorDefault.agregarMiembro(miembro1);
     sectorDefault.agregarMiembro(miembro2);
 
-    feGasNatural = new FactorEmision(1.5, Unidad.M3);
-    feElectricidad = new FactorEmision(1.3, Unidad.KWH);
-    feNafta = new FactorEmision(1.1, Unidad.LT);
-    feDistancia = new FactorEmision(1.3, Unidad.KM);
+    feGasNatural = new FactorEmision(1.5, UnidadConsumo.M3);
+    feElectricidad = new FactorEmision(1.3, UnidadConsumo.KWH);
+    feNafta = new FactorEmision(1.1, UnidadConsumo.LT);
+    feDistancia = new FactorEmision(1.3, UnidadConsumo.KM);
 
     organizacion.cargarMediciones("src/test/java/archivo-prueba.csv");
     List<DatosActividades> datosActividades = organizacion.getDatosActividades();

@@ -1,7 +1,7 @@
 package domain.trayecto;
 
 import domain.trayecto.transporte.MedioDeTransporte;
-import domain.ubicaciones.Distancia;
+import domain.ubicaciones.distancia.Distancia;
 
 public class Tramo {
 

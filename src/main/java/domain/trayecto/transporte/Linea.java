@@ -1,7 +1,7 @@
 package domain.trayecto.transporte;
 
-import domain.ubicaciones.Distancia;
-import domain.ubicaciones.UnidadDeDistancia;
+import domain.ubicaciones.distancia.Distancia;
+import domain.ubicaciones.distancia.UnidadDistancia;
 import java.util.List;
 import lombok.Getter;
 
@@ -70,7 +70,7 @@ public class Linea {
         distanciaEnMetros = distSentidoHaciaAtras(indiceInicial, indiceFinal);
       }
     }
-    return new Distancia(distanciaEnMetros, UnidadDeDistancia.MTS);
+    return new Distancia(distanciaEnMetros, UnidadDistancia.MTS);
   }
 
   private double distEntreIndices(int indiceInicial, int indiceFinal) {

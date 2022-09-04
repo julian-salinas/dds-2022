@@ -6,8 +6,8 @@ import domain.trayecto.transporte.TipoTransportePublico;
 import domain.trayecto.transporte.TransportePublico;
 import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
 import domain.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
-import domain.ubicaciones.Distancia;
-import domain.ubicaciones.UnidadDeDistancia;
+import domain.ubicaciones.distancia.Distancia;
+import domain.ubicaciones.distancia.UnidadDistancia;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,8 +25,8 @@ public class TransportesTests {
   @BeforeEach
   public void init() {
     lineaDefault = new Linea("A", paradasLineaA, TipoTransportePublico.SUBTE);
-    paradaDefault1 = new Parada("Carabobo", new Distancia(4, UnidadDeDistancia.KM));
-    paradaDefault2 = new Parada("Puan", new Distancia(5, UnidadDeDistancia.KM));
+    paradaDefault1 = new Parada("Carabobo", new Distancia(4, UnidadDistancia.KM));
+    paradaDefault2 = new Parada("Puan", new Distancia(5, UnidadDistancia.KM));
   }
 
   @Test
@@ -49,8 +49,8 @@ public class TransportesTests {
   public void crearUnTransportePublicoCuyasParadasNoEstenEnLaLineaTiraError() {
     lineaDefault.agregarParada(paradaDefault1);
     lineaDefault.agregarParada(paradaDefault2);
-    Parada paradaError1 = new Parada("Acoyte", new Distancia(700, UnidadDeDistancia.MTS));
-    Parada paradaError2 = new Parada("Castro Barros", new Distancia(6, UnidadDeDistancia.MTS));
+    Parada paradaError1 = new Parada("Acoyte", new Distancia(700, UnidadDistancia.MTS));
+    Parada paradaError2 = new Parada("Castro Barros", new Distancia(6, UnidadDistancia.MTS));
     // Nunca los agrego a lineaDefault
     assertThrows(ExcepcionParadasTransporteNoIncluidasEnLinea.class, () -> new TransportePublico(TipoTransportePublico.SUBTE, lineaDefault, paradaError1, paradaError2));
   }

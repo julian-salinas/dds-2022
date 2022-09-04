@@ -1,11 +1,16 @@
 package domain.organizaciones;
 
-import domain.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
-import domain.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
-import domain.miembros.Miembro;
-import domain.ubicaciones.Localidad;
-import domain.ubicaciones.Municipio;
-import domain.ubicaciones.Provincia;
+import domain.organizaciones.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
+import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
+import domain.organizaciones.miembros.Miembro;
+import domain.notificaciones.contactos.Contacto;
+import domain.organizaciones.datos.actividades.DatosActividades;
+import domain.organizaciones.hc.HC;
+import domain.organizaciones.hc.UnidadHC;
+import domain.organizaciones.sectores.Sector;
+import domain.ubicaciones.sectores.Localidad;
+import domain.ubicaciones.sectores.Municipio;
+import domain.ubicaciones.sectores.Provincia;
 import domain.ubicaciones.Ubicacion;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -20,14 +25,14 @@ public class Organizacion {
   private String nombre;
   private final String razonSocial;
   private TipoOrganizacion tipo;
+  private ClasificacionOrg clasificacion;
   private Ubicacion ubicacion;
   private final List<Sector> sectores = new ArrayList<>();
-  private ClasificacionOrganizacion clasificacion;
   private List<DatosActividades> datosActividades = new ArrayList<>();
   private List<Contacto> contactos = new ArrayList<>();
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo, String nombre,
-                      Ubicacion ubicacion, ClasificacionOrganizacion clasificacion) {
+                      Ubicacion ubicacion, ClasificacionOrg clasificacion) {
     this.nombre = nombre;
     this.razonSocial = razonSocial;
     this.tipo = tipo;

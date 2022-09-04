@@ -14,6 +14,14 @@ enum TipoOrganizacion {
   INSTITUCION
 }
 
+enum ClasificacionOrg {
+  MINISTERIO
+  UNIVERSIDAD
+  ESCUELA
+  EMPRESA_SECTOR_PRIMARIO
+  EMPRESA_SECTOR_SECUNDARIO
+}
+
 class Organizacion {
     + agregarSector(sector)
     + aceptarVinculacionDeTrabajador(miembro, sector)
@@ -78,7 +86,7 @@ class Distancia {
     + valorEnKm(): double 
 }
 
-enum UnidadDeDistancia {
+enum UnidadDistancia {
   KM
   MTS
 }
@@ -176,7 +184,7 @@ enum Alcance {
   INDIRECTAS_EXTERNAS
 }
 
-enum Unidad {
+enum UnidadConsumo {
   M3
   LT
   KG
@@ -206,6 +214,7 @@ Tramo --> MedioDeTransporte
 
 
 RepoOrganizaciones -> "*" Organizacion
+ClasificacionOrg <-- Organizacion
 TipoOrganizacion <-- Organizacion
 Organizacion ---> Ubicacion
 Miembro -> TipoDeDocumento
@@ -216,7 +225,7 @@ TransportePublico --> Linea
 Linea --> "*" Parada
 Linea --> TipoTransportePublico
 Parada --> Distancia
-Distancia -> UnidadDeDistancia
+Distancia -> UnidadDistancia
 
 Pie --> "2" Ubicacion
 Bicicleta --> "2" Ubicacion
@@ -236,7 +245,7 @@ Organizacion -> "*" DatosActividades
 DatosActividades -> TipoDeConsumo
 TipoDeConsumo --> Actividad
 TipoDeConsumo --> Alcance
-TipoDeConsumo --> Unidad
+TipoDeConsumo --> UnidadConsumo
 TipoDeConsumo --> FactorEmision
 TipoDeConsumoFactory ..> TipoDeConsumo
 

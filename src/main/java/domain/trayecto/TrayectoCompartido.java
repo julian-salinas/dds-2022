@@ -1,7 +1,6 @@
 package domain.trayecto;
 
-import domain.miembros.Miembro;
-import domain.ubicaciones.Distancia;
+import domain.organizaciones.miembros.Miembro;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.ArrayList;
@@ -9,8 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static domain.ubicaciones.UnidadDeDistancia.MTS;
 
 public class TrayectoCompartido extends Trayecto{
 

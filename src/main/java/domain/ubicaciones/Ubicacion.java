@@ -3,10 +3,11 @@ package domain.ubicaciones;
 import java.io.IOException;
 
 import domain.servicios.geodds.ServicioGeoDds;
+import domain.ubicaciones.distancia.Distancia;
+import domain.ubicaciones.sectores.Localidad;
 import lombok.Getter;
 
-import static domain.ubicaciones.UnidadDeDistancia.KM;
-import static domain.ubicaciones.UnidadDeDistancia.MTS;
+import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 
 public class Ubicacion {
   @Getter String calle;

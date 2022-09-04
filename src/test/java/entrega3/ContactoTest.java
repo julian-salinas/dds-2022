@@ -1,7 +1,6 @@
 package entrega3;
 
-import domain.organizaciones.Contacto;
-import org.junit.jupiter.api.BeforeEach;
+import domain.notificaciones.contactos.Contacto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

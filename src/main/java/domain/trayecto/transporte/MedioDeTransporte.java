@@ -1,6 +1,6 @@
 package domain.trayecto.transporte;
 
-import domain.ubicaciones.Distancia;
+import domain.ubicaciones.distancia.Distancia;
 
 public interface MedioDeTransporte {
   Distancia distancia();

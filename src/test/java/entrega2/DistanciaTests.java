@@ -5,16 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import domain.miembros.Miembro;
-import domain.miembros.TipoDeDocumento;
+import domain.organizaciones.miembros.Miembro;
+import domain.organizaciones.miembros.TipoDeDocumento;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import domain.trayecto.TrayectoCompartido;
 import domain.trayecto.transporte.*;
-import domain.ubicaciones.Distancia;
+import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.Ubicacion;
-import domain.ubicaciones.UnidadDeDistancia;
+import domain.ubicaciones.distancia.UnidadDistancia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -259,11 +259,11 @@ public class DistanciaTests {
   // Metodos aux.
 
   private Distancia distanciaMts(double valor) {
-    return new Distancia(valor, UnidadDeDistancia.MTS);
+    return new Distancia(valor, UnidadDistancia.MTS);
   }
 
   private Distancia distanciaKm(double valor) {
-    return new Distancia(valor, UnidadDeDistancia.KM);
+    return new Distancia(valor, UnidadDistancia.KM);
   }
 
   private Ubicacion crearUbicacion(String calle, int altura) throws IOException {

@@ -1,14 +1,14 @@
 package entrega2;
 
-import domain.organizaciones.ClasificacionOrganizacion;
-import domain.organizaciones.DatosActividades;
+import domain.organizaciones.ClasificacionOrg;
+import domain.organizaciones.datos.actividades.DatosActividades;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.TipoOrganizacion;
-import domain.organizaciones.consumos.Unidad;
-import domain.organizaciones.consumos.tipos.FactorEmision;
-import domain.organizaciones.consumos.tipos.NoCoincidenUnidadesFEYTC;
-import domain.organizaciones.consumos.tipos.TipoDeConsumo;
-import domain.organizaciones.consumos.tipos.TipoDeConsumoFactory;
+import domain.organizaciones.datos.actividades.UnidadConsumo;
+import domain.organizaciones.datos.actividades.tipos.FactorEmision;
+import domain.organizaciones.datos.actividades.tipos.NoCoincidenUnidadesFEYTC;
+import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
+import domain.organizaciones.datos.actividades.tipos.TipoDeConsumoFactory;
 import domain.ubicaciones.Ubicacion;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class CargaDeMedicionesyFETests {
 
@@ -28,8 +26,7 @@ public class CargaDeMedicionesyFETests {
 
   @BeforeEach
   public void init() {
-    ClasificacionOrganizacion ministerio = new ClasificacionOrganizacion("ministerio");
-    organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, "Manaos", ubicacionDefault, ministerio);
+    organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, "Manaos", ubicacionDefault, ClasificacionOrg.MINISTERIO);
   }
 
   @Test
@@ -50,7 +47,7 @@ public class CargaDeMedicionesyFETests {
   @Test
   public void noSePuedeCargarUnFEConUnidadDiferenteAlTC(){
     TipoDeConsumo gasNatural = TipoDeConsumoFactory.instance().buildTipoDeConsumo("Gas Natural");
-    FactorEmision fe = new FactorEmision(2, Unidad.LT);
+    FactorEmision fe = new FactorEmision(2, UnidadConsumo.LT);
     assertThrows(NoCoincidenUnidadesFEYTC.class, () -> gasNatural.cargarFactorEmision(fe));
   }
 

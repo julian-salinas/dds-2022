@@ -1,7 +1,7 @@
 package entrega2;
 
-import domain.miembros.Miembro;
-import domain.miembros.TipoDeDocumento;
+import domain.organizaciones.miembros.Miembro;
+import domain.organizaciones.miembros.TipoDeDocumento;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.TrayectoCompartido;

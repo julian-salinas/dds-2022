@@ -1,9 +1,9 @@
 package domain.repositorios;
 
-import domain.organizaciones.Contacto;
+import domain.notificaciones.contactos.Contacto;
 import domain.organizaciones.Organizacion;
-import domain.ubicaciones.Municipio;
-import domain.ubicaciones.Provincia;
+import domain.ubicaciones.sectores.Municipio;
+import domain.ubicaciones.sectores.Provincia;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

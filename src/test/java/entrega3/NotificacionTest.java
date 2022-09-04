@@ -1,5 +1,6 @@
 package entrega3;
 
+import domain.notificaciones.contactos.Contacto;
 import domain.notificaciones.adapters.MensajeriaAdapter;
 import domain.notificaciones.Notificacion;
 import domain.notificaciones.Planificador;

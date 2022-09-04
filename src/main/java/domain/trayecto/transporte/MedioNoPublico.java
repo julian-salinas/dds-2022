@@ -1,10 +1,10 @@
 package domain.trayecto.transporte;
 
-import domain.ubicaciones.Distancia;
+import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.Ubicacion;
 import java.io.IOException;
 
-import static domain.ubicaciones.UnidadDeDistancia.MTS;
+import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 
 public abstract class MedioNoPublico implements MedioDeTransporte {
 

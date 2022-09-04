@@ -2,7 +2,7 @@ package domain.trayecto.transporte;
 
 import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
 import domain.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
-import domain.ubicaciones.Distancia;
+import domain.ubicaciones.distancia.Distancia;
 import lombok.Getter;
 
 public class TransportePublico implements MedioDeTransporte {

@@ -1,12 +1,14 @@
 package entrega3;
 
 import domain.organizaciones.*;
-import domain.organizaciones.consumos.Unidad;
-import domain.organizaciones.consumos.tipos.FactorEmision;
+import domain.organizaciones.datos.actividades.UnidadConsumo;
+import domain.organizaciones.hc.HC;
+import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.repositorios.RepoOrganizaciones;
 import domain.servicios.geodds.ServicioGeoDds;
-import domain.ubicaciones.Municipio;
-import domain.ubicaciones.Provincia;
+import domain.ubicaciones.sectores.AgenteSectorial;
+import domain.ubicaciones.sectores.Municipio;
+import domain.ubicaciones.sectores.Provincia;
 import domain.ubicaciones.Ubicacion;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -225,14 +227,13 @@ public class AgenteSectorialTests {
   }
 
   private Organizacion crearOrg(String nombre, Ubicacion ubicacion) {
-    ClasificacionOrganizacion ministerio = new ClasificacionOrganizacion("ministerio");
-    return new Organizacion("S.A.", TipoOrganizacion.EMPRESA, nombre, ubicacion, ministerio);
+    return new Organizacion("S.A.", TipoOrganizacion.EMPRESA, nombre, ubicacion, ClasificacionOrg.MINISTERIO);
   }
 
   private void setFactoresDeEmision(Organizacion org) {
-    FactorEmision feGasNatural = new FactorEmision(1.5, Unidad.M3);
-    FactorEmision feElectricidad = new FactorEmision(1.3, Unidad.KWH);
-    FactorEmision feNafta = new FactorEmision(1.1, Unidad.LT);
+    FactorEmision feGasNatural = new FactorEmision(1.5, UnidadConsumo.M3);
+    FactorEmision feElectricidad = new FactorEmision(1.3, UnidadConsumo.KWH);
+    FactorEmision feNafta = new FactorEmision(1.1, UnidadConsumo.LT);
 
     org.getDatosActividades().get(0).getTipoDeConsumo().cargarFactorEmision(feGasNatural);
     org.getDatosActividades().get(1).getTipoDeConsumo().cargarFactorEmision(feElectricidad);
