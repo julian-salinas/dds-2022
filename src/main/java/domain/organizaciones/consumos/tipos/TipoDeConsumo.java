@@ -5,22 +5,20 @@ import domain.organizaciones.consumos.Alcance;
 import domain.organizaciones.consumos.Unidad;
 import lombok.Getter;
 
-import java.util.Optional;
-
 public class TipoDeConsumo {
-  private Optional<Unidad> unidad;
+  private Unidad unidad;
   private Actividad actividad;
   private Alcance alcance;
   @Getter private FactorEmision fe;
 
-  public TipoDeConsumo(Optional<Unidad> unidad, Actividad actividad, Alcance alcance) {
+  public TipoDeConsumo(Unidad unidad, Actividad actividad, Alcance alcance) {
     this.unidad = unidad;
     this.actividad = actividad;
     this.alcance = alcance;
   }
 
   public void cargarFactorEmision(FactorEmision fe){
-    if(unidad.isPresent() && unidad.get().equals(fe.getUnidad())) {
+    if(unidad.equals(fe.getUnidad())) {
       this.fe = fe;
     } else {
       throw new NoCoincidenUnidadesFEYTC();
