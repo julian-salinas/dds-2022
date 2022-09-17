@@ -11,10 +11,13 @@ public class Workspace {
     EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
     EntityTransaction tx = entityManager.getTransaction();
     tx.begin();
-    ObjetoTestPersist obj = new ObjetoTestPersist(3, "Juan");
+    ObjetoTestPersist obj = new ObjetoTestPersist("Jhon");
     entityManager.persist(obj);
     tx.commit();
 
+    ObjetoTestPersist objRespuesta = entityManager.find(ObjetoTestPersist.class, obj.id);
+
+    System.out.println("Id: " + objRespuesta.id + " , Nombre: " + objRespuesta.nombre);
     //List<ObjetoTestPersist> difusiones = entityManager.createQuery("from ObjetoTestPersist").getResultList();
 
     entityManager.close();

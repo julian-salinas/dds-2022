@@ -7,15 +7,14 @@ import javax.persistence.Id;
 @Entity
 public class ObjetoTestPersist {
 
-  @Id
+  @Id @GeneratedValue
   int id;
 
   String nombre;
 
   public ObjetoTestPersist() {}
 
-  public ObjetoTestPersist(int id, String nombre) {
-    this.id = id;
+  public ObjetoTestPersist(String nombre) {
     this.nombre = nombre;
   }
 
