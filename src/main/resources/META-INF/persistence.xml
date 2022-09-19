@@ -13,6 +13,9 @@
 
 
         <class>domain.ObjetoTestPersist</class>
+        <class>domain.organizaciones.Organizacion</class>
+        <class>domain.organizaciones.sectores.Sector</class>
+        <class>domain.organizaciones.miembros.Miembro</class>
         <!--
         <class>utn.dds.persistencia.futbol.persistence.Equipo</class>
         <class>utn.dds.persistencia.futbol.persistence.Formacion</class>
