@@ -16,6 +16,10 @@
         <class>domain.organizaciones.Organizacion</class>
         <class>domain.organizaciones.sectores.Sector</class>
         <class>domain.organizaciones.miembros.Miembro</class>
+        <class>domain.trayecto.Trayecto</class>
+        <class>domain.trayecto.TrayectoCompartido</class>
+        <class>domain.trayecto.Tramo</class>
+
         <!--
         <class>utn.dds.persistencia.futbol.persistence.Equipo</class>
         <class>utn.dds.persistencia.futbol.persistence.Formacion</class>

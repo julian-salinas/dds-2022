@@ -1,5 +1,7 @@
 package domain;
 
+import lombok.Getter;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -7,5 +9,5 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class PersistenceEntity {
   @Id @GeneratedValue
-  int id;
+  @Getter int id;
 }

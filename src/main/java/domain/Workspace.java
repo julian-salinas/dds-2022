@@ -6,6 +6,8 @@ import domain.organizaciones.TipoOrganizacion;
 import domain.organizaciones.miembros.Miembro;
 import domain.organizaciones.miembros.TipoDeDocumento;
 import domain.organizaciones.sectores.Sector;
+import domain.trayecto.Tramo;
+import domain.trayecto.Trayecto;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -17,8 +19,7 @@ public class Workspace {
     EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
     EntityTransaction tx = entityManager.getTransaction();
     tx.begin();
-    //ObjetoTestPersist obj = new ObjetoTestPersist("Jhon");
-    //entityManager.persist(obj);
+    // Organizacion, Sector, Miembro
     Miembro miembro = new Miembro("Juan", "Carlos", TipoDeDocumento.DNI, 43567890);
     entityManager.persist(miembro);
     Sector sector = new Sector();
@@ -27,6 +28,26 @@ public class Workspace {
     organizacion.agregarSector(sector);
     entityManager.persist(sector);
     entityManager.persist(organizacion);
+
+    tx.commit();
+    //entityManager.close();
+
+    tx = entityManager.getTransaction();
+    tx.begin();
+
+    // Trayecto, TrayectoCompartido, Tramo
+    Tramo tramo1 = new Tramo(null);
+    Tramo tramo2 = new Tramo(null);
+    Tramo tramo3 = new Tramo(null);
+    Trayecto trayecto = new Trayecto();
+    trayecto.agregarTramos(tramo1, tramo2, tramo3);
+    entityManager.persist(tramo1);
+    entityManager.persist(tramo2);
+    entityManager.persist(tramo3);
+    miembro.registrarTrayecto(trayecto);
+    entityManager.persist(trayecto);
+    entityManager.merge(miembro);
+
     tx.commit();
 
     //ObjetoTestPersist objRespuesta = entityManager.find(ObjetoTestPersist.class, obj.id);

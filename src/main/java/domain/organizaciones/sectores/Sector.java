@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,10 +18,10 @@ import lombok.Setter;
 public class Sector extends PersistenceEntity {
   //@Setter @Getter private Organizacion orgAlaQuePertenezco;
 
-  @OneToMany @JoinColumn(name = "sector_id")
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST) @JoinColumn(name = "sector_id")
   private final List<Miembro> miembros = new ArrayList<>();
 
-  @OneToMany @JoinColumn(name = "sector_id")
+  @OneToMany(fetch = FetchType.LAZY) @JoinColumn(name = "sector_id")
   private final List<Miembro> miembrosParaAceptar = new ArrayList<>(); // --> Tal vez haya q cambiarlo para persistir
 
   public boolean containsMiembro(Miembro miembro) {

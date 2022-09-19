@@ -10,10 +10,7 @@ import domain.organizaciones.hc.HC;
 import domain.trayecto.Trayecto;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +28,7 @@ public class Miembro extends PersistenceEntity {
   private int nroDeDocumento; // era Integer, lo paso a int (a debatir)
 
   //@Setter @Getter private Sector sectorDondeTrabaja;
-  @Transient
+  @ManyToMany(fetch = FetchType.LAZY) @JoinTable(name = "trayecto_x_miembro")
   @Getter private final List<Trayecto> trayectos = new ArrayList<>();
 
   public Miembro() {}

@@ -1,19 +1,28 @@
 package domain.trayecto;
 
+import domain.PersistenceEntity;
 import domain.organizaciones.miembros.Miembro;
 import domain.ubicaciones.distancia.Distancia;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 
-public class Trayecto {
 
-  @Getter private final List<Tramo> tramos = new ArrayList<>();
-  @Getter @Setter private Miembro owner;
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "Soy_un_discriminador")
+public class Trayecto extends PersistenceEntity {
+
+  @OneToMany(fetch = FetchType.LAZY) @JoinColumn(name = "trayecto_id")
+  @Getter public List<Tramo> tramos = new ArrayList<>();
+
+  @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "owner_id")
+  @Getter @Setter public Miembro owner;
 
   public void agregarTramo(Tramo tramo) {
     tramos.add(tramo);
