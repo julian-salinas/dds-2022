@@ -1,7 +1,7 @@
 package domain.ubicaciones.sectores;
 
 import domain.organizaciones.Organizacion;
-import domain.repositorios.RepoOrganizaciones;
+import domain.repositorios.RepositorioOrganizaciones;
 import domain.servicios.geodds.ServicioGeoDds;
 import lombok.Getter;
 
@@ -15,7 +15,6 @@ public class Municipio implements SectorTerritorial {
   private ServicioGeoDds apiClient;
 
   public Municipio(String nombre, ServicioGeoDds apiClient) throws IOException, RuntimeException {
-    //this.apiClient = ServicioGeoDds.getInstancia();
     this.apiClient = apiClient;
     this.id = this.apiClient.verificarNombreMunicipio(nombre);
     this.provincia = new Provincia(apiClient.nombreProvincia(id), apiClient);
@@ -24,6 +23,6 @@ public class Municipio implements SectorTerritorial {
 
   @Override
   public List<Organizacion> orgsDentroDeSector() {
-    return RepoOrganizaciones.instance().inMunicipio(this);
+    return RepositorioOrganizaciones.getInstance().inMunicipio(this);
   }
 }
