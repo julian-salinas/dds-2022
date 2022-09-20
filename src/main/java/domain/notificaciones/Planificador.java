@@ -1,6 +1,6 @@
 package domain.notificaciones;
 
-import domain.repositorios.RepoNotificaciones;
+import domain.repositorios.RepositorioNotificaciones;
 import org.quartz.*;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.*;
@@ -11,7 +11,7 @@ public class Planificador implements Job {
   @Override
   public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
     JobKey jobKey = jobExecutionContext.getJobDetail().getKey();
-    RepoNotificaciones.getInstancia().getNotificaciones().stream()
+    RepositorioNotificaciones.getInstance().all().stream()
         .forEach(notificacion -> notificacion.notificarOrganizaciones());
   }
 

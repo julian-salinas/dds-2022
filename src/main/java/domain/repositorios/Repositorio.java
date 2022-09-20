@@ -14,24 +14,24 @@ public class Repositorio<T> {
         this.dao = dao;
     }
 
-    public List<T> buscarTodos(){
-        return this.dao.buscarTodos();
+    public List<T> all(){
+        return this.dao.all();
     }
 
-    public T buscar(int id){
-        return this.dao.buscar(id);
+    public T get(int id){
+        return this.dao.get(id);
     }
 
-    public void agregar(Object object){
-        this.dao.agregar(object);
+    public void add(Object object){
+        this.dao.add(object);
     }
 
-    public void modificar(Object object){
-        this.dao.modificar(object);
+    public void update(Object object){
+        this.dao.update(object);
     }
 
-    public void eliminar(Object object){
-        this.dao.eliminar(object);
+    public void delete(Object object){
+        this.dao.delete(object);
     }
 
 }

@@ -6,13 +6,13 @@ public interface DAO<T>{
     /**
      * Data Access Object 😏🍔
      */
-    List<T> buscarTodos();
+    List<T> all();
 
-    T buscar(int id);
+    T get(int id);
 
-    void agregar(Object objeto);
+    void add(Object objeto);
 
-    void eliminar(Object objeto);
+    void delete(Object objeto);
 
-    void modificar(Object objeto);
+    void update(Object objeto);
 }

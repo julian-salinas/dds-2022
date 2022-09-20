@@ -12,12 +12,12 @@ public class DAOMemory<T> implements DAO<T> {
     }
 
     @Override
-    public List<T> buscarTodos() {
+    public List<T> all() {
         return (List<T>) this.entidades;
     }
 
     @Override
-    public T buscar(int id) {
+    public T get(int id) {
         return (T) this.entidades
                 .stream()
                 .filter(e -> e.getId() == id)
@@ -26,17 +26,17 @@ public class DAOMemory<T> implements DAO<T> {
     }
 
     @Override
-    public void agregar(Object unObjeto) {
+    public void add(Object unObjeto) {
         this.entidades.add((EntidadPersistente) unObjeto);
     }
 
     @Override
-    public void modificar(Object unObjeto) {
+    public void update(Object unObjeto) {
 
     }
 
     @Override
-    public void eliminar(Object unObjeto) {
+    public void delete(Object unObjeto) {
         this.entidades.remove(unObjeto);
     }
 }

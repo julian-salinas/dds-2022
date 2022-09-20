@@ -1,7 +1,7 @@
 package domain.notificaciones;
 
 import domain.notificaciones.adapters.MensajeriaAdapter;
-import domain.repositorios.RepoOrganizaciones;
+import domain.repositorios.RepositorioContactos;
 
 public class Notificacion {
 
@@ -21,6 +21,6 @@ public class Notificacion {
   }
 
   public void notificarOrganizaciones() {
-    RepoOrganizaciones.instance().getContactos().stream().forEach(contacto -> this.notificar(contacto));
+    RepositorioContactos.getInstance().all().stream().forEach(contacto -> this.notificar(contacto));
   }
 }

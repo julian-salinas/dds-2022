@@ -13,31 +13,31 @@ public class DAOHibernate<T> implements DAO<T> {
     }
 
     @Override
-    public List<T> buscarTodos() {
+    public List<T> all() {
         return EntityManagerHelper.getEntityManager().createQuery("SELECT * FROM " + type.getName()).getResultList();
     }
 
     @Override
-    public T buscar(int id) {
+    public T get(int id) {
         return EntityManagerHelper.getEntityManager().find(type, id);
     }
 
     @Override
-    public void agregar(Object object) {
+    public void add(Object object) {
         EntityManagerHelper.getEntityManager().getTransaction().begin();
         EntityManagerHelper.getEntityManager().persist(object);
         EntityManagerHelper.getEntityManager().getTransaction().commit();
     }
 
     @Override
-    public void modificar(Object object) {
+    public void update(Object object) {
         EntityManagerHelper.getEntityManager().getTransaction().begin();
         EntityManagerHelper.getEntityManager().merge(object);
         EntityManagerHelper.getEntityManager().getTransaction().commit();
     }
 
     @Override
-    public void eliminar(Object object) {
+    public void delete(Object object) {
         EntityManagerHelper.getEntityManager().getTransaction().begin();
         EntityManagerHelper.getEntityManager().remove(object);
         EntityManagerHelper.getEntityManager().getTransaction().commit();
