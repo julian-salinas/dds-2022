@@ -7,8 +7,8 @@ import domain.notificaciones.Planificador;
 import domain.notificaciones.adapters.EmailAdapter;
 import domain.notificaciones.adapters.WhatsAppAdapter;
 import domain.organizaciones.*;
-import domain.repositorios.RepoNotificaciones;
-import domain.repositorios.RepoOrganizaciones;
+import domain.repositorios.RepositorioNotificaciones;
+import domain.repositorios.RepositorioOrganizaciones;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -60,14 +60,15 @@ public class NotificacionTest {
     notificacionWhatsApp = new Notificacion(whatsAppAdapter);
     notificacionEmail = new Notificacion(emailAdapter);
 
-    RepoNotificaciones.getInstancia().agregar(notificacionEmail, notificacionWhatsApp);
+    RepositorioNotificaciones.getInstance().add(notificacionEmail);
+    RepositorioNotificaciones.getInstance().add(notificacionWhatsApp);
 
     unContacto = new Contacto("un.mail.muy.trucho@gmail.com", "5491152573517");
     otroContacto = new Contacto("un.mail.muy.trucho@gmail.com", "5491152573517");
     otroContactoMas = new Contacto("un.mail.muy.trucho@gmail.com", "5491152573517");
 
     unaOrganizacion.agregarContactos(unContacto, otroContacto, otroContactoMas);
-    RepoOrganizaciones.instance().agregarOrganizaciones(unaOrganizacion);
+    RepositorioOrganizaciones.getInstance().add(unaOrganizacion);
   }
 
   @Disabled("Este test no utiliza mocks")
@@ -91,7 +92,7 @@ public class NotificacionTest {
     int status =  notificacionWhatsApp.notificar(unContacto);
     assertEquals(202, status);
 
-    RepoOrganizaciones.instance().limpiar();
+    RepositorioOrganizaciones.getInstance().clean();
   }
 
   @Test
@@ -101,7 +102,7 @@ public class NotificacionTest {
     int status = notificacionEmail.notificar(unContacto);
     assertEquals(202, status);
 
-    RepoOrganizaciones.instance().limpiar();
+    RepositorioOrganizaciones.getInstance().clean();
   }
 
   @Test
@@ -112,6 +113,6 @@ public class NotificacionTest {
     String[] args = new String[] {"123"};
     assertDoesNotThrow(() -> Planificador.main(args));
 
-    RepoOrganizaciones.instance().limpiar();
+    RepositorioOrganizaciones.getInstance().clean();
   }
 }

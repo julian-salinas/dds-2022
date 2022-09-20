@@ -34,4 +34,7 @@ public class Repositorio<T> {
         this.dao.delete(object);
     }
 
+    public void clean() {
+        this.dao.clean();
+    }
 }

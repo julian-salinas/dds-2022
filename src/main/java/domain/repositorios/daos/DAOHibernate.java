@@ -42,4 +42,14 @@ public class DAOHibernate<T> implements DAO<T> {
         EntityManagerHelper.getEntityManager().remove(object);
         EntityManagerHelper.getEntityManager().getTransaction().commit();
     }
+
+    @Override
+    public void clean() {
+        EntityManagerHelper.getEntityManager().getTransaction().begin();
+        CriteriaBuilder cb = EntityManagerHelper.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<T> query = cb.createQuery(type);
+        query.from(type);
+        EntityManagerHelper.getEntityManager().createQuery(query).getResultList().forEach(EntityManagerHelper.getEntityManager()::remove);
+        EntityManagerHelper.getEntityManager().getTransaction().commit();
+    }
 }

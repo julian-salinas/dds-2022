@@ -15,4 +15,6 @@ public interface DAO<T>{
     void delete(Object objeto);
 
     void update(Object objeto);
+
+    void clean();
 }

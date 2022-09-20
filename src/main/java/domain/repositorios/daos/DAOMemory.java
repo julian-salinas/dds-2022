@@ -39,4 +39,9 @@ public class DAOMemory<T> implements DAO<T> {
     public void delete(Object unObjeto) {
         this.entidades.remove(unObjeto);
     }
+
+    @Override
+    public void clean() {
+        this.entidades.clear();
+    }
 }
