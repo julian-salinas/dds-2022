@@ -1,11 +1,10 @@
 package entrega3;
 
+import domain.notificaciones.NotificacionEmail;
+import domain.notificaciones.NotificacionWhatsapp;
 import domain.notificaciones.contactos.Contacto;
-import domain.notificaciones.adapters.MensajeriaAdapter;
 import domain.notificaciones.Notificacion;
 import domain.notificaciones.Planificador;
-import domain.notificaciones.adapters.EmailAdapter;
-import domain.notificaciones.adapters.WhatsAppAdapter;
 import domain.organizaciones.*;
 import domain.repositorios.RepositorioNotificaciones;
 import domain.repositorios.RepositorioOrganizaciones;
@@ -24,9 +23,7 @@ import static org.mockito.Mockito.when;
 public class NotificacionTest {
   private Organizacion unaOrganizacion;
   private Contacto unContacto, otroContacto, otroContactoMas;
-  private Notificacion notificacionWhatsApp, notificacionEmail;
-
-  private MensajeriaAdapter whatsAppAdapter, emailAdapter;
+  private Notificacion notificacionWhatsApp, notificacionEmail, mockNotificacionEmail, mockNotificacionWhatsApp;
 
   private String SENDGRID_API_KEY, EMAIL, ACCOUNT_SID, AUTH_TOKEN, TWILIO_PHONE_NUMBER;
 
@@ -54,11 +51,14 @@ public class NotificacionTest {
 
     unaOrganizacion = new Organizacion("Organizacion Fake", null, null ,null, null);
 
-    whatsAppAdapter = mock(WhatsAppAdapter.class);
-    emailAdapter = mock(EmailAdapter.class);
+    // whatsAppAdapter = mock(WhatsAppAdapter.class);
+    // emailAdapter = mock(EmailAdapter.class);
 
-    notificacionWhatsApp = new Notificacion(whatsAppAdapter);
-    notificacionEmail = new Notificacion(emailAdapter);
+    notificacionWhatsApp = new NotificacionWhatsapp(ACCOUNT_SID, AUTH_TOKEN, TWILIO_PHONE_NUMBER);
+    notificacionEmail = new NotificacionEmail(SENDGRID_API_KEY, EMAIL);
+
+    mockNotificacionWhatsApp = mock(NotificacionWhatsapp.class);
+    mockNotificacionEmail = mock(NotificacionEmail.class);
 
     RepositorioNotificaciones.getInstance().add(notificacionEmail);
     RepositorioNotificaciones.getInstance().add(notificacionWhatsApp);
@@ -74,20 +74,20 @@ public class NotificacionTest {
   @Disabled("Este test no utiliza mocks")
   @Test
   void testEnviarUnWhatsappPosta() {
-    Notificacion unaNotificacionWhatsApp = new Notificacion(new WhatsAppAdapter(ACCOUNT_SID, AUTH_TOKEN, TWILIO_PHONE_NUMBER));
+    Notificacion unaNotificacionWhatsApp = new NotificacionWhatsapp(ACCOUNT_SID, AUTH_TOKEN, TWILIO_PHONE_NUMBER);
     assertDoesNotThrow(() -> unaNotificacionWhatsApp.notificar(unContacto));
   }
 
   @Disabled("Este test no utiliza mocks")
   @Test
   void testEnviarUnMailPosta() {
-    Notificacion unaNotificacionEmail = new Notificacion(new EmailAdapter(SENDGRID_API_KEY, EMAIL));
+    Notificacion unaNotificacionEmail = new NotificacionEmail(SENDGRID_API_KEY, EMAIL);
     assertDoesNotThrow(() -> unaNotificacionEmail.notificar(unContacto));
   }
 
   @Test
   void enviarUnWhatsapp() {
-    when(whatsAppAdapter.enviar(unContacto, "<<<guia de recomendaciones>>>")).thenReturn(202);
+    when(mockNotificacionWhatsApp.notificar(unContacto)).thenReturn(202);
 
     int status =  notificacionWhatsApp.notificar(unContacto);
     assertEquals(202, status);
@@ -97,7 +97,7 @@ public class NotificacionTest {
 
   @Test
   void testEnviarUnMail() {
-    when(emailAdapter.enviar(unContacto, "<<<guia de recomendaciones>>>")).thenReturn(202);
+    when(mockNotificacionEmail.notificar(unContacto)).thenReturn(202);
 
     int status = notificacionEmail.notificar(unContacto);
     assertEquals(202, status);
@@ -107,8 +107,8 @@ public class NotificacionTest {
 
   @Test
   void testFuncionamientoDelPlanificador() {
-    when(emailAdapter.enviar(unContacto, "<<<guia de recomendaciones>>>")).thenReturn(202);
-    when(whatsAppAdapter.enviar(unContacto, "<<<guia de recomendaciones>>>")).thenReturn(202);
+    when(mockNotificacionEmail.notificar(unContacto)).thenReturn(202);
+    when(mockNotificacionWhatsApp.notificar(unContacto)).thenReturn(202);
 
     String[] args = new String[] {"123"};
     assertDoesNotThrow(() -> Planificador.main(args));

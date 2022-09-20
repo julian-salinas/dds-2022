@@ -4,7 +4,7 @@ import domain.organizaciones.*;
 import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.hc.HC;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
-import domain.repositorios.RepoOrganizaciones;
+import domain.repositorios.RepositorioOrganizaciones;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.ubicaciones.sectores.AgenteSectorial;
 import domain.ubicaciones.sectores.Municipio;
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
@@ -65,17 +64,21 @@ public class AgenteSectorialTests {
 
   @Test
   public void sePuedenPedirLasOrgDentroDeUnMunicipioCorrectamente() {
-    RepoOrganizaciones.instance().agregarOrganizaciones(org1, org2, org3);
+    RepositorioOrganizaciones.getInstance().add(org1);
+    RepositorioOrganizaciones.getInstance().add(org2);
+    RepositorioOrganizaciones.getInstance().add(org3);
 
     assertEquals(1, (long) org1.sectorMunicipio().orgsDentroDeSector().size());
     assertEquals(org1, org1.sectorMunicipio().orgsDentroDeSector().get(0));
 
-    RepoOrganizaciones.instance().limpiar();
+    RepositorioOrganizaciones.getInstance().clean();
   }
 
   @Test
   public void sePuedenPedirLasOrgDentroDeUnaProvinciaCorrectamente() {
-    RepoOrganizaciones.instance().agregarOrganizaciones(org1, org2, org3);
+    RepositorioOrganizaciones.getInstance().add(org1);
+    RepositorioOrganizaciones.getInstance().add(org2);
+    RepositorioOrganizaciones.getInstance().add(org3);
 
     List<Organizacion> todasLasOrgs = new ArrayList<>();
     todasLasOrgs.add(org1);
@@ -84,7 +87,7 @@ public class AgenteSectorialTests {
     assertEquals(3, (long) org1.sectorProvincia().orgsDentroDeSector().size());
     assertEquals(todasLasOrgs, org1.sectorProvincia().orgsDentroDeSector());
 
-    RepoOrganizaciones.instance().limpiar();
+    RepositorioOrganizaciones.getInstance().clean();
   }
   // <--
 
@@ -92,7 +95,9 @@ public class AgenteSectorialTests {
 
   @Test
   public void seCalculaBienElhcMensualDeUnMunicipio() {
-    RepoOrganizaciones.instance().agregarOrganizaciones(org1, org2, org3);
+    RepositorioOrganizaciones.getInstance().add(org1);
+    RepositorioOrganizaciones.getInstance().add(org2);
+    RepositorioOrganizaciones.getInstance().add(org3);
 
     org1.cargarMediciones("src/test/java/archivo-prueba.csv");
     org2.cargarMediciones("src/test/java/archivo-prueba.csv");
@@ -113,12 +118,14 @@ public class AgenteSectorialTests {
 
     assertEquals(2010.325, valorHc);
 
-    RepoOrganizaciones.instance().limpiar();
+    RepositorioOrganizaciones.getInstance().clean();
   }
 
   @Test
   public void seCalculaBienElhcAnualDeUnMunicipio() {
-    RepoOrganizaciones.instance().agregarOrganizaciones(org1, org2, org3);
+    RepositorioOrganizaciones.getInstance().add(org1);
+    RepositorioOrganizaciones.getInstance().add(org2);
+    RepositorioOrganizaciones.getInstance().add(org3);
 
     org1.cargarMediciones("src/test/java/archivo-prueba.csv");
     org2.cargarMediciones("src/test/java/archivo-prueba.csv");
@@ -139,12 +146,14 @@ public class AgenteSectorialTests {
 
     assertEquals(24123.9, valorHc);
 
-    RepoOrganizaciones.instance().limpiar();
+    RepositorioOrganizaciones.getInstance().clean();
   }
 
   @Test
   public void seCalculaBienElhcMensualDeUnaProvincia() {
-    RepoOrganizaciones.instance().agregarOrganizaciones(org1, org2, org3);
+    RepositorioOrganizaciones.getInstance().add(org1);
+    RepositorioOrganizaciones.getInstance().add(org2);
+    RepositorioOrganizaciones.getInstance().add(org3);
 
     org1.cargarMediciones("src/test/java/archivo-prueba.csv");
     org2.cargarMediciones("src/test/java/archivo-prueba.csv");
@@ -164,12 +173,14 @@ public class AgenteSectorialTests {
 
     assertEquals(6030.975, valorHc);
 
-    RepoOrganizaciones.instance().limpiar();
+    RepositorioOrganizaciones.getInstance().clean();
   }
 
   @Test
   public void seCalculaBienElhcAnualDeUnaProvincia() {
-    RepoOrganizaciones.instance().agregarOrganizaciones(org1, org2, org3);
+    RepositorioOrganizaciones.getInstance().add(org1);
+    RepositorioOrganizaciones.getInstance().add(org2);
+    RepositorioOrganizaciones.getInstance().add(org3);
 
     org1.cargarMediciones("src/test/java/archivo-prueba.csv");
     org2.cargarMediciones("src/test/java/archivo-prueba.csv");
@@ -189,7 +200,7 @@ public class AgenteSectorialTests {
 
     assertEquals(72371, ((int) valorHc));
 
-    RepoOrganizaciones.instance().limpiar();
+    RepositorioOrganizaciones.getInstance().clean();
   }
 
   @Test
@@ -200,7 +211,10 @@ public class AgenteSectorialTests {
     Ubicacion ubicacion4 = new Ubicacion("Corrientes", 1200, "localidad", apiClient);
     Organizacion org4 = crearOrg("Jojo Donuts", ubicacion4);
 
-    RepoOrganizaciones.instance().agregarOrganizaciones(org1, org2, org3, org4);
+    RepositorioOrganizaciones.getInstance().add(org1);
+    RepositorioOrganizaciones.getInstance().add(org2);
+    RepositorioOrganizaciones.getInstance().add(org3);
+    RepositorioOrganizaciones.getInstance().add(org4);
 
     org1.cargarMediciones("src/test/java/archivo-prueba.csv");
     org2.cargarMediciones("src/test/java/archivo-prueba.csv");
@@ -223,7 +237,7 @@ public class AgenteSectorialTests {
 
     assertEquals(6030.975, valorHc);
 
-    RepoOrganizaciones.instance().limpiar();
+    RepositorioOrganizaciones.getInstance().clean();
   }
 
   private Organizacion crearOrg(String nombre, Ubicacion ubicacion) {

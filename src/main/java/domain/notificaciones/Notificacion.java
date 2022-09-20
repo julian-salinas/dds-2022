@@ -1,18 +1,34 @@
 package domain.notificaciones;
 
+import domain.database.EntidadPersistente;
 import domain.notificaciones.adapters.MensajeriaAdapter;
 import domain.repositorios.RepositorioContactos;
 
-public class Notificacion {
+import javax.persistence.*;
 
+@Entity
+@Table(name = "notificaciones")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "servicio")
+public abstract class Notificacion extends EntidadPersistente {
+
+  @Transient
   private MensajeriaAdapter mensajeriaAdapter;
 
-  public Notificacion(MensajeriaAdapter mensajeriaAdapter) {
+  @Transient
+  private TipoDeNotificacion tipoDeNotificacion;
+
+  public Notificacion(MensajeriaAdapter mensajeriaAdapter, TipoDeNotificacion tipoDeNotificacion) {
     this.mensajeriaAdapter = mensajeriaAdapter;
+    this.tipoDeNotificacion = tipoDeNotificacion;
   }
 
   private String getMensajeNotificacion() {
     return "<<<guia de recomendaciones>>>";
+  }
+
+  public TipoDeNotificacion getTipoDeNotificacion() {
+    return tipoDeNotificacion;
   }
 
   public int notificar(Suscriptor suscriptor) {
@@ -20,7 +36,4 @@ public class Notificacion {
     return status_code;
   }
 
-  public void notificarOrganizaciones() {
-    RepositorioContactos.getInstance().all().stream().forEach(contacto -> this.notificar(contacto));
-  }
 }
