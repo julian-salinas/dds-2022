@@ -8,6 +8,8 @@ import domain.organizaciones.miembros.TipoDeDocumento;
 import domain.organizaciones.sectores.Sector;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
+import domain.trayecto.transporte.TipoTransportePublico;
+import domain.trayecto.transporte.TransportePublico;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -21,12 +23,10 @@ public class Workspace {
     tx.begin();
     // Organizacion, Sector, Miembro
     Miembro miembro = new Miembro("Juan", "Carlos", TipoDeDocumento.DNI, 43567890);
-    //entityManager.persist(miembro);
     Sector sector = new Sector();
     sector.agregarMiembro(miembro);
     Organizacion organizacion = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, "Panchos Loria", null, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
     organizacion.agregarSector(sector);
-    //entityManager.persist(sector);
     entityManager.persist(organizacion);
     // Trayecto, TrayectoCompartido, Tramo
     Tramo tramo1 = new Tramo(null);
@@ -34,12 +34,15 @@ public class Workspace {
     Tramo tramo3 = new Tramo(null);
     Trayecto trayecto = new Trayecto();
     trayecto.agregarTramos(tramo1, tramo2, tramo3);
-    //entityManager.persist(tramo1);
-    //entityManager.persist(tramo2);
-    //entityManager.persist(tramo3);
     miembro.registrarTrayecto(trayecto);
-    //entityManager.persist(trayecto);
     entityManager.merge(miembro);
+    // MedioDeTransporte, MedioNoPublico, y todos los medios de transporte
+    TransportePublico transportePublico = new TransportePublico(TipoTransportePublico.SUBTE,
+        null, null, null);
+    Tramo tramoPublico = new Tramo(transportePublico);
+    trayecto = entityManager.find(Trayecto.class, 1);
+    trayecto.agregarTramo(tramoPublico);
+    entityManager.merge(trayecto);
 
     tx.commit();
 
