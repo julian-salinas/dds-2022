@@ -13,6 +13,8 @@ import java.util.List;
 @Entity
 public class Contacto extends EntidadPersistente implements Suscriptor  {
 
+  public Contacto(){}
+
   @Column(name = "email", unique = true, nullable = true)
   private String email = null;
 

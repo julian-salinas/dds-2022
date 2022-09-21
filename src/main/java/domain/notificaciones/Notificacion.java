@@ -12,6 +12,8 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "servicio")
 public abstract class Notificacion extends EntidadPersistente {
 
+  public Notificacion(){}
+
   @Transient
   private MensajeriaAdapter mensajeriaAdapter;
 
