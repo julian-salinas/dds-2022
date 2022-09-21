@@ -15,13 +15,13 @@ import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "Soy_un_discriminador")
+@DiscriminatorColumn(name = "discriminador")
 public class Trayecto extends PersistenceEntity {
 
-  @OneToMany(fetch = FetchType.LAZY) @JoinColumn(name = "trayecto_id")
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "trayecto_id")
   @Getter public List<Tramo> tramos = new ArrayList<>();
 
-  @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "owner_id")
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "owner_id")
   @Getter @Setter public Miembro owner;
 
   public void agregarTramo(Tramo tramo) {

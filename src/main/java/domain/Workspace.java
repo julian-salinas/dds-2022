@@ -21,37 +21,29 @@ public class Workspace {
     tx.begin();
     // Organizacion, Sector, Miembro
     Miembro miembro = new Miembro("Juan", "Carlos", TipoDeDocumento.DNI, 43567890);
-    entityManager.persist(miembro);
+    //entityManager.persist(miembro);
     Sector sector = new Sector();
     sector.agregarMiembro(miembro);
     Organizacion organizacion = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, "Panchos Loria", null, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
     organizacion.agregarSector(sector);
-    entityManager.persist(sector);
+    //entityManager.persist(sector);
     entityManager.persist(organizacion);
-
-    tx.commit();
-    //entityManager.close();
-
-    tx = entityManager.getTransaction();
-    tx.begin();
-
     // Trayecto, TrayectoCompartido, Tramo
     Tramo tramo1 = new Tramo(null);
     Tramo tramo2 = new Tramo(null);
     Tramo tramo3 = new Tramo(null);
     Trayecto trayecto = new Trayecto();
     trayecto.agregarTramos(tramo1, tramo2, tramo3);
-    entityManager.persist(tramo1);
-    entityManager.persist(tramo2);
-    entityManager.persist(tramo3);
+    //entityManager.persist(tramo1);
+    //entityManager.persist(tramo2);
+    //entityManager.persist(tramo3);
     miembro.registrarTrayecto(trayecto);
-    entityManager.persist(trayecto);
+    //entityManager.persist(trayecto);
     entityManager.merge(miembro);
 
     tx.commit();
 
     //ObjetoTestPersist objRespuesta = entityManager.find(ObjetoTestPersist.class, obj.id);
-
     //System.out.println("Id: " + objRespuesta.id + " , Nombre: " + objRespuesta.nombre);
     //List<ObjetoTestPersist> difusiones = entityManager.createQuery("from ObjetoTestPersist").getResultList();
 

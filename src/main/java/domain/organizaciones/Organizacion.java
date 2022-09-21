@@ -38,7 +38,7 @@ public class Organizacion extends PersistenceEntity {
   @Transient
   private Ubicacion ubicacion;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST) @JoinColumn(name = "org_id")
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
   private List<Sector> sectores = new ArrayList<>();
 
   @Transient

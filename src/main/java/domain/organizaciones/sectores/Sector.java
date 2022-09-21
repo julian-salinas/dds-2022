@@ -18,7 +18,7 @@ import lombok.Setter;
 public class Sector extends PersistenceEntity {
   //@Setter @Getter private Organizacion orgAlaQuePertenezco;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST) @JoinColumn(name = "sector_id")
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "sector_id")
   private final List<Miembro> miembros = new ArrayList<>();
 
   @OneToMany(fetch = FetchType.LAZY) @JoinColumn(name = "sector_id")
