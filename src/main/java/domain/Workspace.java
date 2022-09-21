@@ -8,8 +8,9 @@ import domain.organizaciones.miembros.TipoDeDocumento;
 import domain.organizaciones.sectores.Sector;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
-import domain.trayecto.transporte.TipoTransportePublico;
-import domain.trayecto.transporte.TransportePublico;
+import domain.trayecto.transporte.*;
+import domain.ubicaciones.distancia.Distancia;
+import domain.ubicaciones.distancia.UnidadDistancia;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -42,6 +43,23 @@ public class Workspace {
     Tramo tramoPublico = new Tramo(transportePublico);
     trayecto = entityManager.find(Trayecto.class, 1);
     trayecto.agregarTramo(tramoPublico);
+    entityManager.merge(trayecto);
+
+    VehiculoParticular vehiculoParticular = new VehiculoParticular(TipoDeVehiculo.AUTO, TipoDeCombustible.GASOIL,
+        null, null, 500.0);
+    Tramo tramoVParticular = new Tramo(vehiculoParticular);
+    trayecto = entityManager.find(Trayecto.class, 1);
+    trayecto.agregarTramo(tramoVParticular);
+    entityManager.merge(trayecto);
+
+    Parada parada_ini = new Parada("Hola", new Distancia(400.0, UnidadDistancia.MTS));
+    Parada parada_fin = new Parada("Chau", new Distancia(250.0, UnidadDistancia.MTS));
+
+    TransportePublico transportePublico2 = new TransportePublico(TipoTransportePublico.SUBTE,
+        null, parada_ini, parada_fin);
+    Tramo tramoPublico2 = new Tramo(transportePublico2);
+    trayecto = entityManager.find(Trayecto.class, 1);
+    trayecto.agregarTramo(tramoPublico2);
     entityManager.merge(trayecto);
 
     tx.commit();

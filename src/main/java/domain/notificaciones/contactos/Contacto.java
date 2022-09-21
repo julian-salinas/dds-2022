@@ -1,5 +1,6 @@
 package domain.notificaciones.contactos;
 
+import domain.PersistenceEntity;
 import domain.database.EntidadPersistente;
 import domain.notificaciones.Notificacion;
 import domain.notificaciones.Suscriptor;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Table(name = "contactos")
 @Entity
-public class Contacto extends EntidadPersistente implements Suscriptor  {
+public class Contacto extends PersistenceEntity implements Suscriptor  {
 
   public Contacto(){}
 

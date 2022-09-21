@@ -1,5 +1,6 @@
 package domain.notificaciones;
 
+import domain.PersistenceEntity;
 import domain.database.EntidadPersistente;
 import domain.notificaciones.adapters.MensajeriaAdapter;
 import domain.repositorios.RepositorioContactos;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "notificaciones")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "servicio")
-public abstract class Notificacion extends EntidadPersistente {
+public abstract class Notificacion extends PersistenceEntity {
 
   public Notificacion(){}
 

@@ -6,16 +6,13 @@ import domain.ubicaciones.distancia.Distancia;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity(name = "transporte_publico")
 public class TransportePublico extends MedioDeTransporte {
-  @Transient
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Parada paradaInicio;
-  @Transient
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Parada paradaFin;
   @Enumerated(EnumType.STRING)
   private TipoTransportePublico tipo;

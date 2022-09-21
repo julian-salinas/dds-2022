@@ -19,12 +19,12 @@
         <class>domain.trayecto.TrayectoCompartido</class>
         <class>domain.trayecto.Tramo</class>
         <class>domain.trayecto.transporte.MedioDeTransporte</class>
-        <class>domain.trayecto.transporte.MedioNoPublico</class>
         <class>domain.trayecto.transporte.TransportePublico</class>
         <class>domain.trayecto.transporte.Pie</class>
         <class>domain.trayecto.transporte.Bicicleta</class>
         <class>domain.trayecto.transporte.VehiculoParticular</class>
         <class>domain.trayecto.transporte.ServicioContratado</class>
+        <class>domain.trayecto.transporte.Parada</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

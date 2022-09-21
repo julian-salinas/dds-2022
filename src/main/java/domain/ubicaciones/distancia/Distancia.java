@@ -1,11 +1,21 @@
 package domain.ubicaciones.distancia;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import static domain.ubicaciones.distancia.UnidadDistancia.KM;
 import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 
+@Embeddable
 public class Distancia {
+  @Column(name = "distancia")
   private double valor;
+  @Enumerated(EnumType.STRING)
   private UnidadDistancia unidadDeDistancia;
+
+  public Distancia() {}
 
   public Distancia(double valor, UnidadDistancia unidadDeDistancia) {
     this.valor = valor;
