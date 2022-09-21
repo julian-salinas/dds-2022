@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 
 @Entity
 public class Parada extends PersistenceEntity {
-  @Column(name = "parada")
   private String nombre;
   @Embedded
   @Getter private Distancia distAproximaParada;

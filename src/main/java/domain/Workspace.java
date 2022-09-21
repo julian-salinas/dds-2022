@@ -22,6 +22,7 @@ public class Workspace {
     EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
     EntityTransaction tx = entityManager.getTransaction();
     tx.begin();
+
     // Organizacion, Sector, Miembro
     Miembro miembro = new Miembro("Juan", "Carlos", TipoDeDocumento.DNI, 43567890);
     Sector sector = new Sector();
@@ -29,6 +30,7 @@ public class Workspace {
     Organizacion organizacion = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, "Panchos Loria", null, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
     organizacion.agregarSector(sector);
     entityManager.persist(organizacion);
+
     // Trayecto, TrayectoCompartido, Tramo
     Tramo tramo1 = new Tramo(null);
     Tramo tramo2 = new Tramo(null);
@@ -37,6 +39,7 @@ public class Workspace {
     trayecto.agregarTramos(tramo1, tramo2, tramo3);
     miembro.registrarTrayecto(trayecto);
     entityManager.merge(miembro);
+
     // MedioDeTransporte, MedioNoPublico, y todos los medios de transporte
     TransportePublico transportePublico = new TransportePublico(TipoTransportePublico.SUBTE,
         null, null, null);
@@ -51,6 +54,8 @@ public class Workspace {
     trayecto = entityManager.find(Trayecto.class, 1);
     trayecto.agregarTramo(tramoVParticular);
     entityManager.merge(trayecto);
+
+    // Parada
 
     Parada parada_ini = new Parada("Hola", new Distancia(400.0, UnidadDistancia.MTS));
     Parada parada_fin = new Parada("Chau", new Distancia(250.0, UnidadDistancia.MTS));

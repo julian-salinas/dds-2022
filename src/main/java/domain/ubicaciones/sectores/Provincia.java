@@ -5,13 +5,17 @@ import domain.repositorios.RepositorioOrganizaciones;
 import domain.servicios.geodds.ServicioGeoDds;
 import lombok.Getter;
 
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.IOException;
 import java.util.List;
 
 public class Provincia implements SectorTerritorial {
+  @Id
   @Getter private int id;
   @Getter private String nombre;
   //@Getter private Pais pais; <----------- no lo pongo por ahora porque no lo usamos
+  @Transient
   private ServicioGeoDds apiClient;
 
   public Provincia(String nombre, ServicioGeoDds apiClient) throws RuntimeException, IOException {

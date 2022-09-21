@@ -10,9 +10,9 @@ import javax.persistence.*;
 
 @Entity(name = "transporte_publico")
 public class TransportePublico extends MedioDeTransporte {
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "parada_ini")
   private Parada paradaInicio;
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "parada_fin")
   private Parada paradaFin;
   @Enumerated(EnumType.STRING)
   private TipoTransportePublico tipo;

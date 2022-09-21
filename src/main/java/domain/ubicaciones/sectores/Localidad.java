@@ -5,10 +5,15 @@ import java.io.IOException;
 
 import lombok.Getter;
 
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
 public class Localidad {
+  @Id
   @Getter private int id;
   @Getter private String nombre;
   @Getter private Municipio municipio;
+  @Transient
   private ServicioGeoDds apiClient;
 
   public Localidad(String nombre, ServicioGeoDds apiClient) throws RuntimeException, IOException {

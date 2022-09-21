@@ -7,12 +7,17 @@ import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.sectores.Localidad;
 import lombok.Getter;
 
+import javax.persistence.Transient;
+
 import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
+
 
 public class Ubicacion {
   @Getter String calle;
   @Getter int altura;
+  @Transient // a cambiar
   @Getter Localidad localidad;
+  @Transient // va a quedar como Transient (no tiene sentido guardarlo en la db)
   ServicioGeoDds apiClient;
 
   public Ubicacion(String calle, int altura, String nombreLocalidad, ServicioGeoDds apiClient)

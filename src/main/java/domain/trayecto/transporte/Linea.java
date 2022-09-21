@@ -5,6 +5,8 @@ import domain.ubicaciones.distancia.UnidadDistancia;
 import java.util.List;
 import lombok.Getter;
 
+import javax.persistence.*;
+
 // Unidireccional:
 //  - Las paradas estan seteadas de forma circular (despues de la ultima esta la primera)
 //  - Se circula solo en un sentido (para adelante)
@@ -12,12 +14,17 @@ import lombok.Getter;
 // Bidireccional:
 //  - Se circula en ambos sentidos
 
+@Entity
 public class Linea {
 
   private String nombre;
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable(name = "linea_x_parada")
   @Getter private List<Parada> paradas;
+  @Enumerated(EnumType.STRING)
   private TipoTransportePublico tipo;
   private boolean bidireccional;// = false;
+
+  public Linea() {}
 
   public Linea(String nombre, List<Parada> paradas, TipoTransportePublico tipo) {
     this.nombre = nombre;
