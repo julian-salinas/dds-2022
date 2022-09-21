@@ -4,18 +4,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity
+//@Entity
 public class ObjetoTestPersist {
 
-  @Id
+  //@Id @GeneratedValue
   int id;
 
   String nombre;
 
   public ObjetoTestPersist() {}
 
-  public ObjetoTestPersist(int id, String nombre) {
-    this.id = id;
+  public ObjetoTestPersist(String nombre) {
     this.nombre = nombre;
   }
 

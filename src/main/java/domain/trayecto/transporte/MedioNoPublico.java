@@ -2,11 +2,17 @@ package domain.trayecto.transporte;
 
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.Ubicacion;
+
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import java.io.IOException;
 
 import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 
-public abstract class MedioNoPublico implements MedioDeTransporte {
+@Entity(name = "medio_no_publico")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class MedioNoPublico extends MedioDeTransporte {
 
   abstract Ubicacion getDireccionInicio();
   abstract Ubicacion getDireccionFin();
@@ -21,6 +27,7 @@ public abstract class MedioNoPublico implements MedioDeTransporte {
       return this.getDireccionInicio().calcularDistanciaA(this.getDireccionFin());
     } catch (IOException e) {
       // bruh
+      e.printStackTrace();
       return new Distancia(-1.0, MTS);
     }
   }

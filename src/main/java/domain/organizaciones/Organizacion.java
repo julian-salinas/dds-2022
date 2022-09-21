@@ -1,5 +1,6 @@
 package domain.organizaciones;
 
+import domain.PersistenceEntity;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.miembros.Miembro;
@@ -12,6 +13,7 @@ import domain.ubicaciones.sectores.Localidad;
 import domain.ubicaciones.sectores.Municipio;
 import domain.ubicaciones.sectores.Provincia;
 import domain.ubicaciones.Ubicacion;
+import javax.persistence.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,15 +23,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Organizacion {
+@Entity
+public class Organizacion extends PersistenceEntity {
   private String nombre;
-  private final String razonSocial;
+  private String razonSocial;
+
+  @Enumerated(EnumType.STRING)
   private TipoOrganizacion tipo;
+
+  @Enumerated(EnumType.STRING)
   private ClasificacionOrg clasificacion;
+
+  //@ManyToOne(fetch = FetchType.LAZY)
+  @Transient
   private Ubicacion ubicacion;
-  private final List<Sector> sectores = new ArrayList<>();
+
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
+  private List<Sector> sectores = new ArrayList<>();
+
+  @Transient
   private List<DatosActividades> datosActividades = new ArrayList<>();
+
+  @Transient
   private List<Contacto> contactos = new ArrayList<>();
+
+  public Organizacion() {}
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo, String nombre,
                       Ubicacion ubicacion, ClasificacionOrg clasificacion) {
@@ -47,7 +65,7 @@ public class Organizacion {
   }
 
   public void agregarSector(Sector sector) {
-    sector.setOrgAlaQuePertenezco(this);
+    //sector.setOrgAlaQuePertenezco(this);
     sectores.add(sector);
   }
 
@@ -133,4 +151,5 @@ public class Organizacion {
     double hcDatosActividad = calculoHCMensual() * 12;
     return new HC(hcDatosActividad, UnidadHC.kgCO2);
   }
+
 }

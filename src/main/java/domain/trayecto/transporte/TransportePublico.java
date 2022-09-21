@@ -4,14 +4,24 @@ import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoInclui
 import domain.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
 import domain.ubicaciones.distancia.Distancia;
 import lombok.Getter;
+import lombok.Setter;
 
-public class TransportePublico implements MedioDeTransporte {
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Transient;
 
+@Entity(name = "transporte_publico")
+public class TransportePublico extends MedioDeTransporte {
+  @Transient
   private Parada paradaInicio;
+  @Transient
   private Parada paradaFin;
+  @Enumerated(EnumType.STRING)
   private TipoTransportePublico tipo;
+  @Transient
   private Linea linea;
-  @Getter private double combustibleConsumidoPorKM = 0;
+  @Getter @Setter private double combustibleConsumidoPorKM = 0.0;
 
   private void validacionesTransportePublico(TipoTransportePublico tipo, Linea linea,
                                              Parada paradaInicio, Parada paradaFin) {
@@ -33,10 +43,12 @@ public class TransportePublico implements MedioDeTransporte {
     return linea.containsParada(paradaInicio) && linea.containsParada(paradaFin);
   }
 
+  public TransportePublico() {}
+
   public TransportePublico(TipoTransportePublico tipo, Linea linea,
                            Parada paradaInicio, Parada paradaFin) {
 
-    validacionesTransportePublico(tipo, linea, paradaInicio, paradaFin);
+    //validacionesTransportePublico(tipo, linea, paradaInicio, paradaFin);
     this.tipo = tipo;
     this.linea = linea;
     this.paradaInicio = paradaInicio;

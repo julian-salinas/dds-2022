@@ -1,5 +1,6 @@
 package domain.organizaciones.miembros;
 
+import domain.PersistenceEntity;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.sectores.Sector;
@@ -9,19 +10,30 @@ import domain.organizaciones.hc.HC;
 import domain.trayecto.Trayecto;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class Miembro {
-  private final String nombre;
-  private final String apellido;
+
+@Entity
+public class Miembro extends PersistenceEntity {
+
+  private String nombre;
+  private String apellido;
+
+  @Enumerated(EnumType.STRING)
   private TipoDeDocumento tipoDeDocumento; // no se especifica nada
-  private Integer nroDeDocumento;
-  @Setter @Getter private Sector sectorDondeTrabaja;
+
+  private int nroDeDocumento; // era Integer, lo paso a int (a debatir)
+
+  //@Setter @Getter private Sector sectorDondeTrabaja;
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable(name = "trayecto_x_miembro")
   @Getter private final List<Trayecto> trayectos = new ArrayList<>();
 
-  public Miembro(String nombre, String apellido, TipoDeDocumento tipoDeDocumento, Integer nroDeDocumento) {
+  public Miembro() {}
+
+  public Miembro(String nombre, String apellido, TipoDeDocumento tipoDeDocumento, int nroDeDocumento) {
     this.nombre = nombre;
     this.apellido = apellido;
     this.tipoDeDocumento = tipoDeDocumento;

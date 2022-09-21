@@ -3,17 +3,24 @@ package domain.trayecto;
 import domain.organizaciones.miembros.Miembro;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Entity
 public class TrayectoCompartido extends Trayecto{
 
+  @Transient
   private List<Miembro> miembros = new ArrayList<>();
-  @Getter private List<Tramo> tramos = new ArrayList<>();
-  @Getter @Setter private Miembro owner;
+  //@Getter private List<Tramo> tramos = new ArrayList<>();
+  //@Getter @Setter private Miembro owner;
+
+  public TrayectoCompartido() {}
 
   public TrayectoCompartido(List<Miembro> miembros, List<Tramo> tramos) {
     tramos.forEach(this::validacionTrayectoCompartido);

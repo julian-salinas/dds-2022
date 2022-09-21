@@ -55,7 +55,7 @@ public class VinculacionesTests {
     organizacionDefault.aceptarVinculacionDeTrabajador(miembroDefault, sectorDefault);
     assertFalse(sectorDefault.containsMiembroParaAceptar(miembroDefault));
     assertTrue(sectorDefault.containsMiembro(miembroDefault));
-    assertEquals(miembroDefault.getSectorDondeTrabaja(), sectorDefault);
+    //assertEquals(miembroDefault.getSectorDondeTrabaja(), sectorDefault);
   }
 
   @Test
