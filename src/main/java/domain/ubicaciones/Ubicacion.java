@@ -7,16 +7,17 @@ import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.sectores.Localidad;
 import lombok.Getter;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 
-
+@Entity //(no puede ser Embeddable porque muchos usan 2 Ubicaciones en una misma clase)
 public class Ubicacion {
   @Getter String calle;
   @Getter int altura;
-  @Transient // a cambiar
-  @Getter Localidad localidad;
+  @Getter String nombreLocalidad;
   @Transient // va a quedar como Transient (no tiene sentido guardarlo en la db)
   ServicioGeoDds apiClient;
 
@@ -25,7 +26,17 @@ public class Ubicacion {
     this.apiClient = apiClient;
     this.calle = calle;
     this.altura = altura;
-    this.localidad = new Localidad(nombreLocalidad, apiClient);
+    this.nombreLocalidad = nombreLocalidad;
+  }
+
+  // Hacer esto para Localidad, Municipio, etc. O tal vez no.
+  public Localidad getLocalidad() {
+    try {
+      return new Localidad(nombreLocalidad, apiClient);
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 
   public Distancia calcularDistanciaA(Ubicacion otraUbicacion) throws IOException {
