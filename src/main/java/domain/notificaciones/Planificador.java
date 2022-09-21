@@ -1,5 +1,6 @@
 package domain.notificaciones;
 
+import domain.repositorios.RepositorioContactos;
 import domain.repositorios.RepositorioNotificaciones;
 import org.quartz.*;
 import static org.quartz.JobBuilder.newJob;
@@ -11,8 +12,17 @@ public class Planificador implements Job {
   @Override
   public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
     JobKey jobKey = jobExecutionContext.getJobDetail().getKey();
-    RepositorioNotificaciones.getInstance().all().stream()
-        .forEach(notificacion -> notificacion.notificarOrganizaciones());
+    this.notificarOrganizaciones();
+  }
+
+  public void notificarOrganizaciones() {
+    RepositorioContactos.getInstance()
+            .all()
+            .stream()
+            .forEach(contacto -> contacto
+                    .getMediosDeNotificacion()
+                    .stream()
+                    .forEach(notificacion -> notificacion.notificar(contacto)));
   }
 
   public static void main(String args[]) throws SchedulerException {
