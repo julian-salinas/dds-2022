@@ -1,5 +1,6 @@
 package domain.trayecto.transporte;
 
+import domain.PersistenceEntity;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.distancia.UnidadDistancia;
 import java.util.List;
@@ -15,7 +16,7 @@ import javax.persistence.*;
 //  - Se circula en ambos sentidos
 
 @Entity
-public class Linea {
+public class Linea extends PersistenceEntity {
 
   private String nombre;
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable(name = "linea_x_parada")

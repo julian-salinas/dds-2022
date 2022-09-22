@@ -6,14 +6,17 @@ import domain.organizaciones.TipoOrganizacion;
 import domain.organizaciones.miembros.Miembro;
 import domain.organizaciones.miembros.TipoDeDocumento;
 import domain.organizaciones.sectores.Sector;
+import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import domain.trayecto.transporte.*;
+import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.distancia.UnidadDistancia;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import domain.servicios.geodds.ServicioGeoDds;
 
 public class Workspace {
 
@@ -24,10 +27,11 @@ public class Workspace {
     tx.begin();
 
     // Organizacion, Sector, Miembro
+    Ubicacion ubicacion = new Ubicacion("rivadavia", 2000, null, null);
     Miembro miembro = new Miembro("Juan", "Carlos", TipoDeDocumento.DNI, 43567890);
     Sector sector = new Sector();
     sector.agregarMiembro(miembro);
-    Organizacion organizacion = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, "Panchos Loria", null, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
+    Organizacion organizacion = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, "Panchos Loria", ubicacion, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
     organizacion.agregarSector(sector);
     entityManager.persist(organizacion);
 

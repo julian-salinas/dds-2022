@@ -34,8 +34,7 @@ public class Organizacion extends PersistenceEntity {
   @Enumerated(EnumType.STRING)
   private ClasificacionOrg clasificacion;
 
-  //@ManyToOne(fetch = FetchType.LAZY)
-  @Transient
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Ubicacion ubicacion;
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
