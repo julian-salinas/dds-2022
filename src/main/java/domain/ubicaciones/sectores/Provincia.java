@@ -1,10 +1,12 @@
 package domain.ubicaciones.sectores;
 
 import domain.organizaciones.Organizacion;
-import domain.repositorios.RepoOrganizaciones;
+import domain.repositorios.RepositorioOrganizaciones;
 import domain.servicios.geodds.ServicioGeoDds;
 import lombok.Getter;
 
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,6 +25,6 @@ public class Provincia implements SectorTerritorial {
 
   @Override
   public List<Organizacion> orgsDentroDeSector() {
-    return RepoOrganizaciones.instance().inProvincia(this);
+    return RepositorioOrganizaciones.getInstance().inProvincia(this);
   }
 }

@@ -1,10 +1,30 @@
 package domain.notificaciones.contactos;
 
+import domain.PersistenceEntity;
+import domain.database.EntidadPersistente;
+import domain.notificaciones.Notificacion;
 import domain.notificaciones.Suscriptor;
+import domain.notificaciones.TipoDeNotificacion;
 
-public class Contacto implements Suscriptor {
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Table(name = "contactos")
+@Entity
+public class Contacto extends PersistenceEntity implements Suscriptor  {
+
+  public Contacto(){}
+
+  @Column(name = "email", unique = true, nullable = true)
   private String email = null;
+
+  @Column(name = "whatsapp", unique = true, nullable = true)
   private String whatsApp = null;
+
+  @OneToMany(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "medios_notificacion")
+  private List<Notificacion> mediosDeNotificacion = new ArrayList<>();
 
   public Contacto(String email, String whatsApp) {
     ValidadorDatoDeContacto validadorDatoDeContacto = new ValidadorDatoDeContacto();
@@ -34,6 +54,24 @@ public class Contacto implements Suscriptor {
 
   public String getWhatsApp() {
     return whatsApp;
+  }
+
+  public void agregarMedioDeNotificacion(Notificacion notificacion) {
+    this.validarQuePuedeRecibirNotificacion(notificacion);
+    this.mediosDeNotificacion.add(notificacion);
+  }
+
+  private void validarQuePuedeRecibirNotificacion(Notificacion notificacion) {
+    if (this.email == null && notificacion.getTipoDeNotificacion() == TipoDeNotificacion.EMAIL) {
+      throw new RuntimeException("El contacto no tiene un email asociado");
+    }
+    if (this.whatsApp == null && notificacion.getTipoDeNotificacion() == TipoDeNotificacion.WHATSAPP) {
+      throw new RuntimeException("El contacto no tiene un número de WhatsApp asociado");
+    }
+  }
+
+  public List<Notificacion> getMediosDeNotificacion() {
+    return mediosDeNotificacion;
   }
 
 }

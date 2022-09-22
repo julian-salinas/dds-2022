@@ -1,6 +1,9 @@
 package domain.ubicaciones.sectores;
 
 import domain.servicios.geodds.ServicioGeoDds;
+
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.IOException;
 
 public class Pais {

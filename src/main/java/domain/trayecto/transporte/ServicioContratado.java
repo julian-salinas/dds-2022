@@ -1,6 +1,7 @@
 package domain.trayecto.transporte;
 
 import domain.ubicaciones.Ubicacion;
+import domain.ubicaciones.distancia.Distancia;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,9 +9,12 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Transient;
+import java.io.IOException;
+
+import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 
 @Entity(name = "servicio_contratado")
-public class ServicioContratado extends MedioNoPublico {
+public class ServicioContratado extends MedioDeTransporte {
   @Transient
   @Getter private Ubicacion direccionInicio;
   @Transient
@@ -34,5 +38,15 @@ public class ServicioContratado extends MedioNoPublico {
   @Override
   public Boolean admiteTrayectoCompartido() {
     return true;
+  }
+
+  public Distancia distancia() {
+    try {
+      return this.getDireccionInicio().calcularDistanciaA(this.getDireccionFin());
+    } catch (IOException e) {
+      // bruh
+      e.printStackTrace();
+      return new Distancia(-1.0, MTS);
+    }
   }
 }
