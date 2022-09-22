@@ -4,6 +4,7 @@ import domain.database.EntityManagerHelper;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
+import java.util.Locale;
 
 public class DAOHibernate<T> implements DAO<T> {
     private Class<T> type;
@@ -14,7 +15,7 @@ public class DAOHibernate<T> implements DAO<T> {
 
     @Override
     public List<T> all() {
-        return EntityManagerHelper.getEntityManager().createQuery("SELECT * FROM " + type.getName()).getResultList();
+        return EntityManagerHelper.getEntityManager().createQuery("FROM " + type.getSimpleName()).getResultList();
     }
 
     @Override

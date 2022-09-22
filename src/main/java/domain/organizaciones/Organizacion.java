@@ -13,6 +13,9 @@ import domain.ubicaciones.sectores.Localidad;
 import domain.ubicaciones.sectores.Municipio;
 import domain.ubicaciones.sectores.Provincia;
 import domain.ubicaciones.Ubicacion;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -32,6 +35,7 @@ public class Organizacion extends PersistenceEntity {
   private TipoOrganizacion tipo;
 
   @Enumerated(EnumType.STRING)
+  @Getter
   private ClasificacionOrg clasificacion;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -41,10 +45,14 @@ public class Organizacion extends PersistenceEntity {
   private List<Sector> sectores = new ArrayList<>();
 
   @Transient
+  @Setter
   private List<DatosActividades> datosActividades = new ArrayList<>();
 
   @Transient
   private List<Contacto> contactos = new ArrayList<>();
+
+  @OneToMany
+  private List<HC> historialHC = new ArrayList<>();
 
   public Organizacion() {}
 
@@ -143,7 +151,9 @@ public class Organizacion extends PersistenceEntity {
 
   public HC hcMensual(){
     double hcDatosActividad = calculoHCMensual();
-    return new HC(hcDatosActividad, UnidadHC.kgCO2);
+    HC hc = new HC(hcDatosActividad, UnidadHC.kgCO2);
+    this.historialHC.add(hc);
+    return hc;
   }
 
   public HC hcAnual(){

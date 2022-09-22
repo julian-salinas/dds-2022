@@ -1,8 +1,17 @@
 package domain.organizaciones.hc;
 
-public class HC {
+import domain.PersistenceEntity;
 
+import javax.persistence.*;
+
+@Entity
+@Table
+public class HC extends PersistenceEntity {
+
+  @Column
   private double valor;
+
+  @Enumerated(EnumType.STRING)
   private UnidadHC unidadHC;
 
   public HC(double valor, UnidadHC unidadHC) {
@@ -10,6 +19,7 @@ public class HC {
     this.unidadHC = unidadHC;
   }
 
+  public HC(){}
 
   public double enGCO2() {
     if(unidadHC.equals(UnidadHC.gCO2)) {
