@@ -10,8 +10,9 @@ import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 
 @Embeddable
 public class Distancia {
-  @Column(name = "distancia")
+  @Column(name = "distancia_a_prox")
   private double valor;
+  @Column(name = "unidad_distancia")
   @Enumerated(EnumType.STRING)
   private UnidadDistancia unidadDeDistancia;
 

@@ -25,6 +25,10 @@
         <class>domain.trayecto.transporte.VehiculoParticular</class>
         <class>domain.trayecto.transporte.ServicioContratado</class>
         <class>domain.trayecto.transporte.Parada</class>
+        <class>domain.trayecto.transporte.Linea</class>
+
+        <class>domain.organizaciones.datos.actividades.tipos.TipoDeConsumo</class>
+        <class>domain.organizaciones.datos.actividades.DatosActividades</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

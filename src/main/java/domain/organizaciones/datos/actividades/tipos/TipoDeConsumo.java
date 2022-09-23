@@ -1,17 +1,32 @@
 package domain.organizaciones.datos.actividades.tipos;
 
+import domain.PersistenceEntity;
 import domain.organizaciones.datos.actividades.Actividad;
 import domain.organizaciones.datos.actividades.Alcance;
 import domain.organizaciones.datos.actividades.UnidadConsumo;
 import lombok.Getter;
 
-public class TipoDeConsumo {
+import javax.persistence.*;
+
+@Table(name = "tipo_de_consumo")
+@Entity
+public class TipoDeConsumo extends PersistenceEntity {
+  @Column(name = "nombre_tipo")
+  private String tipo;
+  @Column(name = "unidad_consumo")
+  @Enumerated(EnumType.STRING)
   private UnidadConsumo unidad;
+  @Enumerated(EnumType.STRING)
   private Actividad actividad;
+  @Enumerated(EnumType.STRING)
   private Alcance alcance;
+  @Embedded
   @Getter private FactorEmision fe;
 
-  public TipoDeConsumo(UnidadConsumo unidad, Actividad actividad, Alcance alcance) {
+  public TipoDeConsumo() {}
+
+  public TipoDeConsumo(String tipo, UnidadConsumo unidad, Actividad actividad, Alcance alcance) {
+    this.tipo = tipo;
     this.unidad = unidad;
     this.actividad = actividad;
     this.alcance = alcance;

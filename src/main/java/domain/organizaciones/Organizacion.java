@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -44,14 +45,13 @@ public class Organizacion extends PersistenceEntity {
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
   private List<Sector> sectores = new ArrayList<>();
 
-  @Transient
-  @Setter
-  private List<DatosActividades> datosActividades = new ArrayList<>();
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
+  @Setter private List<DatosActividades> datosActividades = new ArrayList<>();
 
   @Transient
   private List<Contacto> contactos = new ArrayList<>();
 
-  @OneToMany
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "hc_id")
   private List<HC> historialHC = new ArrayList<>();
 
   public Organizacion() {}

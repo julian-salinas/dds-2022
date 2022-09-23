@@ -8,6 +8,7 @@ import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.sectores.Localidad;
 import lombok.Getter;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -18,13 +19,13 @@ import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 public class Ubicacion extends PersistenceEntity {
   @Getter String calle;
   @Getter int altura;
-  @Transient @Getter String nombreLocalidad;
+  @Column(name = "nombre_localidad")
+  @Getter String nombreLocalidad;
   @Transient // va a quedar como Transient (no tiene sentido guardarlo en la db)
   ServicioGeoDds apiClient;
 
   public Ubicacion() {}
-  public Ubicacion(String calle, int altura, String nombreLocalidad, ServicioGeoDds apiClient)
-      {
+  public Ubicacion(String calle, int altura, String nombreLocalidad, ServicioGeoDds apiClient) {
     this.apiClient = apiClient;
     this.calle = calle;
     this.altura = altura;
