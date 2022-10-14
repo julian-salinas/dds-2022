@@ -1,6 +1,5 @@
 package domain.ubicaciones.sectores;
 
-import domain.PersistenceEntity;
 import domain.organizaciones.hc.HC;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.hc.UnidadHC;

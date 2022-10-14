@@ -1,17 +1,13 @@
 package domain.organizaciones.sectores;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 import domain.trayecto.Trayecto;
-import domain.organizaciones.Organizacion;
 import domain.organizaciones.miembros.Miembro;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.*;
-
-import lombok.Getter;
-import lombok.Setter;
 
 
 @Entity

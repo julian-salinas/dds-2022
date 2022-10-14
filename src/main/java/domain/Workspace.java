@@ -9,6 +9,7 @@ import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.miembros.Miembro;
 import domain.organizaciones.miembros.TipoDeDocumento;
 import domain.organizaciones.sectores.Sector;
+import domain.repositorios.RepositorioOrganizaciones;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
@@ -31,6 +32,8 @@ public class Workspace {
     EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
     EntityTransaction tx = entityManager.getTransaction();
     tx.begin();
+
+    // SIN REPOS (FUNCA)
 
     // Organizacion, Sector, Miembro
     Ubicacion ubicacion = new Ubicacion("rivadavia", 2000, "Localidad", null);

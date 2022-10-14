@@ -1,6 +1,10 @@
 package domain.repositorios.daos;
 
 import domain.database.EntityManagerHelper;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
@@ -28,6 +32,12 @@ public class DAOHibernate<T> implements DAO<T> {
         EntityManagerHelper.getEntityManager().getTransaction().begin();
         EntityManagerHelper.getEntityManager().persist(object);
         EntityManagerHelper.getEntityManager().getTransaction().commit();
+        /*EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+        entityManager.persist(object);
+        entityTransaction.commit();
+        entityManager.close();*/
     }
 
     @Override

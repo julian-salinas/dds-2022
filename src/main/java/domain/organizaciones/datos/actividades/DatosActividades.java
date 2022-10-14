@@ -1,6 +1,6 @@
 package domain.organizaciones.datos.actividades;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumoFactory;

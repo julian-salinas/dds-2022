@@ -1,6 +1,6 @@
 package domain.organizaciones.miembros;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.sectores.Sector;
@@ -13,7 +13,6 @@ import java.util.List;
 import javax.persistence.*;
 
 import lombok.Getter;
-import lombok.Setter;
 
 
 @Entity

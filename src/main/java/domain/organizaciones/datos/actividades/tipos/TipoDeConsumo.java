@@ -1,6 +1,6 @@
 package domain.organizaciones.datos.actividades.tipos;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 import domain.organizaciones.datos.actividades.Actividad;
 import domain.organizaciones.datos.actividades.Alcance;
 import domain.organizaciones.datos.actividades.UnidadConsumo;

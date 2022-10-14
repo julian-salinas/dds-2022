@@ -2,14 +2,13 @@ package domain.ubicaciones;
 
 import java.io.IOException;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.sectores.Localidad;
 import lombok.Getter;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 

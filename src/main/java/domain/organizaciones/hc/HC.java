@@ -1,14 +1,13 @@
 package domain.organizaciones.hc;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "hc")
 public class HC extends PersistenceEntity {
 
-  @Column
   private double valor;
 
   @Enumerated(EnumType.STRING)

@@ -1,6 +1,6 @@
 package domain.organizaciones;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.miembros.Miembro;
@@ -17,7 +17,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -39,7 +38,8 @@ public class Organizacion extends PersistenceEntity {
   @Getter
   private ClasificacionOrg clasificacion;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  //@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @Transient
   private Ubicacion ubicacion;
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
@@ -51,7 +51,7 @@ public class Organizacion extends PersistenceEntity {
   @Transient
   private List<Contacto> contactos = new ArrayList<>();
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "hc_id")
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
   private List<HC> historialHC = new ArrayList<>();
 
   public Organizacion() {}

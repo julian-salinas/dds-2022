@@ -1,4 +1,4 @@
-package domain;
+package domain.database;
 
 import lombok.Getter;
 

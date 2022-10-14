@@ -1,13 +1,12 @@
 package domain.trayecto;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 import domain.trayecto.transporte.MedioDeTransporte;
 import domain.ubicaciones.distancia.Distancia;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
 @Entity
 public class Tramo extends PersistenceEntity {

@@ -1,9 +1,13 @@
 package domain.database;
 
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+
 import javax.persistence.*;
 import java.util.function.Supplier;
 
 public class EntityManagerHelper {
+    private static EntityManager entityManager;
+    /*
     private static EntityManagerFactory emf;
     private static ThreadLocal<EntityManager> threadLocal;
 
@@ -15,24 +19,34 @@ public class EntityManagerHelper {
             e.printStackTrace();
         }
     }
+    */
 
     public static EntityManager entityManager() {
         return getEntityManager();
     }
 
     public static EntityManager getEntityManager() {
+        /*
         EntityManager manager = threadLocal.get();
         if (manager == null || !manager.isOpen()) {
             manager = emf.createEntityManager();
             threadLocal.set(manager);
         }
         return manager;
+        */
+        if(entityManager == null) {
+            entityManager = PerThreadEntityManagers.getEntityManager();
+        }
+        return entityManager;
     }
 
     public static void closeEntityManager() {
+        /*
         EntityManager em = threadLocal.get();
         threadLocal.set(null);
         em.close();
+         */
+        entityManager.close();
     }
 
     public static void beginTransaction() {
