@@ -17,7 +17,7 @@ public class WorkspaceRepos {
 
   public static void main(String[] args) {
 
-    // TODO CON REPOS
+    // FULL CON REPOS
 
     Ubicacion ubicacion = new Ubicacion("rivadavia", 2000, "Localidad", null);
     Miembro miembro = new Miembro("Juan", "Carlos", TipoDeDocumento.DNI, 43567890);

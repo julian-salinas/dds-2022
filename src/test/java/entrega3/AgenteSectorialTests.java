@@ -203,6 +203,7 @@ public class AgenteSectorialTests {
     RepositorioOrganizaciones.getInstance().clean();
   }
 
+  // TODO: fixear test
   @Test
   public void siHayUnaOrgQueNoEstaEnSuProvinciaNoLaCuenta() throws IOException {
     when(apiClient.nombreProvincia(anyInt())).thenReturn("San Juan");

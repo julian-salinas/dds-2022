@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+// TODO: fixear tests de notificaciones (debe ser por los Repos) y agregar mejores tests.
+
 public class NotificacionTest {
   private Organizacion unaOrganizacion;
   private Contacto unContacto, otroContacto, otroContactoMas;
