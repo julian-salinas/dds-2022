@@ -17,8 +17,6 @@ public class TrayectoCompartido extends Trayecto{
 
   @Transient
   private List<Miembro> miembros = new ArrayList<>();
-  //@Getter private List<Tramo> tramos = new ArrayList<>();
-  //@Getter @Setter private Miembro owner;
 
   public TrayectoCompartido() {}
 

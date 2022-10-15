@@ -72,7 +72,6 @@ public class Organizacion extends PersistenceEntity {
   }
 
   public void agregarSector(Sector sector) {
-    //sector.setOrgAlaQuePertenezco(this);
     sectores.add(sector);
   }
 
