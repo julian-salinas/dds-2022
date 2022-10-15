@@ -17,7 +17,7 @@ public class Sector extends PersistenceEntity {
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "sector_id")
   private final List<Miembro> miembros = new ArrayList<>();
 
-  @OneToMany(fetch = FetchType.LAZY) @JoinColumn(name = "sector_id")
+  @OneToMany(fetch = FetchType.LAZY) @JoinColumn(name = "sector_para_aceptar_id")
   private final List<Miembro> miembrosParaAceptar = new ArrayList<>(); // --> Tal vez haya q cambiarlo para persistir
 
   public boolean containsMiembro(Miembro miembro) {

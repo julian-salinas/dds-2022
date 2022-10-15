@@ -23,7 +23,11 @@ public class Ubicacion extends PersistenceEntity {
   @Transient // va a quedar como Transient (no tiene sentido guardarlo en la db)
   ServicioGeoDds apiClient;
 
-  public Ubicacion() {}
+  public Ubicacion() {
+    // Puede q esto cambie si hacemos q no sea Singleton
+    apiClient = ServicioGeoDds.getInstancia();
+  }
+
   public Ubicacion(String calle, int altura, String nombreLocalidad, ServicioGeoDds apiClient) {
     this.apiClient = apiClient;
     this.calle = calle;
