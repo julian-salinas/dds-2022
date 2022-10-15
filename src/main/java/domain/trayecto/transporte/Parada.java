@@ -1,11 +1,9 @@
 package domain.trayecto.transporte;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 import domain.ubicaciones.distancia.Distancia;
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 

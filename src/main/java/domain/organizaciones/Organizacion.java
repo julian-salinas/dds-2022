@@ -1,6 +1,6 @@
 package domain.organizaciones;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.miembros.Miembro;
@@ -38,20 +38,20 @@ public class Organizacion extends PersistenceEntity {
   @Getter
   private ClasificacionOrg clasificacion;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  //@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @Transient
   private Ubicacion ubicacion;
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
   private List<Sector> sectores = new ArrayList<>();
 
-  @Transient
-  @Setter
-  private List<DatosActividades> datosActividades = new ArrayList<>();
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
+  @Setter private List<DatosActividades> datosActividades = new ArrayList<>();
 
   @Transient
   private List<Contacto> contactos = new ArrayList<>();
 
-  @OneToMany
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
   private List<HC> historialHC = new ArrayList<>();
 
   public Organizacion() {}

@@ -1,6 +1,6 @@
 package domain.trayecto.transporte;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.distancia.UnidadDistancia;
 import java.util.List;

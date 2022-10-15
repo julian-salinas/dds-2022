@@ -10,13 +10,13 @@ import javax.persistence.*;
 
 @Entity(name = "transporte_publico")
 public class TransportePublico extends MedioDeTransporte {
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "parada_ini")
+  @Transient
   private Parada paradaInicio;
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "parada_fin")
+  @Transient
   private Parada paradaFin;
   @Enumerated(EnumType.STRING)
   private TipoTransportePublico tipo;
-  @Transient
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Linea linea;
   @Getter @Setter private double combustibleConsumidoPorKM = 0.0;
 

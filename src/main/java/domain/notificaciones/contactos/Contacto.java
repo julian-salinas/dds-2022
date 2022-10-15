@@ -1,7 +1,6 @@
 package domain.notificaciones.contactos;
 
-import domain.PersistenceEntity;
-import domain.database.EntidadPersistente;
+import domain.database.PersistenceEntity;
 import domain.notificaciones.Notificacion;
 import domain.notificaciones.Suscriptor;
 import domain.notificaciones.TipoDeNotificacion;

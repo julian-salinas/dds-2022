@@ -5,10 +5,7 @@ import domain.ubicaciones.distancia.Distancia;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.IOException;
 
 import static domain.ubicaciones.distancia.UnidadDistancia.MTS;

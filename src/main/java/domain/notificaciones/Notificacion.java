@@ -1,9 +1,7 @@
 package domain.notificaciones;
 
-import domain.PersistenceEntity;
-import domain.database.EntidadPersistente;
+import domain.database.PersistenceEntity;
 import domain.notificaciones.adapters.MensajeriaAdapter;
-import domain.repositorios.RepositorioContactos;
 
 import javax.persistence.*;
 

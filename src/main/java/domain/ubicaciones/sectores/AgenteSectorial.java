@@ -6,6 +6,7 @@ import domain.organizaciones.hc.UnidadHC;
 
 import java.util.List;
 
+
 public class AgenteSectorial {
   SectorTerritorial sectorTerritorial;
 

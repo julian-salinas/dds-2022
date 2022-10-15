@@ -7,12 +7,27 @@
 
     <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <!--
-        <class>utn.dds.persistencia.futbol.persistence.Jugador</class>
-        <class>utn.dds.persistencia.futbol.persistence.Equipo</class>
-        <class>utn.dds.persistencia.futbol.persistence.Formacion</class>
-        <class>utn.dds.persistencia.futbol.persistence.Partido</class>
-        -->
+
+        <!-- -->
+        <class>domain.organizaciones.Organizacion</class>
+        <class>domain.organizaciones.sectores.Sector</class>
+        <class>domain.organizaciones.miembros.Miembro</class>
+        <class>domain.trayecto.Trayecto</class>
+        <class>domain.trayecto.TrayectoCompartido</class>
+        <class>domain.trayecto.Tramo</class>
+        <class>domain.trayecto.transporte.MedioDeTransporte</class>
+        <class>domain.trayecto.transporte.TransportePublico</class>
+        <class>domain.trayecto.transporte.Pie</class>
+        <class>domain.trayecto.transporte.Bicicleta</class>
+        <class>domain.trayecto.transporte.VehiculoParticular</class>
+        <class>domain.trayecto.transporte.ServicioContratado</class>
+        <class>domain.trayecto.transporte.Parada</class>
+        <class>domain.trayecto.transporte.Linea</class>
+        <class>domain.organizaciones.datos.actividades.tipos.TipoDeConsumo</class>
+        <class>domain.organizaciones.datos.actividades.DatosActividades</class>
+        <class>domain.ubicaciones.Ubicacion</class>
+        <class>domain.organizaciones.hc.HC</class>
+        <!-- -->
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

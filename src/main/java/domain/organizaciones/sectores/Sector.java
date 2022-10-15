@@ -1,17 +1,13 @@
 package domain.organizaciones.sectores;
 
-import domain.PersistenceEntity;
+import domain.database.PersistenceEntity;
 import domain.trayecto.Trayecto;
-import domain.organizaciones.Organizacion;
 import domain.organizaciones.miembros.Miembro;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.*;
-
-import lombok.Getter;
-import lombok.Setter;
 
 
 @Entity
@@ -21,7 +17,7 @@ public class Sector extends PersistenceEntity {
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "sector_id")
   private final List<Miembro> miembros = new ArrayList<>();
 
-  @OneToMany(fetch = FetchType.LAZY) @JoinColumn(name = "sector_id")
+  @OneToMany(fetch = FetchType.LAZY) @JoinColumn(name = "sector_para_aceptar_id")
   private final List<Miembro> miembrosParaAceptar = new ArrayList<>(); // --> Tal vez haya q cambiarlo para persistir
 
   public boolean containsMiembro(Miembro miembro) {

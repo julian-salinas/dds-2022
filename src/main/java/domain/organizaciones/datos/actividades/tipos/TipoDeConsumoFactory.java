@@ -14,44 +14,51 @@ public class TipoDeConsumoFactory {
 
   public TipoDeConsumo buildTipoDeConsumo(String tipo) {
 
-    switch (tipo){
+    switch (tipo) {
 
       default:
       case "Gas Natural":
-        return new TipoDeConsumo(UnidadConsumo.M3,
+        return new TipoDeConsumo(tipo,
+            UnidadConsumo.M3,
             Actividad.COMBUSTION_FIJA,
             Alcance.DIRECTAS);
 
       case "Diesel/Gasoil":
       case "Nafta":
-        return new TipoDeConsumo(UnidadConsumo.LT,
+        return new TipoDeConsumo(tipo,
+            UnidadConsumo.LT,
             Actividad.COMBUSTION_FIJA,
             Alcance.DIRECTAS);
 
       case "Carbon":
-        return new TipoDeConsumo(UnidadConsumo.KG,
+        return new TipoDeConsumo(tipo,
+            UnidadConsumo.KG,
             Actividad.COMBUSTION_FIJA,
             Alcance.DIRECTAS);
 
       case "Combustible Gasoil":
       case "Combustible Nafta":
-        return new TipoDeConsumo(UnidadConsumo.LT,
+        return new TipoDeConsumo(tipo,
+            UnidadConsumo.LT,
             Actividad.COMBUSTION_MOVIL,
             Alcance.DIRECTAS);
 
       case "Electricidad":
-        return new TipoDeConsumo(UnidadConsumo.KWH,
+        return new TipoDeConsumo(tipo,
+            UnidadConsumo.KWH,
             Actividad.ELECTRICIDAD,
             Alcance.INDIRECTAS_ELECTRICIDAD);
 
       case "Camion de carga":
       case "Utilitario liviano":
-        return new TipoDeConsumo(UnidadConsumo.NINGUNA,
+        return new TipoDeConsumo(tipo,
+            UnidadConsumo.NINGUNA,
             Actividad.LOGISTICA_PRODUCTOS_RESIDUOS,
             Alcance.INDIRECTAS_EXTERNAS);
 
       case "Distancia media":
-        return new TipoDeConsumo(UnidadConsumo.KM,
+        return new TipoDeConsumo(tipo,
+            UnidadConsumo.KM,
             Actividad.LOGISTICA_PRODUCTOS_RESIDUOS,
             Alcance.INDIRECTAS_EXTERNAS);
     }

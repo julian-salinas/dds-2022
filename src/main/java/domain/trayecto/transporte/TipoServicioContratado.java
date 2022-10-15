@@ -6,7 +6,12 @@ import javax.persistence.Embeddable;
 public class TipoServicioContratado {
   String nombre;
 
+  public TipoServicioContratado() {
+
+  }
+
   public TipoServicioContratado(String nombre) {
     this.nombre = nombre;
   }
+
 }
