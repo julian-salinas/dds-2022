@@ -39,7 +39,6 @@ public class Miembro extends PersistenceEntity {
   }
 
   public void agregarTrayecto(Trayecto trayecto) {
-    // para probar unas cosas
     trayectos.add(trayecto);
   }
 

@@ -1,5 +1,6 @@
-package domain.trayecto.transporte;
+package domain.trayecto.transporte.nopublico;
 
+import domain.trayecto.transporte.MedioDeTransporte;
 import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 import lombok.Getter;

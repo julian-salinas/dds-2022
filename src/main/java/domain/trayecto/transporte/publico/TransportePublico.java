@@ -1,5 +1,6 @@
-package domain.trayecto.transporte;
+package domain.trayecto.transporte.publico;
 
+import domain.trayecto.transporte.MedioDeTransporte;
 import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
 import domain.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
 import domain.ubicaciones.distancia.Distancia;
@@ -45,7 +46,8 @@ public class TransportePublico extends MedioDeTransporte {
   public TransportePublico(TipoTransportePublico tipo, Linea linea,
                            Parada paradaInicio, Parada paradaFin) {
 
-    validacionesTransportePublico(tipo, linea, paradaInicio, paradaFin); // Comentar esto para correr Workspace
+    // Comentar esto para correr Workspace
+    validacionesTransportePublico(tipo, linea, paradaInicio, paradaFin);
     this.tipo = tipo;
     this.linea = linea;
     this.paradaInicio = paradaInicio;

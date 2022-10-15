@@ -1,7 +1,6 @@
 package entrega2;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -11,7 +10,11 @@ import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import domain.trayecto.TrayectoCompartido;
-import domain.trayecto.transporte.*;
+import domain.trayecto.transporte.nopublico.*;
+import domain.trayecto.transporte.publico.Linea;
+import domain.trayecto.transporte.publico.Parada;
+import domain.trayecto.transporte.publico.TipoTransportePublico;
+import domain.trayecto.transporte.publico.TransportePublico;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.UnidadDistancia;
@@ -246,7 +249,9 @@ public class DistanciaTests {
     Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
     List<Miembro> miembros = Stream.of(miembro, miembro2).collect(Collectors.toList());
 
-    TrayectoCompartido trayecto = new TrayectoCompartido(miembros, new ArrayList<>());
+    TrayectoCompartido trayecto = new TrayectoCompartido();
+    // miembros, new ArrayList<>()
+    trayecto.agregarAcompanantes(miembros);
     trayecto.agregarTramos(tramoEnAuto,
         tramoEnTaxi, tramoEnAuto);
 

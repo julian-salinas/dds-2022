@@ -1,4 +1,4 @@
-package domain.trayecto.transporte;
+package domain.trayecto.transporte.publico;
 
 public enum TipoTransportePublico {
   TREN, SUBTE, COLECTIVO

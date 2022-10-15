@@ -1,4 +1,4 @@
-package domain.trayecto.transporte;
+package domain.trayecto.transporte.nopublico;
 
 import javax.persistence.Embeddable;
 

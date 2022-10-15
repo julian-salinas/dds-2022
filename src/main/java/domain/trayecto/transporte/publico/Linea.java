@@ -1,4 +1,4 @@
-package domain.trayecto.transporte;
+package domain.trayecto.transporte.publico;
 
 import domain.database.PersistenceEntity;
 import domain.ubicaciones.distancia.Distancia;

@@ -12,15 +12,14 @@ import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import domain.trayecto.TrayectoCompartido;
-import domain.trayecto.transporte.Bicicleta;
-import domain.trayecto.transporte.Pie;
-import domain.trayecto.transporte.ServicioContratado;
-import domain.trayecto.transporte.TipoServicioContratado;
+import domain.trayecto.transporte.nopublico.Bicicleta;
+import domain.trayecto.transporte.nopublico.Pie;
+import domain.trayecto.transporte.nopublico.ServicioContratado;
+import domain.trayecto.transporte.nopublico.TipoServicioContratado;
 import domain.ubicaciones.Ubicacion;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -92,14 +91,15 @@ public class CalculoHcTests {
     trayecto2.agregarTramo(primerTramom2);
     miembro2.agregarTrayecto(trayecto2);
 
-    List<Miembro> miembros = Stream.of(miembro2).collect(Collectors.toList());
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
         taxi, unaUbicacion, unaUbicacion, 0.15
     );
     Tramo tramo = new Tramo(servicioContratado);
-    List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
-    trayectoCompartido = new TrayectoCompartido(miembros, tramos);
+    trayectoCompartido = new TrayectoCompartido();
+    // miembros, tramos
+    trayectoCompartido.agregarTramo(tramo);
+    trayectoCompartido.agregarAcompanante(miembro2);
 
     miembro1.registrarTrayecto(trayectoCompartido);
 

@@ -1,9 +1,9 @@
 package entrega1;
 
-import domain.trayecto.transporte.Linea;
-import domain.trayecto.transporte.Parada;
-import domain.trayecto.transporte.TipoTransportePublico;
-import domain.trayecto.transporte.TransportePublico;
+import domain.trayecto.transporte.publico.Linea;
+import domain.trayecto.transporte.publico.Parada;
+import domain.trayecto.transporte.publico.TipoTransportePublico;
+import domain.trayecto.transporte.publico.TransportePublico;
 import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
 import domain.trayecto.transporte.excepciones.ExcepcionTipoTransporteNoIgualAtipoDeLinea;
 import domain.ubicaciones.distancia.Distancia;
