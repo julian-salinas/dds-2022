@@ -45,7 +45,7 @@ public class TransportePublico extends MedioDeTransporte {
   public TransportePublico(TipoTransportePublico tipo, Linea linea,
                            Parada paradaInicio, Parada paradaFin) {
 
-    //validacionesTransportePublico(tipo, linea, paradaInicio, paradaFin);
+    validacionesTransportePublico(tipo, linea, paradaInicio, paradaFin); // Comentar esto para correr Workspace
     this.tipo = tipo;
     this.linea = linea;
     this.paradaInicio = paradaInicio;
