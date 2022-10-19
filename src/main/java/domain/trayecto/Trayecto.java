@@ -2,6 +2,7 @@ package domain.trayecto;
 
 import domain.database.PersistenceEntity;
 import domain.organizaciones.miembros.Miembro;
+import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +25,11 @@ public class Trayecto extends PersistenceEntity {
 
   @ManyToMany(mappedBy = "trayectos")
   @Getter public List<Miembro> miembros = new ArrayList<>();
+
+  @Transient
+  public Ubicacion ubicacionInicio;
+  @Transient
+  public Ubicacion ubicacionFin;
 
   public void agregarTramo(Tramo tramo) {
     tramos.add(tramo);
