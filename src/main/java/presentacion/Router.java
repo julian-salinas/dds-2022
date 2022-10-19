@@ -1,5 +1,6 @@
 package presentacion;
 
+import presentacion.controladores.InicioController;
 import presentacion.controladores.LoginController;
 import presentacion.controladores.SigninController;
 import spark.Spark;
@@ -12,16 +13,19 @@ public class Router {
     // Todos los controllers
     SigninController signinController = new SigninController();
     LoginController loginController = new LoginController();
+    InicioController inicioController = new InicioController();
 
     //DebugScreen.enableDebugScreen();
 
     Spark.staticFiles.location("public");
 
     // Todos los requests
-    Spark.get("/signin", signinController::index, engineTemplate);
-    Spark.post("/signin", signinController::post, engineTemplate);
-    Spark.get("/login", loginController::index, engineTemplate);
-    Spark.post("/login", loginController::post, engineTemplate);
+   Spark.get("/signin", signinController::index, engineTemplate);
+   Spark.post("/signin", signinController::post, engineTemplate);
+   Spark.get("/login", loginController::index, engineTemplate);
+   Spark.post("/login", loginController::post, engineTemplate);
 
+
+    Spark.get("/inicio", inicioController::index, engineTemplate);
   }
 }

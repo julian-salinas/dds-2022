@@ -1,10 +1,15 @@
 package presentacion.controladores;
 
+import domain.repositorios.Repositorio;
+import domain.repositorios.RepositorioUsuarios;
+import presentacion.TipoUsuario;
+import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
 public class LoginController {
+
   // Pagina de Login
   public ModelAndView index(Request request, Response response) {
     return new ModelAndView(null, "login.hbs");
@@ -12,19 +17,25 @@ public class LoginController {
 
   // Logica para procesar los datos introducidos en la pag. de Login
   public ModelAndView post(Request request, Response response) {
-    String usuario = request.queryParams("nombre");
+    String username = request.queryParams("nombre");
     String password = request.queryParams("password");
-    //Usuario usuarioEncontrado = UsuarioRepositorio.get().findByUsername(usuario);
+    Usuario usuarioEncontrado = RepositorioUsuarios.getInstance().findByUsername(username);
 
     // Si no existe, vuelvo a la pagina de Login
-    /*if (usuarioEncontrado == null ||
+    if (usuarioEncontrado == null ||
         !usuarioEncontrado.getPassword().equals(password)) {
       return new ModelAndView(null, "login.hbs");
-    }*/
+    }
+
+    TipoUsuario tipo =  usuarioEncontrado.getTipo();
 
     // Si existe, redirijo a la pag. q haga falta
-    request.session().attribute("usuario_logueado", usuario);
-    response.redirect("/capturas");
+    request.session().attribute("usuario_logueado", username);
+
+    if(tipo == TipoUsuario.MIEMBRO)
+      response.redirect("/inicio");
+    if(tipo == TipoUsuario.ORGANIZACION)
+      response.redirect("/inicio");
     return null;
   }
 }

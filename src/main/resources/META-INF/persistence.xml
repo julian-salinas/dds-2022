@@ -29,6 +29,7 @@
         <class>domain.organizaciones.datos.actividades.DatosActividades</class>
         <class>domain.ubicaciones.Ubicacion</class>
         <class>domain.organizaciones.hc.HC</class>
+        <class>presentacion.Usuario</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
