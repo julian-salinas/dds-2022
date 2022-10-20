@@ -1,5 +1,6 @@
 package presentacion;
 
+import presentacion.controladores.HomeController;
 import presentacion.controladores.InicioController;
 import presentacion.controladores.LoginController;
 import presentacion.controladores.SigninController;
@@ -14,6 +15,7 @@ public class Router {
     SigninController signinController = new SigninController();
     LoginController loginController = new LoginController();
     InicioController inicioController = new InicioController();
+    HomeController homeController = new HomeController();
 
     //DebugScreen.enableDebugScreen();
 
@@ -26,6 +28,7 @@ public class Router {
    Spark.post("/login", loginController::post, engineTemplate);
 
 
-    Spark.get("/inicio", inicioController::index, engineTemplate);
+   Spark.get("/inicio", inicioController::index, engineTemplate);
+   Spark.get("/home", homeController::index, engineTemplate);
   }
 }

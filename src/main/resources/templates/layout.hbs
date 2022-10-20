@@ -16,36 +16,23 @@
          <meta name="viewport" content="width=device-width, initial-scale=1">
          <!-- Bootstrap CSS -->
          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-         <title>Pokedex</title>
-      </head>
+         <title>Impacto Ambiental</title>
 
+      </head>
 
       <body>
 
-              <header class="p-3 mb-3 border-bottom">
-                  <div class="container">
+
+                  <div class="topnav">
                     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
-                        <div class="container">
                           <a class="navbar-brand" href="#">ImpactoAmbiental</a>
-                          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                          </button>
+                           {{#block "barra"}}
+                             {{/block}}
+                         </nav>
+                    </div>
 
-                          <div class="collapse navbar-collapse" id="navbarsExample07">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                              <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/capturas">Capturas</a>
-                              </li>
-                              <li class="nav-item">
-                                <a class="nav-link active" href="/perfil">Perfil</a>
-                              </li>
-                          </div>
-                        </div>
-                      </nav>
-                  </div>
-                </header>
 
-                <div class="container">
+                <div class="content">
                     {{#block "contenido"}}
                     {{/block}}
                 </div>
@@ -57,3 +44,4 @@
          </footer>
       </body>
    </html>
+

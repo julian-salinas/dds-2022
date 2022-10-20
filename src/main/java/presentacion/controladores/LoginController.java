@@ -33,7 +33,7 @@ public class LoginController {
     request.session().attribute("usuario_logueado", username);
 
     if(tipo == TipoUsuario.MIEMBRO)
-      response.redirect("/inicio");
+      response.redirect("/home");
     if(tipo == TipoUsuario.ORGANIZACION)
       response.redirect("/inicio");
     return null;
