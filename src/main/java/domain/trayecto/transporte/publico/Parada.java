@@ -5,16 +5,14 @@ import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 import lombok.Getter;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 public class Parada extends PersistenceEntity {
   private String nombre;
   @Embedded
   @Getter private Distancia distAproximaParada;
-  @Transient
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_parada")
   @Getter private Ubicacion ubicacionParada;
 
   public Parada() {}

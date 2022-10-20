@@ -7,10 +7,7 @@ import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 import lombok.Getter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 public class Tramo extends PersistenceEntity {
@@ -18,9 +15,9 @@ public class Tramo extends PersistenceEntity {
   @ManyToOne(cascade = CascadeType.ALL)
   private MedioDeTransporte medio;
 
-  @Transient
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_inicio")
   @Getter private Ubicacion ubicacionInicio;
-  @Transient
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_fin")
   @Getter private Ubicacion ubicacionFin;
 
   public Tramo() {}
@@ -35,10 +32,6 @@ public class Tramo extends PersistenceEntity {
     this.medio = medio;
     this.ubicacionInicio = paradaInicio.getUbicacionParada();
     this.ubicacionFin = paradaFin.getUbicacionParada();
-  }
-
-  public void validacionUbicaciones() {
-
   }
 
   public boolean admiteTrayectoCompartido() {

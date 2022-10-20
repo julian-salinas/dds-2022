@@ -13,6 +13,9 @@ import javax.persistence.*;
 @Entity
 public class Sector extends PersistenceEntity {
 
+  /*String nombre;
+  String descripcion;*/
+
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "sector_id")
   private final List<Miembro> miembros = new ArrayList<>();
 
