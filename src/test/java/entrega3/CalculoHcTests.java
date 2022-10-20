@@ -12,15 +12,14 @@ import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import domain.trayecto.TrayectoCompartido;
-import domain.trayecto.transporte.Bicicleta;
-import domain.trayecto.transporte.Pie;
-import domain.trayecto.transporte.ServicioContratado;
-import domain.trayecto.transporte.TipoServicioContratado;
+import domain.trayecto.transporte.nopublico.Bicicleta;
+import domain.trayecto.transporte.nopublico.Pie;
+import domain.trayecto.transporte.nopublico.ServicioContratado;
+import domain.trayecto.transporte.nopublico.TipoServicioContratado;
 import domain.ubicaciones.Ubicacion;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -61,7 +60,7 @@ public class CalculoHcTests {
 
     unaUbicacion = new Ubicacion("Calle", 1200, "Juan", apiClient);
 
-    organizacion = new Organizacion("RazonX", TipoOrganizacion.EMPRESA, "Cola-Coca", unaUbicacion, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
+    organizacion = new Organizacion("Cola-Coca", "RazonX", TipoOrganizacion.EMPRESA, unaUbicacion, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
     sectorDefault = new Sector();
     organizacion.agregarSector(sectorDefault);
     miembro1 = new Miembro("Pepito", "Martinez", TipoDeDocumento.DNI, 45869305);
@@ -80,26 +79,25 @@ public class CalculoHcTests {
     datosActividades.get(1).getTipoDeConsumo().cargarFactorEmision(feElectricidad);
     datosActividades.get(2).getTipoDeConsumo().cargarFactorEmision(feNafta);
 
-    Pie tramoPie = new Pie(unaUbicacion, unaUbicacion);
-    Tramo primerTramom1 = new Tramo(tramoPie);
+    Pie tramoPie = new Pie();
+    Tramo primerTramom1 = new Tramo(tramoPie, unaUbicacion, unaUbicacion);
     Trayecto trayecto1 = new Trayecto();
     trayecto1.agregarTramo(primerTramom1);
     miembro1.agregarTrayecto(trayecto1);
 
-    Bicicleta tramoBici = new Bicicleta(unaUbicacion, unaUbicacion);
-    Tramo primerTramom2 = new Tramo(tramoBici);
+    Bicicleta tramoBici = new Bicicleta();
+    Tramo primerTramom2 = new Tramo(tramoBici, unaUbicacion, unaUbicacion);
     Trayecto trayecto2 = new Trayecto();
     trayecto2.agregarTramo(primerTramom2);
     miembro2.agregarTrayecto(trayecto2);
 
-    List<Miembro> miembros = Stream.of(miembro2).collect(Collectors.toList());
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
-    ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, unaUbicacion, unaUbicacion, 0.15
-    );
-    Tramo tramo = new Tramo(servicioContratado);
-    List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
-    trayectoCompartido = new TrayectoCompartido(miembros, tramos);
+    ServicioContratado servicioContratado = new ServicioContratado(taxi, 0.15);
+    Tramo tramo = new Tramo(servicioContratado, unaUbicacion, unaUbicacion);
+    trayectoCompartido = new TrayectoCompartido();
+    // miembros, tramos
+    trayectoCompartido.agregarTramo(tramo);
+    trayectoCompartido.agregarAcompanante(miembro2);
 
     miembro1.registrarTrayecto(trayectoCompartido);
 

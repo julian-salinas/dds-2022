@@ -242,7 +242,7 @@ public class AgenteSectorialTests {
   }
 
   private Organizacion crearOrg(String nombre, Ubicacion ubicacion) {
-    return new Organizacion("S.A.", TipoOrganizacion.EMPRESA, nombre, ubicacion, ClasificacionOrg.MINISTERIO);
+    return new Organizacion(nombre, "S.A.", TipoOrganizacion.EMPRESA, ubicacion, ClasificacionOrg.MINISTERIO);
   }
 
   private void setFactoresDeEmision(Organizacion org) {

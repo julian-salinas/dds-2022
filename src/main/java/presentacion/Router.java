@@ -17,6 +17,7 @@ public class Router {
     HomeController homeController = new HomeController();
     GuiaController guiaController = new GuiaController();
     TrayectoController trayectoController = new TrayectoController();
+    RegistrarOrgController registrarOrgController = new RegistrarOrgController();
 
     //DebugScreen.enableDebugScreen();
 
@@ -31,9 +32,13 @@ public class Router {
 
    Spark.get("/inicio", inicioController::index, engineTemplate);
    Spark.get("/home", homeController::index, engineTemplate);
+
    Spark.get("/guia", guiaController::index, engineTemplate);
    Spark.get("/trayecto", trayectoController::index, engineTemplate);
    Spark.post("/trayecto", trayectoController::post, engineTemplate);
    Spark.post("/trayectoCompartido", trayectoController::postCompartido, engineTemplate);
+
+   Spark.get("/registrarOrg", registrarOrgController::index, engineTemplate);
+   Spark.post("/registrarOrg", registrarOrgController::post, engineTemplate);
   }
 }

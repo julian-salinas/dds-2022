@@ -10,10 +10,11 @@ import spark.Request;
 import spark.Response;
 
 public class SigninController {
-  public ModelAndView index(Request request, Response response) {
 
+  public ModelAndView index(Request request, Response response) {
     return new ModelAndView(null, "signin.hbs");
   }
+
   public ModelAndView post(Request request, Response response) {
     String username = request.queryParams("nombre");
     String password = request.queryParams("password");
@@ -34,12 +35,10 @@ public class SigninController {
     RepositorioUsuarios.getInstance().add(usuario);
     request.session().attribute("usuario_logueado", usuario);
 
-
-//      TipoUsuario tipo =  usuario.getTipo();
-//      if(tipo == TipoUsuario.MIEMBRO)
-//        response.redirect("/inicio");
-//      if(tipo == TipoUsuario.ORGANIZACION)
-//        response.redirect("/inicio");
+    if(tipo == TipoUsuario.MIEMBRO)
+      response.redirect("/inicio");
+    if(tipo == TipoUsuario.ORGANIZACION)
+      response.redirect("/registrarOrg");
 
 
     response.redirect("/inicio");

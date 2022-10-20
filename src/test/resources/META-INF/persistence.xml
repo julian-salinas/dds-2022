@@ -16,13 +16,13 @@
         <class>domain.trayecto.TrayectoCompartido</class>
         <class>domain.trayecto.Tramo</class>
         <class>domain.trayecto.transporte.MedioDeTransporte</class>
-        <class>domain.trayecto.transporte.TransportePublico</class>
-        <class>domain.trayecto.transporte.Pie</class>
-        <class>domain.trayecto.transporte.Bicicleta</class>
-        <class>domain.trayecto.transporte.VehiculoParticular</class>
-        <class>domain.trayecto.transporte.ServicioContratado</class>
-        <class>domain.trayecto.transporte.Parada</class>
-        <class>domain.trayecto.transporte.Linea</class>
+        <class>domain.trayecto.transporte.publico.TransportePublico</class>
+        <class>domain.trayecto.transporte.nopublico.Pie</class>
+        <class>domain.trayecto.transporte.nopublico.Bicicleta</class>
+        <class>domain.trayecto.transporte.nopublico.VehiculoParticular</class>
+        <class>domain.trayecto.transporte.nopublico.ServicioContratado</class>
+        <class>domain.trayecto.transporte.publico.Parada</class>
+        <class>domain.trayecto.transporte.publico.Linea</class>
         <class>domain.organizaciones.datos.actividades.tipos.TipoDeConsumo</class>
         <class>domain.organizaciones.datos.actividades.DatosActividades</class>
         <class>domain.ubicaciones.Ubicacion</class>

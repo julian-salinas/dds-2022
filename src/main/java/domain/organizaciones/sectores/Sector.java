@@ -12,20 +12,21 @@ import javax.persistence.*;
 
 @Entity
 public class Sector extends PersistenceEntity {
-  //@Setter @Getter private Organizacion orgAlaQuePertenezco;
+
+  /*String nombre;
+  String descripcion;*/
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "sector_id")
   private final List<Miembro> miembros = new ArrayList<>();
 
-  @OneToMany(fetch = FetchType.LAZY) @JoinColumn(name = "sector_para_aceptar_id")
-  private final List<Miembro> miembrosParaAceptar = new ArrayList<>(); // --> Tal vez haya q cambiarlo para persistir
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "sector_posible_id")
+  private final List<Miembro> miembrosParaAceptar = new ArrayList<>();
 
   public boolean containsMiembro(Miembro miembro) {
     return miembros.contains(miembro);
   }
 
   public void agregarMiembro(Miembro miembro) {
-    //miembro.setSectorDondeTrabaja(this);
     miembros.add(miembro);
   }
 

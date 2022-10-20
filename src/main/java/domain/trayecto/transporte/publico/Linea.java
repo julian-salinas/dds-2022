@@ -1,9 +1,14 @@
-package domain.trayecto.transporte;
+package domain.trayecto.transporte.publico;
 
 import domain.database.PersistenceEntity;
+import domain.trayecto.transporte.excepciones.ExcepcionMultiplesParadasConMismaUbicacion;
+import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoIncluidasEnLinea;
+import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.distancia.UnidadDistancia;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -19,22 +24,19 @@ import javax.persistence.*;
 public class Linea extends PersistenceEntity {
 
   private String nombre;
+  private boolean bidireccional = false; // Estado inicial: Unidireccional
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable(name = "linea_x_parada")
   @Getter private List<Parada> paradas;
-  @Enumerated(EnumType.STRING)
-  private TipoTransportePublico tipo;
-  private boolean bidireccional;// = false;
 
   public Linea() {}
 
-  public Linea(String nombre, List<Parada> paradas, TipoTransportePublico tipo) {
+  public Linea(String nombre, List<Parada> paradas) {
     this.nombre = nombre;
     this.paradas = paradas;
-    this.tipo = tipo;
   }
 
-  public boolean isTipo(TipoTransportePublico otroTipo) {
-    return tipo.equals(otroTipo);
+  public Linea(String nombre) {
+    this.nombre = nombre;
   }
 
   public boolean containsParada(Parada parada) {
@@ -43,6 +45,20 @@ public class Linea extends PersistenceEntity {
 
   public void agregarParada(Parada parada) {
     paradas.add(parada);
+  }
+
+  public Parada findParada(Ubicacion ubicacion) {
+    List<Parada> paradasAux = paradas
+        .stream()
+        .filter(parada -> parada.getUbicacionParada().equals(ubicacion))
+        .collect(Collectors.toList());
+
+    if (paradasAux.isEmpty())
+      throw new ExcepcionParadasTransporteNoIncluidasEnLinea();
+    else if (paradasAux.size()>1)
+      throw new ExcepcionMultiplesParadasConMismaUbicacion();
+    else
+      return paradasAux.get(0);
   }
 
   public void setUnidireccional() {
