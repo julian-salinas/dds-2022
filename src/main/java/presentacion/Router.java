@@ -1,11 +1,10 @@
 package presentacion;
 
-import presentacion.controladores.HomeController;
-import presentacion.controladores.InicioController;
-import presentacion.controladores.LoginController;
-import presentacion.controladores.SigninController;
+import presentacion.controladores.*;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import java.beans.Transient;
 
 public class Router {
   public static void configure() {
@@ -16,6 +15,8 @@ public class Router {
     LoginController loginController = new LoginController();
     InicioController inicioController = new InicioController();
     HomeController homeController = new HomeController();
+    GuiaController guiaController = new GuiaController();
+    TrayectoController trayectoController = new TrayectoController();
 
     //DebugScreen.enableDebugScreen();
 
@@ -30,5 +31,8 @@ public class Router {
 
    Spark.get("/inicio", inicioController::index, engineTemplate);
    Spark.get("/home", homeController::index, engineTemplate);
+   Spark.get("/guia", guiaController::index, engineTemplate);
+   Spark.get("/trayecto", trayectoController::index, engineTemplate);
+   Spark.post("/trayecto", trayectoController::post, engineTemplate);
   }
 }
