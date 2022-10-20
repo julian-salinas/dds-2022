@@ -26,11 +26,6 @@ public class Trayecto extends PersistenceEntity {
   @ManyToMany(mappedBy = "trayectos")
   @Getter public List<Miembro> miembros = new ArrayList<>();
 
-  @Transient
-  public Ubicacion ubicacionInicio;
-  @Transient
-  public Ubicacion ubicacionFin;
-
   public void agregarTramo(Tramo tramo) {
     tramos.add(tramo);
   }
@@ -54,8 +49,19 @@ public class Trayecto extends PersistenceEntity {
     return this.getOwner().equals(miembro);
   }
 
+  public Ubicacion getUbicacionInicio() {
+    return tramos.get(0).getUbicacionInicio();
+  }
+
+  public Ubicacion getUbicacionFin() {
+    return tramos.get(tramos.size()-1).getUbicacionFin();
+  }
+
   public Distancia distanciaTotal() {
-    double distancia = this.getTramos().stream().mapToDouble(tramo -> tramo.distancia().valorEnMetros()).sum();
+    double distancia = tramos
+        .stream()
+        .mapToDouble(tramo -> tramo.distancia().valorEnMetros())
+        .sum();
     return new Distancia(distancia, MTS);
   }
 

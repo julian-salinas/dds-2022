@@ -44,8 +44,8 @@ public class TrayectoTests {
     Miembro miembro = new Miembro("Crayon", "Lambert", TipoDeDocumento.DNI, 23666920);
     Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
 
-    Bicicleta bici = new Bicicleta(ubicacionDefault, ubicacionDefault);
-    Tramo tramo = new Tramo(bici);
+    Bicicleta bici = new Bicicleta();
+    Tramo tramo = new Tramo(bici, ubicacionDefault, ubicacionDefault);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     TrayectoCompartido trayectoCompartido = new TrayectoCompartido();
@@ -61,10 +61,8 @@ public class TrayectoTests {
     Miembro miembro2 = new Miembro("El", "Pibe", TipoDeDocumento.DNI, 50501502);
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
-    ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, ubicacionDefault, ubicacionDefault, 500.0
-    );
-    Tramo tramo = new Tramo(servicioContratado);
+    ServicioContratado servicioContratado = new ServicioContratado(taxi, 500.0);
+    Tramo tramo = new Tramo(servicioContratado, ubicacionDefault, ubicacionDefault);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     TrayectoCompartido trayectoCompartido = new TrayectoCompartido();
@@ -83,9 +81,9 @@ public class TrayectoTests {
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, ubicacionDefault, ubicacionDefault, 500.0
+        taxi, 500.0
     );
-    Tramo tramo = new Tramo(servicioContratado);
+    Tramo tramo = new Tramo(servicioContratado, ubicacionDefault, ubicacionDefault);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     TrayectoCompartido trayectoCompartido = new TrayectoCompartido();
@@ -106,9 +104,9 @@ public class TrayectoTests {
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, ubicacionDefault, ubicacionDefault, 500.0
+        taxi, 500.0
     );
-    Tramo tramo = new Tramo(servicioContratado);
+    Tramo tramo = new Tramo(servicioContratado, ubicacionDefault, ubicacionDefault);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     TrayectoCompartido trayectoCompartido = new TrayectoCompartido();
@@ -133,9 +131,9 @@ public class TrayectoTests {
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
     ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, ubicacionDefault, ubicacionDefault, 500.0
+        taxi, 500.0
     );
-    Tramo tramo = new Tramo(servicioContratado);
+    Tramo tramo = new Tramo(servicioContratado, ubicacionDefault, ubicacionDefault);
     List<Tramo> tramos = Stream.of(tramo).collect(Collectors.toList());
 
     TrayectoCompartido trayectoCompartido = new TrayectoCompartido();

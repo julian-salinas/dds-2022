@@ -48,25 +48,27 @@ public class Workspace {
     entityManager.persist(organizacion);
 
     // Trayecto, TrayectoCompartido, Tramo
-    Tramo tramo1 = new Tramo(null);
-    Tramo tramo2 = new Tramo(null);
-    Tramo tramo3 = new Tramo(null);
+    Tramo tramo1 = new Tramo();
+    Tramo tramo2 = new Tramo();
+    Tramo tramo3 = new Tramo();
     Trayecto trayecto = new Trayecto();
     trayecto.agregarTramos(tramo1, tramo2, tramo3);
     miembro.registrarTrayecto(trayecto);
     entityManager.merge(miembro);
 
+    Ubicacion ubicacionVacia = new Ubicacion();
+
     // MedioDeTransporte, MedioNoPublico, y todos los medios de transporte
     TransportePublico transportePublico = new TransportePublico(TipoTransportePublico.SUBTE,
-        null, null, null);
-    Tramo tramoPublico = new Tramo(transportePublico);
+        null);
+    Tramo tramoPublico = new Tramo(transportePublico, ubicacionVacia, ubicacionVacia);
     trayecto = entityManager.find(Trayecto.class, 1);
     trayecto.agregarTramo(tramoPublico);
     entityManager.merge(trayecto);
 
-    VehiculoParticular vehiculoParticular = new VehiculoParticular(TipoDeVehiculo.AUTO, TipoDeCombustible.GASOIL,
-        null, null, 500.0);
-    Tramo tramoVParticular = new Tramo(vehiculoParticular);
+    VehiculoParticular vehiculoParticular = new VehiculoParticular(TipoDeVehiculo.AUTO
+        , TipoDeCombustible.GASOIL, 500.0);
+    Tramo tramoVParticular = new Tramo(vehiculoParticular, ubicacionVacia, ubicacionVacia);
     trayecto = entityManager.find(Trayecto.class, 1);
     trayecto.agregarTramo(tramoVParticular);
     entityManager.merge(trayecto);
@@ -74,17 +76,16 @@ public class Workspace {
     // Parada y Linea
 
 
-    Parada parada_ini = new Parada("Hola", new Distancia(400.0, UnidadDistancia.MTS));
-    Parada parada_fin = new Parada("Chau", new Distancia(250.0, UnidadDistancia.MTS));
+    Parada parada_ini = new Parada("Hola", ubicacionVacia, new Distancia(400.0, UnidadDistancia.MTS));
+    Parada parada_fin = new Parada("Chau", ubicacionVacia, new Distancia(250.0, UnidadDistancia.MTS));
 
-    Linea linea = new Linea("Linea A", Stream.of(parada_ini, parada_fin).collect(Collectors.toList()),
-        TipoTransportePublico.SUBTE);
+    Linea linea = new Linea("Linea A", Stream.of(parada_ini, parada_fin).collect(Collectors.toList()));
 
     entityManager.persist(linea);
 
     TransportePublico transportePublico2 = new TransportePublico(TipoTransportePublico.SUBTE,
-        linea, parada_ini, parada_fin);
-    Tramo tramoPublico2 = new Tramo(transportePublico2);
+        linea);
+    Tramo tramoPublico2 = new Tramo(transportePublico2, parada_ini, parada_fin);
     trayecto = entityManager.find(Trayecto.class, 1);
     trayecto.agregarTramo(tramoPublico2);
     entityManager.merge(trayecto);

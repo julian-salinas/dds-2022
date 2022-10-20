@@ -53,25 +53,30 @@ public class DistanciaTests {
   public void init() throws IOException {
     apiClient = mock(ServicioGeoDds.class);
 
-    Parada sanPedrito = new Parada("San Pedrito", distanciaMts(300.0));
-    Parada flores     = new Parada("San Jose de Flores", distanciaMts(200.0));
-    Parada carabobo   = new Parada("Carabobo", distanciaMts(150.0));
-    Parada puan       = new Parada("Puan", distanciaMts(150.0));
+    Ubicacion ubicacionSanPedrito = new Ubicacion("Rivadavia", 1800, null, null);
+    Ubicacion ubicacionFlores     = new Ubicacion("Rivadavia", 1900, null, null);
+    Ubicacion ubicacionCarabobo   = new Ubicacion("Rivadavia", 2000, null, null);
+    Ubicacion ubicacionPuan       = new Ubicacion("Rivadavia", 2100, null, null);
+
+    Parada sanPedrito = new Parada("San Pedrito", ubicacionSanPedrito, distanciaMts(300.0));
+    Parada flores     = new Parada("San Jose de Flores", ubicacionFlores, distanciaMts(200.0));
+    Parada carabobo   = new Parada("Carabobo", ubicacionCarabobo, distanciaMts(150.0));
+    Parada puan       = new Parada("Puan", ubicacionPuan, distanciaMts(150.0));
     List<Parada> paradasLineaA = Stream.of(sanPedrito, flores, carabobo, puan)
         .collect(Collectors.toList());
 
-    lineaA = new Linea("Linea A", paradasLineaA, TipoTransportePublico.SUBTE);
+    lineaA = new Linea("Linea A", paradasLineaA);
     lineaA.setUnidireccional();
 
     // Creo un recorrido que es solo de San Pedrito a Carabobo
     TransportePublico recorridoConLineaA = new TransportePublico(TipoTransportePublico.SUBTE,
-        lineaA, sanPedrito, carabobo);
-    tramoLineaA = new Tramo(recorridoConLineaA);
+        lineaA);
+    tramoLineaA = new Tramo(recorridoConLineaA, sanPedrito, carabobo);
 
     // Con un recorrido que es solo de Carabobo a San Pedrito
     TransportePublico recorridoConLineaAinverso = new TransportePublico(TipoTransportePublico.SUBTE,
-        lineaA, carabobo, sanPedrito);
-    tramoLineaAinverso = new Tramo(recorridoConLineaAinverso);
+        lineaA);
+    tramoLineaAinverso = new Tramo(recorridoConLineaAinverso, carabobo, sanPedrito);
 
     ubicacionInicioPie = crearUbicacion("Directorio", 1700);
     ubicacionInicioBici = crearUbicacion("Directorio", 100);
@@ -82,22 +87,20 @@ public class DistanciaTests {
     ubicacionFinVP = crearUbicacion("Yapeyu", 2400);
     ubicacionFinSC = crearUbicacion("Yapeyu", 700);
 
-    Pie recorridoAPie = new Pie(ubicacionInicioPie, ubicacionFinPie);
-    tramoAPie   = new Tramo(recorridoAPie);
+    Pie recorridoAPie = new Pie();
+    tramoAPie   = new Tramo(recorridoAPie, ubicacionInicioPie, ubicacionFinPie);
 
-    Bicicleta recorridoEnBici = new Bicicleta(ubicacionInicioBici, ubicacionFinBici);
-    tramoEnBici = new Tramo(recorridoEnBici);
+    Bicicleta recorridoEnBici = new Bicicleta();
+    tramoEnBici = new Tramo(recorridoEnBici, ubicacionInicioBici, ubicacionFinBici);
 
     VehiculoParticular recorridoEnAuto = new VehiculoParticular(TipoDeVehiculo.AUTO,
-        TipoDeCombustible.GASOIL,
-        ubicacionInicioVP, ubicacionFinVP,
-        400.0);
-    tramoEnAuto = new Tramo(recorridoEnAuto);
+        TipoDeCombustible.GASOIL, 400.0);
+    tramoEnAuto = new Tramo(recorridoEnAuto, ubicacionInicioVP, ubicacionFinVP);
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
-    ServicioContratado recorridoEnTaxi = new ServicioContratado(taxi, ubicacionInicioSC,
-        ubicacionFinSC, 200.0);
-    tramoEnTaxi = new Tramo(recorridoEnTaxi);
+    ServicioContratado recorridoEnTaxi = new ServicioContratado(taxi, 200.0);
+    tramoEnTaxi = new Tramo(recorridoEnTaxi, ubicacionInicioSC,
+        ubicacionFinSC);
 
   }
 
@@ -140,12 +143,14 @@ public class DistanciaTests {
 
   @Test
   public void laDistanciaDeUnTrayectoDeTramosDeTransportePublicoSeCalculaBien() {
-    Parada carabobo1200 = new Parada("Carabobo1200", distanciaMts(55.0));
-    Parada carabobo1400 = new Parada("Carabobo1400", distanciaMts(55.0));
+    Ubicacion ubicacionCarabobo1200 = new Ubicacion("Carabobo", 1200, null, null);
+    Ubicacion ubicacionCarabobo1400 = new Ubicacion("Carabobo", 1400, null, null);
+    Parada carabobo1200 = new Parada("Carabobo1200", ubicacionCarabobo1200, distanciaMts(55.0));
+    Parada carabobo1400 = new Parada("Carabobo1400", ubicacionCarabobo1400, distanciaMts(55.0));
     List<Parada> paradas132 = Stream.of(carabobo1200, carabobo1400).collect(Collectors.toList());
-    Linea linea132 = new Linea("132", paradas132, TipoTransportePublico.COLECTIVO);
-    TransportePublico recorridoCon132 = new TransportePublico(TipoTransportePublico.COLECTIVO, linea132, carabobo1200, carabobo1400);
-    Tramo tramoCon132 = new Tramo(recorridoCon132);
+    Linea linea132 = new Linea("132", paradas132);
+    TransportePublico recorridoCon132 = new TransportePublico(TipoTransportePublico.COLECTIVO, linea132);
+    Tramo tramoCon132 = new Tramo(recorridoCon132, carabobo1200, carabobo1400);
 
     Trayecto trayecto = new Trayecto();
     trayecto.agregarTramos(tramoLineaA, tramoCon132);

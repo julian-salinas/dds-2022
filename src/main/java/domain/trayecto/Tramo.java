@@ -2,8 +2,10 @@ package domain.trayecto;
 
 import domain.database.PersistenceEntity;
 import domain.trayecto.transporte.MedioDeTransporte;
+import domain.trayecto.transporte.publico.Parada;
 import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
+import lombok.Getter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,22 +19,34 @@ public class Tramo extends PersistenceEntity {
   private MedioDeTransporte medio;
 
   @Transient
-  private Ubicacion ubicacionInicio;
+  @Getter private Ubicacion ubicacionInicio;
   @Transient
-  private Ubicacion ubicacionFin;
+  @Getter private Ubicacion ubicacionFin;
 
   public Tramo() {}
 
-  public Tramo(MedioDeTransporte medio) {
+  public Tramo(MedioDeTransporte medio, Ubicacion ubicacionInicio, Ubicacion ubicacionFin) {
     this.medio = medio;
+    this.ubicacionInicio = ubicacionInicio;
+    this.ubicacionFin = ubicacionFin;
   }
 
-  public Distancia distancia() {
-    return medio.distancia();
+  public Tramo(MedioDeTransporte medio, Parada paradaInicio, Parada paradaFin) {
+    this.medio = medio;
+    this.ubicacionInicio = paradaInicio.getUbicacionParada();
+    this.ubicacionFin = paradaFin.getUbicacionParada();
+  }
+
+  public void validacionUbicaciones() {
+
   }
 
   public boolean admiteTrayectoCompartido() {
     return medio.admiteTrayectoCompartido();
+  }
+
+  public Distancia distancia() {
+    return medio.distancia(ubicacionInicio, ubicacionFin);
   }
 
   public double combustibleUtilizado() {

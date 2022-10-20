@@ -79,23 +79,21 @@ public class CalculoHcTests {
     datosActividades.get(1).getTipoDeConsumo().cargarFactorEmision(feElectricidad);
     datosActividades.get(2).getTipoDeConsumo().cargarFactorEmision(feNafta);
 
-    Pie tramoPie = new Pie(unaUbicacion, unaUbicacion);
-    Tramo primerTramom1 = new Tramo(tramoPie);
+    Pie tramoPie = new Pie();
+    Tramo primerTramom1 = new Tramo(tramoPie, unaUbicacion, unaUbicacion);
     Trayecto trayecto1 = new Trayecto();
     trayecto1.agregarTramo(primerTramom1);
     miembro1.agregarTrayecto(trayecto1);
 
-    Bicicleta tramoBici = new Bicicleta(unaUbicacion, unaUbicacion);
-    Tramo primerTramom2 = new Tramo(tramoBici);
+    Bicicleta tramoBici = new Bicicleta();
+    Tramo primerTramom2 = new Tramo(tramoBici, unaUbicacion, unaUbicacion);
     Trayecto trayecto2 = new Trayecto();
     trayecto2.agregarTramo(primerTramom2);
     miembro2.agregarTrayecto(trayecto2);
 
     TipoServicioContratado taxi = new TipoServicioContratado("taxi");
-    ServicioContratado servicioContratado = new ServicioContratado(
-        taxi, unaUbicacion, unaUbicacion, 0.15
-    );
-    Tramo tramo = new Tramo(servicioContratado);
+    ServicioContratado servicioContratado = new ServicioContratado(taxi, 0.15);
+    Tramo tramo = new Tramo(servicioContratado, unaUbicacion, unaUbicacion);
     trayectoCompartido = new TrayectoCompartido();
     // miembros, tramos
     trayectoCompartido.agregarTramo(tramo);

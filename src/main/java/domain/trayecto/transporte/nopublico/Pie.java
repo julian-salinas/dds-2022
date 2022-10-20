@@ -14,29 +14,22 @@ import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 
 @Entity
 public class Pie extends MedioDeTransporte {
-  @Transient
-  @Getter private Ubicacion direccionInicio;
-  @Transient
-  @Getter private Ubicacion direccionFin;
   @Getter @Setter private double combustibleConsumidoPorKM = 0.0;
 
   public Pie() {}
-
-  public Pie(Ubicacion direccionInicio, Ubicacion direccionFin) {
-    this.direccionInicio = direccionInicio;
-    this.direccionFin = direccionFin;
-  }
 
   @Override
   public Boolean admiteTrayectoCompartido() {
     return false;
   }
 
-  public Distancia distancia() {
+  public Distancia distancia(Ubicacion ubicacionInicio, Ubicacion ubicacionFin) {
     try {
-      return this.getDireccionInicio().calcularDistanciaA(this.getDireccionFin());
+      return ubicacionInicio.calcularDistanciaA(ubicacionFin);
     } catch (IOException e) {
       // bruh
+      // No le pegues a la API, pegame a mi, me lo merezco, te falle este try tan simple.
+      // Por mi, te dejo de funcar la app de la nada y probablemente no tenes ni idea de q yo lo cause.
       e.printStackTrace();
       return new Distancia(-1.0, MTS);
     }
