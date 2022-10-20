@@ -60,7 +60,7 @@ public class CalculoHcTests {
 
     unaUbicacion = new Ubicacion("Calle", 1200, "Juan", apiClient);
 
-    organizacion = new Organizacion("RazonX", TipoOrganizacion.EMPRESA, "Cola-Coca", unaUbicacion, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
+    organizacion = new Organizacion("Cola-Coca", "RazonX", TipoOrganizacion.EMPRESA, unaUbicacion, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
     sectorDefault = new Sector();
     organizacion.agregarSector(sectorDefault);
     miembro1 = new Miembro("Pepito", "Martinez", TipoDeDocumento.DNI, 45869305);

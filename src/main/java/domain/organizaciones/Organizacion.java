@@ -55,7 +55,7 @@ public class Organizacion extends PersistenceEntity {
 
   public Organizacion() {}
 
-  public Organizacion(String razonSocial, TipoOrganizacion tipo, String nombre,
+  public Organizacion(String nombre, String razonSocial, TipoOrganizacion tipo,
                       Ubicacion ubicacion, ClasificacionOrg clasificacion) {
     this.nombre = nombre;
     this.razonSocial = razonSocial;
