@@ -7,6 +7,25 @@
       <!-- Escribir css -->
       <link rel="stylesheet" href="main.css">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+
+    <script>
+        Handlebars.registerHelper('times', function(n, block) {
+            var accum = '';
+            for(var i = 0; i < n; ++i)
+                accum += block.fn(i);
+            return accum;
+        });
+        Handlebars.registerHelper('for', function(from, to, incr, block) {
+            var accum = '';
+            for(var i = from; i < to; i += incr)
+                accum += block.fn(i);
+            return accum;
+        });
+
+        var t = Handlebars.compile($('#t').html());
+        $('body').append(t());
+    </script>
+
    </head>
    <!doctype html>
    <html lang="en">
@@ -22,20 +41,20 @@
 
       <body>
 
+          <div class="topnav">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
+                  <a class="navbar-brand" href="/home">ImpactoAmbiental</a>
+                   {{#block "barra"}}
+                     {{/block}}
+                 </nav>
+            </div>
 
-                  <div class="topnav">
-                    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
-                          <a class="navbar-brand" href="#">ImpactoAmbiental</a>
-                           {{#block "barra"}}
-                             {{/block}}
-                         </nav>
-                    </div>
 
+        <div class="content">
+            {{#block "contenido"}}
+            {{/block}}
+        </div>
 
-                <div class="content">
-                    {{#block "contenido"}}
-                    {{/block}}
-                </div>
 
          <footer class="footer">
              <p class="text-center">

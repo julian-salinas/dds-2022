@@ -17,8 +17,6 @@ public class HomeController {
     String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
-
-
     if(user.getTipo().equals(TipoUsuario.ORGANIZACION)) {
       /*Map<String, Object> model = new HashMap<>();
       model.put("org", user.getOrg());*/
@@ -26,7 +24,7 @@ public class HomeController {
       return new ModelAndView(model, "organizacion.hbs");
     }
 
-    return new ModelAndView(user, "home.hbs");
+    return new ModelAndView(user, "homeMiembro.hbs");
   }
 
 }
