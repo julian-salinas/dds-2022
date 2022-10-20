@@ -27,15 +27,9 @@ public class LoginController {
       return new ModelAndView(null, "login.hbs");
     }
 
-    TipoUsuario tipo =  usuarioEncontrado.getTipo();
-
     // Si existe, redirijo a la pag. q haga falta
     request.session().attribute("usuario_logueado", username);
-
-    if(tipo == TipoUsuario.MIEMBRO)
-      response.redirect("/home");
-    if(tipo == TipoUsuario.ORGANIZACION)
-      response.redirect("/inicio");
+    response.redirect("/home");
     return null;
   }
 }

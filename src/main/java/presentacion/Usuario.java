@@ -1,12 +1,11 @@
 package presentacion;
 
 import domain.database.PersistenceEntity;
+import domain.organizaciones.Organizacion;
+import domain.organizaciones.miembros.Miembro;
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -15,6 +14,11 @@ public class Usuario extends PersistenceEntity {
   String password;
   @Enumerated(EnumType.STRING)
   TipoUsuario tipo;
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  Organizacion org;
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  Miembro miembro;
+
 
   public Usuario(String username, String password, TipoUsuario tipo){
     this.username = username;
