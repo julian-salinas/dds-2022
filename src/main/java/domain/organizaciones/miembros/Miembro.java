@@ -26,7 +26,6 @@ public class Miembro extends PersistenceEntity {
 
   private int nroDeDocumento; // era Integer, lo paso a int (a debatir)
 
-  //@Setter @Getter private Sector sectorDondeTrabaja;
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable(name = "trayecto_x_miembro")
   @Getter private final List<Trayecto> trayectos = new ArrayList<>();
 
@@ -40,7 +39,6 @@ public class Miembro extends PersistenceEntity {
   }
 
   public void agregarTrayecto(Trayecto trayecto) {
-    // para probar unas cosas
     trayectos.add(trayecto);
   }
 

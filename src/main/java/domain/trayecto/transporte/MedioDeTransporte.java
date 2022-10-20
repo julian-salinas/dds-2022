@@ -1,6 +1,7 @@
 package domain.trayecto.transporte;
 
 import domain.database.PersistenceEntity;
+import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class MedioDeTransporte extends PersistenceEntity
 {
-  public abstract Distancia distancia();
+  public abstract Distancia distancia(Ubicacion ubicacionInicio, Ubicacion ubicacionFin);
   public abstract Boolean admiteTrayectoCompartido();
   public abstract double getCombustibleConsumidoPorKM();
 }
