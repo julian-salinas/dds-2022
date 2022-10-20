@@ -3,6 +3,7 @@ package presentacion.controladores;
 import domain.organizaciones.ClasificacionOrg;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.TipoOrganizacion;
+import domain.repositorios.RepositorioOrganizaciones;
 import domain.ubicaciones.Ubicacion;
 import spark.ModelAndView;
 import spark.Request;
@@ -25,6 +26,8 @@ public class RegistrarOrgController {
 
     Organizacion org = new Organizacion(nombre, razonSocial, TipoOrganizacion.valueOf(tipo),
         new Ubicacion(), ClasificacionOrg.valueOf(clasificacion));
+
+    RepositorioOrganizaciones.getInstance().add(org);
 
     return new ModelAndView(org, "organizacion.hbs");
   }

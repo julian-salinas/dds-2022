@@ -42,21 +42,33 @@
                 <input type="text" class="form-control" id="razonSInput" name="razonSocial" value="S.A.">
              </div>
 
-              <!-- Tipo Org -->
+              <!-- Tipo de Org es un enum, asi q pareceria indicar que deberia ser un
+             drop-down menu -->
 
-              <div class="mb-3">
-                <label for="tipo" class="form-label">Tipo Org </label>
-                <input type="text" class="form-control" id="tipoInput" name="tipo" value="Institucion">
+              <div class = "mb-3">
+                  <label for="tipo"> Tipo de Organizacion: </label>
+                  <select id="tipo" name="tipo">
+                      <option value="GUBERNAMENTAL"> Gubernamental </option>
+                      <option value="ONG"> Ong </option>
+                      <option value="EMPRESA"> Empresa </option>
+                      <option value="INSTITUCION" selected> Institucion </option>
+                  </select>
               </div>
 
 
              <!-- Clasificacion de org es un enum, asi q pareceria indicar que deberia ser un
              drop-down menu -->
 
-             <div class="mb-3">
-                <label for="clasificacion" class="form-label">Clasificacion </label>
-                <input type="text" class="form-control" id="clasInput" name="clasificacion" value="Universidad">
-             </div>
+              <div class = "mb-3">
+                  <label for="clasificacion"> Clasificacion de la Organizacion: </label>
+                  <select id="clasificacion" name="clasificacion">
+                      <option value="MINISTERIO"> Ministerio </option>
+                      <option value="UNIVERSIDAD" selected> Universidad </option>
+                      <option value="ESCUELA"> Escuela </option>
+                      <option value="EMPRESA_SECTOR_PRIMARIO"> Empresa del sector primario </option>
+                      <option value="EMPRESA_SECTOR_SECUNDARIO"> Empresa del sector secundario </option>
+                  </select>
+              </div>
 
              <!-- Ubicacion, pareceria ser algo de elegir -->
 
