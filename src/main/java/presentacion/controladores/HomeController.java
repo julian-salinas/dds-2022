@@ -15,7 +15,7 @@ public class HomeController {
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
 
-    return new ModelAndView(user, "home.hbs");
+    return new ModelAndView(user, "homeMiembro.hbs");
   }
 
 }

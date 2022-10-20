@@ -13,15 +13,20 @@
   {{/partial}}
 
 {{#partial "contenido"}}
-    <h1> Trayecto </h1>
     <div class = "container">
         <form action="/trayecto" method="POST">
-            <button type="submit" class="btn btn-primary">Crear Trayecto</button>
-        </form>
-        <form action="/trayectoCompartido" method="POST">
-            <button type="submit" class="btn btn-primary">Crear Trayecto</button>
-        </form>
+            <div class="mb-3">
+                <label for="nombreInput" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombreInput" name="nombre" value="Matias">
+            </div>
 
+            <div class="mb-3">
+                <label for="passwordInput" class="form-label">Password</label>
+                <input type="password" class="form-control" id="passwordInput" name="password" value="1234">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Ingresar</button>
+        </form>
     </div>
     {{/partial}}
 
