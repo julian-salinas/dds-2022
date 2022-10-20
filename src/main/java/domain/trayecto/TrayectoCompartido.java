@@ -15,50 +15,31 @@ import java.util.stream.Stream;
 @Entity
 public class TrayectoCompartido extends Trayecto{
 
-  @Transient
-  private List<Miembro> miembros = new ArrayList<>();
-  //@Getter private List<Tramo> tramos = new ArrayList<>();
-  //@Getter @Setter private Miembro owner;
-
   public TrayectoCompartido() {}
 
-  public TrayectoCompartido(List<Miembro> miembros, List<Tramo> tramos) {
+  /*public TrayectoCompartido(List<Miembro> miembros, List<Tramo> tramos) {
     tramos.forEach(this::validacionTrayectoCompartido);
     this.miembros = miembros;
     this.tramos = tramos;
     agregarTrayCompAmiembros(miembros);
-  }
+  }*/
 
   private void validacionTrayectoCompartido(Tramo tramo) {
     if(!tramo.admiteTrayectoCompartido()) {
       throw new RuntimeException("No se puede hacer un trayecto compartido que no sea "
-          + "de tipo Servico Contratado o Vehiculo Particular");
+          + "de tipo Servico Contratado o Vehiculo Particular en su totalidad");
     }
   }
 
-  private void agregarTrayCompAmiembros(List<Miembro> miembros) {
-    miembros
+  private void agregarTrayCompAmiembros(List<Miembro> miembrosAAgregar) {
+    miembrosAAgregar
         .stream()
-        .filter(miembro -> !miembro.equals(owner)) //Por las dudas
+        .filter(miembro -> !miembro.equals(miembros.get(0))) //Por las dudas
         .forEach(miembro -> miembro.agregarTrayecto(this));
   }
 
-  @Override
-  public List<Miembro> miembros() {
-    if(owner!=null && !miembros.contains(owner)) {
-      // Junto al miembro que registro con los que compartio
-      List<Miembro> miembrosQueMeCargaron = new ArrayList<>();
-      List<Miembro> ownerList = new ArrayList<>();
-      ownerList.add(owner);
-      miembrosQueMeCargaron.addAll(ownerList);
-      miembrosQueMeCargaron.addAll(miembros);
-      return miembrosQueMeCargaron;
-    } else if(owner==null) {
-      throw new RuntimeException("Todavia no se registro el trayecto");
-    }
-    // Si por alguna razon, el que registro el trayecto esta incluido en los que compartieron,
-    // devolve los que compartierion directamente
-    return miembros;
+  private void agregarTrayCompAmiembros(Miembro miembroAAgregar) {
+    miembroAAgregar.agregarTrayecto(this);
   }
 
   @Override
@@ -72,6 +53,26 @@ public class TrayectoCompartido extends Trayecto{
     List<Tramo> listaDeTramos = Stream.of(tramos).collect(Collectors.toList());
     listaDeTramos.forEach(this::validacionTrayectoCompartido);
     Collections.addAll(this.tramos, tramos);
+  }
+
+  public void agregarTramos(List<Tramo> otrosTramos) {
+    otrosTramos.forEach(this::validacionTrayectoCompartido);
+    tramos.addAll(otrosTramos);
+  }
+
+  public void agregarAcompanante(Miembro acompanante) {
+    miembros.add(acompanante);
+    agregarTrayCompAmiembros(acompanante);
+  }
+
+  public void agregarAcompanantes(Miembro... acompanantes) {
+    Collections.addAll(miembros, acompanantes);
+    agregarTrayCompAmiembros(Stream.of(acompanantes).collect(Collectors.toList()));
+  }
+
+  public void agregarAcompanantes(List<Miembro> acompanantes) {
+    miembros.addAll(acompanantes);
+    agregarTrayCompAmiembros(acompanantes);
   }
 
 }
