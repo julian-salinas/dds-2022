@@ -1,8 +1,7 @@
 package presentacion.controladores;
 
-import domain.repositorios.Repositorio;
 import domain.repositorios.RepositorioUsuarios;
-import presentacion.TipoUsuario;
+import presentacion.LogInError;
 import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -17,6 +16,7 @@ public class LoginController {
 
   // Logica para procesar los datos introducidos en la pag. de Login
   public ModelAndView post(Request request, Response response) {
+
     String username = request.queryParams("nombre");
     String password = request.queryParams("password");
     Usuario usuarioEncontrado = RepositorioUsuarios.getInstance().findByUsername(username);
@@ -24,7 +24,9 @@ public class LoginController {
     // Si no existe, vuelvo a la pagina de Login
     if (usuarioEncontrado == null ||
         !usuarioEncontrado.getPassword().equals(password)) {
-      return new ModelAndView(null, "login.hbs");
+      LogInError error = new LogInError("Nombre de Usuario o Contraseña incorrectos \n");
+      error.setError(true);
+      return new ModelAndView(error, "login.hbs");
     }
 
     // Si existe, redirijo a la pag. q haga falta
