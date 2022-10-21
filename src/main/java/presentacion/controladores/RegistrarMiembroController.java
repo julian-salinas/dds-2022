@@ -1,38 +1,35 @@
 package presentacion.controladores;
 
-import domain.organizaciones.ClasificacionOrg;
-import domain.organizaciones.Organizacion;
-import domain.organizaciones.TipoOrganizacion;
-import domain.repositorios.RepositorioOrganizaciones;
+import domain.organizaciones.miembros.Miembro;
+import domain.organizaciones.miembros.TipoDeDocumento;
+import domain.repositorios.RepositorioMiembros;
 import domain.repositorios.RepositorioUsuarios;
-import domain.ubicaciones.Ubicacion;
 import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-public class RegistrarOrgController {
+public class RegistrarMiembroController {
 
   public ModelAndView index(Request request, Response response) {
     String username = request.session().attribute("usuario_signeado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
     request.session().attribute("usuario_signeado_literal", user);
-    return new ModelAndView(null, "registrarOrg.hbs");
+    return new ModelAndView(null, "registrarMiembro.hbs");
   }
 
   public ModelAndView post(Request request, Response response) {
+    // TODO
     String nombre = request.queryParams("nombre");
-    String razonSocial = request.queryParams("razonSocial");
-    String tipo = request.queryParams("tipo");
-    String clasificacion = request.queryParams("clasificacion");
-    String ubicacion = request.queryParams("ubicacion");
-    String sector = request.queryParams("sector");
+    String apellido = request.queryParams("apellido");
+    String tipoDocumento = request.queryParams("tipoDocumento");
+    int nroDocumento = Integer.parseInt(request.queryParams("nroDeDocumento"));
 
-    Organizacion org = new Organizacion(nombre, razonSocial, TipoOrganizacion.valueOf(tipo),
-        new Ubicacion(), ClasificacionOrg.valueOf(clasificacion));
+    Miembro miembro = new Miembro(nombre, apellido, TipoDeDocumento.valueOf(tipoDocumento),
+        nroDocumento);
 
     Usuario usuario = request.session().attribute("usuario_signeado_literal");
-    usuario.setOrg(org);
+    usuario.setMiembro(miembro);
     RepositorioUsuarios.getInstance().update(usuario);
 
     request.session().attribute("usuario_logueado", usuario.getUsername());

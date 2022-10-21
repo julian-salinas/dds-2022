@@ -4,11 +4,12 @@ import domain.database.PersistenceEntity;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.miembros.Miembro;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
 public class Usuario extends PersistenceEntity {
   String username;
   String password;

@@ -33,10 +33,10 @@ public class SigninController {
     Usuario usuario = new Usuario(username, password, tipo);
 
     RepositorioUsuarios.getInstance().add(usuario);
-    request.session().attribute("usuario_logueado", usuario);
+    request.session().attribute("usuario_signeado", username);
 
     if(tipo == TipoUsuario.MIEMBRO)
-      response.redirect("/inicio");
+      response.redirect("/registrarMiembro");
     if(tipo == TipoUsuario.ORGANIZACION)
       response.redirect("/registrarOrg");
 

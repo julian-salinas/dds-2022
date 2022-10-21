@@ -17,14 +17,18 @@ public class HomeController {
     String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
-    if(user.getTipo().equals(TipoUsuario.ORGANIZACION)) {
+    if (user.getTipo().equals(TipoUsuario.ORGANIZACION)) {
       /*Map<String, Object> model = new HashMap<>();
       model.put("org", user.getOrg());*/
       Object model = user.getOrg();
-      return new ModelAndView(model, "organizacion.hbs");
+      return new ModelAndView(model, "homeOrganizacion.hbs");
+    } else if (user.getTipo().equals(TipoUsuario.MIEMBRO)) {
+      Object model = user.getMiembro();
+      return new ModelAndView(model, "homeMiembro.hbs");
     }
+    else
+      return null;
 
-    return new ModelAndView(user, "homeMiembro.hbs");
   }
 
 }

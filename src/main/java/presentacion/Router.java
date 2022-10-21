@@ -18,6 +18,7 @@ public class Router {
     GuiaController guiaController = new GuiaController();
     TrayectoController trayectoController = new TrayectoController();
     RegistrarOrgController registrarOrgController = new RegistrarOrgController();
+    RegistrarMiembroController registrarMiembroController = new RegistrarMiembroController();
 
     //DebugScreen.enableDebugScreen();
 
@@ -41,5 +42,7 @@ public class Router {
 
    Spark.get("/registrarOrg", registrarOrgController::index, engineTemplate);
    Spark.post("/registrarOrg", registrarOrgController::post, engineTemplate);
+   Spark.get("/registrarMiembro", registrarMiembroController::index, engineTemplate);
+   Spark.post("/registrarMiembro", registrarMiembroController::post, engineTemplate);
   }
 }

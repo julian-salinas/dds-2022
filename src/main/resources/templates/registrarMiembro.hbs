@@ -1,0 +1,72 @@
+<html>
+    <head>
+    <!-- Importar archivos javascript -->
+    <!-- Importar archivos css -->
+    <!-- Escribir css -->
+    <link rel="stylesheet" href="main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    </head>
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+        <title>Impacto Ambiental - Miembro</title>
+
+    </head>
+
+    <body>
+
+        <div class="container">
+            <h1> Registrar Miembro </h1>
+        </div>
+
+        <div class = "container">
+
+            <form action="/registrarMiembro" method="POST">
+
+                <!-- Nombre -->
+
+                <div class="mb-3">
+                    <label for="nombre" class="form-label"> Nombre </label>
+                    <input type="text" class="form-control" id="nombreInput" name="nombre" value="Matias">
+                </div>
+
+                <!-- Apellido -->
+
+                <div class="mb-3">
+                    <label for="apellido" class="form-label"> Apellido </label>
+                    <input type="text" class="form-control" id="apellidoInput" name="apellido" value="Gomez">
+                </div>
+
+                <!-- Tipo de Documento es un enum, asi q pareceria indicar que deberia ser un
+               drop-down menu -->
+
+                <div class = "mb-3">
+                    <label for="tipoDocumento"> Tipo de Documento: </label>
+                    <select id="tipoDocumento" name="tipoDocumento">
+                        <option value="DNI" selected> DNI </option>
+                        <option value="LC"> Libreta cívica </option>
+                        <option value="LE"> Libreta de enrolamiento </option>
+                        <option value="CI"> Cédula de identidad </option>
+                    </select>
+                </div>
+
+                <!-- Nro. de Documento -->
+
+                <div class="mb-3">
+                    <label for="nroDeDocumento" class="form-label"> Nro. De Documento </label>
+                    <input type="text" class="form-control" id="nroDeDocumentoInput" name="nroDeDocumento" value="123456789">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+
+            </form>
+        </div>
+
+    </body>
+
+</html>
