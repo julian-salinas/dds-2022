@@ -1,0 +1,32 @@
+{{#partial "barra"}}
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/sectores">Sectores</a>
+        </li>
+
+    </ul>
+{{/partial}}
+
+{{#partial "contenido"}}
+    <h1> SECTORES </h1>
+
+    <div class="col p-2">
+        {{#each sectores}}
+            <p> Un Sector de Ejemplo </p>
+        {{/each}}
+    </div>
+
+    <div class="container">
+        <form action="/sectores" method="POST">
+            <div class="mb-3">
+                <label for="nombreInput" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombreInput" name="nombre">
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar Sector</button>
+        </form>
+    </div>
+
+{{/partial}}
+
+
+{{>layout.hbs}}

@@ -19,6 +19,7 @@ public class Router {
     TrayectoController trayectoController = new TrayectoController();
     RegistrarOrgController registrarOrgController = new RegistrarOrgController();
     RegistrarMiembroController registrarMiembroController = new RegistrarMiembroController();
+    SectoresController sectoresController = new SectoresController();
 
     //DebugScreen.enableDebugScreen();
 
@@ -40,9 +41,12 @@ public class Router {
    Spark.post("/trayectoCompartido", trayectoController::postCompartido, engineTemplate);
    Spark.post("/agregarTramo", trayectoController::agregarTramo, engineTemplate);
 
+
    Spark.get("/registrarOrg", registrarOrgController::index, engineTemplate);
    Spark.post("/registrarOrg", registrarOrgController::post, engineTemplate);
    Spark.get("/registrarMiembro", registrarMiembroController::index, engineTemplate);
    Spark.post("/registrarMiembro", registrarMiembroController::post, engineTemplate);
+   Spark.get("/sectores", sectoresController::index, engineTemplate);
+   Spark.post("/sectores", sectoresController::post, engineTemplate);
   }
 }

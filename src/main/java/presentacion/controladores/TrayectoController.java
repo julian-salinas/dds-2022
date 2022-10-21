@@ -52,7 +52,7 @@ public class TrayectoController {
     trayecto.agregarTramo(tramo);
 
 
-    String username = request.session().attribute("usuario-logeado");
+    String username = request.cookie("usuario-logeado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
     Miembro miembro = user.getMiembro();
