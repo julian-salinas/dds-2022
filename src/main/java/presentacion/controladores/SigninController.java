@@ -36,7 +36,7 @@ public class SigninController {
     request.session().attribute("usuario_signeado", username);
 
     if(tipo == TipoUsuario.MIEMBRO)
-      response.redirect("/inicio");
+      response.redirect("/registrarMiembro");
     if(tipo == TipoUsuario.ORGANIZACION)
       response.redirect("/registrarOrg");
 
