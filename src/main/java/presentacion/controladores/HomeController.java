@@ -15,6 +15,7 @@ public class HomeController {
   public ModelAndView index(Request request, Response response) {
 
     String username = request.session().attribute("usuario_logueado");
+    response.cookie("username", username);
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
     if (user.getTipo().equals(TipoUsuario.ORGANIZACION)) {

@@ -3,6 +3,7 @@ package presentacion.controladores;
 import domain.organizaciones.ClasificacionOrg;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.TipoOrganizacion;
+import domain.organizaciones.sectores.Sector;
 import domain.repositorios.RepositorioOrganizaciones;
 import domain.repositorios.RepositorioUsuarios;
 import domain.ubicaciones.Ubicacion;
@@ -26,7 +27,8 @@ public class RegistrarOrgController {
     String tipo = request.queryParams("tipo");
     String clasificacion = request.queryParams("clasificacion");
     String ubicacion = request.queryParams("ubicacion");
-    String sector = request.queryParams("sector");
+
+
 
     Organizacion org = new Organizacion(nombre, razonSocial, TipoOrganizacion.valueOf(tipo),
         new Ubicacion(), ClasificacionOrg.valueOf(clasificacion));
