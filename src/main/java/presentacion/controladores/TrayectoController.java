@@ -47,12 +47,10 @@ public class TrayectoController {
     Ubicacion ubicacionInicial  = new Ubicacion(request.queryParams("calle"), Integer.parseInt(request.queryParams("altura")), request.queryParams("localidad"));
     Ubicacion ubicacionFin  = new Ubicacion(request.queryParams("calle2"), Integer.parseInt(request.queryParams("altura2")), request.queryParams("localidad2"));
 
-    System.out.print("Hola hola");
     Tramo tramo = new Tramo( new Bicicleta(), ubicacionInicial, ubicacionFin);
 
     trayecto.agregarTramo(tramo);
 
-    System.out.print("chau chau");
 
     String username = request.session().attribute("usuario-logeado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
@@ -60,11 +58,12 @@ public class TrayectoController {
 
 
 
-    Miembro miembro = new Miembro("Juan", "Lopez", TipoDeDocumento.DNI, 4444);
-    RepositorioMiembros.getInstance().add(miembro);
+    Miembro miembro = new Miembro("Fernando", "Lopez", TipoDeDocumento.DNI, 4444);
 
-    System.out.print("Agregue a Juan");
-    miembro.agregarTrayecto(trayecto);
+    RepositorioMiembros.getInstance().add(miembro);
+    miembro.registrarTrayecto(trayecto);
+
+    RepositorioMiembros.getInstance().update(miembro);
 
     return new ModelAndView(null, "trayecto.hbs");
   }
