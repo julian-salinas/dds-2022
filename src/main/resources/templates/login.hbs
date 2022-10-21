@@ -35,6 +35,10 @@
             <input type="password" class="form-control" id="passwordInput" name="password" value="1234">
           </div>
 
+            {{#if error}}
+               {{ descripcion }}
+            {{/if}}
+
           <button type="submit" class="btn btn-primary">Ingresar</button>
         </form>
        </div>
