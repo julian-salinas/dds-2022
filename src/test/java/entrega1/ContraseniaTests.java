@@ -1,8 +1,8 @@
 package entrega1;
 
+import domain.contrasenias.Validador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import domain.contrasenias.Contrasenia;
 import domain.contrasenias.excepciones.*;
 import domain.contrasenias.validaciones.*;
 
@@ -14,7 +14,7 @@ public class ContraseniaTests {
   private ValidacionMayusculas validacionMayusculas;
   private ValidacionMinusculas validacionMinusculas;
   private ValidacionNumeros validacionNumeros;
-  private Contrasenia validadorDeContrasenias;
+  private Validador validadorDeContrasenias;
 
   @BeforeEach
   void init() {
@@ -24,7 +24,7 @@ public class ContraseniaTests {
     validacionMinusculas = new ValidacionMinusculas();
     validacionNumeros = new ValidacionNumeros();
 
-    validadorDeContrasenias = new Contrasenia(validacionContraseniaComun, validacionLongitud, validacionMayusculas,
+    validadorDeContrasenias = new Validador(validacionContraseniaComun, validacionLongitud, validacionMayusculas,
         validacionMinusculas, validacionNumeros);
   }
 

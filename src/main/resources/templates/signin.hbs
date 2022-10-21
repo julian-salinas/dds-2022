@@ -43,6 +43,10 @@
                 </select>
             </div>
 
+           {{#if error}}
+               <p class="red"> Error: {{descripcion}} </p>
+           {{/if}}
+
           <button type="submit" class="btn btn-primary">Registrate</button>
         </form>
        </div>

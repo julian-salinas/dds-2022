@@ -3,14 +3,19 @@ package presentacion.errores;
 import lombok.Getter;
 import lombok.Setter;
 
-public class LogInError {
-  @Getter String descripcion;
+public class InError {
+  @Getter @Setter String descripcion;
   @Setter
   boolean error = false;
 
-  public LogInError(String descripcion) {
+  public InError(String descripcion) {
     this.descripcion = descripcion;
   }
+
+  public InError() {
+
+  }
+
 
   public boolean getError() {
     return error;
