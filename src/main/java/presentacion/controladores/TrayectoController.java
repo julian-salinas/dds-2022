@@ -55,12 +55,8 @@ public class TrayectoController {
     String username = request.session().attribute("usuario-logeado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
+    Miembro miembro = user.getMiembro();
 
-
-
-    Miembro miembro = new Miembro("Fernando", "Lopez", TipoDeDocumento.DNI, 4444);
-
-    RepositorioMiembros.getInstance().add(miembro);
     miembro.registrarTrayecto(trayecto);
 
     RepositorioMiembros.getInstance().update(miembro);
