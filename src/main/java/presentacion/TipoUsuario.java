@@ -2,5 +2,7 @@ package presentacion;
 
 public enum TipoUsuario {
   ORGANIZACION,
-  MIEMBRO
+  MIEMBRO,
+  ADMINISTRADOR,
+  AGENTE_SECTORIAL
 }

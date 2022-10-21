@@ -38,7 +38,7 @@ public class Router {
    Spark.get("/guia", guiaController::index, engineTemplate);
    Spark.get("/trayecto", trayectoController::index, engineTemplate);
    Spark.post("/trayecto", trayectoController::post, engineTemplate);
-   Spark.post("/trayectoCompartido", trayectoController::postCompartido, engineTemplate);
+   //Spark.post("/trayectoCompartido", trayectoController::postCompartido, engineTemplate);
    Spark.post("/agregarTramo", trayectoController::agregarTramo, engineTemplate);
 
 

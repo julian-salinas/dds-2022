@@ -24,16 +24,14 @@ public class TrayectoController {
   }
 
   public ModelAndView post(Request request, Response response) {
-
-    Trayecto trayecto = new Trayecto();
-    request.session().attribute("trayecto", trayecto);
-
-    return new ModelAndView(null, "tramo.hbs");
-  }
-
-  public ModelAndView postCompartido(Request request, Response response) {
-
-    Trayecto trayecto = new TrayectoCompartido();
+    String tipo = request.queryParams("trayecto");
+    Trayecto trayecto;
+    if(tipo.equals("trayecto"))
+      trayecto = new Trayecto();
+    else if (tipo.equals("trayecto-comp"))
+      trayecto = new TrayectoCompartido();
+    else
+      return null;
     request.session().attribute("trayecto", trayecto);
 
     return new ModelAndView(null, "tramo.hbs");
@@ -52,7 +50,7 @@ public class TrayectoController {
     trayecto.agregarTramo(tramo);
 
 
-    String username = request.cookie("usuario-logeado");
+    String username = request.cookie("username");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
     Miembro miembro = user.getMiembro();

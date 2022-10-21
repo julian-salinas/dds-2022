@@ -1,4 +1,4 @@
-package presentacion;
+package presentacion.errores;
 
 import lombok.Getter;
 import lombok.Setter;

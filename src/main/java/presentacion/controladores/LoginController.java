@@ -1,7 +1,7 @@
 package presentacion.controladores;
 
 import domain.repositorios.RepositorioUsuarios;
-import presentacion.LogInError;
+import presentacion.errores.LogInError;
 import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;
