@@ -26,7 +26,7 @@ public class CargaDeMedicionesyFETests {
 
   @BeforeEach
   public void init() {
-    organizacionDefault = new Organizacion("?", TipoOrganizacion.EMPRESA, "Manaos", ubicacionDefault, ClasificacionOrg.MINISTERIO);
+    organizacionDefault = new Organizacion("Manaos", "?", TipoOrganizacion.EMPRESA, ubicacionDefault, ClasificacionOrg.MINISTERIO);
   }
 
   @Test

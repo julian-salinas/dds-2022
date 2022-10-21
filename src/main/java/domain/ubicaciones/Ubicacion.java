@@ -35,6 +35,14 @@ public class Ubicacion extends PersistenceEntity {
     this.nombreLocalidad = nombreLocalidad;
   }
 
+  public Ubicacion(String calle, int altura, String nombreLocalidad) {
+    this.apiClient = ServicioGeoDds.getInstancia();
+    this.calle = calle;
+    this.altura = altura;
+    this.nombreLocalidad = nombreLocalidad;
+  }
+
+
   // Hacer esto para Localidad, Municipio, etc. O tal vez no.
   public Localidad getLocalidad() {
     try {

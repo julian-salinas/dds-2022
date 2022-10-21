@@ -1,0 +1,70 @@
+{{#partial "barra"}}
+   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/guia">Guia</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/trayectos">Mis Trayectos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/vincularse">Vincularse</a>
+      </li>
+   </ul>
+  {{/partial}}
+
+{{#partial "contenido"}}
+    <div class = "container">
+        <form action="/agregarTramo" method="POST">
+        <div class = "container">
+            <h2> Ubicacion 1 </h2>
+            <div class="mb-3">
+                <label for="calle" class="form-label">Calle</label>
+                <input type="text" class="form-control" id="calle" name="calle" value="calleLinda">
+            </div>
+
+            <div class="mb-3">
+                <label for="altura" class="form-label">Altura</label>
+                <input type="text" class="form-control" id="altura" name="altura" value="123">
+            </div>
+
+            <select id="localidad" name="localidad">
+                <option value="au">Australia</option>
+                <option value="ca">Canada</option>
+                <option value="usa">USA</option>
+            </select>
+        </div>
+
+        <div class = "container">
+            <h2> Ubicacion 2 </h2>
+            <div class="mb-3">
+                <label for="calle2" class="form-label">Calle</label>
+                <input type="text" class="form-control" id="calle2" name="calle2" value="calleLinda">
+            </div>
+
+            <div class="mb-3">
+                <label for="altura2" class="form-label">Altura</label>
+                <input type="text" class="form-control" id="altura2" name="altura2" value="123">
+            </div>
+
+            <select id="localidad2" name="localidad2">
+                <option value="au">Australia</option>
+                <option value="ca">Canada</option>
+                <option value="usa">USA</option>
+            </select>
+        </div>
+
+        <div class = "container">
+            <h1> Medio </h1>
+            <select id="medio" name="medio">
+                <option value="1">pie</option>
+                <option value="2">bicicleta</option>
+            </select>
+        </div>
+
+            <button type="submit" class="btn btn-primary">cargar Trayecto</button>
+        </form>
+    </div>
+    {{/partial}}
+
+
+{{>layout.hbs}}

@@ -1,0 +1,29 @@
+{{#partial "barra"}}
+   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/guia">Guia</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/trayectos">Mis Trayectos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/vincularse">Vincularse</a>
+      </li>
+   </ul>
+  {{/partial}}
+
+{{#partial "contenido"}}
+    <h1> Trayecto </h1>
+    <div class = "container">
+        <form action="/trayecto" method="POST">
+            <button type="submit" class="btn btn-primary">Crear Trayecto</button>
+        </form>
+        <form action="/trayectoCompartido" method="POST">
+            <button type="submit" class="btn btn-primary">Crear Trayecto Compartido</button>
+        </form>
+
+    </div>
+    {{/partial}}
+
+
+{{>layout.hbs}}

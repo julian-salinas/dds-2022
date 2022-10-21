@@ -35,7 +35,7 @@ public class VinculacionesTests {
 
     ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
 
-    organizacionDefault = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, "Mc" ,ubicacionDefault, ClasificacionOrg.MINISTERIO);
+    organizacionDefault = new Organizacion("Mc", "S.A.", TipoOrganizacion.EMPRESA ,ubicacionDefault, ClasificacionOrg.MINISTERIO);
     sectorDefault = new Sector();
     miembroDefault = new Miembro("Juan", "Martin", TipoDeDocumento.DNI, 43208556);
   }

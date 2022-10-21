@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Getter
 @Entity
 public class Organizacion extends PersistenceEntity {
   private String nombre;
@@ -35,7 +36,6 @@ public class Organizacion extends PersistenceEntity {
   private TipoOrganizacion tipo;
 
   @Enumerated(EnumType.STRING)
-  @Getter
   private ClasificacionOrg clasificacion;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_id")
@@ -55,7 +55,7 @@ public class Organizacion extends PersistenceEntity {
 
   public Organizacion() {}
 
-  public Organizacion(String razonSocial, TipoOrganizacion tipo, String nombre,
+  public Organizacion(String nombre, String razonSocial, TipoOrganizacion tipo,
                       Ubicacion ubicacion, ClasificacionOrg clasificacion) {
     this.nombre = nombre;
     this.razonSocial = razonSocial;

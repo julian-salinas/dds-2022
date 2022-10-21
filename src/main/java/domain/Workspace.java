@@ -43,7 +43,7 @@ public class Workspace {
     Miembro miembro = new Miembro("Juan", "Carlos", TipoDeDocumento.DNI, 43567890);
     Sector sector = new Sector();
     sector.agregarMiembro(miembro);
-    Organizacion organizacion = new Organizacion("S.A.", TipoOrganizacion.EMPRESA, "Panchos Loria", ubicacion, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
+    Organizacion organizacion = new Organizacion("Panchos Loria", "S.A.", TipoOrganizacion.EMPRESA, ubicacion, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
     organizacion.agregarSector(sector);
     entityManager.persist(organizacion);
 

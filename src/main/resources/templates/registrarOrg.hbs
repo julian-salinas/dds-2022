@@ -1,0 +1,94 @@
+<html>
+   <head>
+      <!-- Importar archivos javascript -->
+      <!-- Importar archivos css -->
+      <!-- Escribir css -->
+      <link rel="stylesheet" href="main.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+   </head>
+   <!doctype html>
+   <html lang="en">
+      <head>
+         <!-- Required meta tags -->
+         <meta charset="utf-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+         <!-- Bootstrap CSS -->
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+         <title>Impacto Ambiental - Registrar Org</title>
+
+      </head>
+
+      <body>
+
+      <div class="container">
+          <h1> Registrar Organizacion </h1>
+      </div>
+
+       <div class = "container">
+
+          <form action="/registrarOrg" method="POST">
+
+             <!-- Nombre -->
+
+             <div class="mb-3">
+               <label for="nombre" class="form-label">Nombre </label>
+               <input type="text" class="form-control" id="nombreInput" name="nombre" value="Matias">
+             </div>
+
+             <!-- Razon Social -->
+
+             <div class="mb-3">
+                <label for="razonSocial" class="form-label">Razon Social </label>
+                <input type="text" class="form-control" id="razonSInput" name="razonSocial" value="S.A.">
+             </div>
+
+              <!-- Tipo de Org es un enum, asi q pareceria indicar que deberia ser un
+             drop-down menu -->
+
+              <div class = "mb-3">
+                  <label for="tipo"> Tipo de Organizacion: </label>
+                  <select id="tipo" name="tipo">
+                      <option value="GUBERNAMENTAL"> Gubernamental </option>
+                      <option value="ONG"> Ong </option>
+                      <option value="EMPRESA"> Empresa </option>
+                      <option value="INSTITUCION" selected> Institucion </option>
+                  </select>
+              </div>
+
+
+             <!-- Clasificacion de org es un enum, asi q pareceria indicar que deberia ser un
+             drop-down menu -->
+
+              <div class = "mb-3">
+                  <label for="clasificacion"> Clasificacion de la Organizacion: </label>
+                  <select id="clasificacion" name="clasificacion">
+                      <option value="MINISTERIO"> Ministerio </option>
+                      <option value="UNIVERSIDAD" selected> Universidad </option>
+                      <option value="ESCUELA"> Escuela </option>
+                      <option value="EMPRESA_SECTOR_PRIMARIO"> Empresa del sector primario </option>
+                      <option value="EMPRESA_SECTOR_SECUNDARIO"> Empresa del sector secundario </option>
+                  </select>
+              </div>
+
+             <!-- Ubicacion, pareceria ser algo de elegir -->
+
+             <div class="mb-3">
+                <label for="ubicacion" class="form-label">Ubicacion </label>
+                <input type="text" class="form-control" id="ubInput" name="ubicacion" value="B.A.">
+             </div>
+
+             <!-- Sector -->
+
+             <div class="mb-3">
+                <label for="sector" class="form-label">Sector </label>
+                <input type="text" class="form-control" id="sectorInput" name="sector" value="Cobranzas">
+             </div>
+
+             <button type="submit" class="btn btn-primary">Ingresar</button>
+
+           </form>
+       </div>
+
+      </body>
+
+   </html>

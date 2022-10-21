@@ -1,6 +1,7 @@
 package domain.contrasenias;
 
-import domain.contrasenias.validaciones.Validacion;
+import domain.contrasenias.validaciones.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +16,11 @@ public class Contrasenia {
 
   public Contrasenia() {
     this.validaciones = new ArrayList<>();
+    this.validaciones.add(new ValidacionContraseniaComun());
+    this.validaciones.add(new ValidacionLongitud());
+    this.validaciones.add(new ValidacionMayusculas());
+    this.validaciones.add(new ValidacionMinusculas());
+    this.validaciones.add(new ValidacionNumeros());
   }
 
   public void setValidaciones(Validacion... validaciones) {
