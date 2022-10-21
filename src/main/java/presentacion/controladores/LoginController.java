@@ -24,7 +24,7 @@ public class LoginController {
     // Si no existe, vuelvo a la pagina de Login
     if (usuarioEncontrado == null ||
         !usuarioEncontrado.getPassword().equals(password)) {
-      LogInError error = new LogInError("Username o Contraseña incorrectos \n");
+      LogInError error = new LogInError("Nombre de Usuario o Contraseña incorrectos \n");
       error.setError(true);
       return new ModelAndView(error, "login.hbs");
     }
