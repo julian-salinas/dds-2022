@@ -21,32 +21,37 @@ public class Router {
     RegistrarMiembroController registrarMiembroController = new RegistrarMiembroController();
     SectoresController sectoresController = new SectoresController();
 
+
     //DebugScreen.enableDebugScreen();
 
     Spark.staticFiles.location("public");
 
     // Todos los requests
-   Spark.get("/signin", signinController::index, engineTemplate);
-   Spark.post("/signin", signinController::post, engineTemplate);
-   Spark.get("/login", loginController::index, engineTemplate);
-   Spark.post("/login", loginController::post, engineTemplate);
+    Spark.get("/signin", signinController::index, engineTemplate);
+    Spark.post("/signin", signinController::post, engineTemplate);
+    Spark.get("/login", loginController::index, engineTemplate);
+    Spark.post("/login", loginController::post, engineTemplate);
 
 
-   Spark.get("/inicio", inicioController::index, engineTemplate);
-   Spark.get("/home", homeController::index, engineTemplate);
+    Spark.get("/inicio", inicioController::index, engineTemplate);
+    Spark.get("/home", homeController::index, engineTemplate);
+    Spark.get("/guia", guiaController::index, engineTemplate);
 
-   Spark.get("/guia", guiaController::index, engineTemplate);
-   Spark.get("/trayecto", trayectoController::index, engineTemplate);
-   Spark.post("/trayecto", trayectoController::post, engineTemplate);
-   //Spark.post("/trayectoCompartido", trayectoController::postCompartido, engineTemplate);
-   Spark.post("/agregarTramo", trayectoController::agregarTramo, engineTemplate);
+    Spark.get("/registrarOrg", registrarOrgController::index, engineTemplate);
+    Spark.post("/registrarOrg", registrarOrgController::post, engineTemplate);
+    Spark.get("/registrarMiembro", registrarMiembroController::index, engineTemplate);
+    Spark.post("/registrarMiembro", registrarMiembroController::post, engineTemplate);
 
 
-   Spark.get("/registrarOrg", registrarOrgController::index, engineTemplate);
-   Spark.post("/registrarOrg", registrarOrgController::post, engineTemplate);
-   Spark.get("/registrarMiembro", registrarMiembroController::index, engineTemplate);
-   Spark.post("/registrarMiembro", registrarMiembroController::post, engineTemplate);
-   Spark.get("/sectores", sectoresController::index, engineTemplate);
-   Spark.post("/sectores", sectoresController::post, engineTemplate);
+    // Miembro
+    Spark.get("/trayecto", trayectoController::index, engineTemplate);
+    Spark.post("/trayecto", trayectoController::post, engineTemplate);
+    Spark.post("/agregarTramo", trayectoController::agregarTramo, engineTemplate);
+
+    // Organizacion
+    Spark.get("/sectores", sectoresController::index, engineTemplate);
+    Spark.post("/sectores", sectoresController::post, engineTemplate);
+    Spark.get("/aceptar-miembros",,engineTemplate);
+
   }
 }
