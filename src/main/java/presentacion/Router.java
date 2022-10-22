@@ -51,7 +51,7 @@ public class Router {
     // Organizacion
     Spark.get("/sectores", sectoresController::index, engineTemplate);
     Spark.post("/sectores", sectoresController::post, engineTemplate);
-    Spark.get("/aceptar-miembros",,engineTemplate);
+    //Spark.get("/aceptar-miembros",,engineTemplate);
 
   }
 }
