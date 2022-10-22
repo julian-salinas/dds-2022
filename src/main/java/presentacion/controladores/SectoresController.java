@@ -29,13 +29,14 @@ public class SectoresController {
   }
 
   public ModelAndView post(Request request, Response response) {
-
+    String nombre       = request.queryParams("nombre");
+    String descripcion  = request.queryParams("descripcion");
     String username = request.cookie("username");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
     Organizacion organizacion = user.getOrg();
 
-    Sector sector = new Sector();
+    Sector sector = new Sector(nombre, descripcion);
 
     organizacion.agregarSector(sector);
 

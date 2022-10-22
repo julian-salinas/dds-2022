@@ -8,19 +8,47 @@
 {{/partial}}
 
 {{#partial "contenido"}}
-    <h1> SECTORES </h1>
+    <center class="red-backg">
+        <h1> SECTORES </h1>
+    </center>
 
-    <div class="col p-2">
-        {{#each sectores}}
-            <p> Un Sector de Ejemplo </p>
+    <div class="titulo">
+        <h2> Listado de sectores: </h2>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+        {{#each sectores }}
+            <div class="col p-2">
+                <div class="card shadow-sm p-2">
+                    <img src="https://i.pinimg.com/236x/fb/29/d0/fb29d0729e08e52e4fc841b2663089ed--logos.jpg"
+                         class="card-img-top" alt="nombre">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ nombre }}
+                            {{#if nuevo}} <span class="badge rounded-pill bg-info">Nuevo</span> {{/if}}
+                        </h5>
+                        <p class="card-text">
+                            {{ descripcion }}
+                        </p>
+                    </div>
+                </div>
+            </div>
         {{/each}}
+    </div>
+
+    <div class="titulo">
+        <h2> Agregar Sector: </h2>
     </div>
 
     <div class="container">
         <form action="/sectores" method="POST">
             <div class="mb-3">
-                <label for="nombreInput" class="form-label">Nombre</label>
+                <label for="nombreInput" class="form-label"> Nombre </label>
                 <input type="text" class="form-control" id="nombreInput" name="nombre">
+            </div>
+            <div class="mb-3">
+                <label for="descInput" class="form-label"> Descripcion (Opcional) </label>
+                <input type="text" class="form-control" id="descInput" name="descripcion">
             </div>
             <button type="submit" class="btn btn-primary">Agregar Sector</button>
         </form>
