@@ -1,14 +1,14 @@
 package domain.administrador;
 
-import domain.contrasenias.Contrasenia;
+import domain.contrasenias.Validador;
 
 public class Administrador {
   String user;
-  Contrasenia contrasenia;
+  Validador validador;
 
-  public Administrador(String user, Contrasenia contrasenia) {
+  public Administrador(String user, Validador validador) {
     this.user = user;
-    this.contrasenia = contrasenia;
+    this.validador = validador;
   }
 
 }
