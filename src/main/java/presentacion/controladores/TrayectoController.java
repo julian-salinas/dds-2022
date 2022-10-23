@@ -40,7 +40,7 @@ public class TrayectoController {
   public ModelAndView agregarTramo(Request request, Response response) {
 
     Trayecto trayecto = request.session().attribute("trayecto");
-
+    String boton = request.queryParams("tramo");
 
     Ubicacion ubicacionInicial  = new Ubicacion(request.queryParams("calle"), Integer.parseInt(request.queryParams("altura")), request.queryParams("localidad"));
     Ubicacion ubicacionFin  = new Ubicacion(request.queryParams("calle2"), Integer.parseInt(request.queryParams("altura2")), request.queryParams("localidad2"));
@@ -49,17 +49,21 @@ public class TrayectoController {
 
     trayecto.agregarTramo(tramo);
 
+    if(boton.equals("fin")) {
 
-    String username = request.cookie("username");
-    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+      String username = request.cookie("username");
+      Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
-    Miembro miembro = user.getMiembro();
+      Miembro miembro = user.getMiembro();
 
-    miembro.registrarTrayecto(trayecto);
+      miembro.registrarTrayecto(trayecto);
 
-    RepositorioMiembros.getInstance().update(miembro);
+      RepositorioMiembros.getInstance().update(miembro);
 
-    return new ModelAndView(null, "trayecto.hbs");
+
+      return new ModelAndView(null, "trayecto.hbs");
+    }
+    else return new ModelAndView(null, "tramo.hbs");
   }
 
 
