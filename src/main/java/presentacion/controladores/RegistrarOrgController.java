@@ -29,7 +29,6 @@ public class RegistrarOrgController {
     String ubicacion = request.queryParams("ubicacion");
 
 
-
     Organizacion org = new Organizacion(nombre, razonSocial, TipoOrganizacion.valueOf(tipo),
         new Ubicacion(), ClasificacionOrg.valueOf(clasificacion));
 

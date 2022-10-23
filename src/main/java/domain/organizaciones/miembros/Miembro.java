@@ -14,7 +14,7 @@ import javax.persistence.*;
 
 import lombok.Getter;
 
-
+@Getter
 @Entity
 public class Miembro extends PersistenceEntity {
 
@@ -27,7 +27,7 @@ public class Miembro extends PersistenceEntity {
   private int nroDeDocumento; // era Integer, lo paso a int (a debatir)
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable(name = "trayecto_x_miembro")
-  @Getter private final List<Trayecto> trayectos = new ArrayList<>();
+  private final List<Trayecto> trayectos = new ArrayList<>();
 
   public Miembro() {}
 

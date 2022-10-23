@@ -7,14 +7,34 @@
         <a class="nav-link active" href="/trayecto">Mis Trayectos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="/vincularse">Vincularse</a>
+        <a class="nav-link active" href="/vincularse">Vincularse a Org</a>
       </li>
    </ul>
   {{/partial}}
 
 {{#partial "contenido"}}
-    <h1> hola </h1>
-    {{/partial}}
+    <center>
+        <h1> HOLA, MIEMBROS! </h1>
+    </center>
+
+    <div class="col p-2">
+        <div class="card shadow-sm p-2">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <p>
+                        <u> DATOS DE MIEMBRO: </u>
+                    </p>
+                </h5>
+                <p class="card-text"> Nombre: {{ nombre }} </p>
+                <p class="card-text"> Apellido: {{ apellido }} </p>
+                <p class="card-text"> Tipo de Documento: {{ tipoDeDocumento }} </p>
+                <p class="card-text"> Nro. de Documento: {{ nroDeDocumento }} </p>
+
+            </div>
+        </div>
+    </div>
+
+{{/partial}}
 
 
 {{>layout.hbs}}

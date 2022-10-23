@@ -1,0 +1,50 @@
+{{#partial "barra"}}
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/guia">Guia</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/trayectos">Mis Trayectos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/vincularse">Vincularse a Org</a>
+        </li>
+    </ul>
+{{/partial}}
+
+{{#partial "contenido"}}
+    <div class="titulo">
+        <h2>
+            <u> Paso 1: </u>
+        </h2>
+        <h3> Elija la Organizacion a la que desea unirse: </h3>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+        {{#each organizaciones }}
+            <div class="col p-2">
+                <div class="card shadow-sm p-2">
+                    <img src="https://static.vecteezy.com/system/resources/previews/005/266/960/non_2x/organizational-chart-line-icon-outline-hierarchy-logo-linear-pictogram-isolated-on-white-pixel-perfect-illustration-vector.jpg"
+                         class="card-img-top" alt="nombre">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ nombre }} {{ razonSocial }}
+                            <br>
+                            {{ tipo }}
+                            <!--{{#if nuevo}} <span class="badge rounded-pill bg-info">Nuevo</span> {{/if}}-->
+                        </h5>
+                        <center>
+                            <form>
+                                <button type="submit" class="btn btn-primary"> Elegir </button>
+                            </form>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+
+{{/partial}}
+
+
+{{>layout.hbs}}

@@ -19,7 +19,6 @@ import spark.Response;
 public class TrayectoController {
 
   public ModelAndView index(Request request, Response response) {
-
     return new ModelAndView(null, "trayecto.hbs");
   }
 

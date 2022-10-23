@@ -4,8 +4,6 @@ import presentacion.controladores.*;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.beans.Transient;
-
 public class Router {
   public static void configure() {
     HandlebarsTemplateEngine engineTemplate = new HandlebarsTemplateEngine();
@@ -21,6 +19,8 @@ public class Router {
     RegistrarMiembroController registrarMiembroController = new RegistrarMiembroController();
     SectoresController sectoresController = new SectoresController();
     HcController hcController = new HcController();
+    AceptarMiembroController aceptarMiembroController = new AceptarMiembroController();
+    PedirVinculacionController pedirVinculacionController = new PedirVinculacionController();
 
 
     //DebugScreen.enableDebugScreen();
@@ -48,11 +48,12 @@ public class Router {
     Spark.get("/trayecto", trayectoController::index, engineTemplate);
     Spark.post("/trayecto", trayectoController::post, engineTemplate);
     Spark.post("/agregarTramo", trayectoController::agregarTramo, engineTemplate);
+    Spark.get("/vincularse", pedirVinculacionController::index, engineTemplate);
 
     // Organizacion
     Spark.get("/sectores", sectoresController::index, engineTemplate);
     Spark.post("/sectores", sectoresController::post, engineTemplate);
-    //Spark.get("/aceptar-miembros",,engineTemplate);
+    Spark.get("/aceptar-miembros", aceptarMiembroController::index, engineTemplate);
     Spark.get("/hc", hcController::index, engineTemplate);
 
   }
