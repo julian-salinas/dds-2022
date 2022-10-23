@@ -20,6 +20,7 @@ public class Router {
     RegistrarOrgController registrarOrgController = new RegistrarOrgController();
     RegistrarMiembroController registrarMiembroController = new RegistrarMiembroController();
     SectoresController sectoresController = new SectoresController();
+    HcController hcController = new HcController();
 
 
     //DebugScreen.enableDebugScreen();
@@ -52,6 +53,7 @@ public class Router {
     Spark.get("/sectores", sectoresController::index, engineTemplate);
     Spark.post("/sectores", sectoresController::post, engineTemplate);
     //Spark.get("/aceptar-miembros",,engineTemplate);
+    Spark.get("/hc", hcController::index, engineTemplate);
 
   }
 }
