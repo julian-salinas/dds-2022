@@ -15,27 +15,32 @@
 {{#partial "contenido"}}
     <div class="titulo">
         <h2>
-            <u> Paso 1: </u>
+            <u> Paso 2: </u>
         </h2>
-        <h3> Elija la Organizacion a la que desea unirse: </h3>
+        <h3> Elija el Sector al que desea unirse: </h3>
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-        {{#each organizaciones }}
+        {{#each sectores }}
             <div class="col p-2">
                 <div class="card shadow-sm p-2">
                     <img src="https://static.vecteezy.com/system/resources/previews/005/266/960/non_2x/organizational-chart-line-icon-outline-hierarchy-logo-linear-pictogram-isolated-on-white-pixel-perfect-illustration-vector.jpg"
                          class="card-img-top" alt="nombre">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <b> {{ nombre }} {{ razonSocial }} </b>
+                            <b> {{ nombre }} </b>
                             <br>
-                            {{ tipo }}
+                            {{ descripcion }}
                             <!--{{#if nuevo}} <span class="badge rounded-pill bg-info">Nuevo</span> {{/if}}-->
                         </h5>
                         <center>
-                            <form action="/vincularse" method="POST">
-                                <button name="id" value={{id}} type="submit" class="btn btn-primary"> Elegir </button>
+                            <form action="/mandar-postulamiento" method="POST">
+                                <script>
+                                    function alertea() {
+                                        alert("Se mando la vinculacion")
+                                    }
+                                </script>
+                                <button onclick="alertea()" name="id" value={{id}} type="submit" class="btn btn-primary"> Elegir </button>
                             </form>
                         </center>
                     </div>

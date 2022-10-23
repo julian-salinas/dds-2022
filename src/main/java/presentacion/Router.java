@@ -49,6 +49,8 @@ public class Router {
     Spark.post("/trayecto", trayectoController::post, engineTemplate);
     Spark.post("/agregarTramo", trayectoController::agregarTramo, engineTemplate);
     Spark.get("/vincularse", pedirVinculacionController::index, engineTemplate);
+    Spark.post("/vincularse", pedirVinculacionController::postOrg, engineTemplate);
+    Spark.post("/mandar-postulamiento", pedirVinculacionController::mandar, engineTemplate);
 
     // Organizacion
     Spark.get("/sectores", sectoresController::index, engineTemplate);
