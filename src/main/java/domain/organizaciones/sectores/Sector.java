@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Entity
 public class Sector extends PersistenceEntity {
 
-  @Setter String nombre;
+  @Setter String nombreSector;
   @Setter String descripcion;
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "sector_id")
@@ -29,8 +29,8 @@ public class Sector extends PersistenceEntity {
 
   }
 
-  public Sector(String nombre, String descripcion) {
-    this.nombre = nombre;
+  public Sector(String nombreSector, String descripcion) {
+    this.nombreSector = nombreSector;
     this.descripcion = descripcion;
   }
 

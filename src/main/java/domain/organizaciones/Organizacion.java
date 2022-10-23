@@ -29,7 +29,7 @@ import java.util.List;
 @Getter
 @Entity
 public class Organizacion extends PersistenceEntity {
-  private String nombre;
+  private String nombreOrg;
   private String razonSocial;
 
   @Enumerated(EnumType.STRING)
@@ -55,9 +55,9 @@ public class Organizacion extends PersistenceEntity {
 
   public Organizacion() {}
 
-  public Organizacion(String nombre, String razonSocial, TipoOrganizacion tipo,
+  public Organizacion(String nombreOrg, String razonSocial, TipoOrganizacion tipo,
                       Ubicacion ubicacion, ClasificacionOrg clasificacion) {
-    this.nombre = nombre;
+    this.nombreOrg = nombreOrg;
     this.razonSocial = razonSocial;
     this.tipo = tipo;
     this.ubicacion = ubicacion;
