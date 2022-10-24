@@ -8,13 +8,14 @@ import lombok.Getter;
 
 import javax.persistence.*;
 
+@Getter
 @Table(name = "datos_actividades")
 @Entity
 public class DatosActividades extends PersistenceEntity {
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "consumo_id")
-  @Getter TipoDeConsumo tipoDeConsumo;
+  TipoDeConsumo tipoDeConsumo;
   @Column(name = "valor_actividad")
-  @Getter double valor;
+  double valor;
   String periodicidad;
   @Column(name = "periodo_imputacion")
   String periodoImputacion;

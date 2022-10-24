@@ -1,0 +1,82 @@
+{{#partial "barra"}}
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/sectores"> Sectores </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/aceptar-miembros"> Aceptar Miembros </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/mediciones"> Cargar Mediciones </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/hc"> Consumo HC </a>
+        </li>
+    </ul>
+{{/partial}}
+
+{{#partial "contenido"}}
+    <center>
+        <h1> MEDICIONES </h1>
+    </center>
+
+    <div class="titulo">
+        <h2> Agregar Medicion/es: </h2>
+    </div>
+
+    <div class="container">
+        <form action="/mediciones-manual" method="POST">
+            <div class="mb-3">
+                <label for="tipoId" class="form-label"> Tipo </label>
+                <input type="text" class="form-control" name="tipoConsumo" id="tipoId" value="Gas Natural">
+            </div>
+            <div class="mb-3">
+                <label for="valorId" class="form-label"> Valor </label>
+                <input type="text" class="form-control" name="valor" id="valorId" value="200.50">
+            </div>
+            <div class="mb-3">
+                <label for="perId" class="form-label"> Periodicidad </label>
+                <input type="text" class="form-control" name="periodicidad" id="perId" value="Mensual">
+            </div>
+            <div class="mb-3">
+                <label for="impId" class="form-label"> Periodo De Imputacion </label>
+                <input type="text" class="form-control" name="perImputacion" id="impId" value="05/2021">
+            </div>
+            <button type="submit" class="btn btn-primary"> Subir Medicion </button>
+        </form>
+        <p>
+            <b> o </b>
+        </p>
+        <form action="/mediciones-csv" method="POST">
+            <div class="mb-3">
+                <label for="archId" class="form-label"> Archivo CSV </label>
+                <input type="file" class="form-control" name="archivoCSV" id="archId">
+            </div>
+            <button type="submit" class="btn btn-primary"> Subir Archivo </button>
+        </form>
+    </div>
+
+    <div class="titulo">
+        <h2> Listado de Mediciones: </h2>
+    </div>
+
+    <div class="mb-3">
+        <center>
+            <table>
+                <tr><th> Tipo de Consumo </th><th> Valor </th><th> Periodicidad </th><th> Periodo Imputacion </th></tr>
+                {{#each datosActividades }}
+                    <tr>
+                        <td> {{tipoDeConsumo.tipo}} </td>
+                        <td> {{valor}} </td>
+                        <td> {{periodicidad}} </td>
+                        <td> {{periodoImputacion}} </td>
+                    </tr>
+                {{/each}}
+            </table>
+        </center>>
+    </div>
+
+{{/partial}}
+
+
+{{>layout.hbs}}
