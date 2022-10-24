@@ -132,6 +132,7 @@ public class Organizacion extends PersistenceEntity {
     return contactos;
   }
 
+  // Nota: En lo que aca llamamos 'combustible', se tiene en cuenta la distancia (en Tramo: combustible x dist)
   public void cargarDATransladoMiembros(){
     double combustibleTransporteMiembros = 30 * sectores.stream().mapToDouble(Sector::combustibleConsumidoTransporteMiembros).sum();
     //SimpleDateFormat formatFecha = new SimpleDateFormat("MM/yyyy");

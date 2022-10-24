@@ -19,7 +19,6 @@ public class RegistrarMiembroController {
   }
 
   public ModelAndView post(Request request, Response response) {
-    // TODO
     String nombre = request.queryParams("nombre");
     String apellido = request.queryParams("apellido");
     String tipoDocumento = request.queryParams("tipoDocumento");

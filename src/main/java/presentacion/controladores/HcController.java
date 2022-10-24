@@ -1,7 +1,11 @@
 package presentacion.controladores;
 
 import domain.organizaciones.Organizacion;
+import domain.organizaciones.datos.actividades.UnidadConsumo;
+import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.hc.HC;
+import domain.organizaciones.miembros.Miembro;
+import domain.repositorios.RepositorioMiembros;
 import domain.repositorios.RepositorioOrganizaciones;
 import domain.repositorios.RepositorioUsuarios;
 import presentacion.Usuario;
@@ -16,10 +20,10 @@ public class HcController {
 
   public ModelAndView index(Request request, Response response) {
 
-    String username = request.cookie("username");
+    /*String username = request.cookie("username");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
-    Organizacion organizacion = user.getOrg();
+    Organizacion organizacion = user.getOrg();*/
 
     Map<String, Object> model = new HashMap<>();
     model.put("esMensual", true);
@@ -74,6 +78,47 @@ public class HcController {
     RepositorioOrganizaciones.getInstance().update(organizacion);
 
     return new ModelAndView(model, "hc.hbs");
+  }
+
+  public ModelAndView indexMiembro(Request request, Response response) {
+
+    /*String username = request.cookie("username");
+    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+
+    Miembro miembro = user.getMiembro();*/
+
+    Map<String, Object> model = new HashMap<>();
+
+    return new ModelAndView(model, "hcMiembro.hbs");
+  }
+
+  public ModelAndView postMiembro(Request request, Response response) {
+
+    String username = request.cookie("username");
+    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+    Miembro miembro = user.getMiembro();
+    String unidadHC    = request.queryParams("unidadHC");
+    Map<String, Object> model = new HashMap<>();
+
+    // TODO: q onda con q se le pasa el Fe por parametro? Por ahora lo dejo asi.
+    FactorEmision factorEmisionDefault = new FactorEmision(4.0, UnidadConsumo.LT);
+    HC hcMiembro = miembro.calculoHCPersonal(factorEmisionDefault);
+
+    if (unidadHC.equals("gCO2")) {
+      model.put("mensual", hcMiembro.enGCO2());
+    }
+    else if (unidadHC.equals("kgCO2")) {
+      model.put("mensual", hcMiembro.enKgCO2());
+    }
+    else {// if(unidadHC.equals("tnCO2"))
+      model.put("mensual", hcMiembro.enTnCO2());
+    }
+
+    model.put("unidad", unidadHC);
+
+    RepositorioMiembros.getInstance().update(miembro);
+
+    return new ModelAndView(model, "hcMiembro.hbs");
   }
 
 }
