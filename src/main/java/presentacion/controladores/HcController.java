@@ -20,8 +20,8 @@ public class HcController {
     Organizacion organizacion = user.getOrg();
 
     Map<String, Object> model = new HashMap<>();
-      model.put("mensual", organizacion.hcMensual().enKgCO2());
-      model.put("anual", organizacion.hcAnual().enKgCO2());
+    model.put("mensual", organizacion.hcMensual().enKgCO2());
+    model.put("anual", organizacion.hcAnual().enKgCO2());
 
     return new ModelAndView(model, "hc.hbs");
   }
