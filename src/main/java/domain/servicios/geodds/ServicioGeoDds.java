@@ -199,6 +199,14 @@ public class ServicioGeoDds {
         .collect(Collectors.toMap(Provincia::getNombre, Provincia::getId));
   }
 
+  public Map<String, Integer> mapProvincias(int offset, int idPais) throws IOException {
+    List<Provincia> listadoDeProvincias = this.listadoDeProvincias(offset, idPais);
+
+    return listadoDeProvincias
+        .stream()
+        .collect(Collectors.toMap(Provincia::getNombre, Provincia::getId));
+  }
+
   /**
    * Mapea todos los municipios que tiene disponibles la api
    *
@@ -206,6 +214,14 @@ public class ServicioGeoDds {
    */
   public Map<String, Integer> mapMunicipios(int offset) throws  IOException {
     List<Municipio> listadoDeMunicipios = this.listadoDeMunicipios(offset);
+
+    return listadoDeMunicipios
+        .stream()
+        .collect(Collectors.toMap(Municipio::getNombre, Municipio::getId));
+  }
+
+  public Map<String, Integer> mapMunicipios(int offset, int idProvincia) throws  IOException {
+    List<Municipio> listadoDeMunicipios = this.listadoDeMunicipios(offset, idProvincia);
 
     return listadoDeMunicipios
         .stream()
@@ -220,6 +236,14 @@ public class ServicioGeoDds {
    */
   public Map<String, Integer> mapLocalidades(int offset) throws IOException {
     List<Localidad> listadoDeLocalidades = this.listadoDeLocalidades(offset);
+
+    return listadoDeLocalidades
+        .stream()
+        .collect(Collectors.toMap(Localidad::getNombre, Localidad::getId));
+  }
+
+  public Map<String, Integer> mapLocalidades(int offset, int idMunicipio) throws IOException {
+    List<Localidad> listadoDeLocalidades = this.listadoDeLocalidades(offset, idMunicipio);
 
     return listadoDeLocalidades
         .stream()
@@ -267,6 +291,15 @@ public class ServicioGeoDds {
     return id;
   }
 
+  public int verificarNombreProvincia(String nombreProvincia, int idPais)  throws RuntimeException, IOException {
+    Map<String, Integer> provincias = this.mapProvincias(1, idPais);
+    Integer id = provincias.get(nombreProvincia.toUpperCase());
+
+    this.validarId(id, "No se pudo encontrar la provincia");
+
+    return id;
+  }
+
   /**
    * Verifica que un municipio exista y retorna el ID de la misma.
    *
@@ -275,6 +308,15 @@ public class ServicioGeoDds {
    */
   public int verificarNombreMunicipio(String nombreMunicipio) throws  RuntimeException, IOException {
     Map<String, Integer> municipios = this.mapMunicipios(1);
+    Integer id = municipios.get(nombreMunicipio.toUpperCase());
+
+    this.validarId(id, "No se encontró el municipio");
+
+    return id;
+  }
+
+  public int verificarNombreMunicipio(String nombreMunicipio, int idProvincia) throws  RuntimeException, IOException {
+    Map<String, Integer> municipios = this.mapMunicipios(1, idProvincia);
     Integer id = municipios.get(nombreMunicipio.toUpperCase());
 
     this.validarId(id, "No se encontró el municipio");
@@ -296,4 +338,14 @@ public class ServicioGeoDds {
 
     return id;
   }
+
+  public int verificarNombreLocalidad(String nombreLocalidad, int idMunicipio) throws RuntimeException, IOException {
+    Map<String, Integer> localidades = this.mapLocalidades(1, idMunicipio);
+    Integer id = localidades.get(nombreLocalidad.toUpperCase());
+
+    this.validarId(id, "No se pudo encontrar la localidad");
+
+    return id;
+  }
+
 }

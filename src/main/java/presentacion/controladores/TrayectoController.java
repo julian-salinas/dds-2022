@@ -44,12 +44,19 @@ public class TrayectoController {
 
     Trayecto trayecto = request.session().attribute("trayecto");
 
-    String calleInicio = request.queryParams("calle");
-    int alturaInicio = Integer.parseInt(request.queryParams("altura"));
-    String localidadInicio = request.queryParams("localidad");
-    String calleFin = request.queryParams("calle2");
-    int alturaFin = Integer.parseInt(request.queryParams("altura2"));
-    String localidadFin = request.queryParams("localidad2");
+    String paisInicio = request.queryParams("paisInicio");
+    String provinciaInicio = request.queryParams("provinciaInicio");
+    String municipioInicio = request.queryParams("municipioInicio");
+    String localidadInicio = request.queryParams("localidadInicio");
+    String calleInicio = request.queryParams("calleInicio");
+    int alturaInicio = Integer.parseInt(request.queryParams("alturaInicio"));
+
+    String paisFin = request.queryParams("paisFin");
+    String provinciaFin = request.queryParams("provinciaFin");
+    String municipioFin = request.queryParams("municipioFin");
+    String localidadFin = request.queryParams("localidadFin");
+    String calleFin = request.queryParams("calleFin");
+    int alturaFin = Integer.parseInt(request.queryParams("alturaFin"));
 
     String boton = request.queryParams("tramo");
 

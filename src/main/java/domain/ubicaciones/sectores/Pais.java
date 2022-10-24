@@ -1,11 +1,13 @@
 package domain.ubicaciones.sectores;
 
 import domain.servicios.geodds.ServicioGeoDds;
+import lombok.Getter;
 
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.io.IOException;
 
+@Getter
 public class Pais {
   private int id;
   private String nombre;
