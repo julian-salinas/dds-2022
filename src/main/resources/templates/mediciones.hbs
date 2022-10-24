@@ -63,18 +63,57 @@
     <div class="mb-3">
         <center>
             <table>
-                <tr><th> Tipo de Consumo </th><th> Valor </th><th> Periodicidad </th><th> Periodo Imputacion </th></tr>
+                <tr>
+                    <th> Id </th>
+                    <th> Tipo de Consumo </th>
+                    <th> Valor </th>
+                    <th> Periodicidad </th>
+                    <th> Periodo Imputacion </th>
+                    <th> FE </th>
+                </tr>
                 {{#each datosActividades }}
                     <tr>
+                        <td> {{id}} </td>
                         <td> {{tipoDeConsumo.tipo}} </td>
                         <td> {{valor}} </td>
                         <td> {{periodicidad}} </td>
                         <td> {{periodoImputacion}} </td>
+                        <td> {{tipoDeConsumo.fe.valor}} </td>
                     </tr>
                 {{/each}}
             </table>
         </center>
     </div>
+
+    <div class="titulo">
+        <h2> Cargar Factor de Emision (FE): </h2>
+    </div>
+
+    <form action="/cargar-fe" method="POST">
+        <div class="mb-3">
+            <label for="idInput" class="form-label">Id</label>
+            <input type="text" class="form-control" id="idInput" name="idDA">
+        </div>
+
+        <div class = "mb-3">
+            <label for="unidad">Unidad FE: </label>
+            <select id="unidad" name="unidadFE">
+                <option value="M3" selected>M3</option>
+                <option value="LT">LT</option>
+                <option value="KG">KG</option>
+                <option value="KWH">KWH</option>
+                <option value="KM">KM</option>
+                <option value="NINGUNA">NINGUNA</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="valorInput" class="form-label">Valor FE</label>
+            <input type="text" class="form-control" id="valorInput" name="valorFE">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cargar FE</button>
+    </form>
 
 {{/partial}}
 
