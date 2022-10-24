@@ -25,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Entity
@@ -150,7 +151,8 @@ public class Organizacion extends PersistenceEntity {
   public HC hcMensual(){
     double hcDatosActividad = calculoHCMensual();
     HC hc = new HC(hcDatosActividad, UnidadHC.kgCO2);
-    this.historialHC.add(hc);
+    if(historialHC.stream().filter(hc1 -> hc1.enKgCO2() == hcDatosActividad).count() == 0)
+      this.historialHC.add(hc);
     return hc;
   }
 

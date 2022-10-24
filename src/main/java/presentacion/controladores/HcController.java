@@ -1,6 +1,7 @@
 package presentacion.controladores;
 
 import domain.organizaciones.Organizacion;
+import domain.organizaciones.hc.HC;
 import domain.repositorios.RepositorioOrganizaciones;
 import domain.repositorios.RepositorioUsuarios;
 import presentacion.Usuario;
@@ -39,25 +40,28 @@ public class HcController {
     String unidadHC    = request.queryParams("unidadHC");
     Map<String, Object> model = new HashMap<>();
 
+    HC hcMensual = organizacion.hcMensual();
+    HC hcAnual = organizacion.hcAnual();
+
     if(tipoCalculo.equals("Mensual")) {
       if (unidadHC.equals("gCO2")) {
-        model.put("mensual", organizacion.hcMensual().enGCO2());
+        model.put("mensual", hcMensual.enGCO2());
       }
       else if (unidadHC.equals("kgCO2")) {
-        model.put("mensual", organizacion.hcMensual().enKgCO2());
+        model.put("mensual", hcMensual.enKgCO2());
       }
       else {// if(unidadHC.equals("tnCO2"))
-        model.put("mensual", organizacion.hcMensual().enTnCO2());
+        model.put("mensual", hcMensual.enTnCO2());
       }
     } else { //if(tipoCalculo.equals("Anual"))
       if (unidadHC.equals("gCO2")) {
-        model.put("anual", organizacion.hcAnual().enGCO2());
+        model.put("anual", hcAnual.enGCO2());
       }
       else if (unidadHC.equals("kgCO2")) {
-        model.put("anual", organizacion.hcAnual().enKgCO2());
+        model.put("anual", hcAnual.enKgCO2());
       }
       else {// if(unidadHC.equals("tnCO2"))
-        model.put("anual", organizacion.hcAnual().enTnCO2());
+        model.put("anual", hcAnual.enTnCO2());
       }
     }
     if(tipoCalculo.equals("Mensual"))
