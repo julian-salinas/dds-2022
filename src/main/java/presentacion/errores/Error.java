@@ -3,16 +3,16 @@ package presentacion.errores;
 import lombok.Getter;
 import lombok.Setter;
 
-public class InError {
+public class Error {
   @Getter @Setter String descripcion;
   @Setter
   boolean error = false;
 
-  public InError(String descripcion) {
+  public Error(String descripcion) {
     this.descripcion = descripcion;
   }
 
-  public InError() {
+  public Error() {
 
   }
 

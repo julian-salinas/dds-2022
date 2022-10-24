@@ -95,8 +95,7 @@ public class Ubicacion extends PersistenceEntity {
       Localidad localidad = new Localidad(nombreLocalidad, municipio, apiClient);
       return localidad;
     } catch (RuntimeException e) {
-      e.printStackTrace();
-      return null;
+      throw e;
     } catch (IOException e) {
       e.printStackTrace();
       return null;

@@ -1,7 +1,7 @@
 package presentacion.controladores;
 
 import domain.repositorios.RepositorioUsuarios;
-import presentacion.errores.InError;
+import presentacion.errores.Error;
 import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -24,7 +24,7 @@ public class LoginController {
     // Valido que exista
     if (usuarioEncontrado == null ||
         !usuarioEncontrado.getPassword().equals(password)) {
-      InError error = new InError("Nombre de Usuario o Contraseña incorrectos \n");
+      Error error = new Error("Nombre de Usuario o Contraseña incorrectos \n");
       error.setError(true);
       return new ModelAndView(error, "login.hbs");
     }

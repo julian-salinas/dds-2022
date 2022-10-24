@@ -20,11 +20,11 @@ public class WorkspaceRepos {
 
     // FULL CON REPOS
 
-    Ubicacion ubicacion = new Ubicacion("rivadavia", 2000);
-    ubicacion.crearEstructuras("ARGENTINA",
+    Ubicacion ubicacion = new Ubicacion("rivadavia", 2000, "ARGENTINA",
         "BUENOS AIRES",
         "AVELLANEDA",
         "AVELLANEDA");
+    ubicacion.getLocalidad();
 
   }
 

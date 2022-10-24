@@ -5,7 +5,7 @@ import domain.contrasenias.excepciones.PasswordException;
 import domain.repositorios.RepositorioUsuarios;
 import presentacion.TipoUsuario;
 import presentacion.Usuario;
-import presentacion.errores.InError;
+import presentacion.errores.Error;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -21,7 +21,7 @@ public class SigninController {
     String password = request.queryParams("password");
     TipoUsuario tipo = TipoUsuario.valueOf(request.queryParams("tipo"));
 
-    InError error = new InError();
+    Error error = new Error();
 
     // Valido Username
     if(RepositorioUsuarios.getInstance().findByUsername(username) != null) {

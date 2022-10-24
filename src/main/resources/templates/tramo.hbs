@@ -19,24 +19,31 @@
 {{/partial}}
 
 {{#partial "contenido"}}
+    <div class="mb-3">
+        <center>
+            {{#if error}}
+                <p class="red"> Error: {{descripcion}} </p>
+            {{/if}}
+        </center>
+    </div>
     <div class = "container">
         <form action="/agregarTramo" method="POST">
             <div class = "container">
                 <h2> Ubicacion Inicio </h2>
 
                 <div class="mb-3">
-                    <label for="pais2Id" class="form-label">Localidad</label>
-                    <input type="text" class="form-control" id="pais2Id" name="paisInicio" value="ARGENTINA">
+                    <label for="paisId" class="form-label">Pais</label>
+                    <input type="text" class="form-control" id="paisId" name="paisInicio" value="ARGENTINA">
                 </div>
 
                 <div class="mb-3">
-                    <label for="provincia2Id" class="form-label">Provincia</label>
-                    <input type="text" class="form-control" id="provincia2Id" name="provinciaInicio" value="BUENOS AIRES">
+                    <label for="provinciaId" class="form-label">Provincia</label>
+                    <input type="text" class="form-control" id="provinciaId" name="provinciaInicio" value="BUENOS AIRES">
                 </div>
 
                 <div class="mb-3">
-                    <label for="municipio2Id" class="form-label">Municipio</label>
-                    <input type="text" class="form-control" id="municipio2Id" name="municipioInicio" value="AVELLANEDA">
+                    <label for="municipioId" class="form-label">Municipio</label>
+                    <input type="text" class="form-control" id="municipioId" name="municipioInicio" value="AVELLANEDA">
                 </div>
 
                 <div class="mb-3">
@@ -62,7 +69,7 @@
                 <h2> Ubicacion Fin </h2>
 
                 <div class="mb-3">
-                    <label for="pais2Id" class="form-label">Localidad</label>
+                    <label for="pais2Id" class="form-label">Pais</label>
                     <input type="text" class="form-control" id="pais2Id" name="paisFin" value="ARGENTINA">
                 </div>
 

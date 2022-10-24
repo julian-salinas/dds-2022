@@ -24,6 +24,14 @@
           <h1> Registrar Organizacion </h1>
       </div>
 
+      <div class="mb-3">
+          <center>
+              {{#if error}}
+                  <p class="red"> Error: {{descripcion}} </p>
+              {{/if}}
+          </center>
+      </div>
+
        <div class = "container">
 
           <form action="/registrarOrg" method="POST">
@@ -70,12 +78,37 @@
                   </select>
               </div>
 
-             <!-- Ubicacion, pareceria ser algo de elegir -->
+             <!-- Ubicacion -->
 
-             <div class="mb-3">
-                <label for="ubicacion" class="form-label">Ubicacion </label>
-                <input type="text" class="form-control" id="ubInput" name="ubicacion" value="B.A.">
-             </div>
+              <div class="mb-3">
+                  <label for="paisId" class="form-label">Pais</label>
+                  <input type="text" class="form-control" id="paisId" name="ubicacionPais" value="ARGENTINA">
+              </div>
+
+              <div class="mb-3">
+                  <label for="provinciaId" class="form-label">Provincia</label>
+                  <input type="text" class="form-control" id="provinciaId" name="ubicacionProvincia" value="BUENOS AIRES">
+              </div>
+
+              <div class="mb-3">
+                  <label for="municipioId" class="form-label">Municipio</label>
+                  <input type="text" class="form-control" id="municipioId" name="ubicacionMunicipio" value="AVELLANEDA">
+              </div>
+
+              <div class="mb-3">
+                  <label for="localidadId" class="form-label">Localidad</label>
+                  <input type="text" class="form-control" id="localidadId" name="ubicacionLocalidad" value="AVELLANEDA">
+              </div>
+
+              <div class="mb-3">
+                  <label for="calle" class="form-label">Calle</label>
+                  <input type="text" class="form-control" id="calle" name="ubicacionCalle" value="Bonifacio">
+              </div>
+
+              <div class="mb-3">
+                  <label for="altura" class="form-label">Altura</label>
+                  <input type="text" class="form-control" id="altura" name="ubicacionAltura" value="1231">
+              </div>
 
 
 

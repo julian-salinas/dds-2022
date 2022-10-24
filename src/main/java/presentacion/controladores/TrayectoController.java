@@ -1,24 +1,19 @@
 package presentacion.controladores;
 
 import domain.organizaciones.miembros.Miembro;
-import domain.organizaciones.miembros.TipoDeDocumento;
 import domain.repositorios.RepositorioMiembros;
 import domain.repositorios.RepositorioUsuarios;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import domain.trayecto.TrayectoCompartido;
-import domain.trayecto.transporte.MedioDeTransporte;
-import domain.trayecto.transporte.nopublico.Bicicleta;
 import domain.trayecto.transporte.nopublico.Pie;
 import domain.ubicaciones.Ubicacion;
-import presentacion.TipoUsuario;
 import presentacion.Usuario;
+import presentacion.errores.Error;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
-import java.io.IOException;
 
 public class TrayectoController {
 
@@ -60,17 +55,27 @@ public class TrayectoController {
 
     String boton = request.queryParams("tramo");
 
-    ServicioGeoDds api = ServicioGeoDds.getInstancia();
+    Ubicacion ubicacionInicial  = new Ubicacion(calleInicio, alturaInicio, paisInicio,
+        provinciaInicio, municipioInicio, localidadInicio);
 
+    Ubicacion ubicacionFin  = new Ubicacion(calleFin, alturaFin, paisFin,
+        provinciaFin, municipioFin, localidadFin);
+
+
+    // Validacion de Ubicaciones
+    Error error = new Error();
+    String cualUbicacion = "Ubicacion Inicio";
     try {
-      int idLocalidad = api.verificarNombreLocalidad(localidadInicio);
-    } catch (IOException e) {
+      ubicacionInicial.getLocalidad();
+      cualUbicacion = "Ubicacion Fin";
+      ubicacionFin.getLocalidad();
+    } catch (Exception e) {
+      error.setError(true);
+      error.setDescripcion(e.getMessage() + " en " + cualUbicacion);
       e.printStackTrace();
+      return new ModelAndView(error, "tramo.hbs");
     }
 
-    Ubicacion ubicacionInicial  = new Ubicacion(calleInicio, alturaInicio, localidadInicio);
-
-    Ubicacion ubicacionFin  = new Ubicacion(calleFin, alturaFin, localidadFin);
 
     Tramo tramo = new Tramo( new Pie(), ubicacionInicial, ubicacionFin);
 
