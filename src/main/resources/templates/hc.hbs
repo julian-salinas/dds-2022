@@ -22,12 +22,32 @@
 
     <div class="col p-2">
         <div class="card shadow-sm p-2">
-            <h3>Calculo Mensual</h3>
-            <p> {{ mensual }} KgCO2 </p>
+            <!--<h3>Calculo Mensual</h3>-->
+            <form action="/calculo-hc" method="post">
+                <button value="Mensual" type="submit" class="btn btn-primary" name="tipoCalculo">
+                    Calculo HC Mensual
+                </button>
+                <select id="unidadHCMId" name="unidadHC">
+                    <option value="gCO2">gCO2</option>
+                    <option value="kgCO2" selected>KgCO2</option>
+                    <option value="tnCO2">TnCO2</option>
+                </select>
+            </form>
+            <p> {{#if esMensual}} {{ mensual }} {{ unidad }} {{else}} {{/if}} </p>
         </div>
         <div class="card shadow-sm p-2">
-            <h3>Calculo Anual</h3>
-            <p> {{ anual }} KgCO2 </p>
+            <!--<h3>Calculo Anual</h3>-->
+            <form action="/calculo-hc" method="post">
+                <button value="Anual" type="submit" class="btn btn-primary" name="tipoCalculo">
+                    Calculo HC Anual
+                </button>
+                <select id="unidadHCAId" name="unidadHC">
+                    <option value="gCO2">gCO2</option>
+                    <option value="kgCO2" selected>KgCO2</option>
+                    <option value="tnCO2">TnCO2</option>
+                </select>
+            </form>
+            <p> {{#if esMensual}} {{else}} {{ anual }} {{ unidad }} {{/if}} </p>
         </div>
     </div>
 

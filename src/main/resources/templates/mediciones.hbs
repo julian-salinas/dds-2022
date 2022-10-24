@@ -26,17 +26,33 @@
 
     <div class="container">
         <form action="/mediciones-manual" method="POST">
-            <div class="mb-3">
+            <!--TODO: Esto deberia pasar a ser dinamico. Problemas del futuro-->
+            <!--Extra: Algunas de estas opciones no deberian estar, creo-->
+            <div class = "mb-3">
                 <label for="tipoId" class="form-label"> Tipo </label>
-                <input type="text" class="form-control" name="tipoConsumo" id="tipoId" value="Gas Natural">
+                <select id="tipoId" name="tipoConsumo">
+                    <option value="Gas Natural" selected>Gas Natural</option>
+                    <option value="Diesel/Gasoil">Diesel/Gasoil</option>
+                    <option value="Nafta">Nafta</option>
+                    <option value="Carbon">Carbon</option>
+                    <option value="Combustible Gasoil">Combustible Consumido - Gasoil</option>
+                    <option value="Combustible Nafta">Combustible Consumido - Nafta</option>
+                    <option value="Electricidad">Electricidad</option>
+                    <option value="Camion de carga">Camion de carga</option>
+                    <option value="Utilitario liviano">Utilitario liviano</option>
+                    <option value="Distancia media">Distancia media</option>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="valorId" class="form-label"> Valor </label>
                 <input type="text" class="form-control" name="valor" id="valorId" value="200.50">
             </div>
-            <div class="mb-3">
+            <div class = "mb-3">
                 <label for="perId" class="form-label"> Periodicidad </label>
-                <input type="text" class="form-control" name="periodicidad" id="perId" value="Mensual">
+                <select id="perId" name="periodicidad">
+                    <option value="Mensual" selected>Mensual</option>
+                    <option value="Anual">Anual</option>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="impId" class="form-label"> Periodo De Imputacion </label>

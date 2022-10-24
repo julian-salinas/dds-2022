@@ -59,6 +59,7 @@ public class Router {
     Spark.get("/aceptar-miembros", aceptarMiembroController::index, engineTemplate);
     Spark.post("/aceptar-miembros", aceptarMiembroController::post, engineTemplate);
     Spark.get("/hc", hcController::index, engineTemplate);
+    Spark.post("/calculo-hc", hcController::post, engineTemplate);
     Spark.get("/mediciones", medicionesController::index, engineTemplate);
     Spark.post("/mediciones-csv", medicionesController::postCsv, engineTemplate);
     Spark.post("/mediciones-manual", medicionesController::postManual, engineTemplate);
