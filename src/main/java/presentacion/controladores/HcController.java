@@ -44,6 +44,8 @@ public class HcController {
     String unidadHC    = request.queryParams("unidadHC");
     Map<String, Object> model = new HashMap<>();
 
+    organizacion.cargarDATransladoMiembros();
+
     HC hcMensual = organizacion.hcMensual();
     HC hcAnual = organizacion.hcAnual();
 

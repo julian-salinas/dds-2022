@@ -6,17 +6,22 @@
       </div>
 
       <div class="sectores">
-        {{#each sectores }}
-
-          <h2> {{ nombre }} </h2>
-
-          {{#if nuevo}}
-            <span style="color:green">Nuevo</span>
-          {{/if}}
-
-          <p> {{ descripcion }} </p>
-
-        {{/each}}
+          {{#each sectores }}
+              <div class="col p-2">
+                  <div class="card shadow-sm p-2">
+<!--                      <img src="https://i.pinimg.com/236x/fb/29/d0/fb29d0729e08e52e4fc841b2663089ed--logos.jpg"-->
+<!--                           class="card-img-top" alt="nombre">-->
+                      <div class="card-body">
+                          <h5 class="card-title">
+                              {{ nombreSector }}
+                          </h5>
+                          <p class="card-text">
+                              {{ descripcion }}
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          {{/each}}
       </div>
   {{else}}
       <div class="big-title">

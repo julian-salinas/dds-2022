@@ -1,6 +1,8 @@
 package domain.organizaciones;
 
 import domain.database.PersistenceEntity;
+import domain.organizaciones.datos.actividades.UnidadConsumo;
+import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.miembros.Miembro;
@@ -42,7 +44,7 @@ public class Organizacion extends PersistenceEntity {
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_id")
   private Ubicacion ubicacion;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
   private List<Sector> sectores = new ArrayList<>();
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
@@ -138,10 +140,13 @@ public class Organizacion extends PersistenceEntity {
     //SimpleDateFormat formatFecha = new SimpleDateFormat("MM/yyyy");
     DateTimeFormatter formatFecha = DateTimeFormatter.ofPattern("MM/yyyy");
     // Multiplico por 30, para obtener el valor mensual dado que el trayecto que recorren los miembros es a diario
-    datosActividades.add(new DatosActividades("Distancia media",
+
+    DatosActividades datos = new DatosActividades("Distancia media",
         String.valueOf(combustibleTransporteMiembros),
         "Mensual",
-        formatFecha.format(LocalDate.now())));
+        formatFecha.format(LocalDate.now()));
+    datos.cargarFactorEmision(new FactorEmision(2000, UnidadConsumo.KM));
+    datosActividades.add(datos);
   }
 
   private double calculoHCMensual(){
