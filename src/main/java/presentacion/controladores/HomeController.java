@@ -15,6 +15,12 @@ public class HomeController {
   public ModelAndView index(Request request, Response response) {
 
     String username = request.session().attribute("usuario_logueado");
+
+    if (username == null) {
+      response.redirect("/login");
+      return null;
+    }
+
     response.cookie("username", username);
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 

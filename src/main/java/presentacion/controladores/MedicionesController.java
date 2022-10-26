@@ -17,6 +17,12 @@ public class MedicionesController {
 
   public ModelAndView index(Request request, Response response) {
     String username = request.cookie("username");
+
+    if (username == null) {
+      response.redirect("/login");
+      return null;
+    }
+
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
     return new ModelAndView(org, "mediciones.hbs");

@@ -1,46 +1,24 @@
-{{#partial "barra"}}
-   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-       <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="/inicio"> Log Out </a>
-       </li>
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="/guia">Guia</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="/trayecto">Mis Trayectos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="/vincularse">Vincularse a Org</a>
-      </li>
-       <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="/hc-miembro"> Calculadora HC </a>
-       </li>
-   </ul>
-  {{/partial}}
+{{#partial "content"}}
+    <div class="left">
+      <div class="big-title">
+        <h1>Hola {{ nombre }}! 😎</h1>
+      </div>
 
-{{#partial "contenido"}}
-    <center>
-        <h1> HOLA, MIEMBROS! </h1>
-    </center>
+      <br/><br/>
 
-    <div class="col p-2">
-        <div class="card shadow-sm p-2">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <p>
-                        <u> DATOS DE MIEMBRO: </u>
-                    </p>
-                </h5>
-                <p class="card-text"> Nombre: {{ nombre }} </p>
-                <p class="card-text"> Apellido: {{ apellido }} </p>
-                <p class="card-text"> Tipo de Documento: {{ tipoDeDocumento }} </p>
-                <p class="card-text"> Nro. de Documento: {{ nroDeDocumento }} </p>
+      <div class="links">
+        <ul>
+          <li><a href="/guia" class="boton">Recomendaciones</a></li>
+          <li><a href="/trayecto" class="boton">Trayectos</a></li>
+          <li><a href="/vincularse" class="boton">Vincularse</a></li>
+        </ul>
+      </div>
 
-            </div>
-        </div>
     </div>
 
+    <div class="right">
+      <img src="img/register.svg" alt="Person Image" class="person" />
+    </div>
 {{/partial}}
 
-
-{{>layout.hbs}}
+{{>base.hbs}}

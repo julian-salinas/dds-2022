@@ -1,217 +1,196 @@
-{{#partial "barra"}}
-   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-       <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="/inicio"> Log Out </a>
-       </li>
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="/guia">Guia</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="/trayectos">Mis Trayectos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="/vincularse">Vincularse a Org</a>
-      </li>
-       <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="/hc-miembro"> Calculadora HC </a>
-       </li>
-   </ul>
-{{/partial}}
+{{#partial "content"}}
+<form action="/agregarTramo" method="POST">
 
-{{#partial "contenido"}}
-    <div class="mb-3">
-        <center>
-            {{#if error}}
-                <p class="red"> Error: {{descripcion}} </p>
-            {{/if}}
-        </center>
+  <select class="select-field" id="medio" name="medio" onchange="esconder()">
+    <option value="pie" selected>Pie</option>
+    <option value="bici">Bicicleta</option>
+    <option value="servicioContratado">Servicio Contratado</option>
+    <option value="vehiculoParticular">Vehiculo Particular</option>
+    <option value="transportePublico">Transporte Público</option>
+  </select>
+
+  <div id="ubicacionInicio">
+    <div class="big-title">
+      <h2>Ubicación de Inicio</h2>
     </div>
-    <div class = "container">
-        <form action="/agregarTramo" method="POST">
-            <div class = "container">
-                <h1> Medio </h1>
-                <select id="medio" name="medio" onchange="esconder()">
-                    <option value="pie" selected>Pie</option>
-                    <option value="bici">Bicicleta</option>
-                    <option value="servicioContratado">Servicio Contratado</option>
-                    <option value="vehiculoParticular">Vehiculo Particular</option>
-                    <option value="transportePublico">Transporte Público</option>
-                </select>
-            </div>
-
-            <div class = "container" id="ubicacionInicio">
-                <h2> Ubicacion Inicio </h2>
-
-                <div class="mb-3">
-                    <label for="paisId" class="form-label">Pais</label>
-                    <input type="text" class="form-control" id="paisId" name="paisInicio" value="ARGENTINA">
-                </div>
-
-                <div class="mb-3">
-                    <label for="provinciaId" class="form-label">Provincia</label>
-                    <input type="text" class="form-control" id="provinciaId" name="provinciaInicio" value="BUENOS AIRES">
-                </div>
-
-                <div class="mb-3">
-                    <label for="municipioId" class="form-label">Municipio</label>
-                    <input type="text" class="form-control" id="municipioId" name="municipioInicio" value="AVELLANEDA">
-                </div>
-
-                <div class="mb-3">
-                    <label for="localidadId" class="form-label">Localidad</label>
-                    <input type="text" class="form-control" id="localidadId" name="localidadInicio" value="AVELLANEDA">
-                </div>
-
-                <div class="mb-3">
-                    <label for="calle" class="form-label">Calle</label>
-                    <input type="text" class="form-control" id="calle" name="calleInicio" value="Bonifacio">
-                </div>
-
-                <div class="mb-3">
-                    <label for="altura" class="form-label">Altura</label>
-                    <input type="text" class="form-control" id="altura" name="alturaInicio" value="1231">
-                </div>
-
-
-            </div>
-
-            <div class = "container" id="ubicacionFin">
-                <br>
-                <h2> Ubicacion Fin </h2>
-
-                <div class="mb-3">
-                    <label for="pais2Id" class="form-label">Pais</label>
-                    <input type="text" class="form-control" id="pais2Id" name="paisFin" value="ARGENTINA">
-                </div>
-
-                <div class="mb-3">
-                    <label for="provincia2Id" class="form-label">Provincia</label>
-                    <input type="text" class="form-control" id="provincia2Id" name="provinciaFin" value="BUENOS AIRES">
-                </div>
-
-                <div class="mb-3">
-                    <label for="municipio2Id" class="form-label">Municipio</label>
-                    <input type="text" class="form-control" id="municipio2Id" name="municipioFin" value="AVELLANEDA">
-                </div>
-
-                <div class="mb-3">
-                    <label for="localidad2Id" class="form-label">Localidad</label>
-                    <input type="text" class="form-control" id="localidad2Id" name="localidadFin" value="AVELLANEDA">
-                </div>
-
-                <div class="mb-3">
-                    <label for="calle2" class="form-label">Calle</label>
-                    <input type="text" class="form-control" id="calle2" name="calleFin" value="Bonifacio">
-                </div>
-
-                <div class="mb-3">
-                    <label for="altura2" class="form-label">Altura</label>
-                    <input type="text" class="form-control" id="altura2" name="alturaFin" value="1490">
-                </div>
-            </div>
-
-            <div class = "container" id="paradas" style="display:none;">
-              <h2> Tipo de Transporte publico </h2>
-              <select id="tipoDeTransportePublico" name="tipoDeTransportePublico">
-                <option value="COLECTIVO">Colectivo</option>
-                <option value="TREN">Tren</option>
-                <option value="SUBTE">Subte</option>
-              </select>
-
-              <h2> Parada inicio </h2>
-              <select id="paradaInicio" name="paradaInicio">
-                <option value="0">No</option>
-                <option value="1">Si</option>
-              </select>
-
-              <h2> Parada fin </h2>
-              <select id="paradaFin" name="paradaFin">
-                <option value="0">No</option>
-                <option value="1">Si</option>
-              </select>
-
-            </div>
-
-            <div class="container" id="servicioContratado" style="display:none;">
-                <div class="mb-3">
-                    <label for="tipoDeServicio" class="form-label">Tipo de Servicio</label>
-                    <input type="text" class="form-control" id="tipoDeServicio" name="tipoDeServicio" value="Tipo de Servicio">
-                </div>
-
-                <div class="mb-3">
-                    <label for="combustibleConsumidoPorKM" class="form-label">Combustible Consumido Por KM</label>
-                    <input type="number" class="form-control" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM" value="100">
-                </div>
-            </div>
-
-            <div class="container" id="vehiculoParticular" style="display:none;">
-                <h3>Tipo de Vehiculo</h3>
-                <select id="tipoDeVehiculo" name="tipoDeVehiculo">
-                  <option value="MOTO">Moto</option>
-                  <option value="AUTO">Auto</option>
-                  <option value="CAMIONETA">Camioneta</option>
-                </select>
-
-                <h3>Tipo de Combustible</h3>
-                <select id="tipoDeCombustible" name="tipoDeCombustible">
-                  <option value="GNC">GNC</option>
-                  <option value="NAFTA">Nafta</option>
-                  <option value="ELECTRICO">Electrico</option>
-                  <option value="GASOIL">Gasoil</option>
-                </select>
-
-                <div class="mb-3">
-                    <label for="combustibleConsumidoPorKM" class="form-label">Combustible Consumido Por KM</label>
-                    <input type="number" class="form-control" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM" value="100">
-                </div>
-            </div>
-
-            <button name="tramo" type="submit" class="btn btn-primary" value="fin">cargar Trayecto</button>
-            <button name="tramo" type="submit" class="btn btn-primary" value="tramo">Agregar Otro Tramo</button>
-        </form>
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="País de inicio" id="paisId" name="paisInicio"/>
     </div>
 
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Provincia de Inicio" id="provinciaId" name="provinciaInicio"/>
+    </div>
 
-    <script>
-      function esconder() {
-          switch (document.getElementById("medio").value) {
-            case "bici":
-              document.getElementById("ubicacionInicio").style.display = "block";
-              document.getElementById("ubicacionFin").style.display = "block";
-              document.getElementById("paradas").style.display = "none";
-              document.getElementById("servicioContratado").style.display = "none";
-              document.getElementById("vehiculoParticular").style.display = "none";
-              break;
-            case "pie":
-              document.getElementById("ubicacionInicio").style.display = "block";
-              document.getElementById("ubicacionFin").style.display = "block";
-              document.getElementById("paradas").style.display = "none";
-              document.getElementById("servicioContratado").style.display = "none";
-              document.getElementById("vehiculoParticular").style.display = "none";
-              break;
-            case "servicioContratado":
-              document.getElementById("ubicacionInicio").style.display = "block";
-              document.getElementById("ubicacionFin").style.display = "block";
-              document.getElementById("paradas").style.display = "none";
-              document.getElementById("servicioContratado").style.display = "block";
-              document.getElementById("vehiculoParticular").style.display = "none";
-              break;
-            case "vehiculoParticular":
-              document.getElementById("ubicacionInicio").style.display = "block";
-              document.getElementById("ubicacionFin").style.display = "block";
-              document.getElementById("paradas").style.display = "none";
-              document.getElementById("servicioContratado").style.display = "none";
-              document.getElementById("vehiculoParticular").style.display = "block";
-              break;
-            case "transportePublico":
-              document.getElementById("ubicacionInicio").style.display = "none";
-              document.getElementById("ubicacionFin").style.display = "none";
-              document.getElementById("paradas").style.display = "block";
-              document.getElementById("servicioContratado").style.display = "none";
-              document.getElementById("vehiculoParticular").style.display = "none";
-              break;
-          }
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Municipio de Inicio"  id="municipioId" name="municipioInicio"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Localidad de Inicio" id="localidadId" name="localidadInicio"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Calle de Inicio" id="calle" name="calleInicio"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="number" placeholder="Altura de Inicio" name="alturaInicio" />
+    </div>
+  </div>
+
+  <div id="ubicacionFin">
+    <div class="big-title">
+      <h2>Ubicación de Fin</h2>
+    </div>
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="País fin" id="paisId" name="paisFin"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Provincia Fin" id="provinciaId" name="provinciaFin"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Municipio Fin"  id="municipioId" name="municipioFin"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Localidad Fin" id="localidadId" name="localidadFin"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Calle Fin" id="calle" name="calleFin"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="number" placeholder="Altura Fin" name="alturaFin"/>
+    </div>
+  </div>
+
+  <div id="paradas" style="display:none;">
+      <div class="big-title">
+        <h4>Tipo de Transporte publico</h4>
+      </div>
+      <select class="select-field" id="tipoDeTransportePublico" name="tipoDeTransportePublico">
+        <option value="COLECTIVO">Colectivo</option>
+        <option value="TREN">Tren</option>
+        <option value="SUBTE">Subte</option>
+      </select>
+
+      <div class="big-title">
+        <h4>Parada Inicio</h4>
+      </div>
+      <select class="select-field" id="paradaInicio" name="paradaInicio">
+        <option value="0">No</option>
+        <option value="1">Si</option>
+      </select>
+
+      <div class="big-title">
+        <h4>Parada Fin</h4>
+      </div>
+      <select class="select-field" id="paradaInicio" name="paradaInicio">
+        <option value="0">No</option>
+        <option value="1">Si</option>
+      </select>
+  </div>
+
+
+  <div id="servicioContratado" style="display:none;">
+      <div class="input-field">
+        <i class="fa fa-shield"></i>
+        <input type="text" placeholder="Tipo de Servicio" id="tipoDeServicio" name="tipoDeServicio"/>
+      </div>
+
+      <div class="input-field">
+        <i class="fa fa-shield"></i>
+        <input type="number" placeholder="Combustible Consumido Por KM" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM"/>
+      </div>
+  </div>
+
+  <div id="vehiculoParticular" style="display:none;">
+      <div class="big-title">
+        <h4>Tipo de Vehiculo</h4>
+      </div>
+
+      <select class="select-field" id="tipoDeVehiculo" name="tipoDeVehiculo">
+        <option value="MOTO">Moto</option>
+        <option value="AUTO">Auto</option>
+        <option value="CAMIONETA">Camioneta</option>
+      </select>
+
+      <div class="big-title">
+        <h4>Tipo de Combustible</h4>
+      </div>
+      <select class="select-field" id="tipoDeCombustible" name="tipoDeCombustible">
+        <option value="GNC">GNC</option>
+        <option value="NAFTA">Nafta</option>
+        <option value="ELECTRICO">Electrico</option>
+        <option value="GASOIL">Gasoil</option>
+      </select>
+
+      <div class="input-field">
+        <i class="fa fa-shield"></i>
+        <input type="number" placeholder="Combustible Consumido Por KM" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM"/>
+      </div>
+  </div>
+
+  <button name="tramo" type="submit" class="boton" value="fin">cargar Trayecto</button>
+  <button name="tramo" type="submit" class="boton" value="tramo">Agregar Otro Tramo</button>
+
+</form>
+
+<script>
+  function esconder() {
+      switch (document.getElementById("medio").value) {
+        case "bici":
+          document.getElementById("ubicacionInicio").style.display = "block";
+          document.getElementById("ubicacionFin").style.display = "block";
+          document.getElementById("paradas").style.display = "none";
+          document.getElementById("servicioContratado").style.display = "none";
+          document.getElementById("vehiculoParticular").style.display = "none";
+          break;
+        case "pie":
+          document.getElementById("ubicacionInicio").style.display = "block";
+          document.getElementById("ubicacionFin").style.display = "block";
+          document.getElementById("paradas").style.display = "none";
+          document.getElementById("servicioContratado").style.display = "none";
+          document.getElementById("vehiculoParticular").style.display = "none";
+          break;
+        case "servicioContratado":
+          document.getElementById("ubicacionInicio").style.display = "block";
+          document.getElementById("ubicacionFin").style.display = "block";
+          document.getElementById("paradas").style.display = "none";
+          document.getElementById("servicioContratado").style.display = "block";
+          document.getElementById("vehiculoParticular").style.display = "none";
+          break;
+        case "vehiculoParticular":
+          document.getElementById("ubicacionInicio").style.display = "block";
+          document.getElementById("ubicacionFin").style.display = "block";
+          document.getElementById("paradas").style.display = "none";
+          document.getElementById("servicioContratado").style.display = "none";
+          document.getElementById("vehiculoParticular").style.display = "block";
+          break;
+        case "transportePublico":
+          document.getElementById("ubicacionInicio").style.display = "none";
+          document.getElementById("ubicacionFin").style.display = "none";
+          document.getElementById("paradas").style.display = "block";
+          document.getElementById("servicioContratado").style.display = "none";
+          document.getElementById("vehiculoParticular").style.display = "none";
+          break;
       }
-    </script>
+  }
+</script>
 {{/partial}}
-{{>layout.hbs}}
+{{>base.hbs}}

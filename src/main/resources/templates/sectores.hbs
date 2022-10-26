@@ -1,71 +1,46 @@
-{{#partial "barra"}}
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/inicio"> Log Out </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/sectores"> Sectores </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/aceptar-miembros"> Aceptar Miembros </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/mediciones"> Cargar Mediciones </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/hc"> Calculadora HC </a>
-        </li>
-    </ul>
-{{/partial}}
+{{#partial "content"}}
+  <div class="left">
+    {{#if sectores }}
+      <div class="big-title">
+        <h1>Sectores existentes</h1>
+      </div>
 
-{{#partial "contenido"}}
-    <center>
-        <h1> SECTORES </h1>
-    </center>
-
-    <div class="titulo">
-        <h2> Agregar Sector: </h2>
-    </div>
-
-    <div class="container">
-        <form action="/sectores" method="POST">
-            <div class="mb-3">
-                <label for="nombreInput" class="form-label"> Nombre </label>
-                <input type="text" class="form-control" id="nombreInput" name="nombre">
-            </div>
-            <div class="mb-3">
-                <label for="descInput" class="form-label"> Descripcion (Opcional) </label>
-                <input type="text" class="form-control" id="descInput" name="descripcion">
-            </div>
-            <button type="submit" class="btn btn-primary">Agregar Sector</button>
-        </form>
-    </div>
-
-    <div class="titulo">
-        <h2> Listado de sectores: </h2>
-    </div>
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+      <div class="sectores">
         {{#each sectores }}
-            <div class="col p-2">
-                <div class="card shadow-sm p-2">
-                    <img src="https://i.pinimg.com/236x/fb/29/d0/fb29d0729e08e52e4fc841b2663089ed--logos.jpg"
-                         class="card-img-top" alt="nombre">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            {{ nombreSector }}
-                            {{#if nuevo}} <span class="badge rounded-pill bg-info">Nuevo</span> {{/if}}
-                        </h5>
-                        <p class="card-text">
-                            {{ descripcion }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        {{/each}}
-    </div>
 
+          <h2> {{ nombre }} </h2>
+
+          {{#if nuevo}}
+            <span style="color:green">Nuevo</span>
+          {{/if}}
+
+          <p> {{ descripcion }} </p>
+
+        {{/each}}
+      </div>
+  {{else}}
+      <div class="big-title">
+        <h1>No hay sectores registrados</h1>
+      </div>
+  {{/if}}
+  </div>
+
+  <div class="right">
+    <div class="big-title">
+      <h1>Agregar un sector</h1>
+    </div>
+    <form action="/sectores" method="POST">
+      <div class="input-field">
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Nombre" id="nombreInput" name="nombre" />
+      </div>
+      <div class="input-field">
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Descripcion (Opcional)" id="descInput" name="descripcion"/>
+      </div>
+      <button type="submit" class="btn">Agregar Sector</button>
+    </form>
+  </div>
 {{/partial}}
 
-
-{{>layout.hbs}}
+{{>base.hbs}}
