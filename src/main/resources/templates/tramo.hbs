@@ -30,6 +30,7 @@
         <form action="/agregarTramo" method="POST">
             <div class = "container">
                 <h1> Medio </h1>
+                <br>
                 <select id="medio" name="medio" onchange="esconder()">
                     <option value="pie" selected>Pie</option>
                     <option value="bici">Bicicleta</option>
@@ -37,10 +38,75 @@
                     <option value="vehiculoParticular">Vehiculo Particular</option>
                     <option value="transportePublico">Transporte Público</option>
                 </select>
+                <br>
+                <br>
+
+                <div class = "container" id="paradas" style="display:none;">
+                    <label for="paradaInicio" class="form-label">Tipo de Transporte publico</label>
+                    <select id="tipoDeTransportePublico" name="tipoDeTransportePublico">
+                        <option value="COLECTIVO">Colectivo</option>
+                        <option value="TREN">Tren</option>
+                        <option value="SUBTE">Subte</option>
+                    </select>
+
+                    <br>
+                    <label for="paradaInicio" class="form-label">Parada inicio</label>
+                    <select id="paradaInicio" name="paradaInicio">
+                        <option value="0">No</option>
+                        <option value="1">Si</option>
+                    </select>
+
+                    <br>
+                    <label for="paradaFin" class="form-label">Parada fin</label>
+                    <select id="paradaFin" name="paradaFin">
+                        <option value="0">No</option>
+                        <option value="1">Si</option>
+                    </select>
+
+                </div>
+
+                <div class="container" id="servicioContratado" style="display:none;">
+                    <div class="mb-3">
+                        <label for="tipoDeServicio" class="form-label">Tipo de Servicio</label>
+                        <input type="text" class="form-control" id="tipoDeServicio" name="tipoDeServicio" value="Tipo de Servicio">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="combustibleConsumidoPorKM" class="form-label">Combustible Consumido Por KM</label>
+                        <input type="number" class="form-control" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM" value="100">
+                    </div>
+                </div>
+
+                <div class="container" id="vehiculoParticular" style="display:none;">
+                    <label for="tipoDeVehiculo" class="form-label">Tipo de Vehiculo</label>
+                    <select id="tipoDeVehiculo" name="tipoDeVehiculo">
+                        <option value="MOTO">Moto</option>
+                        <option value="AUTO">Auto</option>
+                        <option value="CAMIONETA">Camioneta</option>
+                    </select>
+
+                    <br>
+                    <label for="tipoDeCombustible" class="form-label">Tipo de Combustible</label>
+                    <select id="tipoDeCombustible" name="tipoDeCombustible">
+                        <option value="GNC">GNC</option>
+                        <option value="NAFTA">Nafta</option>
+                        <option value="ELECTRICO">Electrico</option>
+                        <option value="GASOIL">Gasoil</option>
+                    </select>
+
+                    <br>
+                    <div class="mb-3">
+                        <label for="combustibleConsumidoPorKM" class="form-label">Combustible Consumido Por KM</label>
+                        <input type="number" class="form-control" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM" value="100">
+                    </div>
+                </div>
+
             </div>
 
             <div class = "container" id="ubicacionInicio">
+                <br>
                 <h2> Ubicacion Inicio </h2>
+                <br>
 
                 <div class="mb-3">
                     <label for="paisId" class="form-label">Pais</label>
@@ -78,6 +144,7 @@
             <div class = "container" id="ubicacionFin">
                 <br>
                 <h2> Ubicacion Fin </h2>
+                <br>
 
                 <div class="mb-3">
                     <label for="pais2Id" class="form-label">Pais</label>
@@ -110,62 +177,7 @@
                 </div>
             </div>
 
-            <div class = "container" id="paradas" style="display:none;">
-              <h2> Tipo de Transporte publico </h2>
-              <select id="tipoDeTransportePublico" name="tipoDeTransportePublico">
-                <option value="COLECTIVO">Colectivo</option>
-                <option value="TREN">Tren</option>
-                <option value="SUBTE">Subte</option>
-              </select>
-
-              <h2> Parada inicio </h2>
-              <select id="paradaInicio" name="paradaInicio">
-                <option value="0">No</option>
-                <option value="1">Si</option>
-              </select>
-
-              <h2> Parada fin </h2>
-              <select id="paradaFin" name="paradaFin">
-                <option value="0">No</option>
-                <option value="1">Si</option>
-              </select>
-
-            </div>
-
-            <div class="container" id="servicioContratado" style="display:none;">
-                <div class="mb-3">
-                    <label for="tipoDeServicio" class="form-label">Tipo de Servicio</label>
-                    <input type="text" class="form-control" id="tipoDeServicio" name="tipoDeServicio" value="Tipo de Servicio">
-                </div>
-
-                <div class="mb-3">
-                    <label for="combustibleConsumidoPorKM" class="form-label">Combustible Consumido Por KM</label>
-                    <input type="number" class="form-control" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM" value="100">
-                </div>
-            </div>
-
-            <div class="container" id="vehiculoParticular" style="display:none;">
-                <h3>Tipo de Vehiculo</h3>
-                <select id="tipoDeVehiculo" name="tipoDeVehiculo">
-                  <option value="MOTO">Moto</option>
-                  <option value="AUTO">Auto</option>
-                  <option value="CAMIONETA">Camioneta</option>
-                </select>
-
-                <h3>Tipo de Combustible</h3>
-                <select id="tipoDeCombustible" name="tipoDeCombustible">
-                  <option value="GNC">GNC</option>
-                  <option value="NAFTA">Nafta</option>
-                  <option value="ELECTRICO">Electrico</option>
-                  <option value="GASOIL">Gasoil</option>
-                </select>
-
-                <div class="mb-3">
-                    <label for="combustibleConsumidoPorKM" class="form-label">Combustible Consumido Por KM</label>
-                    <input type="number" class="form-control" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM" value="100">
-                </div>
-            </div>
-
+            <br>
             <button name="tramo" type="submit" class="btn btn-primary" value="fin">cargar Trayecto</button>
             <button name="tramo" type="submit" class="btn btn-primary" value="tramo">Agregar Otro Tramo</button>
         </form>
