@@ -102,9 +102,7 @@ public class HcController {
     String unidadHC    = request.queryParams("unidadHC");
     Map<String, Object> model = new HashMap<>();
 
-    // TODO: q onda con q se le pasa el Fe por parametro? Por ahora lo dejo asi.
-    FactorEmision factorEmisionDefault = new FactorEmision(4.0, UnidadConsumo.LT);
-    HC hcMiembro = miembro.calculoHCPersonal(factorEmisionDefault);
+    HC hcMiembro = miembro.calculoHCPersonal();
 
     if (unidadHC.equals("gCO2")) {
       model.put("mensual", hcMiembro.enGCO2());
