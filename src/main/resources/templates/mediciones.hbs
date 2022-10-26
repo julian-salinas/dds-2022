@@ -30,12 +30,10 @@
 
     <div class="container">
         <form action="/mediciones-manual" method="POST">
-            <!--TODO: Esto deberia pasar a ser dinamico. Problemas del futuro-->
-            <!--Extra: Algunas de estas opciones no deberian estar, creo-->
             <div class = "mb-3">
                 <label for="tipoId" class="form-label"> Tipo </label>
                 <select id="tipoId" name="tipoConsumo">
-                    <option value="Gas Natural" selected>Gas Natural</option>
+                    <!--<option value="Gas Natural" selected>Gas Natural</option>
                     <option value="Diesel/Gasoil">Diesel/Gasoil</option>
                     <option value="Nafta">Nafta</option>
                     <option value="Carbon">Carbon</option>
@@ -44,7 +42,10 @@
                     <option value="Electricidad">Electricidad</option>
                     <option value="Camion de carga">Camion de carga</option>
                     <option value="Utilitario liviano">Utilitario liviano</option>
-                    <option value="Distancia media">Distancia media</option>
+                    <option value="Distancia media">Distancia media</option>-->
+                    {{#each consumos}}
+                        <option value={{id}}> {{tipo}} </option>
+                    {{/each}}
                 </select>
             </div>
             <div class="mb-3">
@@ -85,27 +86,27 @@
         <center>
             <table>
                 <tr>
-                    <th> Id </th>
                     <th> Tipo de Consumo </th>
                     <th> Valor </th>
                     <th> Periodicidad </th>
                     <th> Periodo Imputacion </th>
                     <th> FE </th>
                 </tr>
-                {{#each datosActividades }}
-                    <tr>
-                        <td> {{id}} </td>
-                        <td> {{tipoDeConsumo.tipo}} </td>
-                        <td> {{valor}} </td>
-                        <td> {{periodicidad}} </td>
-                        <td> {{periodoImputacion}} </td>
-                        <td> {{tipoDeConsumo.fe.valor}} </td>
-                    </tr>
+                {{#each orgs }}
+                    {{#each datosActividades}}
+                        <tr>
+                            <td> {{tipoDeConsumo.tipo}} </td>
+                            <td> {{valor}} </td>
+                            <td> {{periodicidad}} </td>
+                            <td> {{periodoImputacion}} </td>
+                            <td> {{tipoDeConsumo.fe.valor}} </td>
+                        </tr>
+                    {{/each}}
                 {{/each}}
             </table>
         </center>
     </div>
-
+    <!--
     <div class="titulo">
         <br>
         <h2> Cargar Factor de Emision (FE): </h2>
@@ -139,6 +140,7 @@
             <button type="submit" class="btn btn-primary">Cargar FE</button>
         </form>
     </div>
+    -->
 
 {{/partial}}
 

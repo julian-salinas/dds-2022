@@ -4,6 +4,8 @@ import domain.organizaciones.Organizacion;
 import domain.organizaciones.datos.actividades.DatosActividades;
 import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
+import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
+import domain.repositorios.RepositorioConsumos;
 import domain.repositorios.RepositorioOrganizaciones;
 import domain.repositorios.RepositorioUsuarios;
 import presentacion.Usuario;
@@ -11,6 +13,10 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MedicionesController {
@@ -23,9 +29,15 @@ public class MedicionesController {
       return null;
     }
 
+    Map<String, Object> model = new HashMap<>();
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
-    return new ModelAndView(org, "mediciones.hbs");
+    List<Organizacion> orgs = new ArrayList<>();
+    orgs.add(org);
+    List<TipoDeConsumo> consumos = RepositorioConsumos.getInstance().all();
+    model.put("orgs", orgs);
+    model.put("consumos", consumos);
+    return new ModelAndView(model, "mediciones.hbs");
   }
 
   public ModelAndView postCsv(Request request, Response response) {
@@ -47,10 +59,12 @@ public class MedicionesController {
     String username = request.cookie("username");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
-    String tipoConsumo = request.queryParams("tipoConsumo");
+    int tipoConsumoid = Integer.parseInt(request.queryParams("tipoConsumo"));
     String valor = request.queryParams("valor");
     String periodicidad = request.queryParams("periodicidad");
     String perImputacion = request.queryParams("perImputacion");
+
+    String tipoConsumo = RepositorioConsumos.getInstance().get(tipoConsumoid).getTipo();
 
     DatosActividades datosActividades = new DatosActividades(tipoConsumo,
         valor, periodicidad, perImputacion);
