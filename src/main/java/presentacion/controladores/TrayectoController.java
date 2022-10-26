@@ -2,6 +2,7 @@ package presentacion.controladores;
 
 import domain.organizaciones.miembros.Miembro;
 import domain.repositorios.RepositorioMiembros;
+import domain.repositorios.RepositorioTransportes;
 import domain.repositorios.RepositorioUsuarios;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
@@ -15,6 +16,8 @@ import presentacion.errores.Error;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+
+import java.util.List;
 
 public class TrayectoController {
 
@@ -33,7 +36,9 @@ public class TrayectoController {
       return null;
     request.session().attribute("trayecto", trayecto);
 
-    return new ModelAndView(null, "tramo.hbs");
+    List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
+
+    return new ModelAndView(transportes, "tramo.hbs");
   }
 
   public ModelAndView agregarTramo(Request request, Response response) {
