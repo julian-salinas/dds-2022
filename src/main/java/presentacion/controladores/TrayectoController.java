@@ -7,7 +7,8 @@ import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import domain.trayecto.TrayectoCompartido;
-import domain.trayecto.transporte.nopublico.Pie;
+import domain.trayecto.transporte.MedioDeTransporte;
+import domain.trayecto.transporte.nopublico.*;
 import domain.ubicaciones.Ubicacion;
 import presentacion.Usuario;
 import presentacion.errores.Error;
@@ -76,8 +77,33 @@ public class TrayectoController {
       return new ModelAndView(error, "tramo.hbs");
     }
 
+    String medio = request.queryParams("medio");
 
-    Tramo tramo = new Tramo( new Pie(), ubicacionInicial, ubicacionFin);
+    Tramo tramo = null;
+    switch (medio){
+      case "pie":
+        tramo = new Tramo( new Pie(), ubicacionInicial, ubicacionFin);
+        break;
+      case "bici":
+        tramo = new Tramo( new Bicicleta(), ubicacionInicial, ubicacionFin);
+        break;
+      case "servicioContratado":
+        String tipo = request.queryParams("tipoDeServicio");
+        String combustibleConsumidoServicio = request.queryParams("combustibleConsumidoPorKM");
+        ServicioContratado servicioContratado = new ServicioContratado(new TipoServicioContratado(tipo), Double.parseDouble(combustibleConsumidoServicio));
+        tramo = new Tramo(servicioContratado, ubicacionInicial, ubicacionFin);
+        break;
+      case "vehiculoParticular":
+        String tipoVehiculo = request.queryParams("tipoDeVehiculo");
+        String tipoCombustible = request.queryParams("tipoDeCombustible");
+        String combustibleConsumidoVehiculo = request.queryParams("combustibleConsumidoPorKM");
+        VehiculoParticular vehiculoParticular = new VehiculoParticular(TipoDeVehiculo.valueOf(tipoVehiculo), TipoDeCombustible.valueOf(tipoCombustible), Double.parseDouble(combustibleConsumidoVehiculo));
+        tramo = new Tramo(vehiculoParticular, ubicacionInicial, ubicacionFin);
+        break;
+      default:
+        break;
+    }
+
 
     trayecto.agregarTramo(tramo);
 
