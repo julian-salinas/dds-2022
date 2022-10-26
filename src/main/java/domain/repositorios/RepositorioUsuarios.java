@@ -25,15 +25,12 @@ public class RepositorioUsuarios extends Repositorio<Usuario>{
 
   public Usuario findByUsername(String nombre){
 
-
     EntityManagerHelper.getEntityManager().getTransaction().begin();
-
     String query =
         "FROM Usuario " +
         "WHERE username LIKE " + "'" + nombre + "'";
     List<Usuario> user = EntityManagerHelper.getEntityManager().createQuery(query).getResultList();
     EntityManagerHelper.getEntityManager().getTransaction().commit();
-
 
     if(user.isEmpty())
       return null;

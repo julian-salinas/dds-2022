@@ -25,6 +25,7 @@
 
     <div class="titulo">
         <h2> Agregar Medicion/es: </h2>
+        <br>
     </div>
 
     <div class="container">
@@ -76,6 +77,7 @@
     </div>
 
     <div class="titulo">
+        <br>
         <h2> Listado de Mediciones: </h2>
     </div>
 
@@ -105,34 +107,38 @@
     </div>
 
     <div class="titulo">
+        <br>
         <h2> Cargar Factor de Emision (FE): </h2>
+        <br>
     </div>
 
-    <form action="/cargar-fe" method="POST">
-        <div class="mb-3">
-            <label for="idInput" class="form-label">Id</label>
-            <input type="text" class="form-control" id="idInput" name="idDA">
-        </div>
+    <div class="container">
+        <form action="/cargar-fe" method="POST">
+            <div class="mb-3">
+                <label for="idInput" class="form-label">Id</label>
+                <input type="text" class="form-control" id="idInput" name="idDA">
+            </div>
 
-        <div class = "mb-3">
-            <label for="unidad">Unidad FE: </label>
-            <select id="unidad" name="unidadFE">
-                <option value="M3" selected>M3</option>
-                <option value="LT">LT</option>
-                <option value="KG">KG</option>
-                <option value="KWH">KWH</option>
-                <option value="KM">KM</option>
-                <option value="NINGUNA">NINGUNA</option>
-            </select>
-        </div>
+            <div class = "mb-3">
+                <label for="unidad">Unidad FE: </label>
+                <select id="unidad" name="unidadFE">
+                    <option value="M3" selected>M3</option>
+                    <option value="LT">LT</option>
+                    <option value="KG">KG</option>
+                    <option value="KWH">KWH</option>
+                    <option value="KM">KM</option>
+                    <option value="NINGUNA">NINGUNA</option>
+                </select>
+            </div>
 
-        <div class="mb-3">
-            <label for="valorInput" class="form-label">Valor FE</label>
-            <input type="text" class="form-control" id="valorInput" name="valorFE">
-        </div>
+            <div class="mb-3">
+                <label for="valorInput" class="form-label">Valor FE</label>
+                <input type="text" class="form-control" id="valorInput" name="valorFE">
+            </div>
 
-        <button type="submit" class="btn btn-primary">Cargar FE</button>
-    </form>
+            <button type="submit" class="btn btn-primary">Cargar FE</button>
+        </form>
+    </div>
 
 {{/partial}}
 

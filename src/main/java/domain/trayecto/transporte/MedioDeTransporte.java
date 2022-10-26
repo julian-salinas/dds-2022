@@ -6,7 +6,7 @@ import domain.ubicaciones.distancia.Distancia;
 
 import javax.persistence.*;
 
-@Entity(name = "medio_de_transporte")
+@Entity//(name = "medio_de_transporte")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class MedioDeTransporte extends PersistenceEntity
 {
