@@ -10,12 +10,13 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class MedioDeTransporte extends PersistenceEntity
 {
+  public String descripcion;
   public abstract Distancia distancia(Ubicacion ubicacionInicio, Ubicacion ubicacionFin);
   public abstract Boolean admiteTrayectoCompartido();
   public abstract double getCombustibleConsumidoPorKM();
   public abstract String toString();
 
   public String getDescripcion() {
-    return this.toString();
+    return this.descripcion;
   }
 }

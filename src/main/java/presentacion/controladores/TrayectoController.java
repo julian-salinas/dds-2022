@@ -41,7 +41,7 @@ public class TrayectoController {
     List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
     Map<String, Object> model = new HashMap<>();
     model.put("transportes", transportes);
-    return new ModelAndView(transportes, "tramo.hbs");
+    return new ModelAndView(model, "tramo.hbs");
   }
 
   public ModelAndView agregarTramo(Request request, Response response) {
@@ -85,9 +85,11 @@ public class TrayectoController {
       return new ModelAndView(error, "tramo.hbs");
     }
 
-    String medio = request.queryParams("medio");
+    int medioid = Integer.parseInt(request.queryParams("medio"));
+    MedioDeTransporte medio = RepositorioTransportes.getInstance().get(medioid);
+    Tramo tramo = new Tramo(medio, ubicacionInicial, ubicacionFin);
 
-    Tramo tramo = null;
+    /*Tramo tramo = null;
     switch (medio){
       case "pie":
         tramo = new Tramo( new Pie(), ubicacionInicial, ubicacionFin);
@@ -110,7 +112,7 @@ public class TrayectoController {
         break;
       default:
         break;
-    }
+    }*/
 
     trayecto.agregarTramo(tramo);
 
@@ -120,15 +122,18 @@ public class TrayectoController {
       Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
       Miembro miembro = user.getMiembro();
-
       miembro.registrarTrayecto(trayecto);
 
       RepositorioMiembros.getInstance().update(miembro);
 
-
       return new ModelAndView(null, "trayecto.hbs");
     }
-    else return new ModelAndView(null, "tramo.hbs");
+    else {
+      List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
+      Map<String, Object> model = new HashMap<>();
+      model.put("transportes", transportes);
+      return new ModelAndView(model, "tramo.hbs");
+    }
   }
 
 

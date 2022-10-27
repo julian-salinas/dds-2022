@@ -16,12 +16,14 @@ public class ServicioContratado extends MedioDeTransporte {
   @Embedded
   private TipoServicioContratado tipo;
   @Getter @Setter private double combustibleConsumidoPorKM; // No se que deberia poner en los que desconocemos
+  //@Getter private String descripcion;
 
   public ServicioContratado() {}
 
   public ServicioContratado(TipoServicioContratado tipo, double combustible) {
     this.tipo = tipo;
     this.combustibleConsumidoPorKM = combustible;
+    this.descripcion = this.toString();
   }
 
   @Override

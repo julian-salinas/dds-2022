@@ -18,6 +18,7 @@ public class VehiculoParticular extends MedioDeTransporte {
   @Enumerated(EnumType.STRING)
   private TipoDeCombustible tipoCombustible;
   @Getter @Setter private double combustibleConsumidoPorKM;
+  //@Getter private String descripcion;
 
   public VehiculoParticular() {}
 
@@ -26,6 +27,7 @@ public class VehiculoParticular extends MedioDeTransporte {
     this.tipoVehiculo = tipoVehiculo;
     this.tipoCombustible = tipoCombustible;
     this.combustibleConsumidoPorKM = combustible;
+    this.descripcion = this.toString();
   }
 
   @Override

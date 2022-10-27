@@ -15,8 +15,11 @@ import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 @Entity
 public class Bicicleta extends MedioDeTransporte {
   @Getter @Setter private double combustibleConsumidoPorKM = 0.0;
+  //@Getter private String descripcion;
 
-  public Bicicleta() {}
+  public Bicicleta() {
+    this.descripcion = this.toString();
+  }
 
   @Override
   public Boolean admiteTrayectoCompartido() {
@@ -37,7 +40,7 @@ public class Bicicleta extends MedioDeTransporte {
 
   @Override
   public String toString() {
-    return "Bicicleta";
+    return "BICICLETA";
   }
 
 }
