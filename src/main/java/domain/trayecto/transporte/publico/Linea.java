@@ -25,7 +25,7 @@ import javax.persistence.*;
 @Entity
 public class Linea extends PersistenceEntity {
 
-  private String nombre;
+  @Getter private String nombre;
   private boolean bidireccional = false; // Estado inicial: Unidireccional
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable(name = "linea_x_parada")
   @Getter private List<Parada> paradas;

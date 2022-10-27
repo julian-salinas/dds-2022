@@ -35,4 +35,11 @@ public class TransportePublico extends MedioDeTransporte {
     return false;
   }
 
+  @Override
+  public String toString() {
+    // "Transporte Publico: " +
+    return tipo.toString().toUpperCase() + " " +
+        linea.getNombre().toUpperCase();
+  }
+
 }

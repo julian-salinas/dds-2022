@@ -17,7 +17,9 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TrayectoController {
 
@@ -37,7 +39,8 @@ public class TrayectoController {
     request.session().attribute("trayecto", trayecto);
 
     List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
-
+    Map<String, Object> model = new HashMap<>();
+    model.put("transportes", transportes);
     return new ModelAndView(transportes, "tramo.hbs");
   }
 

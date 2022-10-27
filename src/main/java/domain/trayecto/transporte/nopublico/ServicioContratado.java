@@ -40,4 +40,11 @@ public class ServicioContratado extends MedioDeTransporte {
       return new Distancia(-1.0, MTS);
     }
   }
+
+  @Override
+  public String toString() {
+    // "Servicio Contratado: " +
+    return tipo.getNombre().toUpperCase();
+  }
+
 }

@@ -48,6 +48,8 @@ public class Bootstrap {
     linea.agregarParada(parada2);
     TransportePublico transportePublico = new TransportePublico(TipoTransportePublico.SUBTE, linea);
 
+    System.out.println(transportePublico.getDescripcion());
+
     //MedioDeTransporte medio = RepositorioTransportes.getInstance().get(1);
     List<MedioDeTransporte> medios = RepositorioTransportes.getInstance().all();
     if(medios.isEmpty()) {

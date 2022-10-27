@@ -35,4 +35,9 @@ public class Pie extends MedioDeTransporte {
     }
   }
 
+  @Override
+  public String toString() {
+    return "Pie";
+  }
+
 }

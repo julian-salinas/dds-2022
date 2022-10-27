@@ -35,4 +35,9 @@ public class Bicicleta extends MedioDeTransporte {
     }
   }
 
+  @Override
+  public String toString() {
+    return "Bicicleta";
+  }
+
 }

@@ -45,4 +45,12 @@ public class VehiculoParticular extends MedioDeTransporte {
     }
   }
 
+  @Override
+  public String toString() {
+    // "Vehiculo Particular: " +
+    return tipoVehiculo.toString().toUpperCase() +
+        " de tipo de combustible ".toUpperCase() +
+        tipoCombustible.toString().toUpperCase();
+  }
+
 }

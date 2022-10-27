@@ -2,12 +2,82 @@
 <form action="/agregarTramo" method="POST">
 
   <select class="select-field" id="medio" name="medio" onchange="esconder()">
-    <option value="pie" selected>Pie</option>
+    <!--<option value="pie" selected>Pie</option>
     <option value="bici">Bicicleta</option>
     <option value="servicioContratado">Servicio Contratado</option>
     <option value="vehiculoParticular">Vehiculo Particular</option>
-    <option value="transportePublico">Transporte Público</option>
+    <option value="transportePublico">Transporte Público</option>-->
+      {{#each transportes}}
+          <option value={{id}}> {{id}} </option>
+      {{/each}}
+      <!--{{this.toString}}-->
   </select>
+
+    <div id="servicioContratado" style="display:none;">
+        <div class="input-field">
+            <i class="fa fa-shield"></i>
+            <input type="text" placeholder="Tipo de Servicio" id="tipoDeServicio" name="tipoDeServicio"/>
+        </div>
+
+        <div class="input-field">
+            <i class="fa fa-shield"></i>
+            <input type="number" placeholder="Combustible Consumido Por KM" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM"/>
+        </div>
+    </div>
+
+    <div id="vehiculoParticular" style="display:none;">
+        <div class="big-title">
+            <h4>Tipo de Vehiculo</h4>
+        </div>
+
+        <select class="select-field" id="tipoDeVehiculo" name="tipoDeVehiculo">
+            <option value="MOTO">Moto</option>
+            <option value="AUTO">Auto</option>
+            <option value="CAMIONETA">Camioneta</option>
+        </select>
+
+        <div class="big-title">
+            <h4>Tipo de Combustible</h4>
+        </div>
+        <select class="select-field" id="tipoDeCombustible" name="tipoDeCombustible">
+            <option value="GNC">GNC</option>
+            <option value="NAFTA">Nafta</option>
+            <option value="ELECTRICO">Electrico</option>
+            <option value="GASOIL">Gasoil</option>
+        </select>
+
+        <div class="input-field">
+            <i class="fa fa-shield"></i>
+            <input type="number" placeholder="Combustible Consumido Por KM" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM"/>
+        </div>
+    </div>
+
+    <div id="paradas" style="display:none;">
+        <div class="big-title">
+            <h4>Tipo de Transporte publico</h4>
+        </div>
+        <select class="select-field" id="tipoDeTransportePublico" name="tipoDeTransportePublico">
+            <option value="COLECTIVO">Colectivo</option>
+            <option value="TREN">Tren</option>
+            <option value="SUBTE">Subte</option>
+        </select>
+
+        <div class="big-title">
+            <h4>Parada Inicio</h4>
+        </div>
+        <select class="select-field" id="paradaInicio" name="paradaInicio">
+            <option value="0">No</option>
+            <option value="1">Si</option>
+        </select>
+
+        <div class="big-title">
+            <h4>Parada Fin</h4>
+        </div>
+        <select class="select-field" id="paradaInicio" name="paradaInicio">
+            <option value="0">No</option>
+            <option value="1">Si</option>
+        </select>
+    </div>
 
   <div id="ubicacionInicio">
     <div class="big-title">
@@ -78,73 +148,6 @@
       <i class="fa fa-shield"></i>
       <input type="number" placeholder="Altura Fin" name="alturaFin" value="1231"/>
     </div>
-  </div>
-
-  <div id="paradas" style="display:none;">
-      <div class="big-title">
-        <h4>Tipo de Transporte publico</h4>
-      </div>
-      <select class="select-field" id="tipoDeTransportePublico" name="tipoDeTransportePublico">
-        <option value="COLECTIVO">Colectivo</option>
-        <option value="TREN">Tren</option>
-        <option value="SUBTE">Subte</option>
-      </select>
-
-      <div class="big-title">
-        <h4>Parada Inicio</h4>
-      </div>
-      <select class="select-field" id="paradaInicio" name="paradaInicio">
-        <option value="0">No</option>
-        <option value="1">Si</option>
-      </select>
-
-      <div class="big-title">
-        <h4>Parada Fin</h4>
-      </div>
-      <select class="select-field" id="paradaInicio" name="paradaInicio">
-        <option value="0">No</option>
-        <option value="1">Si</option>
-      </select>
-  </div>
-
-
-  <div id="servicioContratado" style="display:none;">
-      <div class="input-field">
-        <i class="fa fa-shield"></i>
-        <input type="text" placeholder="Tipo de Servicio" id="tipoDeServicio" name="tipoDeServicio"/>
-      </div>
-
-      <div class="input-field">
-        <i class="fa fa-shield"></i>
-        <input type="number" placeholder="Combustible Consumido Por KM" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM"/>
-      </div>
-  </div>
-
-  <div id="vehiculoParticular" style="display:none;">
-      <div class="big-title">
-        <h4>Tipo de Vehiculo</h4>
-      </div>
-
-      <select class="select-field" id="tipoDeVehiculo" name="tipoDeVehiculo">
-        <option value="MOTO">Moto</option>
-        <option value="AUTO">Auto</option>
-        <option value="CAMIONETA">Camioneta</option>
-      </select>
-
-      <div class="big-title">
-        <h4>Tipo de Combustible</h4>
-      </div>
-      <select class="select-field" id="tipoDeCombustible" name="tipoDeCombustible">
-        <option value="GNC">GNC</option>
-        <option value="NAFTA">Nafta</option>
-        <option value="ELECTRICO">Electrico</option>
-        <option value="GASOIL">Gasoil</option>
-      </select>
-
-      <div class="input-field">
-        <i class="fa fa-shield"></i>
-        <input type="number" placeholder="Combustible Consumido Por KM" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM"/>
-      </div>
   </div>
 
   <button name="tramo" type="submit" class="boton" value="fin">cargar Trayecto</button>
