@@ -89,35 +89,9 @@ public class TrayectoController {
     MedioDeTransporte medio = RepositorioTransportes.getInstance().get(medioid);
     Tramo tramo = new Tramo(medio, ubicacionInicial, ubicacionFin);
 
-    /*Tramo tramo = null;
-    switch (medio){
-      case "pie":
-        tramo = new Tramo( new Pie(), ubicacionInicial, ubicacionFin);
-        break;
-      case "bici":
-        tramo = new Tramo( new Bicicleta(), ubicacionInicial, ubicacionFin);
-        break;
-      case "servicioContratado":
-        String tipo = request.queryParams("tipoDeServicio");
-        String combustibleConsumidoServicio = request.queryParams("combustibleConsumidoPorKM");
-        ServicioContratado servicioContratado = new ServicioContratado(new TipoServicioContratado(tipo), Double.parseDouble(combustibleConsumidoServicio));
-        tramo = new Tramo(servicioContratado, ubicacionInicial, ubicacionFin);
-        break;
-      case "vehiculoParticular":
-        String tipoVehiculo = request.queryParams("tipoDeVehiculo");
-        String tipoCombustible = request.queryParams("tipoDeCombustible");
-        String combustibleConsumidoVehiculo = request.queryParams("combustibleConsumidoPorKM");
-        VehiculoParticular vehiculoParticular = new VehiculoParticular(TipoDeVehiculo.valueOf(tipoVehiculo), TipoDeCombustible.valueOf(tipoCombustible), Double.parseDouble(combustibleConsumidoVehiculo));
-        tramo = new Tramo(vehiculoParticular, ubicacionInicial, ubicacionFin);
-        break;
-      default:
-        break;
-    }*/
-
     trayecto.agregarTramo(tramo);
 
     if(boton.equals("fin")) {
-
       String username = request.cookie("username");
       Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
@@ -128,7 +102,8 @@ public class TrayectoController {
 
       return new ModelAndView(null, "trayecto.hbs");
     }
-    else {
+    else
+    {
       List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
       Map<String, Object> model = new HashMap<>();
       model.put("transportes", transportes);
