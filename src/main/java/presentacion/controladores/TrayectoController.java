@@ -20,6 +20,7 @@ import spark.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TrayectoController {
 
@@ -30,16 +31,27 @@ public class TrayectoController {
   public ModelAndView post(Request request, Response response) {
     String tipo = request.queryParams("trayecto");
     Trayecto trayecto;
-    if(tipo.equals("trayecto"))
+    Map<String, Object> model = new HashMap<>();
+    if(tipo.equals("trayecto")) {
       trayecto = new Trayecto();
-    else if (tipo.equals("trayecto-comp"))
+      request.session().attribute("trayecto", trayecto);
+      request.session().attribute("compartido", false);
+     }
+    else if (tipo.equals("trayecto-comp")) {
       trayecto = new TrayectoCompartido();
-    else
-      return null;
-    request.session().attribute("trayecto", trayecto);
+      request.session().attribute("trayecto", trayecto);
+      request.session().attribute("compartido", true);
+
+      String username = request.session().attribute("username");
+      Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+      List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
+      model.put("miembros",miembros);
+      return new ModelAndView(model, "miembroTramo.hbs");
+
+    } else return null;
+
 
     List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
-    Map<String, Object> model = new HashMap<>();
     model.put("transportes", transportes);
     return new ModelAndView(model, "tramo.hbs");
   }
@@ -105,11 +117,44 @@ public class TrayectoController {
     else
     {
       List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
+      if (request.session().attribute("compartido"))
+        transportes = transportes.stream().filter(t -> t.admiteTrayectoCompartido()).collect(Collectors.toList());
       Map<String, Object> model = new HashMap<>();
       model.put("transportes", transportes);
       return new ModelAndView(model, "tramo.hbs");
     }
   }
 
+  public ModelAndView agregarMiembros(Request request, Response response) {
+    int miembroID = Integer.parseInt(request.queryParams("miembro"));
+    Miembro miembro = RepositorioMiembros.getInstance().get(miembroID);
+    TrayectoCompartido trayecto = request.session().attribute("trayecto");
+
+    trayecto.agregarAcompanantes(miembro);
+
+    String boton = request.queryParams("agregar");
+    Map<String, Object> model = new HashMap<>();
+
+    if(boton.equals("fin")) {
+      List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
+      transportes = transportes.stream().filter(t -> t.admiteTrayectoCompartido()).collect(Collectors.toList());
+      model.put("transportes", transportes);
+      return new ModelAndView(model, "tramo.hbs");
+    }
+    else
+    {
+
+      String username = request.session().attribute("username");
+      Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+      List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
+      model.put("miembros",miembros);
+      return new ModelAndView(model, "miembroTramo.hbs");
+    }
+
+  }
+
 
 }
+
+
+

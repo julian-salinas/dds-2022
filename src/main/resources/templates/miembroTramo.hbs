@@ -1,0 +1,23 @@
+{{#partial "content"}}
+<form action="/agregarMiembro" method="POST">
+
+  <select class="select-field" id="miembro" name="miembro"">
+    <!--<option value="pie" selected>Pie</option>
+    <option value="bici">Bicicleta</option>
+    <option value="servicioContratado">Servicio Contratado</option>
+    <option value="vehiculoParticular">Vehiculo Particular</option>
+    <option value="transportePublico">Transporte Público</option>-->
+      {{#each miembros}}
+          <option value={{id}}> {{nombre}}, {{apellido}} </option>
+      {{/each}}
+      <!--{{this.toString}}-->
+  </select>
+    <div = "container">
+  <button name="agregar" type="submit" class="boton" value="fin">Definir Tramos</button>
+  <button name="agregar" type="submit" class="boton" value="seguir">Agregar Otro Miembro</button>
+
+    <div = "container">
+</form>
+
+{{/partial}}
+{{>base.hbs}}

@@ -48,6 +48,7 @@ public class Router {
     // Miembro
     Spark.get("/trayecto", trayectoController::index, engineTemplate);
     Spark.post("/trayecto", trayectoController::post, engineTemplate);
+    Spark.post("/agregarMiembro", trayectoController::agregarMiembros, engineTemplate);
     Spark.post("/agregarTramo", trayectoController::agregarTramo, engineTemplate);
     Spark.get("/vincularse", pedirVinculacionController::index, engineTemplate);
     Spark.post("/vincularse", pedirVinculacionController::postOrg, engineTemplate);
