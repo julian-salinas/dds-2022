@@ -8,11 +8,17 @@ import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
 import domain.repositorios.RepositorioConsumos;
 import domain.repositorios.RepositorioOrganizaciones;
 import domain.repositorios.RepositorioUsuarios;
+import org.apache.commons.io.FileUtils;
 import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,14 +46,21 @@ public class MedicionesController {
     return new ModelAndView(model, "mediciones.hbs");
   }
 
-  public ModelAndView postCsv(Request request, Response response) {
-    // TODO: Arreglarlo, porque aca llega el path NO completo (solo nombre de archivo), entonces explota
+  public ModelAndView postCsv(Request request, Response response) throws IOException, ServletException {
+    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+    InputStream inputStream = request.raw().getPart("archivoCSV").getInputStream();
+
+    System.out.println("inputStream: " + inputStream);
+
+    String pathToCSV = "upload/csvfile.csv";
+    File targetFile = new File(pathToCSV);
+
+    FileUtils.copyInputStreamToFile(inputStream, targetFile);
     String username = request.cookie("username");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
-    String pathCSV = request.queryParams("archivoCSV");
+    org.cargarMediciones(pathToCSV);
 
-    org.cargarMediciones(pathCSV);
     RepositorioOrganizaciones.getInstance().update(org);
 
     response.redirect("/mediciones");
