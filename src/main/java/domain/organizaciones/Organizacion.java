@@ -95,7 +95,7 @@ public class Organizacion extends PersistenceEntity {
   public void cargarMediciones(String pathCSV) {
     String linea;
 
-    datosActividades.clear();
+    //datosActividades.clear();
     try {
       BufferedReader buffer = new BufferedReader(new FileReader(pathCSV));
       buffer.readLine();
