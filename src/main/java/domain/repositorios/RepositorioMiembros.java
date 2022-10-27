@@ -28,7 +28,7 @@ public class RepositorioMiembros extends Repositorio<Miembro> {
   public List<Miembro> miembrosMismaOrg(Miembro miembro){
     int id = miembro.getId();
 
-    EntityManagerHelper.getEntityManager().getTransaction().begin();
+    /*EntityManagerHelper.getEntityManager().getTransaction().begin();
     String query =
         "from Miembro m2 " +
         "where sector_id in ( " +
@@ -39,11 +39,13 @@ public class RepositorioMiembros extends Repositorio<Miembro> {
             "where m.id = " + id +  " ))" +
          "AND m2.id != " + id;
     //List<Miembro> miembroList = EntityManagerHelper.getEntityManager().createQuery(query).getResultList();
-    EntityManagerHelper.getEntityManager().getTransaction().commit();
+    EntityManagerHelper.getEntityManager().getTransaction().commit();*/
 
 
     List<Organizacion> organizaciones = RepositorioOrganizaciones.getInstance().all().stream().filter(org-> org.containsMiembro(miembro)).collect(Collectors.toList());
-    List<Miembro> miembroList = organizaciones.stream().flatMap()
+    List<Miembro> miembroList = organizaciones.stream().flatMap(org -> org.getSectores().stream())
+        .flatMap(sector -> sector.getMiembros().stream()).collect(Collectors.toList());
+
     if(miembroList.isEmpty())
       return null;
     return miembroList;
