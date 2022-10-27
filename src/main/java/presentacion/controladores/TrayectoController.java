@@ -109,7 +109,6 @@ public class TrayectoController {
         break;
     }
 
-
     trayecto.agregarTramo(tramo);
 
     if(boton.equals("fin")) {
