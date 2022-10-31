@@ -42,7 +42,7 @@ public class TrayectoController {
       request.session().attribute("trayecto", trayecto);
       request.session().attribute("compartido", true);
 
-      String username = request.session().attribute("username");
+      String username = request.cookie("username");
       Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
       List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
       model.put("miembros",miembros);
@@ -144,7 +144,7 @@ public class TrayectoController {
     else
     {
 
-      String username = request.session().attribute("username");
+      String username = request.cookie("username");
       Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
       List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
       model.put("miembros",miembros);

@@ -73,6 +73,8 @@ public class Organizacion extends PersistenceEntity {
     return sectores.contains(sector);
   }
 
+  public boolean containsMiembro(Miembro miembro) { return sectores.stream().flatMap(sector -> sector.getMiembros().stream()).collect(Collectors.toList()).contains(miembro); }
+
   public void agregarSector(Sector sector) {
     sectores.add(sector);
   }
@@ -93,7 +95,7 @@ public class Organizacion extends PersistenceEntity {
   public void cargarMediciones(String pathCSV) {
     String linea;
 
-    datosActividades.clear();
+    //datosActividades.clear();
     try {
       BufferedReader buffer = new BufferedReader(new FileReader(pathCSV));
       buffer.readLine();
