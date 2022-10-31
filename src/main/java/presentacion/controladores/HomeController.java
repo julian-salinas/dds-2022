@@ -21,21 +21,25 @@ public class HomeController {
       return null;
     }
 
-    response.cookie("username", username);
+    request.session().attribute("usuario_logueado", username);
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
     if (user.getTipo().equals(TipoUsuario.ORGANIZACION)) {
-      /*Map<String, Object> model = new HashMap<>();
-      model.put("org", user.getOrg());*/
-      Object model = user.getOrg();
+      // Object model = user.getOrg();
+      Map<String, Object> model = new HashMap<>();
+      model.put("nombre", user.getOrg().getNombreOrg());
+      model.put("nombreOrg", user.getOrg().getNombreOrg());
+      model.put("clasificacion", user.getOrg().getClasificacion());
+      model.put("tipo", user.getOrg().getTipo());
       return new ModelAndView(model, "homeOrganizacion.hbs");
-    } else if (user.getTipo().equals(TipoUsuario.MIEMBRO)) {
+    }
+    else if (user.getTipo().equals(TipoUsuario.MIEMBRO)) {
       Object model = user.getMiembro();
       return new ModelAndView(model, "homeMiembro.hbs");
     }
-    else
+    else {
       return null;
-
+    }
   }
 
 }

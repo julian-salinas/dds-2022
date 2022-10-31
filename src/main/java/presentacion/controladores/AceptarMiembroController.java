@@ -16,14 +16,14 @@ import java.util.stream.Collectors;
 public class AceptarMiembroController {
 
   public ModelAndView index(Request request, Response response) {
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
     return new ModelAndView(org, "aceptarMiembros.hbs");
   }
 
   public ModelAndView post(Request request, Response response) {
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
 

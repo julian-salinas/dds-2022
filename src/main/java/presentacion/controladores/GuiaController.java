@@ -9,12 +9,9 @@ import spark.Response;
 public class GuiaController {
 
   public ModelAndView index(Request request, Response response) {
-
-    String username = request.session().attribute("usuario-logueado");
+    String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
-
-
-    return new ModelAndView(user, "guia.hbs");
+    Object model = user.getMiembro();
+    return new ModelAndView(model, "guia.hbs");
   }
-
 }

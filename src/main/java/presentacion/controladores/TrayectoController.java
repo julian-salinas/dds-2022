@@ -25,7 +25,10 @@ import java.util.stream.Collectors;
 public class TrayectoController {
 
   public ModelAndView index(Request request, Response response) {
-    return new ModelAndView(null, "trayecto.hbs");
+    String username = request.session().attribute("usuario_logueado");
+    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+    Object model = user.getMiembro();
+    return new ModelAndView(model, "trayecto.hbs");
   }
 
   public ModelAndView post(Request request, Response response) {

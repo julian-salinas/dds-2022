@@ -167,4 +167,11 @@ public class Organizacion extends PersistenceEntity {
     return new HC(hcDatosActividad, UnidadHC.kgCO2);
   }
 
+  public boolean contieneMiembro(Miembro miembro) {
+    return sectores.stream().anyMatch(sector -> sector.containsMiembro(miembro));
+  }
+
+  public String getNombreOrg() {
+    return nombreOrg;
+  }
 }

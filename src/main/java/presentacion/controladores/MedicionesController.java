@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class MedicionesController {
 
   public ModelAndView index(Request request, Response response) {
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
 
     if (username == null) {
       response.redirect("/login");
@@ -69,7 +69,7 @@ public class MedicionesController {
 
   public ModelAndView postManual(Request request, Response response) {
 
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
     int tipoConsumoid = Integer.parseInt(request.queryParams("tipoConsumo"));
@@ -92,7 +92,7 @@ public class MedicionesController {
 
   public ModelAndView postFe(Request request, Response response) {
 
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
     int idDA = Integer.parseInt(request.queryParams("idDA"));

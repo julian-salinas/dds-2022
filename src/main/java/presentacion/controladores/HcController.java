@@ -83,14 +83,9 @@ public class HcController {
   }
 
   public ModelAndView indexMiembro(Request request, Response response) {
-
-    /*String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
-
-    Miembro miembro = user.getMiembro();*/
-
-    Map<String, Object> model = new HashMap<>();
-
+    Object model = user.getMiembro();
     return new ModelAndView(model, "hcMiembro.hbs");
   }
 
