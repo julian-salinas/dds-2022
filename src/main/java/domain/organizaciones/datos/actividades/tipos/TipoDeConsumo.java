@@ -8,6 +8,7 @@ import lombok.Getter;
 
 import javax.persistence.*;
 
+@Getter
 @Table(name = "tipo_de_consumo")
 @Entity
 public class TipoDeConsumo extends PersistenceEntity {

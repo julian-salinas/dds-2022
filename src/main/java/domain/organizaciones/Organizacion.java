@@ -1,6 +1,8 @@
 package domain.organizaciones;
 
 import domain.database.PersistenceEntity;
+import domain.organizaciones.datos.actividades.UnidadConsumo;
+import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.miembros.Miembro;
@@ -25,23 +27,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Getter
 @Entity
 public class Organizacion extends PersistenceEntity {
-  private String nombre;
+  private String nombreOrg;
   private String razonSocial;
 
   @Enumerated(EnumType.STRING)
   private TipoOrganizacion tipo;
 
   @Enumerated(EnumType.STRING)
-  @Getter
   private ClasificacionOrg clasificacion;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_id")
   private Ubicacion ubicacion;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
   private List<Sector> sectores = new ArrayList<>();
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
@@ -55,9 +58,9 @@ public class Organizacion extends PersistenceEntity {
 
   public Organizacion() {}
 
-  public Organizacion(String razonSocial, TipoOrganizacion tipo, String nombre,
+  public Organizacion(String nombreOrg, String razonSocial, TipoOrganizacion tipo,
                       Ubicacion ubicacion, ClasificacionOrg clasificacion) {
-    this.nombre = nombre;
+    this.nombreOrg = nombreOrg;
     this.razonSocial = razonSocial;
     this.tipo = tipo;
     this.ubicacion = ubicacion;
@@ -131,15 +134,19 @@ public class Organizacion extends PersistenceEntity {
     return contactos;
   }
 
+  // Nota: En lo que aca llamamos 'combustible', se tiene en cuenta la distancia (en Tramo: combustible x dist)
   public void cargarDATransladoMiembros(){
     double combustibleTransporteMiembros = 30 * sectores.stream().mapToDouble(Sector::combustibleConsumidoTransporteMiembros).sum();
     //SimpleDateFormat formatFecha = new SimpleDateFormat("MM/yyyy");
     DateTimeFormatter formatFecha = DateTimeFormatter.ofPattern("MM/yyyy");
     // Multiplico por 30, para obtener el valor mensual dado que el trayecto que recorren los miembros es a diario
-    datosActividades.add(new DatosActividades("Distancia media",
+
+    DatosActividades datos = new DatosActividades("Distancia media",
         String.valueOf(combustibleTransporteMiembros),
         "Mensual",
-        formatFecha.format(LocalDate.now())));
+        formatFecha.format(LocalDate.now()));
+    //datos.cargarFactorEmision(new FactorEmision(2000, UnidadConsumo.KM));
+    datosActividades.add(datos);
   }
 
   private double calculoHCMensual(){
@@ -150,7 +157,8 @@ public class Organizacion extends PersistenceEntity {
   public HC hcMensual(){
     double hcDatosActividad = calculoHCMensual();
     HC hc = new HC(hcDatosActividad, UnidadHC.kgCO2);
-    this.historialHC.add(hc);
+    if(historialHC.stream().filter(hc1 -> hc1.enKgCO2() == hcDatosActividad).count() == 0)
+      this.historialHC.add(hc);
     return hc;
   }
 

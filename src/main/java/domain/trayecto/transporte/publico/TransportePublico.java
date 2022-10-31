@@ -15,12 +15,14 @@ public class TransportePublico extends MedioDeTransporte {
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Linea linea;
   @Getter @Setter private double combustibleConsumidoPorKM = 0.0;
+  //@Getter private String descripcion
 
   public TransportePublico() {}
 
   public TransportePublico(TipoTransportePublico tipo, Linea linea) {
     this.tipo = tipo;
     this.linea = linea;
+    this.descripcion = this.toString();
   }
 
   @Override
@@ -33,6 +35,13 @@ public class TransportePublico extends MedioDeTransporte {
   @Override
   public Boolean admiteTrayectoCompartido() {
     return false;
+  }
+
+  @Override
+  public String toString() {
+    // "Transporte Publico: " +
+    return tipo.toString().toUpperCase() + " " +
+        linea.getNombre().toUpperCase();
   }
 
 }

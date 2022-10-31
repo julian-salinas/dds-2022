@@ -1,0 +1,51 @@
+{{#partial "content"}}
+  <div class="left">
+    {{#if sectores }}
+      <div class="big-title">
+        <h1>Sectores existentes</h1>
+      </div>
+
+      <div class="sectores">
+          {{#each sectores }}
+              <div class="col p-2">
+                  <div class="card shadow-sm p-2">
+<!--                      <img src="https://i.pinimg.com/236x/fb/29/d0/fb29d0729e08e52e4fc841b2663089ed--logos.jpg"-->
+<!--                           class="card-img-top" alt="nombre">-->
+                      <div class="card-body">
+                          <h5 class="card-title">
+                              {{ nombreSector }}
+                          </h5>
+                          <p class="card-text">
+                              {{ descripcion }}
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          {{/each}}
+      </div>
+  {{else}}
+      <div class="big-title">
+        <h1>No hay sectores registrados</h1>
+      </div>
+  {{/if}}
+  </div>
+
+  <div class="right">
+    <div class="big-title">
+      <h1>Agregar un sector</h1>
+    </div>
+    <form action="/sectores" method="POST">
+      <div class="input-field">
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Nombre" id="nombreInput" name="nombre" />
+      </div>
+      <div class="input-field">
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Descripcion (Opcional)" id="descInput" name="descripcion"/>
+      </div>
+      <button type="submit" class="btn">Agregar Sector</button>
+    </form>
+  </div>
+{{/partial}}
+
+{{>base.hbs}}

@@ -23,6 +23,13 @@ public class Municipio implements SectorTerritorial {
     this.nombre = nombre.toUpperCase();
   }
 
+  public Municipio(String nombre, Provincia provincia, ServicioGeoDds apiClient) throws IOException, RuntimeException {
+    this.apiClient = apiClient;
+    this.id = this.apiClient.verificarNombreMunicipio(nombre, provincia.getId());
+    this.nombre = nombre.toUpperCase();
+    this.provincia = provincia;
+  }
+
   @Override
   public List<Organizacion> orgsDentroDeSector() {
     return RepositorioOrganizaciones.getInstance().inMunicipio(this);

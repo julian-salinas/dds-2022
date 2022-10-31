@@ -1,0 +1,30 @@
+{{#partial "content"}}
+    <div class="left">
+      <div class="big-title">
+        <h1>{{ nombreOrg     }}</h1>
+        <h2>{{ razonSocial }}</h2>
+      </div>
+
+      <h4>Clasificación: {{ clasificacion }}</h4>
+      <h4>Tipo: {{ tipo }}</h4>
+
+      <br/><br/>
+
+      <div class="links">
+        <ul>
+          <li><a href="/sectores" class="boton">Sectores</a></li>
+          <li><a href="/hc" class="boton">HC</a></li>
+          <li > <a href="/aceptar-miembros" class="boton"> Aceptar Miembros </a></li>
+          <li > <a href="/mediciones" class = "boton"> Cargar Mediciones </a></li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="right">
+      <img src="img/register.svg" alt="Person Image" class="person" />
+    </div>
+{{/partial}}
+
+{{>base.hbs}}

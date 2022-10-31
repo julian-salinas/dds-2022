@@ -1,0 +1,59 @@
+{{#partial "content"}}
+<div class="big-title">
+  <h1>Vincularse a una sector 🧩</h1>
+  <h4> Seleccione el sector al que desea vincularse </h4>
+</div>
+
+<div>
+  {{#each sectores }}
+  <div class="card">
+    <img src="https://static.vecteezy.com/system/resources/previews/005/266/960/non_2x/organizational-chart-line-icon-outline-hierarchy-logo-linear-pictogram-isolated-on-white-pixel-perfect-illustration-vector.jpg"
+         alt="nombre" style="height:8rem;object-fit: contain;">
+
+    <strong> {{ nombreSector }} </strong>
+    <p> {{descripcion }} </p>
+
+    <form action="/mandar-postulamiento" method="POST">
+        <script>
+            function alertea() {
+                alert("Se mando la vinculacion")
+            }
+        </script>
+        <button onclick="alertea()" name="id" value={{id}} type="submit" class="btn btn-primary"> Elegir </button>
+    </form>
+    </form>
+
+  </div>
+
+  <br/><br/>
+  {{/each}}
+</div>
+
+{{/partial}}
+{{>base.hbs}}
+
+<style>
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+  }
+
+  .card button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #64bcf4;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .card button:hover {
+    opacity: 0.7;
+  }
+</style>

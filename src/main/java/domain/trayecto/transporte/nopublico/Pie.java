@@ -15,8 +15,11 @@ import static domain.ubicaciones.distancia.UnidadDistancia.MTS;
 @Entity
 public class Pie extends MedioDeTransporte {
   @Getter @Setter private double combustibleConsumidoPorKM = 0.0;
+  //@Getter private String descripcion;
 
-  public Pie() {}
+  public Pie() {
+    this.descripcion = this.toString();
+  }
 
   @Override
   public Boolean admiteTrayectoCompartido() {
@@ -33,6 +36,11 @@ public class Pie extends MedioDeTransporte {
       e.printStackTrace();
       return new Distancia(-1.0, MTS);
     }
+  }
+
+  @Override
+  public String toString() {
+    return "PIE";
   }
 
 }

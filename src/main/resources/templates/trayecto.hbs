@@ -1,0 +1,22 @@
+{{#partial "content"}}
+    <div class="left">
+      <div class="big-title">
+        <h1>Crear un trayecto</h1>
+      </div>
+      <p class="text">
+        ¿Qué tipo de trayecto querés crear? 😐
+      </p>
+
+    <form action="/trayecto" method="POST">
+      <button name="trayecto" value="trayecto" type="submit" class="boton" style="border: none;cursor:pointer;">Crear trayecto común</button>
+      <button name="trayecto" value="trayecto-comp" type="submit" class="boton" style="border: none;cursor:pointer;">Crear trayecto compartido</button>
+    </form>
+
+    </div>
+
+    <div class="right">
+      <img src="img/car.svg" alt="" class=""/>
+    </div>
+{{/partial}}
+
+{{>base.hbs}}

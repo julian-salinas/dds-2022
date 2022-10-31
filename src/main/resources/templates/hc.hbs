@@ -1,0 +1,60 @@
+{{#partial "barra"}}
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/inicio"> Log Out </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/sectores"> Sectores </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="sectores"> Aceptar Miembros </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/mediciones"> Cargar Mediciones </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/hc"> Calculadora HC </a>
+        </li>
+    </ul>
+{{/partial}}
+
+{{#partial "contenido"}}
+
+        <h1> HOLA, ORGANIZACIONES </h1>
+
+
+    <div class="col p-2">
+        <div class="card shadow-sm p-2">
+            <!--<h3>Calculo Mensual</h3>-->
+            <form action="/calculo-hc" method="post">
+                <button value="Mensual" type="submit" class="btn btn-primary" name="tipoCalculo">
+                    Calculo HC Mensual
+                </button>
+                <select id="unidadHCMId" name="unidadHC">
+                    <option value="gCO2">gCO2</option>
+                    <option value="kgCO2" selected>KgCO2</option>
+                    <option value="tnCO2">TnCO2</option>
+                </select>
+            </form>
+            <p> {{#if esMensual}} {{ mensual }} {{ unidad }} {{else}} {{/if}} </p>
+        </div>
+        <div class="card shadow-sm p-2">
+            <!--<h3>Calculo Anual</h3>-->
+            <form action="/calculo-hc" method="post">
+                <button value="Anual" type="submit" class="btn btn-primary" name="tipoCalculo">
+                    Calculo HC Anual
+                </button>
+                <select id="unidadHCAId" name="unidadHC">
+                    <option value="gCO2">gCO2</option>
+                    <option value="kgCO2" selected>KgCO2</option>
+                    <option value="tnCO2">TnCO2</option>
+                </select>
+            </form>
+            <p> {{#if esMensual}} {{else}} {{ anual }} {{ unidad }} {{/if}} </p>
+        </div>
+    </div>
+
+{{/partial}}
+
+
+{{>layout.hbs}}

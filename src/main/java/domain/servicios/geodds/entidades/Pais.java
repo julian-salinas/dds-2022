@@ -1,5 +1,7 @@
 package domain.servicios.geodds.entidades;
 
+import lombok.Getter;
+
 public class Pais {
   public int id;
   public String nombre;

@@ -1,0 +1,19 @@
+{{#partial "content"}}
+  <div class="big-title">
+    <h1> Calculadora de HC 👣 </h1>
+    <h4 style="text-transform: lowercase;"> Seleccioná la unidad en la que deseas calcular tu HC </h4>
+  </div>
+
+  <form action="/calculo-hc-miembro" method="post">
+      <select class="select-field" id="unidadHCMId" name="unidadHC">
+          <option value="gCO2">gCO2</option>
+          <option value="kgCO2" selected>KgCO2</option>
+          <option value="tnCO2">TnCO2</option>
+      </select>
+
+      <button type="submit" class="boton">
+          Calculo HC Personal
+      </button>
+  </form>
+{{/partial}}
+{{>base.hbs}}

@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <title>Impacto Ambiental - Miembro</title>
+
+        <!-- Font Awesome -->
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          rel="stylesheet"
+        />
+
+        <!-- Google Fonts -->
+        <link
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          rel="stylesheet"
+        />
+
+        <!-- MDB -->
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
+          rel="stylesheet"
+        />
+
+        <!-- MDB -->
+        <script
+          type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"
+        ></script>
+    </head>
+    <body>
+        <div class="container my-5">
+          <div class="card">
+            <form action="/registrarMiembro" method="POST">
+              <!-- Card header -->
+              <div class="card-header py-4 px-5 bg-light border-0">
+                <h4 class="mb-0 fw-bold">Registrarse como miembro</h4>
+              </div>
+
+              <!-- Card body -->
+              <div class="card-body px-5">
+                <!-- Business address section -->
+                <div class="row gx-xl-5">
+                  <div class="col-md-4">
+                    <h5>Datos personales</h5>
+                    <p class="text-muted">
+                        Vamos a necesitar algunos datos personales para poder crear tu cuenta.
+                    </p>
+                  </div>
+
+                  <div class="col-md-8">
+                    <div class="mb-3">
+                      <label for="exampleInput6" class="form-label">Nombre/s</label>
+                      <input type="text" class="form-control"  id="nombreInput" name="nombre" />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="exampleInput6" class="form-label">Apellido/s</label>
+                      <input type="text" class="form-control" id="apellidoInput" name="apellido" />
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label for="exampleInput7" class="form-label">Número de Documento</label>
+                          <input
+                                 type="number"
+                                 class="form-control"
+                                 id="nroDeDocumentoInput"
+                                 name="nroDeDocumento"
+                                 />
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for="exampleInput8" class="form-label">Tipo de Documento</label>
+                        <select
+                                id="tipoDocumento"
+                                name="tipoDocumento"
+                                class="form-select mb-3"
+                                aria-label="Default select example"
+                                >
+                          <option selected value="DNI">DNI</option>
+                          <option value="LC">LC</option>
+                          <option value="LE">LE</option>
+                          <option value="LI">LI</option>
+                        </select>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              <!-- Card footer -->
+              <div class="card-footer text-end py-4 px-5 bg-light border-0">
+                <button type="submit" class="btn btn-primary btn-rounded">
+                  OK
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </body>
+</html>

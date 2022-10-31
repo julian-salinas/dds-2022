@@ -1,0 +1,144 @@
+<html>
+    <head>
+        <title>Impacto Ambiental - Miembro</title>
+
+        <!-- Font Awesome -->
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          rel="stylesheet"
+        />
+
+        <!-- Google Fonts -->
+        <link
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          rel="stylesheet"
+        />
+
+        <!-- MDB -->
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
+          rel="stylesheet"
+        />
+
+        <!-- MDB -->
+        <script
+          type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"
+        ></script>
+    </head>
+    <body>
+        <div class="container my-5">
+          <div class="card">
+            <form action="/registrarOrg" method="POST">
+              <!-- Card header -->
+              <div class="card-header py-4 px-5 bg-light border-0">
+                <h4 class="mb-0 fw-bold">Registrarse como miembro</h4>
+              </div>
+
+              <!-- Card body -->
+              <div class="card-body px-5">
+                <!-- Business address section -->
+                <div class="row gx-xl-5">
+                  <div class="col-md-4">
+                    <h5>Datos de tu organización</h5>
+                    <p class="text-muted">
+                        Vamos a necesitar algunos datos más para poder registrarte.
+                    </p>
+                  </div>
+
+                  <div class="col-md-8">
+                    <div class="mb-3">
+                      <label for="exampleInput6" class="form-label">Nombre</label>
+                      <input type="text" class="form-control" id="nombreInput" name="nombre" value="Matias"/>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="exampleInput6" class="form-label">Razón Social</label>
+                      <input type="text" class="form-control" id="razonSInput" name="razonSocial" value="S.A."/>
+                    </div>
+
+
+
+
+                      <div class="mb-3">
+                          <label for="paisId" class="form-label">Pais</label>
+                          <input type="text" class="form-control" id="paisId" name="ubicacionPais" value="ARGENTINA">
+                      </div>
+
+                      <div class="mb-3">
+                          <label for="provinciaId" class="form-label">Provincia</label>
+                          <input type="text" class="form-control" id="provinciaId" name="ubicacionProvincia" value="BUENOS AIRES">
+                      </div>
+
+                      <div class="mb-3">
+                          <label for="municipioId" class="form-label">Municipio</label>
+                          <input type="text" class="form-control" id="municipioId" name="ubicacionMunicipio" value="AVELLANEDA">
+                      </div>
+
+                      <div class="mb-3">
+                          <label for="localidadId" class="form-label">Localidad</label>
+                          <input type="text" class="form-control" id="localidadId" name="ubicacionLocalidad" value="AVELLANEDA">
+                      </div>
+
+                      <div class="mb-3">
+                          <label for="calle" class="form-label">Calle</label>
+                          <input type="text" class="form-control" id="calle" name="ubicacionCalle" value="Bonifacio">
+                      </div>
+
+                      <div class="mb-3">
+                          <label for="altura" class="form-label">Altura</label>
+                          <input type="text" class="form-control" id="altura" name="ubicacionAltura" value="1231">
+                      </div>
+
+
+
+
+
+
+
+
+                    <div class="col-md-6">
+                        <label for="exampleInput8" class="form-label">Tipo de Organizacion</label>
+                        <select
+                                id="tipo"
+                                name="tipo"
+                                class="form-select mb-3"
+                                aria-label="Default select example"
+                                >
+                          <option value="GUBERNAMENTAL"> Gubernamental </option>
+                          <option value="ONG"> Ong </option>
+                          <option value="EMPRESA"> Empresa </option>
+                          <option value="INSTITUCION" selected> Institucion </option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-6">
+                        <label for="exampleInput8" class="form-label">Clasificacion de la Organizacion</label>
+                        <select
+                                id="clasificacion"
+                                name="clasificacion"
+                                class="form-select mb-3"
+                                aria-label="Default select example"
+                                >
+                              <option value="MINISTERIO"> Ministerio </option>
+                              <option value="UNIVERSIDAD" selected> Universidad </option>
+                              <option value="ESCUELA"> Escuela </option>
+                              <option value="EMPRESA_SECTOR_PRIMARIO"> Empresa del sector primario </option>
+                              <option value="EMPRESA_SECTOR_SECUNDARIO"> Empresa del sector secundario </option>
+                        </select>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              <!-- Card footer -->
+              <div class="card-footer text-end py-4 px-5 bg-light border-0">
+                <button type="submit" class="btn btn-primary btn-rounded">
+                  OK
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </body>
+</html>

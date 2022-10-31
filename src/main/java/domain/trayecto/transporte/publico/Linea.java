@@ -6,6 +6,8 @@ import domain.trayecto.transporte.excepciones.ExcepcionParadasTransporteNoInclui
 import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.distancia.UnidadDistancia;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +25,7 @@ import javax.persistence.*;
 @Entity
 public class Linea extends PersistenceEntity {
 
-  private String nombre;
+  @Getter private String nombre;
   private boolean bidireccional = false; // Estado inicial: Unidireccional
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable(name = "linea_x_parada")
   @Getter private List<Parada> paradas;
@@ -37,6 +39,7 @@ public class Linea extends PersistenceEntity {
 
   public Linea(String nombre) {
     this.nombre = nombre;
+    this.paradas = new ArrayList<>();
   }
 
   public boolean containsParada(Parada parada) {
