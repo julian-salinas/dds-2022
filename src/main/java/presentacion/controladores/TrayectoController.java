@@ -45,14 +45,15 @@ public class TrayectoController {
       request.session().attribute("trayecto", trayecto);
       request.session().attribute("compartido", true);
 
-      String username = request.cookie("username");
+      String username = request.session().attribute("usuario_logueado");
       Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
       List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
       model.put("miembros",miembros);
       return new ModelAndView(model, "miembroTramo.hbs");
 
-    } else return null;
-
+    } else {
+      return null;
+    }
 
     List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
     model.put("transportes", transportes);
@@ -107,7 +108,7 @@ public class TrayectoController {
     trayecto.agregarTramo(tramo);
 
     if(boton.equals("fin")) {
-      String username = request.cookie("username");
+      String username = request.session().attribute("usuario_logueado");
       Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
       Miembro miembro = user.getMiembro();
@@ -120,8 +121,9 @@ public class TrayectoController {
     else
     {
       List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
-      if (request.session().attribute("compartido"))
+      if (request.session().attribute("compartido")) {
         transportes = transportes.stream().filter(t -> t.admiteTrayectoCompartido()).collect(Collectors.toList());
+      }
       Map<String, Object> model = new HashMap<>();
       model.put("transportes", transportes);
       return new ModelAndView(model, "tramo.hbs");
