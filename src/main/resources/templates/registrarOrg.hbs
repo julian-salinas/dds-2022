@@ -32,7 +32,7 @@
             <form action="/registrarOrg" method="POST">
               <!-- Card header -->
               <div class="card-header py-4 px-5 bg-light border-0">
-                <h4 class="mb-0 fw-bold">Registrarse como miembro</h4>
+                <h4 class="mb-0 fw-bold">Registrarse como Organizacion</h4>
               </div>
 
               <!-- Card body -->
@@ -47,6 +47,10 @@
                   </div>
 
                   <div class="col-md-8">
+
+
+
+
                     <div class="mb-3">
                       <label for="exampleInput6" class="form-label">Nombre</label>
                       <input type="text" class="form-control" id="nombreInput" name="nombre" value="Matias"/>
@@ -58,6 +62,36 @@
                     </div>
 
 
+                      <div class="col-md-6">
+                          <label for="exampleInput8" class="form-label">Tipo de Organizacion</label>
+                          <select
+                                  id="tipo"
+                                  name="tipo"
+                                  class="form-select mb-3"
+                                  aria-label="Default select example"
+                          >
+                              <option value="GUBERNAMENTAL"> Gubernamental </option>
+                              <option value="ONG"> Ong </option>
+                              <option value="EMPRESA"> Empresa </option>
+                              <option value="INSTITUCION" selected> Institucion </option>
+                          </select>
+                      </div>
+
+                      <div class="col-md-6">
+                          <label for="exampleInput8" class="form-label">Clasificacion de la Organizacion</label>
+                          <select
+                                  id="clasificacion"
+                                  name="clasificacion"
+                                  class="form-select mb-3"
+                                  aria-label="Default select example"
+                          >
+                              <option value="MINISTERIO"> Ministerio </option>
+                              <option value="UNIVERSIDAD" selected> Universidad </option>
+                              <option value="ESCUELA"> Escuela </option>
+                              <option value="EMPRESA_SECTOR_PRIMARIO"> Empresa del sector primario </option>
+                              <option value="EMPRESA_SECTOR_SECUNDARIO"> Empresa del sector secundario </option>
+                          </select>
+                      </div>
 
 
                       <div class="mb-3">
@@ -97,36 +131,7 @@
 
 
 
-                    <div class="col-md-6">
-                        <label for="exampleInput8" class="form-label">Tipo de Organizacion</label>
-                        <select
-                                id="tipo"
-                                name="tipo"
-                                class="form-select mb-3"
-                                aria-label="Default select example"
-                                >
-                          <option value="GUBERNAMENTAL"> Gubernamental </option>
-                          <option value="ONG"> Ong </option>
-                          <option value="EMPRESA"> Empresa </option>
-                          <option value="INSTITUCION" selected> Institucion </option>
-                        </select>
-                      </div>
 
-                      <div class="col-md-6">
-                        <label for="exampleInput8" class="form-label">Clasificacion de la Organizacion</label>
-                        <select
-                                id="clasificacion"
-                                name="clasificacion"
-                                class="form-select mb-3"
-                                aria-label="Default select example"
-                                >
-                              <option value="MINISTERIO"> Ministerio </option>
-                              <option value="UNIVERSIDAD" selected> Universidad </option>
-                              <option value="ESCUELA"> Escuela </option>
-                              <option value="EMPRESA_SECTOR_PRIMARIO"> Empresa del sector primario </option>
-                              <option value="EMPRESA_SECTOR_SECUNDARIO"> Empresa del sector secundario </option>
-                        </select>
-                      </div>
                     </div>
                     </div>
                   </div>
