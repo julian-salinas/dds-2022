@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
+@Getter // <-- Esto ya da getters para todoo lo de adentro
 @Entity
 public class Organizacion extends PersistenceEntity {
   private String nombreOrg;
@@ -73,7 +73,12 @@ public class Organizacion extends PersistenceEntity {
     return sectores.contains(sector);
   }
 
+  // TODO: Quedarse con un solo 'containsMiembro'
+  public boolean contieneMiembro(Miembro miembro) {
+    return sectores.stream().anyMatch(sector -> sector.containsMiembro(miembro));
+  }
   public boolean containsMiembro(Miembro miembro) { return sectores.stream().flatMap(sector -> sector.getMiembros().stream()).collect(Collectors.toList()).contains(miembro); }
+  //
 
   public void agregarSector(Sector sector) {
     sectores.add(sector);
@@ -169,11 +174,4 @@ public class Organizacion extends PersistenceEntity {
     return new HC(hcDatosActividad, UnidadHC.kgCO2);
   }
 
-  public boolean contieneMiembro(Miembro miembro) {
-    return sectores.stream().anyMatch(sector -> sector.containsMiembro(miembro));
-  }
-
-  public String getNombreOrg() {
-    return nombreOrg;
-  }
 }

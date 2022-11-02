@@ -25,12 +25,7 @@ public class HomeController {
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
     if (user.getTipo().equals(TipoUsuario.ORGANIZACION)) {
-      // Object model = user.getOrg();
-      Map<String, Object> model = new HashMap<>();
-      model.put("nombre", user.getOrg().getNombreOrg());
-      model.put("nombreOrg", user.getOrg().getNombreOrg());
-      model.put("clasificacion", user.getOrg().getClasificacion());
-      model.put("tipo", user.getOrg().getTipo());
+      Object model = user.getOrg();
       return new ModelAndView(model, "homeOrganizacion.hbs");
     }
     else if (user.getTipo().equals(TipoUsuario.MIEMBRO)) {
