@@ -56,7 +56,7 @@ public class MedicionesController {
     File targetFile = new File(pathToCSV);
 
     FileUtils.copyInputStreamToFile(inputStream, targetFile);
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
     org.cargarMediciones(pathToCSV);

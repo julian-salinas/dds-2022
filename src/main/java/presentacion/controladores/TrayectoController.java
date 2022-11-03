@@ -148,8 +148,7 @@ public class TrayectoController {
     }
     else
     {
-
-      String username = request.cookie("username");
+      String username = request.session().attribute("usuario_logueado");
       Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
       List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
       model.put("miembros",miembros);

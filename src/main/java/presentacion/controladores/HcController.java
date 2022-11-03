@@ -20,7 +20,7 @@ public class HcController {
 
   public ModelAndView index(Request request, Response response) {
 
-    /*String username = request.cookie("username");
+    /*String username = request.cookie("username"); --> por las dudas, comento q esto paso a seesion
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
     Organizacion organizacion = user.getOrg();*/
@@ -37,7 +37,7 @@ public class HcController {
 
   public ModelAndView post(Request request, Response response) {
 
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion organizacion = user.getOrg();
     String tipoCalculo = request.queryParams("tipoCalculo");
@@ -91,7 +91,7 @@ public class HcController {
 
   public ModelAndView postMiembro(Request request, Response response) {
 
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
     Miembro miembro = user.getMiembro();
     String unidadHC    = request.queryParams("unidadHC");
