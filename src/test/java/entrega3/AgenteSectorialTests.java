@@ -68,8 +68,10 @@ public class AgenteSectorialTests {
     RepositorioOrganizaciones.getInstance().add(org2);
     RepositorioOrganizaciones.getInstance().add(org3);
 
-    assertEquals(1, (long) org1.sectorMunicipio().orgsDentroDeSector().size());
-    assertEquals(org1, org1.sectorMunicipio().orgsDentroDeSector().get(0));
+    List<Organizacion> orgs = RepositorioOrganizaciones.getInstance().inMunicipio(org1.sectorMunicipio().getId());
+
+    assertEquals(1, orgs.size());
+    assertEquals(org1, orgs.get(0));
 
     RepositorioOrganizaciones.getInstance().clean();
   }
@@ -84,8 +86,11 @@ public class AgenteSectorialTests {
     todasLasOrgs.add(org1);
     todasLasOrgs.add(org2);
     todasLasOrgs.add(org3);
-    assertEquals(3, (long) org1.sectorProvincia().orgsDentroDeSector().size());
-    assertEquals(todasLasOrgs, org1.sectorProvincia().orgsDentroDeSector());
+
+    List<Organizacion> orgs = RepositorioOrganizaciones.getInstance().inProvincia(org1.sectorProvincia().getId());
+
+    assertEquals(3, orgs.size());
+    assertEquals(todasLasOrgs, orgs);
 
     RepositorioOrganizaciones.getInstance().clean();
   }

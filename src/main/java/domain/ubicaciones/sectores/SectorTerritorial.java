@@ -4,5 +4,6 @@ import domain.organizaciones.Organizacion;
 import java.util.List;
 
 public interface SectorTerritorial {
-  List<Organizacion> orgsDentroDeSector();
+  //List<Organizacion> orgsDentroDeSector();
+  int getId();
 }

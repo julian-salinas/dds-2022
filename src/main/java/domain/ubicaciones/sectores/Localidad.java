@@ -15,6 +15,7 @@ public class Localidad {
   @Getter private Municipio municipio;
   private ServicioGeoDds apiClient;
 
+  @Deprecated
   public Localidad(String nombreLocalidad, ServicioGeoDds apiClient) throws RuntimeException, IOException {
     //this.apiClient = ServicioGeoDds.getInstancia();
     this.apiClient = apiClient;

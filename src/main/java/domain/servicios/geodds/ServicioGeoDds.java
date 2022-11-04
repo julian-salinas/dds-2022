@@ -3,6 +3,7 @@ package domain.servicios.geodds;
 import static java.net.URLEncoder.encode;
 import domain.servicios.geodds.entidades.*;
 import java.io.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -50,6 +51,8 @@ public class ServicioGeoDds {
   }
 
   /** =============== Métodos para hacer Request a API GeoDds =============== **/
+
+  // Nota: Estos NO devuelven TODOS los de su tipo. Esto tiene q ver con el Offset y el Id.
 
   public List<Pais> listadoDePaises(int offset) throws IOException {
     RetrofitGeoDds geoDdsService = this.retrofit.create(RetrofitGeoDds.class);
@@ -154,15 +157,18 @@ public class ServicioGeoDds {
   }
 
   // Para agarrar el Municipio de una Localidad, una Provincia de un Municipio, etc.
+  // Actualizacion: esto no funciona y es basura. Y lo hice yo. Sacar.
 
+  @Deprecated
   public String nombreMunicipio(int idLocalidad) throws IOException {
-    List<Localidad> listadoDeLocalidades = this.listadoDeLocalidades(1);
-    return listadoDeLocalidades
+    List<Municipio> listadoDeMunicipios = this.listadoDeMunicipios(1);
+    return listadoDeMunicipios
         .stream()
-        .collect(Collectors.toMap(Localidad::getId, loc -> loc.getMunicipio().getNombre()))
+        .collect(Collectors.toMap(Municipio::getId, mun -> mun.getProvincia().getNombre()))
         .get(idLocalidad);
   }
 
+  @Deprecated
   public String nombreProvincia(int idMunicipio) throws IOException {
     List<Municipio> listadoDeMunicipios = this.listadoDeMunicipios(1);
     return listadoDeMunicipios
