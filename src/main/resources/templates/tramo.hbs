@@ -1,70 +1,196 @@
-{{#partial "barra"}}
-   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="/guia">Guia</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="/trayectos">Mis Trayectos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="/vincularse">Vincularse</a>
-      </li>
-   </ul>
-  {{/partial}}
+{{#partial "content"}}
+<form action="/agregarTramo" method="POST">
 
-{{#partial "contenido"}}
-    <div class = "container">
-        <form action="/agregarTramo" method="POST">
-        <div class = "container">
-            <h2> Ubicacion 1 </h2>
-            <div class="mb-3">
-                <label for="calle" class="form-label">Calle</label>
-                <input type="text" class="form-control" id="calle" name="calle" value="calleLinda">
-            </div>
+  <select class="select-field" id="medio" name="medio" onchange="esconder()">
+    <!--<option value="pie" selected>Pie</option>
+    <option value="bici">Bicicleta</option>
+    <option value="servicioContratado">Servicio Contratado</option>
+    <option value="vehiculoParticular">Vehiculo Particular</option>
+    <option value="transportePublico">Transporte Público</option>-->
+      {{#each transportes}}
+          <option value={{id}}> {{descripcion}} </option>
+      {{/each}}
+      <!--{{this.toString}}-->
+  </select>
 
-            <div class="mb-3">
-                <label for="altura" class="form-label">Altura</label>
-                <input type="text" class="form-control" id="altura" name="altura" value="123">
-            </div>
-
-            <select id="localidad" name="localidad">
-                <option value="au">Australia</option>
-                <option value="ca">Canada</option>
-                <option value="usa">USA</option>
-            </select>
+    <div id="servicioContratado" style="display:none;">
+        <div class="input-field">
+            <i class="fa fa-shield"></i>
+            <input type="text" placeholder="Tipo de Servicio" id="tipoDeServicio" name="tipoDeServicio"/>
         </div>
 
-        <div class = "container">
-            <h2> Ubicacion 2 </h2>
-            <div class="mb-3">
-                <label for="calle2" class="form-label">Calle</label>
-                <input type="text" class="form-control" id="calle2" name="calle2" value="calleLinda">
-            </div>
-
-            <div class="mb-3">
-                <label for="altura2" class="form-label">Altura</label>
-                <input type="text" class="form-control" id="altura2" name="altura2" value="123">
-            </div>
-
-            <select id="localidad2" name="localidad2">
-                <option value="au">Australia</option>
-                <option value="ca">Canada</option>
-                <option value="usa">USA</option>
-            </select>
+        <div class="input-field">
+            <i class="fa fa-shield"></i>
+            <input type="number" placeholder="Combustible Consumido Por KM" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM"/>
         </div>
-
-        <div class = "container">
-            <h1> Medio </h1>
-            <select id="medio" name="medio">
-                <option value="1">pie</option>
-                <option value="2">bicicleta</option>
-            </select>
-        </div>
-
-            <button type="submit" class="btn btn-primary">cargar Trayecto</button>
-        </form>
     </div>
-    {{/partial}}
 
+    <div id="vehiculoParticular" style="display:none;">
+        <div class="big-title">
+            <h4>Tipo de Vehiculo</h4>
+        </div>
 
-{{>layout.hbs}}
+        <select class="select-field" id="tipoDeVehiculo" name="tipoDeVehiculo">
+            <option value="MOTO">Moto</option>
+            <option value="AUTO">Auto</option>
+            <option value="CAMIONETA">Camioneta</option>
+        </select>
+
+        <div class="big-title">
+            <h4>Tipo de Combustible</h4>
+        </div>
+        <select class="select-field" id="tipoDeCombustible" name="tipoDeCombustible">
+            <option value="GNC">GNC</option>
+            <option value="NAFTA">Nafta</option>
+            <option value="ELECTRICO">Electrico</option>
+            <option value="GASOIL">Gasoil</option>
+        </select>
+
+        <div class="input-field">
+            <i class="fa fa-shield"></i>
+            <input type="number" placeholder="Combustible Consumido Por KM" id="combustibleConsumidoPorKM" name="combustibleConsumidoPorKM"/>
+        </div>
+    </div>
+
+    <div id="paradas" style="display:none;">
+        <div class="big-title">
+            <h4>Tipo de Transporte publico</h4>
+        </div>
+        <select class="select-field" id="tipoDeTransportePublico" name="tipoDeTransportePublico">
+            <option value="COLECTIVO">Colectivo</option>
+            <option value="TREN">Tren</option>
+            <option value="SUBTE">Subte</option>
+        </select>
+
+        <div class="big-title">
+            <h4>Parada Inicio</h4>
+        </div>
+        <select class="select-field" id="paradaInicio" name="paradaInicio">
+            <option value="0">No</option>
+            <option value="1">Si</option>
+        </select>
+
+        <div class="big-title">
+            <h4>Parada Fin</h4>
+        </div>
+        <select class="select-field" id="paradaInicio" name="paradaInicio">
+            <option value="0">No</option>
+            <option value="1">Si</option>
+        </select>
+    </div>
+
+  <div id="ubicacionInicio">
+    <div class="big-title">
+      <h2>Ubicación de Inicio</h2>
+    </div>
+
+      <div class="input-field">
+          <i class="fa fa-shield"></i>
+          <input type="text" placeholder="País de Inicio" id="paisId" name="paisInicio" value="ARGENTINA"/>
+      </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Provincia de Inicio" id="provinciaId" name="provinciaInicio" value="BUENOS AIRES"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Municipio de Inicio"  id="municipioId" name="municipioInicio" value="AVELLANEDA"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Localidad de Inicio" id="localidadId" name="localidadInicio" value="AVELLANEDA"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Calle de Inicio" id="calle" name="calleInicio" value="Bonifacio"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="number" placeholder="Altura de Inicio" name="alturaInicio" value="1231"/>
+    </div>
+  </div>
+
+  <div id="ubicacionFin">
+    <div class="big-title">
+      <h2>Ubicación de Fin</h2>
+    </div>
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="País fin" id="paisId" name="paisFin" value="ARGENTINA"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Provincia Fin" id="provinciaId" name="provinciaFin" value="BUENOS AIRES"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Municipio Fin"  id="municipioId" name="municipioFin" value="AVELLANEDA"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Localidad Fin" id="localidadId" name="localidadFin" value="AVELLANEDA"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Calle Fin" id="calle" name="calleFin" value="Bonifacio"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="number" placeholder="Altura Fin" name="alturaFin" value="1231"/>
+    </div>
+  </div>
+
+  <button name="tramo" type="submit" class="boton" value="fin">cargar Trayecto</button>
+  <button name="tramo" type="submit" class="boton" value="tramo">Agregar Otro Tramo</button>
+
+</form>
+
+<script>
+  function esconder() {
+      switch (document.getElementById("medio").value) {
+          default:
+        case "bici":
+        case "pie":
+          document.getElementById("ubicacionInicio").style.display = "block";
+          document.getElementById("ubicacionFin").style.display = "block";
+          document.getElementById("paradas").style.display = "none";
+          document.getElementById("servicioContratado").style.display = "none";
+          document.getElementById("vehiculoParticular").style.display = "none";
+          break;
+        case "servicioContratado":
+          document.getElementById("ubicacionInicio").style.display = "block";
+          document.getElementById("ubicacionFin").style.display = "block";
+          document.getElementById("paradas").style.display = "none";
+          document.getElementById("servicioContratado").style.display = "block";
+          document.getElementById("vehiculoParticular").style.display = "none";
+          break;
+        case "vehiculoParticular":
+          document.getElementById("ubicacionInicio").style.display = "block";
+          document.getElementById("ubicacionFin").style.display = "block";
+          document.getElementById("paradas").style.display = "none";
+          document.getElementById("servicioContratado").style.display = "none";
+          document.getElementById("vehiculoParticular").style.display = "block";
+          break;
+
+        case "transportePublico":
+          document.getElementById("ubicacionInicio").style.display = "none";
+          document.getElementById("ubicacionFin").style.display = "none";
+          document.getElementById("paradas").style.display = "block";
+          document.getElementById("servicioContratado").style.display = "none";
+          document.getElementById("vehiculoParticular").style.display = "none";
+          break;
+      }
+  }
+</script>
+{{/partial}}
+{{>base.hbs}}

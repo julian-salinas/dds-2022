@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi impacto ambiental</title>
+
+    <link rel="stylesheet" href="base.css" />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- MDB -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- MDB -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"
+    ></script>
+  </head>
+  <body>
+    <main>
+      <div class="big-wrapper light">
+        <img src="./img/shape.png" alt="" class="shape" />
+
+        <header>
+          <div class="container">
+            <div class="logo">
+              <a href="/home"><img src="./img/logo.png" alt="Logo" /><h3>Mi Impacto ambiental</h3></a>
+            </div>
+
+            <div class="links">
+              <ul>
+                {{#if nombre}}
+                <li><a href="/home">Home</a></li>
+                <li><a href="/inicio" class="boton">Log Out</a></li>
+                {{else}}
+                <li><a href="/signin" class="boton">Sign Up</a></li>
+                <li><a href="/login" class="boton">Log In</a></li>
+                {{/if}}
+              </ul>
+            </div>
+
+            <div class="overlay"></div>
+
+            <div class="hamburger-menu">
+              <div class="bar"></div>
+            </div>
+          </div>
+        </header>
+
+        <div class="showcase-area">
+          <div class="container">
+            {{#block "content"}}
+            {{/block}}
+          </div>
+        </div>
+
+        <div class="bottom-area">
+          <div class="container">
+            <button class="toggle-boton">
+              <i class="far fa-moon"></i>
+              <i class="far fa-sun"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+
+    <script>
+        var toggle_boton;
+        var big_wrapper;
+        var hamburger_menu;
+
+        function declare() {
+          toggle_boton = document.querySelector(".toggle-boton");
+          big_wrapper = document.querySelector(".big-wrapper");
+          hamburger_menu = document.querySelector(".hamburger-menu");
+        }
+
+        const main = document.querySelector("main");
+
+        declare();
+
+        let dark = false;
+
+        function toggleAnimation() {
+          // Clone the wrapper
+          dark = !dark;
+          let clone = big_wrapper.cloneNode(true);
+          if (dark) {
+            clone.classList.remove("light");
+            clone.classList.add("dark");
+          } else {
+            clone.classList.remove("dark");
+            clone.classList.add("light");
+          }
+          clone.classList.add("copy");
+          main.appendChild(clone);
+
+          clone.addEventListener("animationend", () => {
+            big_wrapper.remove();
+            clone.classList.remove("copy");
+            // Reset Variables
+            declare();
+            events();
+          });
+        }
+
+        function events() {
+          toggle_boton.addEventListener("click", toggleAnimation);
+          hamburger_menu.addEventListener("click", () => {
+            big_wrapper.classList.toggle("active");
+          });
+        }
+
+        events();
+
+    </script>
+  </body>
+</html>

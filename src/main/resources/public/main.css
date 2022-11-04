@@ -2,6 +2,19 @@
     color: red;
 }
 
+.red-backg {
+    background: red;
+}
+
+.ebrima {
+    font-family: Ebrima, sans-serif;
+}
+
+.white {
+    color: white;
+    background: black;
+}
+
 .titulo {
     font-size: 20px;
 }
@@ -61,4 +74,12 @@ select {
     border: none;
     border-radius: 4px;
     background-color: #f1f1f1;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px;
 }

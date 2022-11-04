@@ -1,68 +1,164 @@
 package presentacion.controladores;
 
 import domain.organizaciones.miembros.Miembro;
-import domain.organizaciones.miembros.TipoDeDocumento;
 import domain.repositorios.RepositorioMiembros;
+import domain.repositorios.RepositorioTransportes;
 import domain.repositorios.RepositorioUsuarios;
+import domain.servicios.geodds.ServicioGeoDds;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import domain.trayecto.TrayectoCompartido;
 import domain.trayecto.transporte.MedioDeTransporte;
-import domain.trayecto.transporte.nopublico.Bicicleta;
+import domain.trayecto.transporte.nopublico.*;
 import domain.ubicaciones.Ubicacion;
-import presentacion.TipoUsuario;
 import presentacion.Usuario;
+import presentacion.errores.Error;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class TrayectoController {
 
   public ModelAndView index(Request request, Response response) {
-
-    return new ModelAndView(null, "trayecto.hbs");
+    String username = request.session().attribute("usuario_logueado");
+    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+    Object model = user.getMiembro();
+    return new ModelAndView(model, "trayecto.hbs");
   }
 
   public ModelAndView post(Request request, Response response) {
+    String tipo = request.queryParams("trayecto");
+    Trayecto trayecto;
+    Map<String, Object> model = new HashMap<>();
+    if(tipo.equals("trayecto")) {
+      trayecto = new Trayecto();
+      request.session().attribute("trayecto", trayecto);
+      request.session().attribute("compartido", false);
+     }
+    else if (tipo.equals("trayecto-comp")) {
+      trayecto = new TrayectoCompartido();
+      request.session().attribute("trayecto", trayecto);
+      request.session().attribute("compartido", true);
 
-    Trayecto trayecto = new Trayecto();
-    request.session().attribute("trayecto", trayecto);
+      String username = request.session().attribute("usuario_logueado");
+      Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+      List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
+      model.put("miembros",miembros);
+      return new ModelAndView(model, "miembroTramo.hbs");
 
-    return new ModelAndView(null, "tramo.hbs");
-  }
+    } else {
+      return null;
+    }
 
-  public ModelAndView postCompartido(Request request, Response response) {
-
-    Trayecto trayecto = new TrayectoCompartido();
-    request.session().attribute("trayecto", trayecto);
-
-    return new ModelAndView(null, "tramo.hbs");
+    List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
+    model.put("transportes", transportes);
+    return new ModelAndView(model, "tramo.hbs");
   }
 
   public ModelAndView agregarTramo(Request request, Response response) {
 
     Trayecto trayecto = request.session().attribute("trayecto");
 
+    String paisInicio = request.queryParams("paisInicio");
+    String provinciaInicio = request.queryParams("provinciaInicio");
+    String municipioInicio = request.queryParams("municipioInicio");
+    String localidadInicio = request.queryParams("localidadInicio");
+    String calleInicio = request.queryParams("calleInicio");
+    int alturaInicio = Integer.parseInt(request.queryParams("alturaInicio"));
 
-    Ubicacion ubicacionInicial  = new Ubicacion(request.queryParams("calle"), Integer.parseInt(request.queryParams("altura")), request.queryParams("localidad"));
-    Ubicacion ubicacionFin  = new Ubicacion(request.queryParams("calle2"), Integer.parseInt(request.queryParams("altura2")), request.queryParams("localidad2"));
+    String paisFin = request.queryParams("paisFin");
+    String provinciaFin = request.queryParams("provinciaFin");
+    String municipioFin = request.queryParams("municipioFin");
+    String localidadFin = request.queryParams("localidadFin");
+    String calleFin = request.queryParams("calleFin");
+    int alturaFin = Integer.parseInt(request.queryParams("alturaFin"));
 
-    Tramo tramo = new Tramo( new Bicicleta(), ubicacionInicial, ubicacionFin);
+    String boton = request.queryParams("tramo");
+
+    Ubicacion ubicacionInicial  = new Ubicacion(calleInicio, alturaInicio, paisInicio,
+        provinciaInicio, municipioInicio, localidadInicio);
+
+    Ubicacion ubicacionFin  = new Ubicacion(calleFin, alturaFin, paisFin,
+        provinciaFin, municipioFin, localidadFin);
+
+
+    // Validacion de Ubicaciones
+    Error error = new Error();
+    String cualUbicacion = "Ubicacion Inicio";
+    try {
+      ubicacionInicial.getLocalidad();
+      cualUbicacion = "Ubicacion Fin";
+      ubicacionFin.getLocalidad();
+    } catch (Exception e) {
+      error.setError(true);
+      error.setDescripcion(e.getMessage() + " en " + cualUbicacion);
+      e.printStackTrace();
+      return new ModelAndView(error, "tramo.hbs");
+    }
+
+    int medioid = Integer.parseInt(request.queryParams("medio"));
+    MedioDeTransporte medio = RepositorioTransportes.getInstance().get(medioid);
+    Tramo tramo = new Tramo(medio, ubicacionInicial, ubicacionFin);
 
     trayecto.agregarTramo(tramo);
 
+    if(boton.equals("fin")) {
+      String username = request.session().attribute("usuario_logueado");
+      Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
-    String username = request.session().attribute("usuario-logeado");
-    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+      Miembro miembro = user.getMiembro();
+      miembro.registrarTrayecto(trayecto);
 
-    Miembro miembro = user.getMiembro();
+      RepositorioMiembros.getInstance().update(miembro);
 
-    miembro.registrarTrayecto(trayecto);
+      return new ModelAndView(null, "trayecto.hbs");
+    }
+    else
+    {
+      List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
+      if (request.session().attribute("compartido")) {
+        transportes = transportes.stream().filter(t -> t.admiteTrayectoCompartido()).collect(Collectors.toList());
+      }
+      Map<String, Object> model = new HashMap<>();
+      model.put("transportes", transportes);
+      return new ModelAndView(model, "tramo.hbs");
+    }
+  }
 
-    RepositorioMiembros.getInstance().update(miembro);
+  public ModelAndView agregarMiembros(Request request, Response response) {
+    int miembroID = Integer.parseInt(request.queryParams("miembro"));
+    Miembro miembro = RepositorioMiembros.getInstance().get(miembroID);
+    TrayectoCompartido trayecto = request.session().attribute("trayecto");
 
-    return new ModelAndView(null, "trayecto.hbs");
+    trayecto.agregarAcompanantes(miembro);
+
+    String boton = request.queryParams("agregar");
+    Map<String, Object> model = new HashMap<>();
+
+    if(boton.equals("fin")) {
+      List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
+      transportes = transportes.stream().filter(t -> t.admiteTrayectoCompartido()).collect(Collectors.toList());
+      model.put("transportes", transportes);
+      return new ModelAndView(model, "tramo.hbs");
+    }
+    else
+    {
+      String username = request.session().attribute("usuario_logueado");
+      Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+      List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
+      model.put("miembros",miembros);
+      return new ModelAndView(model, "miembroTramo.hbs");
+    }
+
   }
 
 
 }
+
+
+

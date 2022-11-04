@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Contrasenia {
+public class Validador {
   private List<Validacion> validaciones;
 
-  public Contrasenia(Validacion... validaciones) {
+  public Validador(Validacion... validaciones) {
     this.validaciones = new ArrayList<>();
     Collections.addAll(this.validaciones, validaciones);
   }
 
-  public Contrasenia() {
+  public Validador() {
     this.validaciones = new ArrayList<>();
     this.validaciones.add(new ValidacionContraseniaComun());
     this.validaciones.add(new ValidacionLongitud());

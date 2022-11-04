@@ -74,10 +74,10 @@ public interface RetrofitGeoDds {
   })
   @GET("distancia")
   Call<Distancia> distancia(@Header("Authorization") String token,
-                            @Query("LocalidadOrigenId") int localidadOrigenId,
+                            @Query("localidadOrigenId") int localidadOrigenId,
                             @Query("calleOrigen") String calleOrigen,
                             @Query("alturaOrigen") int alturaOrigen,
-                            @Query("LocalidadDestinoId") int localidadDestinoId,
+                            @Query("localidadDestinoId") int localidadDestinoId,
                             @Query("calleDestino") String calleDestino,
                             @Query("alturaDestino") int alturaDestino);
 }

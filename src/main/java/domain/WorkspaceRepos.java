@@ -11,26 +11,20 @@ import domain.ubicaciones.Ubicacion;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.util.List;
 
 public class WorkspaceRepos {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
 
     // FULL CON REPOS
 
-    Ubicacion ubicacion = new Ubicacion("rivadavia", 2000, "Localidad", null);
-    Miembro miembro = new Miembro("Juan", "Carlos", TipoDeDocumento.DNI, 43567890);
-    Sector sector = new Sector();
-    //sector.agregarMiembro(miembro);
-    Organizacion organizacion = new Organizacion("Panchos Loria", "S.A.", TipoOrganizacion.EMPRESA, ubicacion, ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
-    organizacion.agregarSector(sector);
-    miembro.vincularTrabajadorConOrg(organizacion, sector);
-
-    RepositorioOrganizaciones.getInstance().add(organizacion);
-
-    Organizacion org = RepositorioOrganizaciones.getInstance().get(1);
-
+    Ubicacion ubicacion = new Ubicacion("rivadavia", 2000, "ARGENTINA",
+        "BUENOS AIRES",
+        "AVELLANEDA",
+        "AVELLANEDA");
+    ubicacion.getLocalidad();
 
   }
 

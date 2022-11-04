@@ -3,6 +3,7 @@ package domain.organizaciones.datos.actividades.tipos;
 import domain.organizaciones.datos.actividades.Actividad;
 import domain.organizaciones.datos.actividades.Alcance;
 import domain.organizaciones.datos.actividades.UnidadConsumo;
+import domain.repositorios.RepositorioConsumos;
 
 public class TipoDeConsumoFactory {
 
@@ -13,8 +14,8 @@ public class TipoDeConsumoFactory {
   }
 
   public TipoDeConsumo buildTipoDeConsumo(String tipo) {
-
-    switch (tipo) {
+    return RepositorioConsumos.getInstance().findByName(tipo);
+    /*switch (tipo) {
 
       default:
       case "Gas Natural":
@@ -61,7 +62,7 @@ public class TipoDeConsumoFactory {
             UnidadConsumo.KM,
             Actividad.LOGISTICA_PRODUCTOS_RESIDUOS,
             Alcance.INDIRECTAS_EXTERNAS);
-    }
+    }*/
   }
 
 }

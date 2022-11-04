@@ -13,7 +13,7 @@ import java.util.List;
 public class Provincia implements SectorTerritorial {
   @Getter private int id;
   @Getter private String nombre;
-  //@Getter private Pais pais; <----------- no lo pongo por ahora porque no lo usamos
+  @Getter private Pais pais; //<----------- no lo pongo por ahora porque no lo usamos
   private ServicioGeoDds apiClient;
 
   public Provincia(String nombre, ServicioGeoDds apiClient) throws RuntimeException, IOException {
@@ -21,6 +21,14 @@ public class Provincia implements SectorTerritorial {
     this.apiClient = apiClient;
     this.id = this.apiClient.verificarNombreProvincia(nombre);
     this.nombre = nombre.toUpperCase();
+  }
+
+  public Provincia(String nombre, Pais pais, ServicioGeoDds apiClient) throws RuntimeException, IOException {
+    //this.apiClient = ServicioGeoDds.getInstancia();
+    this.apiClient = apiClient;
+    this.id = this.apiClient.verificarNombreProvincia(nombre, pais.getId());
+    this.nombre = nombre.toUpperCase();
+    this.pais = pais;
   }
 
   @Override

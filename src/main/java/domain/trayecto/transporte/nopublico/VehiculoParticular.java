@@ -18,6 +18,7 @@ public class VehiculoParticular extends MedioDeTransporte {
   @Enumerated(EnumType.STRING)
   private TipoDeCombustible tipoCombustible;
   @Getter @Setter private double combustibleConsumidoPorKM;
+  //@Getter private String descripcion;
 
   public VehiculoParticular() {}
 
@@ -26,6 +27,7 @@ public class VehiculoParticular extends MedioDeTransporte {
     this.tipoVehiculo = tipoVehiculo;
     this.tipoCombustible = tipoCombustible;
     this.combustibleConsumidoPorKM = combustible;
+    this.descripcion = this.toString();
   }
 
   @Override
@@ -43,6 +45,14 @@ public class VehiculoParticular extends MedioDeTransporte {
       e.printStackTrace();
       return new Distancia(-1.0, MTS);
     }
+  }
+
+  @Override
+  public String toString() {
+    // "Vehiculo Particular: " +
+    return tipoVehiculo.toString().toUpperCase() +
+        " de tipo de combustible ".toUpperCase() +
+        tipoCombustible.toString().toUpperCase();
   }
 
 }

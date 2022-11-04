@@ -1,12 +1,14 @@
 package domain.organizaciones.miembros;
 
 import domain.database.PersistenceEntity;
+import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.sectores.Sector;
 import domain.organizaciones.hc.UnidadHC;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.hc.HC;
+import domain.repositorios.RepositorioConsumos;
 import domain.trayecto.Trayecto;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,7 @@ import javax.persistence.*;
 
 import lombok.Getter;
 
-
+@Getter
 @Entity
 public class Miembro extends PersistenceEntity {
 
@@ -27,7 +29,7 @@ public class Miembro extends PersistenceEntity {
   private int nroDeDocumento; // era Integer, lo paso a int (a debatir)
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable(name = "trayecto_x_miembro")
-  @Getter private final List<Trayecto> trayectos = new ArrayList<>();
+  private final List<Trayecto> trayectos = new ArrayList<>();
 
   public Miembro() {}
 
@@ -60,7 +62,14 @@ public class Miembro extends PersistenceEntity {
     }
   }
 
+  // Deprecated
   public HC calculoHCPersonal(FactorEmision fe){
+    return new HC(fe.getValor() * trayectos.stream().mapToDouble(Trayecto::combustibleTotalUtilizado).sum(), UnidadHC.kgCO2);
+  }
+
+  public HC calculoHCPersonal(){
+    TipoDeConsumo tipoDeConsumo = RepositorioConsumos.getInstance().findByName("Distancia media");
+    FactorEmision fe = tipoDeConsumo.getFe();
     return new HC(fe.getValor() * trayectos.stream().mapToDouble(Trayecto::combustibleTotalUtilizado).sum(), UnidadHC.kgCO2);
   }
 

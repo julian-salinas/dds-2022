@@ -1,27 +1,29 @@
-{{#partial "barra"}}
+{{#partial "content"}}
+    <div class="left">
+      <div class="big-title">
+        <h1>{{ nombreOrg }}</h1>
+        <h2>{{ razonSocial }}</h2>
+      </div>
 
-{{/partial}}
+      <h4>Clasificación: {{ clasificacion }}</h4>
+      <h4>Tipo: {{ tipo }}</h4>
 
-{{#partial "contenido"}}
-    <h1> HOLA </h1>
-    <h1> ORGANIZACIONES </h1>
+      <br/><br/>
 
-    <div class="col p-2">
-        <div class="card shadow-sm p-2">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <p> DATOS DE LA ORG: </p>
-                </h5>
-                <p class="card-text"> Nombre: {{ nombre }} </p>
-                <p class="card-text"> Razon Social: {{ razonSocial }} </p>
-                <p class="card-text"> Tipo: {{ tipo }} </p>
-                <p class="card-text"> Clasificacion: {{ clasificacion }} </p>
+      <div class="links">
+        <ul>
+          <li><a href="/sectores" class="boton">Sectores</a></li>
+          <li><a href="/hc" class="boton">HC</a></li>
+          <li > <a href="/aceptar-miembros" class="boton"> Aceptar Miembros </a></li>
+          <li > <a href="/mediciones" class = "boton"> Cargar Mediciones </a></li>
+        </ul>
+      </div>
 
-            </div>
-        </div>
     </div>
 
+    <div class="right">
+      <img src="img/register.svg" alt="Person Image" class="person" />
+    </div>
 {{/partial}}
 
-
-{{>layout.hbs}}
+{{>base.hbs}}

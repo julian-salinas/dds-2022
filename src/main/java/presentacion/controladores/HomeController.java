@@ -15,20 +15,26 @@ public class HomeController {
   public ModelAndView index(Request request, Response response) {
 
     String username = request.session().attribute("usuario_logueado");
+
+    if (username == null) {
+      response.redirect("/login");
+      return null;
+    }
+
+    request.session().attribute("usuario_logueado", username);
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
     if (user.getTipo().equals(TipoUsuario.ORGANIZACION)) {
-      /*Map<String, Object> model = new HashMap<>();
-      model.put("org", user.getOrg());*/
       Object model = user.getOrg();
       return new ModelAndView(model, "homeOrganizacion.hbs");
-    } else if (user.getTipo().equals(TipoUsuario.MIEMBRO)) {
+    }
+    else if (user.getTipo().equals(TipoUsuario.MIEMBRO)) {
       Object model = user.getMiembro();
       return new ModelAndView(model, "homeMiembro.hbs");
     }
-    else
+    else {
       return null;
-
+    }
   }
 
 }

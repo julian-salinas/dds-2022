@@ -15,9 +15,9 @@ public class Usuario extends PersistenceEntity {
   String password;
   @Enumerated(EnumType.STRING)
   TipoUsuario tipo;
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   Organizacion org;
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   Miembro miembro;
 
 

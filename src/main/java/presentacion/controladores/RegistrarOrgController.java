@@ -3,10 +3,12 @@ package presentacion.controladores;
 import domain.organizaciones.ClasificacionOrg;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.TipoOrganizacion;
+import domain.organizaciones.sectores.Sector;
 import domain.repositorios.RepositorioOrganizaciones;
 import domain.repositorios.RepositorioUsuarios;
 import domain.ubicaciones.Ubicacion;
 import presentacion.Usuario;
+import presentacion.errores.Error;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -21,15 +23,34 @@ public class RegistrarOrgController {
   }
 
   public ModelAndView post(Request request, Response response) {
-    String nombre = request.queryParams("nombre");
-    String razonSocial = request.queryParams("razonSocial");
-    String tipo = request.queryParams("tipo");
-    String clasificacion = request.queryParams("clasificacion");
-    String ubicacion = request.queryParams("ubicacion");
-    String sector = request.queryParams("sector");
+    String nombre           = request.queryParams("nombre");
+    String razonSocial      = request.queryParams("razonSocial");
+    String tipo             = request.queryParams("tipo");
+    String clasificacion    = request.queryParams("clasificacion");
+    String pais             = request.queryParams("ubicacionPais");
+    String provincia        = request.queryParams("ubicacionProvincia");
+    String municipio        = request.queryParams("ubicacionMunicipio");
+    String localidad        = request.queryParams("ubicacionLocalidad");
+    String calle            = request.queryParams("ubicacionCalle");
+    int altura              = Integer.parseInt(request.queryParams("ubicacionAltura"));
+
+    Ubicacion ubicacion = new Ubicacion(calle, altura,
+        pais, provincia, municipio, localidad);
+
+    // Validacion de Ubicacion
+    Error error = new Error();
+    try {
+      ubicacion.getLocalidad();
+    } catch (Exception e) {
+      error.setError(true);
+      error.setDescripcion(e.getMessage() + " (en los datos ingresados correspondientes a la " +
+          "ubicacion) ");
+      e.printStackTrace();
+      return new ModelAndView(error, "registrarOrg.hbs");
+    }
 
     Organizacion org = new Organizacion(nombre, razonSocial, TipoOrganizacion.valueOf(tipo),
-        new Ubicacion(), ClasificacionOrg.valueOf(clasificacion));
+        ubicacion, ClasificacionOrg.valueOf(clasificacion));
 
     Usuario usuario = request.session().attribute("usuario_signeado_literal");
     usuario.setOrg(org);
