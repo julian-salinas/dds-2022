@@ -51,25 +51,19 @@ public class RepositorioOrganizaciones extends Repositorio<Organizacion> {
         return organizaciones;
     } */
 
-    public List<Organizacion> inMunicipio(Municipio municipio) {
+    public List<Organizacion> inMunicipio(int idMunicipio) {
         List<Organizacion> organizaciones = this.dao.all();
         return organizaciones
                 .stream()
-                .filter(org -> org.sectorMunicipio().equals(municipio) ||
-                        (org.sectorMunicipio().getId() == municipio.getId() &&
-                                Objects.equals(org.sectorMunicipio().getNombre(), municipio.getNombre()))
-                )
+                .filter(org -> org.sectorMunicipio().getId() == idMunicipio)
                 .collect(Collectors.toList());
     }
 
-    public List<Organizacion> inProvincia(Provincia provincia) {
+    public List<Organizacion> inProvincia(int idProvincia) {
         List<Organizacion> organizaciones = this.dao.all();
         return organizaciones
                 .stream()
-                .filter(org -> org.sectorProvincia().equals(provincia) ||
-                        (org.sectorProvincia().getId() == provincia.getId() &&
-                                Objects.equals(org.sectorProvincia().getNombre(), provincia.getNombre()))
-                )
+                .filter(org -> org.sectorProvincia().getId() == idProvincia)
                 .collect(Collectors.toList());
     }
 

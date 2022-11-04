@@ -1,14 +1,9 @@
 package domain.ubicaciones.sectores;
 
-import domain.organizaciones.Organizacion;
-import domain.repositorios.RepositorioOrganizaciones;
 import domain.servicios.geodds.ServicioGeoDds;
+import java.io.IOException;
 import lombok.Getter;
 
-import javax.persistence.Id;
-import javax.persistence.Transient;
-import java.io.IOException;
-import java.util.List;
 
 public class Provincia implements SectorTerritorial {
   @Getter private int id;
@@ -16,6 +11,7 @@ public class Provincia implements SectorTerritorial {
   @Getter private Pais pais; //<----------- no lo pongo por ahora porque no lo usamos
   private ServicioGeoDds apiClient;
 
+  @Deprecated
   public Provincia(String nombre, ServicioGeoDds apiClient) throws RuntimeException, IOException {
     //this.apiClient = ServicioGeoDds.getInstancia();
     this.apiClient = apiClient;
@@ -31,8 +27,4 @@ public class Provincia implements SectorTerritorial {
     this.pais = pais;
   }
 
-  @Override
-  public List<Organizacion> orgsDentroDeSector() {
-    return RepositorioOrganizaciones.getInstance().inProvincia(this);
-  }
 }

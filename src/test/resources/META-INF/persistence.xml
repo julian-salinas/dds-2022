@@ -27,6 +27,7 @@
         <class>domain.organizaciones.datos.actividades.DatosActividades</class>
         <class>domain.ubicaciones.Ubicacion</class>
         <class>domain.organizaciones.hc.HC</class>
+        <class>domain.ubicaciones.sectores.AgenteSectorial</class>
         <!-- -->
 
         <properties>

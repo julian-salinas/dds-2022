@@ -38,7 +38,7 @@ public class Ubicacion extends PersistenceEntity {
     apiClient = ServicioGeoDds.getInstancia();
   }
 
-  // Deprecated
+  @Deprecated
   public Ubicacion(String calle, int altura, String nombreLocalidad, ServicioGeoDds apiClient) {
     this.apiClient = apiClient;
     this.calle = calle;
@@ -46,7 +46,7 @@ public class Ubicacion extends PersistenceEntity {
     //this.nombreLocalidad = nombreLocalidad;
   }
 
-  // Deprecated
+  @Deprecated
   public Ubicacion(String calle, int altura, String nombreLocalidad) {
     this.apiClient = ServicioGeoDds.getInstancia();
     this.calle = calle;
@@ -74,16 +74,6 @@ public class Ubicacion extends PersistenceEntity {
     this.calle = calle;
     this.altura = altura;
   }
-
-  // Hacer esto para Localidad, Municipio, etc. O tal vez no.
-  /*public Localidad getLocalidad() {
-    try {
-      return new Localidad(nombreLocalidad, apiClient);
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }*/
 
   public Localidad getLocalidad() {
 
