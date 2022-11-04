@@ -1,5 +1,6 @@
 package presentacion.controladores;
 
+import domain.organizaciones.Organizacion;
 import domain.repositorios.RepositorioUsuarios;
 import presentacion.TipoUsuario;
 import presentacion.Usuario;
