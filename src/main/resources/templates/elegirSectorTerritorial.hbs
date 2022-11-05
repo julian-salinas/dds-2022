@@ -50,14 +50,26 @@
                         <div class="col-md-8">
 
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label for="exampleInput8" class="form-label">Provincia:</label>
-                                    <select id="tipoDocumento" name="idSector" class="form-select mb-3">
-                                        {{#each provincias}}
-                                            <option value={{id}}>{{nombre}}</option>
-                                        {{/each}}
-                                    </select>
-                                </div>
+                                {{#if provincias}}
+                                    <div class="col-md-6">
+                                        <label for="exampleInput8" class="form-label">Provincia:</label>
+                                        <select id="tipoDocumento" name="idSector" class="form-select mb-3">
+                                            {{#each provincias}}
+                                                <option value={{id}}>{{nombre}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                {{/if}}
+                                {{#if municipios}}
+                                    <div class="col-md-6">
+                                        <label for="exampleInput8" class="form-label">Municipio:</label>
+                                        <select id="tipoDocumento" name="idSector" class="form-select mb-3">
+                                            {{#each municipios}}
+                                                <option value={{id}}>{{nombre}}, {{provincia.nombre}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                {{/if}}
                             </div>
 
                         </div>

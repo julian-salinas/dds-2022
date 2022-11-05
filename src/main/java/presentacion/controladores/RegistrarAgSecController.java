@@ -1,6 +1,7 @@
 package presentacion.controladores;
 
 import domain.servicios.geodds.ServicioGeoDds;
+import domain.servicios.geodds.entidades.Municipio;
 import domain.servicios.geodds.entidades.Provincia;
 import domain.ubicaciones.sectores.AgenteSectorial;
 import domain.ubicaciones.sectores.TipoSectorTerritorial;
@@ -39,15 +40,13 @@ public class RegistrarAgSecController {
   public ModelAndView index_sector(Request request, Response response) {
     TipoSectorTerritorial tipo = request.session().attribute("tipo_sec_terr");
 
-    String example = request.queryParams("hola");
-
     Map<String, Object> model = new HashMap<>();
     model.put("tipoSectorTerritorial", tipo);
 
 
     if(tipo.equals(TipoSectorTerritorial.MUNICIPIO)) {
-      List<Provincia> provincias = ServicioGeoDds.getInstancia().allProvincias();
-      model.put("provincias", provincias);
+      List<Municipio> municipios = ServicioGeoDds.getInstancia().allMunicipios();
+      model.put("municipios", municipios);
     } else {
       List<Provincia> provincias = ServicioGeoDds.getInstancia().allProvincias();
       model.put("provincias", provincias);
@@ -56,13 +55,12 @@ public class RegistrarAgSecController {
     return new ModelAndView(model, "elegirSectorTerritorial.hbs");
   }
 
-  //TODO
   public ModelAndView post_sector(Request request, Response response) {
     TipoSectorTerritorial tipo = TipoSectorTerritorial.valueOf(request.queryParams("tipo"));
     int id = Integer.parseInt(request.queryParams("idSector"));
-
     Usuario usuario = request.session().attribute("usuario_signeado_literal");
-    AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.PROVINCIA, id);
+
+    AgenteSectorial agenteSectorial = new AgenteSectorial(tipo, id);
     agenteSectorial.setNombreAgente("Panamiguel");
     usuario.setAgenteSectorial(agenteSectorial);
 

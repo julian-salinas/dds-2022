@@ -3,10 +3,7 @@ package domain.servicios.geodds;
 import static java.net.URLEncoder.encode;
 import domain.servicios.geodds.entidades.*;
 import java.io.*;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.stream.Collectors;
 import domain.ubicaciones.Ubicacion;
 import retrofit2.Call;
@@ -120,6 +117,24 @@ public class ServicioGeoDds {
   public List<Provincia> allProvincias() {
     try {
       return listadoDeProvincias(1);
+    } catch (IOException e) {
+      throw new RuntimeException("Fuck you bro");
+    }
+  }
+
+  public List<Municipio> allMunicipios() {
+    try {
+      List<Municipio> municipios = new ArrayList<>();
+      int offset = 1;
+      while (true) {
+        List<Municipio> aux = listadoDeMunicipios(offset);
+        if (aux.isEmpty())
+          break;
+        municipios.addAll(aux);
+        offset++;
+      }
+      municipios.sort(Comparator.comparingInt(a -> a.getProvincia().id));
+      return  municipios;
     } catch (IOException e) {
       throw new RuntimeException("Fuck you bro");
     }
