@@ -116,7 +116,7 @@ public class ServicioGeoDds {
 
   public List<Provincia> allProvincias() {
     try {
-      return listadoDeProvincias(1);
+      return listadoDeProvincias(1,9);
     } catch (IOException e) {
       throw new RuntimeException("Fuck you bro");
     }
