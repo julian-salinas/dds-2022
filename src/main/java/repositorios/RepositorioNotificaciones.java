@@ -1,8 +1,8 @@
-package domain.repositorios;
+package repositorios;
 
-import domain.repositorios.daos.DAO;
+import repositorios.daos.DAO;
 import domain.notificaciones.Notificacion;
-import domain.repositorios.daos.DAOHibernate;
+import repositorios.daos.DAOHibernate;
 
 public class RepositorioNotificaciones extends Repositorio<Notificacion> {
 

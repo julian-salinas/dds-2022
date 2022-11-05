@@ -1,9 +1,8 @@
-package domain.repositorios;
+package repositorios;
 
 import domain.database.EntityManagerHelper;
-import domain.organizaciones.Organizacion;
-import domain.repositorios.daos.DAO;
-import domain.repositorios.daos.DAOHibernate;
+import repositorios.daos.DAO;
+import repositorios.daos.DAOHibernate;
 import presentacion.Usuario;
 
 import java.util.List;

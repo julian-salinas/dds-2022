@@ -1,14 +1,10 @@
-package domain.repositorios.daos;
+package repositorios.daos;
 
 import domain.database.EntityManagerHelper;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
-import java.util.Locale;
 
 public class DAOHibernate<T> implements DAO<T> {
     private Class<T> type;

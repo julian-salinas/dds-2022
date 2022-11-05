@@ -6,7 +6,6 @@ import domain.organizaciones.TipoOrganizacion;
 import domain.organizaciones.miembros.Miembro;
 import domain.organizaciones.miembros.TipoDeDocumento;
 import domain.organizaciones.sectores.Sector;
-import domain.repositorios.RepositorioOrganizaciones;
 import domain.ubicaciones.Ubicacion;
 import org.junit.jupiter.api.Test;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;

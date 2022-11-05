@@ -152,8 +152,8 @@ public class Organizacion extends PersistenceEntity {
         String.valueOf(combustibleTransporteMiembros),
         "Mensual",
         formatFecha.format(LocalDate.now()));
-    //datos.cargarFactorEmision(new FactorEmision(2000, UnidadConsumo.KM));
-    datosActividades.add(datos);
+    if (combustibleTransporteMiembros > 0.0)
+      datosActividades.add(datos);
   }
 
   private double calculoHCMensual(){

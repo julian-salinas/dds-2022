@@ -2,15 +2,12 @@ package presentacion.controladores;
 
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.sectores.Sector;
-import domain.repositorios.RepositorioOrganizaciones;
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioOrganizaciones;
+import repositorios.RepositorioUsuarios;
 import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SectoresController {
 

@@ -1,9 +1,6 @@
 package domain.organizaciones.datos.actividades.tipos;
 
-import domain.organizaciones.datos.actividades.Actividad;
-import domain.organizaciones.datos.actividades.Alcance;
-import domain.organizaciones.datos.actividades.UnidadConsumo;
-import domain.repositorios.RepositorioConsumos;
+import repositorios.RepositorioConsumos;
 
 public class TipoDeConsumoFactory {
 

@@ -8,7 +8,7 @@ import domain.organizaciones.sectores.Sector;
 import domain.organizaciones.hc.UnidadHC;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.hc.HC;
-import domain.repositorios.RepositorioConsumos;
+import repositorios.RepositorioConsumos;
 import domain.trayecto.Trayecto;
 import java.util.ArrayList;
 import java.util.List;

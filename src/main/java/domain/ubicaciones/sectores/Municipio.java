@@ -14,7 +14,7 @@ public class Municipio implements SectorTerritorial {
   @Deprecated
   public Municipio(String nombre, ServicioGeoDds apiClient) throws IOException, RuntimeException {
     this.apiClient = apiClient;
-    this.id = this.apiClient.verificarNombreMunicipio(nombre);
+    //this.id = this.apiClient.verificarNombreMunicipio(nombre);
     this.provincia = new Provincia(apiClient.nombreProvincia(id), apiClient);
     this.nombre = nombre.toUpperCase();
   }

@@ -1,18 +1,13 @@
-package domain.repositorios;
+package repositorios;
 
 import domain.database.EntityManagerHelper;
-import domain.notificaciones.TipoDeNotificacion;
 import domain.organizaciones.ClasificacionOrg;
 import domain.organizaciones.Organizacion;
-import domain.organizaciones.hc.HC;
-import domain.repositorios.daos.DAO;
-import domain.repositorios.daos.DAOHibernate;
-import domain.ubicaciones.sectores.Municipio;
-import domain.ubicaciones.sectores.Provincia;
+import repositorios.daos.DAO;
+import repositorios.daos.DAOHibernate;
 
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RepositorioOrganizaciones extends Repositorio<Organizacion> {

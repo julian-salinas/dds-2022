@@ -1,15 +1,13 @@
 package presentacion.controladores;
 
 import domain.organizaciones.miembros.Miembro;
-import domain.repositorios.RepositorioMiembros;
-import domain.repositorios.RepositorioTransportes;
-import domain.repositorios.RepositorioUsuarios;
-import domain.servicios.geodds.ServicioGeoDds;
+import repositorios.RepositorioMiembros;
+import repositorios.RepositorioTransportes;
+import repositorios.RepositorioUsuarios;
 import domain.trayecto.Tramo;
 import domain.trayecto.Trayecto;
 import domain.trayecto.TrayectoCompartido;
 import domain.trayecto.transporte.MedioDeTransporte;
-import domain.trayecto.transporte.nopublico.*;
 import domain.ubicaciones.Ubicacion;
 import presentacion.Usuario;
 import presentacion.errores.Error;

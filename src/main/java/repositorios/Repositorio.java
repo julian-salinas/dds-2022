@@ -1,6 +1,7 @@
-package domain.repositorios;
+package repositorios;
 
-import domain.repositorios.daos.DAO;
+import repositorios.daos.DAO;
+
 import java.util.List;
 
 public class Repositorio<T> {
