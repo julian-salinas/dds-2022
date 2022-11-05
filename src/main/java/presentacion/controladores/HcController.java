@@ -3,6 +3,7 @@ package presentacion.controladores;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.hc.HC;
 import domain.organizaciones.miembros.Miembro;
+import domain.ubicaciones.sectores.AgenteSectorial;
 import repositorios.RepositorioMiembros;
 import repositorios.RepositorioOrganizaciones;
 import repositorios.RepositorioUsuarios;
@@ -75,6 +76,9 @@ public class HcController {
 
     model.put("unidad", unidadHC);
 
+    // Para lo de los botones de log in y sign in
+    model.put("nombre", username);
+
     RepositorioOrganizaciones.getInstance().update(organizacion);
 
     return new ModelAndView(model, "hc.hbs");
@@ -109,9 +113,47 @@ public class HcController {
 
     model.put("unidad", unidadHC);
 
-    RepositorioMiembros.getInstance().update(miembro);
+    // Para lo de los botones de log in y sign in
+    model.put("nombre", username);
+
+    //RepositorioMiembros.getInstance().update(miembro);
 
     return new ModelAndView(model, "hcMiembro.hbs");
+  }
+
+  public ModelAndView index_agente(Request request, Response response) {
+    //Para lo de los botones de log in y sign in
+    Map<String, Object> model = new HashMap<>();
+    model.put("nombre", "nombre");
+    return new ModelAndView(model, "hcAgente.hbs");
+  }
+
+  public ModelAndView post_agente(Request request, Response response) {
+
+    String username = request.session().attribute("usuario_logueado");
+    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+    AgenteSectorial agenteSectorial = user.getAgenteSectorial();
+    String unidadHC    = request.queryParams("unidadHC");
+    Map<String, Object> model = new HashMap<>();
+
+    HC hcAgente = agenteSectorial.hcSectorMensual();
+
+    if (unidadHC.equals("gCO2")) {
+      model.put("mensual", hcAgente.enGCO2());
+    }
+    else if (unidadHC.equals("kgCO2")) {
+      model.put("mensual", hcAgente.enKgCO2());
+    }
+    else {// if(unidadHC.equals("tnCO2"))
+      model.put("mensual", hcAgente.enTnCO2());
+    }
+
+    model.put("unidad", unidadHC);
+
+    // Para lo de los botones de log in y sign in
+    model.put("nombre", username);
+
+    return new ModelAndView(model, "hcAgente.hbs");
   }
 
 }
