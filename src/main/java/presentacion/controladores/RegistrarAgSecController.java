@@ -39,6 +39,8 @@ public class RegistrarAgSecController {
   public ModelAndView index_sector(Request request, Response response) {
     TipoSectorTerritorial tipo = request.session().attribute("tipo_sec_terr");
 
+    String example = request.queryParams("hola");
+
     Map<String, Object> model = new HashMap<>();
     model.put("tipoSectorTerritorial", tipo);
 
@@ -57,9 +59,18 @@ public class RegistrarAgSecController {
   //TODO
   public ModelAndView post_sector(Request request, Response response) {
     TipoSectorTerritorial tipo = TipoSectorTerritorial.valueOf(request.queryParams("tipo"));
+    int id = Integer.parseInt(request.queryParams("idSector"));
 
-    AgenteSectorial agenteSectorial = new AgenteSectorial(tipo, 335);
-    return new ModelAndView(agenteSectorial, "elegirSectorTerritorial.hbs");
+    Usuario usuario = request.session().attribute("usuario_signeado_literal");
+    AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.PROVINCIA, id);
+    agenteSectorial.setNombreAgente("Panamiguel");
+    usuario.setAgenteSectorial(agenteSectorial);
+
+    RepositorioUsuarios.getInstance().update(usuario);
+
+    request.session().attribute("usuario_logueado", usuario.getUsername());
+    response.redirect("/home");
+    return null;
   }
 
 }

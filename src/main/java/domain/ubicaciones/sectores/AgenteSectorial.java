@@ -5,6 +5,7 @@ import domain.organizaciones.hc.HC;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.hc.UnidadHC;
 import lombok.Getter;
+import lombok.Setter;
 import repositorios.RepositorioOrganizaciones;
 
 import javax.persistence.Entity;
@@ -14,13 +15,18 @@ import javax.persistence.Transient;
 import java.util.List;
 
 @Entity(name = "agente_sectorial")
-@Getter
+@Getter @Setter
 public class AgenteSectorial extends PersistenceEntity {
+  String nombreAgente;
   int idSectorTerritorial;
   @Enumerated(EnumType.STRING)
   TipoSectorTerritorial tipoSectorTerritorial;
   @Transient
   SectorTerritorial sectorTerritorial;
+
+  public AgenteSectorial() {
+
+  }
 
   @Deprecated
   public AgenteSectorial(SectorTerritorial sectorTerritorial) {
