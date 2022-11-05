@@ -10,14 +10,11 @@ import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.datos.actividades.tipos.NoCoincidenUnidadesFEYTC;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
-import domain.organizaciones.datos.actividades.tipos.TipoDeConsumoFactory;
-import domain.repositorios.RepositorioConsumos;
+import repositorios.RepositorioConsumos;
 import domain.ubicaciones.Ubicacion;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.ubicaciones.distancia.Distancia;
-import domain.ubicaciones.distancia.UnidadDistancia;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

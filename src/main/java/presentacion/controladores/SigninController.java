@@ -2,7 +2,7 @@ package presentacion.controladores;
 
 import domain.contrasenias.Validador;
 import domain.contrasenias.excepciones.PasswordException;
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioUsuarios;
 import presentacion.TipoUsuario;
 import presentacion.Usuario;
 import presentacion.errores.Error;
@@ -48,6 +48,8 @@ public class SigninController {
       response.redirect("/registrarMiembro");
     if(tipo == TipoUsuario.ORGANIZACION)
       response.redirect("/registrarOrg");
+    if(tipo == TipoUsuario.AGENTE_SECTORIAL)
+      response.redirect("/registrarAgSec");
 
     response.redirect("/inicio");
     return null;

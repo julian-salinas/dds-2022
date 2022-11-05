@@ -1,15 +1,12 @@
 package presentacion.controladores;
 
-import domain.organizaciones.Organizacion;
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioUsuarios;
 import presentacion.TipoUsuario;
 import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class HomeController {
 
@@ -32,6 +29,10 @@ public class HomeController {
     else if (user.getTipo().equals(TipoUsuario.MIEMBRO)) {
       Object model = user.getMiembro();
       return new ModelAndView(model, "homeMiembro.hbs");
+    }
+    else if (user.getTipo().equals(TipoUsuario.AGENTE_SECTORIAL)) {
+      Object model = user.getAgenteSectorial();
+      return new ModelAndView(model, "homeAgenteSectorial.hbs");
     }
     else {
       return null;

@@ -4,7 +4,7 @@ import domain.organizaciones.*;
 import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.hc.HC;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
-import domain.repositorios.RepositorioOrganizaciones;
+import repositorios.RepositorioOrganizaciones;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.ubicaciones.sectores.AgenteSectorial;
 import domain.ubicaciones.sectores.Municipio;

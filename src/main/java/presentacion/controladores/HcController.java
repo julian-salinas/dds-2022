@@ -1,13 +1,11 @@
 package presentacion.controladores;
 
 import domain.organizaciones.Organizacion;
-import domain.organizaciones.datos.actividades.UnidadConsumo;
-import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.hc.HC;
 import domain.organizaciones.miembros.Miembro;
-import domain.repositorios.RepositorioMiembros;
-import domain.repositorios.RepositorioOrganizaciones;
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioMiembros;
+import repositorios.RepositorioOrganizaciones;
+import repositorios.RepositorioUsuarios;
 import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;

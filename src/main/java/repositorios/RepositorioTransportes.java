@@ -1,8 +1,8 @@
-package domain.repositorios;
+package repositorios;
 
 import domain.database.EntityManagerHelper;
-import domain.repositorios.daos.DAO;
-import domain.repositorios.daos.DAOHibernate;
+import repositorios.daos.DAO;
+import repositorios.daos.DAOHibernate;
 import domain.trayecto.transporte.MedioDeTransporte;
 import domain.trayecto.transporte.nopublico.Bicicleta;
 import domain.trayecto.transporte.nopublico.Pie;

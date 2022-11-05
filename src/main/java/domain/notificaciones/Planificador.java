@@ -1,7 +1,6 @@
 package domain.notificaciones;
 
-import domain.repositorios.RepositorioContactos;
-import domain.repositorios.RepositorioNotificaciones;
+import repositorios.RepositorioContactos;
 import org.quartz.*;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.*;

@@ -1,0 +1,112 @@
+<html>
+<head>
+    <title>Impacto Ambiental</title>
+
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
+            rel="stylesheet"
+    />
+
+    <!-- MDB -->
+    <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"
+    ></script>
+</head>
+<body>
+<div class="container my-5">
+    <div class="card">
+        {{#if tipoSectorTerritorial}}
+            <form action="/registrarAgSec/sector" method="POST">
+                <!-- Card header -->
+                <div class="card-header py-4 px-5 bg-light border-0">
+                    <h4 class="mb-0 fw-bold">Registrarse como Agente Sectorial</h4>
+                </div>
+
+                <!-- Card body -->
+                <div class="card-body px-5">
+                    <!-- Business address section -->
+                    <div class="row gx-xl-5">
+                        <div class="col-md-4">
+                            <h5>Datos de Sector</h5>
+                            <p class="text-muted">
+                                Vamos a necesitar algunos datos sobre el sector donde vas a actuar para poder crear tu cuenta.
+                            </p>
+                        </div>
+
+                        <div class="col-md-8">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="exampleInput8" class="form-label">Provincia:</label>
+                                    <select id="tipoDocumento" name="tipoDocumento" class="form-select mb-3">
+                                        {{#each provincias}}
+                                            <option value={{id}}>{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Card footer -->
+                <div class="card-footer text-end py-4 px-5 bg-light border-0">
+                    <button type="submit" class="btn btn-primary btn-rounded" name="tipo" value={{tipoSectorTerritorial}}>
+                        OK
+                    </button>
+                </div>
+            </form>
+        {{else}}
+            <form action="/registrarAgSec/tipo" method="POST">
+                <!-- Card header -->
+                <div class="card-header py-4 px-5 bg-light border-0">
+                    <h4 class="mb-0 fw-bold">Registrarse como Agente Sectorial</h4>
+                </div>
+
+                <!-- Card body -->
+                <div class="card-body px-5">
+                    <!-- Business address section -->
+                    <div class="row gx-xl-5">
+                        <div class="col-md-4">
+                            <h5>Datos de Sector</h5>
+                            <p class="text-muted">
+                                Vamos a necesitar algunos datos sobre el sector donde vas a actuar para poder crear tu cuenta.
+                            </p>
+                        </div>
+
+                        <div class="col-md-8">
+
+                            <div class="card-header py-4 px-5">
+                                <center>
+                                    <button type="submit" class="btn btn-primary btn-rounded" name="tipo" value="PROVINCIA">
+                                        Provincial
+                                    </button>
+                                    <button type="submit" class="btn btn-primary btn-rounded" name="tipo" value="MUNICIPIO">
+                                        Municipal
+                                    </button>
+                                </center>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        {{/if}}
+    </div>
+</div>
+</body>
+</html>

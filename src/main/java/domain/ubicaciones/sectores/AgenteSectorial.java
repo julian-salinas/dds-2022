@@ -4,7 +4,8 @@ import domain.database.PersistenceEntity;
 import domain.organizaciones.hc.HC;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.hc.UnidadHC;
-import domain.repositorios.RepositorioOrganizaciones;
+import lombok.Getter;
+import repositorios.RepositorioOrganizaciones;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,6 +14,7 @@ import javax.persistence.Transient;
 import java.util.List;
 
 @Entity(name = "agente_sectorial")
+@Getter
 public class AgenteSectorial extends PersistenceEntity {
   int idSectorTerritorial;
   @Enumerated(EnumType.STRING)

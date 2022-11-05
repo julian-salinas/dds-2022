@@ -117,6 +117,14 @@ public class ServicioGeoDds {
     return responseLocalidades.body();
   }
 
+  public List<Provincia> allProvincias() {
+    try {
+      return listadoDeProvincias(1);
+    } catch (IOException e) {
+      throw new RuntimeException("Fuck you bro");
+    }
+  }
+
   public double distanciaEntreUbicaciones(Ubicacion origen, Ubicacion destino) throws IOException {
 
     String calleOrigen = origen.getCalle();

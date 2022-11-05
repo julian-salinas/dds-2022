@@ -1,19 +1,9 @@
 package domain;
 
-import domain.organizaciones.ClasificacionOrg;
-import domain.organizaciones.Organizacion;
-import domain.organizaciones.TipoOrganizacion;
 import domain.organizaciones.hc.HC;
-import domain.organizaciones.miembros.Miembro;
-import domain.organizaciones.miembros.TipoDeDocumento;
-import domain.organizaciones.sectores.Sector;
-import domain.repositorios.RepositorioOrganizaciones;
-import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.sectores.AgenteSectorial;
 import domain.ubicaciones.sectores.TipoSectorTerritorial;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
-import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;

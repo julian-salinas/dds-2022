@@ -1,4 +1,4 @@
-package domain.repositorios.daos;
+package repositorios.daos;
 
 import java.util.List;
 
