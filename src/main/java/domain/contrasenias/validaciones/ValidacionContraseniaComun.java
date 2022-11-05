@@ -42,6 +42,6 @@ public class ValidacionContraseniaComun implements Validacion {
 
   @Override
   public PasswordException error() {
-    return new PasswordException("Tu contraseña se encuentra en el top 1000 peores contraseñas");
+    return new PasswordException("Tu contraseña es muy debil");
   }
 }
