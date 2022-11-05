@@ -37,7 +37,7 @@ public class WorkspaceRepos {
     Collections.sort(strings);
     strings.forEach(System.out::println);
 
-    AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.PROVINCIA, 168);
+    AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.PROVINCIA, 168, "Pana");
 
     HC hc = agenteSectorial.hcSectorMensual();
 

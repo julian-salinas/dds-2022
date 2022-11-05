@@ -19,6 +19,7 @@ import java.util.List;
 public class AgenteSectorial extends PersistenceEntity {
   String nombreAgente;
   int idSectorTerritorial;
+  String nombreSectorTerritorial;
   @Enumerated(EnumType.STRING)
   TipoSectorTerritorial tipoSectorTerritorial;
   @Transient
@@ -33,9 +34,10 @@ public class AgenteSectorial extends PersistenceEntity {
     this.sectorTerritorial = sectorTerritorial;
   }
 
-  public AgenteSectorial(TipoSectorTerritorial tipo, int id) {
+  public AgenteSectorial(TipoSectorTerritorial tipo, int id, String nombre) {
     this.tipoSectorTerritorial = tipo;
     this.idSectorTerritorial = id;
+    this.nombreSectorTerritorial = nombre;
     //this.sectorTerritorial = encontrarSectorTerritorial();
   }
 

@@ -180,25 +180,15 @@ public class ServicioGeoDds {
   }
 
   // Para agarrar el Municipio de una Localidad, una Provincia de un Municipio, etc.
-  // Actualizacion: esto no funciona y es basura. Y lo hice yo. Sacar.
 
-  @Deprecated
-  public String nombreMunicipio(int idLocalidad) throws IOException {
-    List<Municipio> listadoDeMunicipios = this.listadoDeMunicipios(1);
-    return listadoDeMunicipios
-        .stream()
-        .collect(Collectors.toMap(Municipio::getId, mun -> mun.getProvincia().getNombre()))
-        .get(idLocalidad);
+  public String nombreMunicipio(int idMunicipio) {
+    return mapMunicipios().get(idMunicipio);
   }
 
-  @Deprecated
-  public String nombreProvincia(int idMunicipio) throws IOException {
-    List<Municipio> listadoDeMunicipios = this.listadoDeMunicipios(1);
-    return listadoDeMunicipios
-        .stream()
-        .collect(Collectors.toMap(Municipio::getId, mun -> mun.getProvincia().getNombre()))
-        .get(idMunicipio);
+  public String nombreProvincia(int idProvincia) {
+    return mapProvincias().get(idProvincia);
   }
+
 
   /** =============== Métodos para mapear =============== **/
 
@@ -220,12 +210,12 @@ public class ServicioGeoDds {
    *
    * @return Map (Nombre, ID) con las provincias
    */
-  public Map<String, Integer> mapProvincias(int offset) throws IOException {
-    List<Provincia> listadoDeProvincias = this.listadoDeProvincias(offset);
+  public Map<Integer, String> mapProvincias() {
+    List<Provincia> listadoDeProvincias = allProvincias();
 
     return listadoDeProvincias
         .stream()
-        .collect(Collectors.toMap(Provincia::getNombre, Provincia::getId));
+        .collect(Collectors.toMap(Provincia::getId, Provincia::getNombre));
   }
 
   public Map<String, Integer> mapProvincias(int offset, int idPais) throws IOException {
@@ -241,12 +231,12 @@ public class ServicioGeoDds {
    *
    * @return Map (Nombre, ID) de los municipios
    */
-  public Map<String, Integer> mapMunicipios(int offset) throws  IOException {
-    List<Municipio> listadoDeMunicipios = this.listadoDeMunicipios(offset);
+  public Map<Integer, String> mapMunicipios() {
+    List<Municipio> listadoDeMunicipios = allMunicipios();
 
     return listadoDeMunicipios
         .stream()
-        .collect(Collectors.toMap(Municipio::getNombre, Municipio::getId));
+        .collect(Collectors.toMap(Municipio::getId, Municipio::getNombre));
   }
 
   public Map<String, Integer> mapMunicipios(int offset, int idProvincia) throws  IOException {
@@ -311,8 +301,10 @@ public class ServicioGeoDds {
    * @param nombreProvincia nombre de la provincia que se está queriendo validar.
    * @return ID de la provincia
    */
+
+  @Deprecated
   public int verificarNombreProvincia(String nombreProvincia)  throws RuntimeException, IOException {
-    Map<String, Integer> provincias = this.mapProvincias(1);
+    Map<String, Integer> provincias = new HashMap<>();// this.mapProvincias(1);
     Integer id = provincias.get(nombreProvincia.toUpperCase());
 
     this.validarId(id, "No se pudo encontrar la provincia");
@@ -335,8 +327,9 @@ public class ServicioGeoDds {
    * @param nombreMunicipio nombre del municipio que se está queriendo validar.
    * @return ID del municipio
    */
+
   public int verificarNombreMunicipio(String nombreMunicipio) throws  RuntimeException, IOException {
-    Map<String, Integer> municipios = this.mapMunicipios(1);
+    Map<String, Integer> municipios = new HashMap<>();//this.mapMunicipios(1);
     Integer id = municipios.get(nombreMunicipio.toUpperCase());
 
     this.validarId(id, "No se encontró el municipio");

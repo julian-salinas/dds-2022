@@ -11,9 +11,11 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class RegistrarAgSecController {
 
@@ -56,12 +58,20 @@ public class RegistrarAgSecController {
   }
 
   public ModelAndView post_sector(Request request, Response response) {
+    Usuario usuario = request.session().attribute("usuario_signeado_literal");
+    String nombreAgente = request.queryParams("nombreAgente");
     TipoSectorTerritorial tipo = TipoSectorTerritorial.valueOf(request.queryParams("tipo"));
     int id = Integer.parseInt(request.queryParams("idSector"));
-    Usuario usuario = request.session().attribute("usuario_signeado_literal");
+    String nombreSector;
+    if (tipo.equals(TipoSectorTerritorial.MUNICIPIO)) {
+      nombreSector = ServicioGeoDds.getInstancia().nombreMunicipio(id);
+    }
+    else {
+      nombreSector = ServicioGeoDds.getInstancia().nombreProvincia(id);
+    }
 
-    AgenteSectorial agenteSectorial = new AgenteSectorial(tipo, id);
-    agenteSectorial.setNombreAgente("Panamiguel");
+    AgenteSectorial agenteSectorial = new AgenteSectorial(tipo, id, nombreSector);
+    agenteSectorial.setNombreAgente(nombreAgente);
     usuario.setAgenteSectorial(agenteSectorial);
 
     RepositorioUsuarios.getInstance().update(usuario);
