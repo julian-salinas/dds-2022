@@ -7,6 +7,7 @@ import repositorios.daos.DAO;
 import repositorios.daos.DAOHibernate;
 
 import javax.persistence.criteria.CriteriaQuery;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,7 +51,14 @@ public class RepositorioOrganizaciones extends Repositorio<Organizacion> {
         List<Organizacion> organizaciones = this.dao.all();
         return organizaciones
                 .stream()
-                .filter(org -> org.sectorMunicipio().getId() == idMunicipio)
+                .filter(org -> {
+                    try {
+                        return org.sectorMunicipio().getId() == idMunicipio;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return false;
+                    }
+                })
                 .collect(Collectors.toList());
     }
 
@@ -58,7 +66,14 @@ public class RepositorioOrganizaciones extends Repositorio<Organizacion> {
         List<Organizacion> organizaciones = this.dao.all();
         return organizaciones
                 .stream()
-                .filter(org -> org.sectorProvincia().getId() == idProvincia)
+                .filter(org -> {
+                    try {
+                        return org.sectorProvincia().getId() == idProvincia;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return false;
+                    }
+                })
                 .collect(Collectors.toList());
     }
 

@@ -8,6 +8,7 @@ import domain.ubicaciones.distancia.Distancia;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.io.IOException;
 
 @Entity
 public class Tramo extends PersistenceEntity {
@@ -15,9 +16,9 @@ public class Tramo extends PersistenceEntity {
   @ManyToOne(cascade = CascadeType.ALL)
   private MedioDeTransporte medio;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_inicio")
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_inicio")
   @Getter private Ubicacion ubicacionInicio;
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_fin")
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_fin")
   @Getter private Ubicacion ubicacionFin;
 
   public Tramo() {}

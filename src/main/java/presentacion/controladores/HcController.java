@@ -2,8 +2,11 @@ package presentacion.controladores;
 
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.hc.HC;
+import domain.organizaciones.hc.UnidadHC;
 import domain.organizaciones.miembros.Miembro;
+import domain.servicios.geodds.excepciones.TimeoutException;
 import domain.ubicaciones.sectores.AgenteSectorial;
+import presentacion.errores.Error;
 import repositorios.RepositorioMiembros;
 import repositorios.RepositorioOrganizaciones;
 import repositorios.RepositorioUsuarios;
@@ -12,6 +15,8 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -96,10 +101,23 @@ public class HcController {
     String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
     Miembro miembro = user.getMiembro();
-    String unidadHC    = request.queryParams("unidadHC");
+    String unidadHC = request.queryParams("unidadHC");
     Map<String, Object> model = new HashMap<>();
 
-    HC hcMiembro = miembro.calculoHCPersonal();
+    HC hcMiembro;
+    Error error = new Error();
+    error.setError(false);
+
+    try {
+      hcMiembro = miembro.calculoHCPersonal();
+    } catch (TimeoutException e) {
+      error.setError(true);
+      error.setDescripcion("Timeout, por favor intente otra vez.");
+      hcMiembro = new HC(0.0, UnidadHC.kgCO2);
+      e.printStackTrace();
+    }
+
+    model.put("error", error);
 
     if (unidadHC.equals("gCO2")) {
       model.put("mensual", hcMiembro.enGCO2());

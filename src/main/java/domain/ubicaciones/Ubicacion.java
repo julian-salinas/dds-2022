@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import domain.database.PersistenceEntity;
 import domain.servicios.geodds.ServicioGeoDds;
+import domain.servicios.geodds.excepciones.TimeoutException;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.sectores.Localidad;
 import domain.ubicaciones.sectores.Municipio;
@@ -84,11 +85,8 @@ public class Ubicacion extends PersistenceEntity {
       Municipio municipio = new Municipio(nombreMunicipio, provincia, apiClient);
       Localidad localidad = new Localidad(nombreLocalidad, municipio, apiClient);
       return localidad;
-    } catch (RuntimeException e) {
-      throw e;
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+    } catch (IOException exception) {
+      throw new TimeoutException("Timeout");
     }
   }
 

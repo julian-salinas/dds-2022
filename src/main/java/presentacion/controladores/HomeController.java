@@ -7,6 +7,9 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class HomeController {
 
@@ -41,7 +44,9 @@ public class HomeController {
       return new ModelAndView(model, "homeAgenteSectorial.hbs");
     }
     else if (user.getTipo().equals(TipoUsuario.ADMINISTRADOR)) {
-      return new ModelAndView(null, "homeAdmin.hbs");
+      Map<String, Object> model = new HashMap<>();
+      model.put("nombre", username);
+      return new ModelAndView(model, "homeAdmin.hbs");
     }
     else {
       return null;

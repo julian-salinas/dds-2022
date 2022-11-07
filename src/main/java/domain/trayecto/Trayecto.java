@@ -4,6 +4,8 @@ import domain.database.PersistenceEntity;
 import domain.organizaciones.miembros.Miembro;
 import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
