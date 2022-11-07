@@ -48,7 +48,19 @@ public class HcController {
     String unidadHC    = request.queryParams("unidadHC");
     Map<String, Object> model = new HashMap<>();
 
-    organizacion.cargarDATransladoMiembros();
+    Error error = new Error();
+    error.setError(false);
+
+    // Validar q no haya Timeout
+    try {
+      organizacion.cargarDATransladoMiembros();
+    } catch (TimeoutException e) {
+      e.printStackTrace();
+      error.setError(true);
+      error.setDescripcion("Timeout, por favor intente otra vez.");
+      model.put("error", error);
+      return new ModelAndView(model, "hc.hbs");
+    }
 
     HC hcMensual = organizacion.hcMensual();
     HC hcAnual = organizacion.hcAnual();
@@ -108,16 +120,16 @@ public class HcController {
     Error error = new Error();
     error.setError(false);
 
+    // Validar q no haya Timeout
     try {
       hcMiembro = miembro.calculoHCPersonal();
     } catch (TimeoutException e) {
+      e.printStackTrace();
       error.setError(true);
       error.setDescripcion("Timeout, por favor intente otra vez.");
-      hcMiembro = new HC(0.0, UnidadHC.kgCO2);
-      e.printStackTrace();
+      model.put("error", error);
+      return new ModelAndView(model, "hcMiembro.hbs");
     }
-
-    model.put("error", error);
 
     if (unidadHC.equals("gCO2")) {
       model.put("mensual", hcMiembro.enGCO2());
@@ -154,7 +166,20 @@ public class HcController {
     String unidadHC    = request.queryParams("unidadHC");
     Map<String, Object> model = new HashMap<>();
 
-    HC hcAgente = agenteSectorial.hcSectorMensual();
+    HC hcAgente;
+    Error error = new Error();
+    error.setError(false);
+
+    // Validar q no haya Timeout
+    try {
+      hcAgente= agenteSectorial.hcSectorMensual();
+    } catch (TimeoutException e) {
+      e.printStackTrace();
+      error.setError(true);
+      error.setDescripcion("Timeout, por favor intente otra vez.");
+      model.put("error", error);
+      return new ModelAndView(model, "hcAgente.hbs");
+    }
 
     if (unidadHC.equals("gCO2")) {
       model.put("mensual", hcAgente.enGCO2());

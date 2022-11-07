@@ -1,8 +1,10 @@
 {{#partial "content"}}
 <form action="/agregarTramo" method="POST">
 
-    {{#if error}}
-        <p style="color: red"> Error: {{descripcion}} </p>
+    {{#if error.error}}
+        <br>
+        <h5 style="color: red"> Error: {{error.descripcion}} </h5>
+        <br>
     {{/if}}
 
   <select class="select-field" id="medio" name="medio" onchange="esconder()">

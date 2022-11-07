@@ -51,14 +51,7 @@ public class RepositorioOrganizaciones extends Repositorio<Organizacion> {
         List<Organizacion> organizaciones = this.dao.all();
         return organizaciones
                 .stream()
-                .filter(org -> {
-                    try {
-                        return org.sectorMunicipio().getId() == idMunicipio;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        return false;
-                    }
-                })
+                .filter(org -> org.sectorMunicipio().getId() == idMunicipio)
                 .collect(Collectors.toList());
     }
 
@@ -66,14 +59,7 @@ public class RepositorioOrganizaciones extends Repositorio<Organizacion> {
         List<Organizacion> organizaciones = this.dao.all();
         return organizaciones
                 .stream()
-                .filter(org -> {
-                    try {
-                        return org.sectorProvincia().getId() == idProvincia;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        return false;
-                    }
-                })
+                .filter(org -> org.sectorProvincia().getId() == idProvincia)
                 .collect(Collectors.toList());
     }
 

@@ -93,10 +93,19 @@ public class TrayectoController {
       cualUbicacion = "Ubicacion de Fin";
       ubicacionFin.getLocalidad();
     } catch (RuntimeException e) {
+      e.printStackTrace();
       error.setError(true);
       error.setDescripcion(e.getMessage() + " en " + cualUbicacion);
-      e.printStackTrace();
-      return new ModelAndView(error, "tramo.hbs");
+
+      List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
+      if (request.session().attribute("compartido")) {
+        transportes = transportes.stream().filter(MedioDeTransporte::admiteTrayectoCompartido).collect(Collectors.toList());
+      }
+
+      Map<String, Object> model = new HashMap<>();
+      model.put("transportes", transportes);
+      model.put("error", error);
+      return new ModelAndView(model, "tramo.hbs");
     }
 
     int medioid = Integer.parseInt(request.queryParams("medio"));
