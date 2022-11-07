@@ -17,6 +17,7 @@ import spark.Response;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +41,9 @@ public class HcController {
   }
 
   public ModelAndView post(Request request, Response response) {
+
+    // Para mostrar despues 2 decimales
+    DecimalFormat df = new DecimalFormat("0.000");
 
     String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
@@ -67,23 +71,23 @@ public class HcController {
 
     if(tipoCalculo.equals("Mensual")) {
       if (unidadHC.equals("gCO2")) {
-        model.put("mensual", hcMensual.enGCO2());
+        model.put("mensual", df.format(hcMensual.enGCO2()));
       }
       else if (unidadHC.equals("kgCO2")) {
-        model.put("mensual", hcMensual.enKgCO2());
+        model.put("mensual", df.format(hcMensual.enKgCO2()));
       }
       else {// if(unidadHC.equals("tnCO2"))
-        model.put("mensual", hcMensual.enTnCO2());
+        model.put("mensual", df.format(hcMensual.enTnCO2()));
       }
     } else { //if(tipoCalculo.equals("Anual"))
       if (unidadHC.equals("gCO2")) {
-        model.put("anual", hcAnual.enGCO2());
+        model.put("anual", df.format(hcAnual.enGCO2()));
       }
       else if (unidadHC.equals("kgCO2")) {
-        model.put("anual", hcAnual.enKgCO2());
+        model.put("anual", df.format(hcAnual.enKgCO2()));
       }
       else {// if(unidadHC.equals("tnCO2"))
-        model.put("anual", hcAnual.enTnCO2());
+        model.put("anual", df.format(hcAnual.enTnCO2()));
       }
     }
     if(tipoCalculo.equals("Mensual"))
@@ -110,6 +114,9 @@ public class HcController {
 
   public ModelAndView postMiembro(Request request, Response response) {
 
+    // Para mostrar despues 2 decimales
+    DecimalFormat df = new DecimalFormat("0.000");
+
     String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
     Miembro miembro = user.getMiembro();
@@ -132,13 +139,13 @@ public class HcController {
     }
 
     if (unidadHC.equals("gCO2")) {
-      model.put("mensual", hcMiembro.enGCO2());
+      model.put("mensual", df.format(hcMiembro.enGCO2()));
     }
     else if (unidadHC.equals("kgCO2")) {
-      model.put("mensual", hcMiembro.enKgCO2());
+      model.put("mensual", df.format(hcMiembro.enKgCO2()));
     }
     else {// if(unidadHC.equals("tnCO2"))
-      model.put("mensual", hcMiembro.enTnCO2());
+      model.put("mensual", df.format(hcMiembro.enTnCO2()));
     }
 
     model.put("unidad", unidadHC);
@@ -159,6 +166,9 @@ public class HcController {
   }
 
   public ModelAndView post_agente(Request request, Response response) {
+
+    // Para mostrar despues 2 decimales
+    DecimalFormat df = new DecimalFormat("0.000");
 
     String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
@@ -182,13 +192,13 @@ public class HcController {
     }
 
     if (unidadHC.equals("gCO2")) {
-      model.put("mensual", hcAgente.enGCO2());
+      model.put("mensual", df.format(hcAgente.enGCO2()));
     }
     else if (unidadHC.equals("kgCO2")) {
-      model.put("mensual", hcAgente.enKgCO2());
+      model.put("mensual", df.format(hcAgente.enKgCO2()));
     }
     else {// if(unidadHC.equals("tnCO2"))
-      model.put("mensual", hcAgente.enTnCO2());
+      model.put("mensual", df.format(hcAgente.enTnCO2()));
     }
 
     model.put("unidad", unidadHC);
