@@ -1,16 +1,16 @@
 {{#partial "content"}}
 <form action="/agregarTramo" method="POST">
 
+    {{#if error.error}}
+        <br>
+        <h5 style="color: red"> Error: {{error.descripcion}} </h5>
+        <br>
+    {{/if}}
+
   <select class="select-field" id="medio" name="medio" onchange="esconder()">
-    <!--<option value="pie" selected>Pie</option>
-    <option value="bici">Bicicleta</option>
-    <option value="servicioContratado">Servicio Contratado</option>
-    <option value="vehiculoParticular">Vehiculo Particular</option>
-    <option value="transportePublico">Transporte Público</option>-->
       {{#each transportes}}
           <option value={{id}}> {{descripcion}} </option>
       {{/each}}
-      <!--{{this.toString}}-->
   </select>
 
     <div id="servicioContratado" style="display:none;">

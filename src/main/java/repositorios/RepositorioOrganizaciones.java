@@ -7,6 +7,7 @@ import repositorios.daos.DAO;
 import repositorios.daos.DAOHibernate;
 
 import javax.persistence.criteria.CriteriaQuery;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 

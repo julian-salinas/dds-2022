@@ -87,16 +87,25 @@ public class TrayectoController {
 
     // Validacion de Ubicaciones
     Error error = new Error();
-    String cualUbicacion = "Ubicacion Inicio";
+    String cualUbicacion = "Ubicacion de Inicio";
     try {
       ubicacionInicial.getLocalidad();
-      cualUbicacion = "Ubicacion Fin";
+      cualUbicacion = "Ubicacion de Fin";
       ubicacionFin.getLocalidad();
-    } catch (Exception e) {
+    } catch (RuntimeException e) {
+      e.printStackTrace();
       error.setError(true);
       error.setDescripcion(e.getMessage() + " en " + cualUbicacion);
-      e.printStackTrace();
-      return new ModelAndView(error, "tramo.hbs");
+
+      List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
+      if (request.session().attribute("compartido")) {
+        transportes = transportes.stream().filter(MedioDeTransporte::admiteTrayectoCompartido).collect(Collectors.toList());
+      }
+
+      Map<String, Object> model = new HashMap<>();
+      model.put("transportes", transportes);
+      model.put("error", error);
+      return new ModelAndView(model, "tramo.hbs");
     }
 
     int medioid = Integer.parseInt(request.queryParams("medio"));
@@ -114,13 +123,13 @@ public class TrayectoController {
 
       RepositorioMiembros.getInstance().update(miembro);
 
-      return new ModelAndView(null, "trayecto.hbs");
+      return new ModelAndView(miembro, "trayecto.hbs");
     }
     else
     {
       List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
       if (request.session().attribute("compartido")) {
-        transportes = transportes.stream().filter(t -> t.admiteTrayectoCompartido()).collect(Collectors.toList());
+        transportes = transportes.stream().filter(MedioDeTransporte::admiteTrayectoCompartido).collect(Collectors.toList());
       }
       Map<String, Object> model = new HashMap<>();
       model.put("transportes", transportes);

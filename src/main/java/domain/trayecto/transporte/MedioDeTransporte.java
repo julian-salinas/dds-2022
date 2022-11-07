@@ -5,6 +5,7 @@ import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 
 import javax.persistence.*;
+import java.io.IOException;
 
 @Entity//(name = "medio_de_transporte")
 @Inheritance(strategy = InheritanceType.JOINED)

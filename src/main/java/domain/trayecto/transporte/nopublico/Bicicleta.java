@@ -1,5 +1,6 @@
 package domain.trayecto.transporte.nopublico;
 
+import domain.servicios.geodds.excepciones.TimeoutException;
 import domain.trayecto.transporte.MedioDeTransporte;
 import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
@@ -30,11 +31,7 @@ public class Bicicleta extends MedioDeTransporte {
     try {
       return ubicacionInicio.calcularDistanciaA(ubicacionFin);
     } catch (IOException e) {
-      // bruh
-      // No le pegues a la API, pegame a mi, me lo merezco, te falle este try tan simple.
-      // Por mi, te dejo de funcar la app de la nada y probablemente no tenes ni idea de q yo lo cause.
-      e.printStackTrace();
-      return new Distancia(-1.0, MTS);
+      throw new TimeoutException("Timeout");
     }
   }
 
