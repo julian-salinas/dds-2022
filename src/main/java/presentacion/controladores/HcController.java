@@ -2,7 +2,6 @@ package presentacion.controladores;
 
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.hc.HC;
-import domain.organizaciones.hc.UnidadHC;
 import domain.organizaciones.miembros.Miembro;
 import domain.servicios.geodds.excepciones.TimeoutException;
 import domain.ubicaciones.sectores.AgenteSectorial;
@@ -15,8 +14,6 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +22,7 @@ public class HcController {
 
   public ModelAndView index(Request request, Response response) {
 
-    /*String username = request.cookie("username"); --> por las dudas, comento q esto paso a seesion
+    /*String username = request.cookie("username"); --> por las dudas, comento q esto paso a session
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
     Organizacion organizacion = user.getOrg();*/
@@ -63,6 +60,7 @@ public class HcController {
       error.setError(true);
       error.setDescripcion("Timeout, por favor intente otra vez.");
       model.put("error", error);
+      model.put("nombre", "nombre"); // para q funque lo de los botones de signin y login
       return new ModelAndView(model, "hc.hbs");
     }
 
@@ -135,6 +133,7 @@ public class HcController {
       error.setError(true);
       error.setDescripcion("Timeout, por favor intente otra vez.");
       model.put("error", error);
+      model.put("nombre", "nombre"); // para q funque lo de los botones de signin y login
       return new ModelAndView(model, "hcMiembro.hbs");
     }
 
@@ -173,7 +172,7 @@ public class HcController {
     String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
     AgenteSectorial agenteSectorial = user.getAgenteSectorial();
-    String unidadHC    = request.queryParams("unidadHC");
+    String unidadHC = request.queryParams("unidadHC");
     Map<String, Object> model = new HashMap<>();
 
     HC hcAgente;
@@ -188,6 +187,7 @@ public class HcController {
       error.setError(true);
       error.setDescripcion("Timeout, por favor intente otra vez.");
       model.put("error", error);
+      model.put("nombre", "nombre"); // para q funque lo de los botones de signin y login
       return new ModelAndView(model, "hcAgente.hbs");
     }
 
