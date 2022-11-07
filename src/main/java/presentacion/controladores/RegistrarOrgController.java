@@ -14,9 +14,6 @@ import spark.Response;
 public class RegistrarOrgController {
 
   public ModelAndView index(Request request, Response response) {
-    String username = request.session().attribute("usuario_signeado");
-    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
-    request.session().attribute("usuario_signeado_literal", user);
     return new ModelAndView(null, "registrarOrg.hbs");
   }
 
@@ -50,11 +47,12 @@ public class RegistrarOrgController {
     Organizacion org = new Organizacion(nombre, razonSocial, TipoOrganizacion.valueOf(tipo),
         ubicacion, ClasificacionOrg.valueOf(clasificacion));
 
-    Usuario usuario = request.session().attribute("usuario_signeado_literal");
+    String username = request.session().attribute("usuario_logueado");
+    Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     usuario.setOrg(org);
     RepositorioUsuarios.getInstance().update(usuario);
 
-    request.session().attribute("usuario_logueado", usuario.getUsername());
+    //request.session().attribute("usuario_logueado", usuario.getUsername());
     response.redirect("/home");
     return null;
   }
