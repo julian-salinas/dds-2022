@@ -62,6 +62,8 @@ public class AgenteSectorialTests {
   // Estos dos tests no van a hacer falta despues
   // -->
 
+  /*
+
   @Test
   public void sePuedenPedirLasOrgDentroDeUnMunicipioCorrectamente() {
     RepositorioOrganizaciones.getInstance().add(org1);
@@ -245,6 +247,7 @@ public class AgenteSectorialTests {
 
     RepositorioOrganizaciones.getInstance().clean();
   }
+  */
 
   private Organizacion crearOrg(String nombre, Ubicacion ubicacion) {
     return new Organizacion(nombre, "S.A.", TipoOrganizacion.EMPRESA, ubicacion, ClasificacionOrg.MINISTERIO);

@@ -11,7 +11,6 @@ import repositorios.RepositorioOrganizaciones;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Transient;
 import java.util.List;
 
 @Entity(name = "agente_sectorial")
@@ -22,16 +21,9 @@ public class AgenteSectorial extends PersistenceEntity {
   String nombreSectorTerritorial;
   @Enumerated(EnumType.STRING)
   TipoSectorTerritorial tipoSectorTerritorial;
-  @Transient
-  SectorTerritorial sectorTerritorial;
 
   public AgenteSectorial() {
 
-  }
-
-  @Deprecated
-  public AgenteSectorial(SectorTerritorial sectorTerritorial) {
-    this.sectorTerritorial = sectorTerritorial;
   }
 
   public AgenteSectorial(TipoSectorTerritorial tipo, int id, String nombre) {
