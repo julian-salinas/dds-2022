@@ -11,11 +11,9 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class RegistrarAgSecController {
 
@@ -25,13 +23,9 @@ public class RegistrarAgSecController {
   }
 
   public ModelAndView index(Request request, Response response) {
-    String username = request.session().attribute("usuario_signeado");
-    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
-    request.session().attribute("usuario_signeado_literal", user);
     return new ModelAndView(null, "elegirSectorTerritorial.hbs");
   }
 
-  //TODO
   public ModelAndView post(Request request, Response response) {
     TipoSectorTerritorial tipo = TipoSectorTerritorial.valueOf(request.queryParams("tipo"));
     request.session().attribute("tipo_sec_terr", tipo);
@@ -58,7 +52,8 @@ public class RegistrarAgSecController {
   }
 
   public ModelAndView post_sector(Request request, Response response) {
-    Usuario usuario = request.session().attribute("usuario_signeado_literal");
+    String username = request.session().attribute("usuario_logueado");
+    Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     String nombreAgente = request.queryParams("nombreAgente");
     TipoSectorTerritorial tipo = TipoSectorTerritorial.valueOf(request.queryParams("tipo"));
     int id = Integer.parseInt(request.queryParams("idSector"));
@@ -76,7 +71,7 @@ public class RegistrarAgSecController {
 
     RepositorioUsuarios.getInstance().update(usuario);
 
-    request.session().attribute("usuario_logueado", usuario.getUsername());
+    //request.session().attribute("usuario_logueado", usuario.getUsername());
     response.redirect("/home");
     return null;
   }
