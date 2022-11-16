@@ -150,6 +150,14 @@
       <version>0.5</version>
     </dependency>
 
+    <!-- Para crear el jar bien -->
+
+    <dependency>
+      <groupId>org.javassist</groupId>
+      <artifactId>javassist</artifactId>
+      <version>3.22.0-GA</version>
+    </dependency>
+
     <!-- Fin -->
   </dependencies>
 
