@@ -1,0 +1,70 @@
+{{#partial "content"}}
+<form action="/nuevaParada" method="POST">
+
+  <select class="select-field" id="idLinea" name="idLinea">
+      {{#each lineas}}
+          <option value={{id}}> {{nombre}} </option>
+      {{/each}}
+  </select>
+    <div id="datos">
+        <div class="big-title">
+            <h2>Datos</h2>
+        </div>
+
+        <div class="input-field">
+            <i class="fa fa-shield"></i>
+            <input type="text" placeholder="nombre" id="nombre" name="nombre"/>
+        </div>
+
+        <div class="input-field">
+            <i class="fa fa-shield"></i>
+            <input type="text" placeholder="siguiente" id="distancia" name="distancia"/>
+        </div>
+    </div>
+
+
+  <div id="ubicacion">
+    <div class="big-title">
+      <h2>Ubicación</h2>
+    </div>
+
+      <div class="input-field">
+          <i class="fa fa-shield"></i>
+          <input type="text" placeholder="País" id="paisId" name="pais" value="ARGENTINA"/>
+      </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Provincia" id="provinciaId" name="provincia" value="BUENOS AIRES"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Municipio"  id="municipioId" name="municipio" value="AVELLANEDA"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Localidad" id="localidadId" name="localidad" value="AVELLANEDA"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Calle" id="calle" name="calle" value="Bonifacio"/>
+    </div>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="number" placeholder="Altura" name="altura" value="1231"/>
+    </div>
+  </div>
+
+
+  <button name="cargar" type="submit" class="boton" value="fin">cargar Parada</button>
+
+
+</form>
+
+
+{{/partial}}
+{{>base.hbs}}
