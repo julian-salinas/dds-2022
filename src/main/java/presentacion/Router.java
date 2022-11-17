@@ -25,6 +25,7 @@ public class Router {
     MedicionesController medicionesController = new MedicionesController();
     CargarParadaController cargarParadaController = new CargarParadaController();
     CargarLineaController cargarLineaController = new CargarLineaController();
+    CargarFeController cargarFeController = new CargarFeController();
 
 
     //DebugScreen.enableDebugScreen();
@@ -87,6 +88,8 @@ public class Router {
     Spark.post("/nuevaParada", cargarParadaController::post, engineTemplate);
     Spark.get("/cargarLinea", cargarLineaController::index, engineTemplate);
     Spark.post("/nuevaLinea", cargarLineaController::post, engineTemplate);
+    Spark.get("/cargarFe", cargarFeController::index, engineTemplate);
+    Spark.post("/nuevaFe", cargarFeController::post, engineTemplate);
 
   }
 }
