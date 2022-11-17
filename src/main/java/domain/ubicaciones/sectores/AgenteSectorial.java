@@ -42,15 +42,15 @@ public class AgenteSectorial extends PersistenceEntity {
     }
   }
 
-  public HC hcSectorMensual() {
+  public HC hcSectorMensual(String mes) {
     List<Organizacion> orgInSectorTerr = encontrarOrgs();
-    double hcEnKgCO2 = orgInSectorTerr.stream().mapToDouble(org -> org.hcMensual().enKgCO2()).sum();
+    double hcEnKgCO2 = orgInSectorTerr.stream().mapToDouble(org -> org.hcMensual(mes).enKgCO2()).sum();
     return new HC(hcEnKgCO2, UnidadHC.kgCO2);
   }
 
-  public HC hcSectorAnual() {
+  public HC hcSectorAnual(String anio) {
     List<Organizacion> orgInSectorTerr = encontrarOrgs();
-    double hcEnKgCO2 = orgInSectorTerr.stream().mapToDouble(org -> org.hcAnual().enKgCO2()).sum();
+    double hcEnKgCO2 = orgInSectorTerr.stream().mapToDouble(org -> org.hcAnual(anio).enKgCO2()).sum();
     return new HC(hcEnKgCO2, UnidadHC.kgCO2);
   }
 

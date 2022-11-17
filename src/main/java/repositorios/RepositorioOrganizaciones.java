@@ -76,7 +76,7 @@ public class RepositorioOrganizaciones extends Repositorio<Organizacion> {
 
         return organizaciones.stream()
                 .filter(organizacion -> organizacion.getClasificacion() == clasificacionOrg)
-                .mapToDouble(organizacion -> organizacion.hcMensual().enKgCO2())
+                .mapToDouble(organizacion -> organizacion.hcTotal().enKgCO2())
                 .sum();
     }
 

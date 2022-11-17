@@ -110,7 +110,7 @@ public class CalculoHcTests {
     List<DatosActividades> datosActividades = organizacion.getDatosActividades();
     datosActividades.get(3).getTipoDeConsumo().cargarFactorEmision(feDistancia);
 
-    HC hcMensualOrg = organizacion.hcMensual();
+    HC hcMensualOrg = organizacion.hcMensual("05/2021");
 
     // Calculo realizado:
     // Archivo CSV: Gas natural: 1234, mensual; Electricidad: 567, anual; Nafta: 89, mensual
@@ -130,7 +130,7 @@ public class CalculoHcTests {
     List<DatosActividades> datosActividades = organizacion.getDatosActividades();
     datosActividades.get(3).getTipoDeConsumo().cargarFactorEmision(feDistancia);
 
-    HC hcAnualOrg = organizacion.hcAnual();
+    HC hcAnualOrg = organizacion.hcAnual("2021");
 
     // Calculo realizado:
     // Archivo CSV: Gas natural: 1234, mensual; Electricidad: 567, anual; Nafta: 89, mensual

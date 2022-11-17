@@ -3,6 +3,7 @@ package domain.organizaciones;
 import domain.database.PersistenceEntity;
 import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
+import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.miembros.Miembro;
@@ -23,6 +24,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,7 +57,10 @@ public class Organizacion extends PersistenceEntity {
   private List<Contacto> contactos = new ArrayList<>();
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
-  private List<HC> historialHC = new ArrayList<>();
+  private List<HC> historialHCMensual = new ArrayList<>();
+
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
+  private List<HC> historialHCAnual = new ArrayList<>();
 
   public Organizacion() {}
 
@@ -155,23 +161,66 @@ public class Organizacion extends PersistenceEntity {
     if (combustibleTransporteMiembros > 0.0)
       datosActividades.add(datos);
   }
+/*
+    private double calculoHCMensual(){
+      //this.cargarDATransladoMiembros();
+      return datosActividades.stream().mapToDouble(DatosActividades::impactoHC).sum();
+    }
 
-  private double calculoHCMensual(){
-    //this.cargarDATransladoMiembros();
-    return datosActividades.stream().mapToDouble(DatosActividades::impactoHC).sum();
-  }
+    public HC hcMensual(){
+      double hcDatosActividad = calculoHCMensual();
+      HC hc = new HC(hcDatosActividad, UnidadHC.kgCO2);
+      if(historialHC.stream().filter(hc1 -> hc1.enKgCO2() == hcDatosActividad).count() == 0)
+        this.historialHC.add(hc);
+      return hc;
+    }
+  */
+  public HC hcMensual(String stringMes){
 
-  public HC hcMensual(){
-    double hcDatosActividad = calculoHCMensual();
-    HC hc = new HC(hcDatosActividad, UnidadHC.kgCO2);
-    if(historialHC.stream().filter(hc1 -> hc1.enKgCO2() == hcDatosActividad).count() == 0)
-      this.historialHC.add(hc);
+    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MM/yyyy");
+    YearMonth mes = YearMonth.parse(stringMes, formatter2);
+
+    double valoresMensuales = datosActividades.stream().filter(datosActividad -> datosActividad.getPeriodicidad().equals("Mensual")).filter(datosActividad -> (YearMonth.parse(datosActividad.getPeriodoImputacion(), formatter2).equals(mes))).mapToDouble(DatosActividades::impactoHC).sum();
+    HC hc = new HC(valoresMensuales, UnidadHC.kgCO2);
+
+    historialHCMensual.add(hc);
     return hc;
   }
-
+/*
   public HC hcAnual(){
     double hcDatosActividad = calculoHCMensual() * 12;
     return new HC(hcDatosActividad, UnidadHC.kgCO2);
   }
+*/
+  public HC hcAnual(String stringAnio){
 
+    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy");
+    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MM/yyyy");
+    Year Anio = Year.parse(stringAnio, formatter1);
+    YearMonth desdeMes = YearMonth.parse("01/"+stringAnio, formatter2).minusMonths(1);
+    YearMonth hastaMes = YearMonth.parse("12/"+stringAnio, formatter2).plusMonths(1);
+
+    double valoresAnuales = datosActividades.stream().filter(datosActividad -> datosActividad.getPeriodicidad().equals("Anual")).filter(datosActividad -> (Year.parse(datosActividad.getPeriodoImputacion(), formatter1).equals(Anio))).mapToDouble(DatosActividades::impactoHC).sum();
+    double valoresMensuales = datosActividades.stream().filter(datosActividad -> datosActividad.getPeriodicidad().equals("Mensual")).filter(datosActividad -> (YearMonth.parse(datosActividad.getPeriodoImputacion(), formatter2).isAfter(desdeMes)
+        && YearMonth.parse(datosActividad.getPeriodoImputacion(), formatter2).isBefore(hastaMes))).mapToDouble(DatosActividades::impactoHC).sum();
+
+    HC hc = new HC(valoresAnuales+valoresMensuales, UnidadHC.kgCO2);
+
+    historialHCAnual.add(hc);
+    return hc;
+  }
+
+  public HC hcTotal(){
+    double valorTotal = datosActividades.stream().mapToDouble(DatosActividades::impactoHC).sum();
+    return new HC(valorTotal, UnidadHC.kgCO2);
+  }
+
+  public double composicionHCMensual(String tipo, String stringMes, HC hc){
+    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MM/yyyy");
+    YearMonth mes = YearMonth.parse(stringMes, formatter2);
+    double valorTipoConsumo = datosActividades.stream().filter(datosActividad -> (datosActividad.getPeriodoImputacion().equals(stringMes) && datosActividad.getTipoDeConsumo().getTipo().equals(tipo))).mapToDouble(DatosActividades::impactoHC).sum();
+    double porcentaje = 100*(valorTipoConsumo / hc.enKgCO2());
+
+    return porcentaje;
+  }
 }

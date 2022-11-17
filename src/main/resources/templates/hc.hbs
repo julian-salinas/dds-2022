@@ -35,6 +35,7 @@
                     <option value="kgCO2" selected>KgCO2</option>
                     <option value="tnCO2">TnCO2</option>
                 </select>
+                <input type="text" id="mes" name="mes" placeholder="MM/AAAA"/>
             </form>
             <h3 class="text">
                 {{#if error.error}}
@@ -43,6 +44,7 @@
                     {{#if esMensual}} {{ mensual }} {{ unidad }} {{else}} {{/if}}
                 {{/if}}
             </h3>
+            <h5>{{porcentaje-gas}}</h5>
         </div>
         <div class="card shadow-sm p-2">
             <!--<h3>Calculo Anual</h3>-->
@@ -55,6 +57,7 @@
                     <option value="kgCO2" selected>KgCO2</option>
                     <option value="tnCO2">TnCO2</option>
                 </select>
+                <input type="text" id="anio" name="anio" placeholder="AAAA"/>
             </form>
             <h3 class="text">
                 {{#if error.error}}

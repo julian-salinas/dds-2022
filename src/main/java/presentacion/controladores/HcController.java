@@ -64,10 +64,15 @@ public class HcController {
       return new ModelAndView(model, "hc.hbs");
     }
 
-    HC hcMensual = organizacion.hcMensual();
-    HC hcAnual = organizacion.hcAnual();
+    String mes = request.queryParams("mes");
+    String anio = request.queryParams("anio");
 
     if(tipoCalculo.equals("Mensual")) {
+      HC hcMensual = organizacion.hcMensual(mes);
+
+      double porcentajeGasNatural = organizacion.composicionHCMensual("Gas Natural", "05/2021", hcMensual);
+      model.put("porcentaje-gas", df.format(porcentajeGasNatural));
+
       if (unidadHC.equals("gCO2")) {
         model.put("mensual", df.format(hcMensual.enGCO2()));
       }
@@ -78,6 +83,8 @@ public class HcController {
         model.put("mensual", df.format(hcMensual.enTnCO2()));
       }
     } else { //if(tipoCalculo.equals("Anual"))
+      HC hcAnual = organizacion.hcAnual(anio);
+
       if (unidadHC.equals("gCO2")) {
         model.put("anual", df.format(hcAnual.enGCO2()));
       }
@@ -181,7 +188,7 @@ public class HcController {
 
     // Validar q no haya Timeout
     try {
-      hcAgente= agenteSectorial.hcSectorMensual();
+      hcAgente= agenteSectorial.hcSectorMensual("2020"); // string prueba
     } catch (TimeoutException e) {
       e.printStackTrace();
       error.setError(true);
