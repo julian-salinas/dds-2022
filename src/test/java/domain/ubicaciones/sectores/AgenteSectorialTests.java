@@ -6,9 +6,6 @@ import domain.organizaciones.hc.HC;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import repositorios.RepositorioOrganizaciones;
 import domain.servicios.geodds.ServicioGeoDds;
-import domain.ubicaciones.sectores.AgenteSectorial;
-import domain.ubicaciones.sectores.Municipio;
-import domain.ubicaciones.sectores.Provincia;
 import domain.ubicaciones.Ubicacion;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,12 +43,21 @@ public class AgenteSectorialTests {
     when(apiClient.verificarNombreMunicipio("Carpincho")).thenReturn(5);      //id Municipio = 5
     when(apiClient.verificarNombreMunicipio("Bozoro")).thenReturn(6);         //id Municipio = 6
 
-    when(apiClient.nombreProvincia(anyInt())).thenReturn("Rio Negro");
-    when(apiClient.verificarNombreProvincia("Rio Negro")).thenReturn(7);     //id Provincia = 7
 
-    ubicacion1 = new Ubicacion("Corrientes", 1200, "localidad", apiClient);
+    when(apiClient.verificarNombrePais("Argentina")).thenReturn(9);
+    when(apiClient.verificarNombreProvincia("Buenos Aires",9)).thenReturn(9);
+
+    /*ubicacion1 = new Ubicacion("Corrientes", 1200, "localidad", apiClient);
     ubicacion2 = new Ubicacion("Corrientes", 1200, "localidad2", apiClient);
-    ubicacion3 = new Ubicacion("Corrientes", 1200, "localidad3", apiClient);
+    ubicacion3 = new Ubicacion("Corrientes", 1200, "localidad3", apiClient);*/
+
+    ubicacion1 = new Ubicacion("Corrientes", 1200, "Argentina", "Buenos Aires",
+        "Valcheta", "localidad");
+    ubicacion2 = new Ubicacion("Corrientes", 1200, "Argentina", "Buenos Aires",
+        "Carpincho", "localidad2");
+    ubicacion3 = new Ubicacion("Corrientes", 1200, "Argentina", "Buenos Aires",
+        "Bozoro", "localidad3");
+
 
     org1 = crearOrg("McDonalds", ubicacion1);
     org2 = crearOrg("Filamentos Danjo", ubicacion2);
@@ -59,10 +65,6 @@ public class AgenteSectorialTests {
 
   }
 
-  // Estos dos tests no van a hacer falta despues
-  // -->
-
-  /*
 
   @Test
   public void sePuedenPedirLasOrgDentroDeUnMunicipioCorrectamente() {
@@ -116,7 +118,8 @@ public class AgenteSectorialTests {
 
     // El agente esta en el Municipio de org1, pero no de org2, y org3
     Municipio municipio = org1.sectorMunicipio();
-    AgenteSectorial agenteSectorial = new AgenteSectorial(municipio);
+    AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.MUNICIPIO,
+        municipio.getId(), "Alfonso");
     HC hcSectorMensual = agenteSectorial.hcSectorMensual();
     double valorHc = hcSectorMensual.enKgCO2();
 
@@ -144,7 +147,8 @@ public class AgenteSectorialTests {
 
     // El agente esta en el Municipio de org1, pero no de org2, y org3
     Municipio municipio = org1.sectorMunicipio();
-    AgenteSectorial agenteSectorial = new AgenteSectorial(municipio);
+    AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.MUNICIPIO,
+        municipio.getId(), "Alfonso");
     HC hcSectorAnual = agenteSectorial.hcSectorAnual();
     double valorHc = hcSectorAnual.enKgCO2();
 
@@ -171,7 +175,8 @@ public class AgenteSectorialTests {
     setFactoresDeEmision(org3);
 
     Provincia provincia = org1.sectorProvincia();
-    AgenteSectorial agenteSectorial = new AgenteSectorial(provincia);
+    AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.PROVINCIA,
+        provincia.getId(), "Alfonso");
     HC hcSectorMensual = agenteSectorial.hcSectorMensual();
     double valorHc = hcSectorMensual.enKgCO2();
 
@@ -198,7 +203,8 @@ public class AgenteSectorialTests {
     setFactoresDeEmision(org3);
 
     Provincia provincia = org1.sectorProvincia();
-    AgenteSectorial agenteSectorial = new AgenteSectorial(provincia);
+    AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.PROVINCIA,
+        provincia.getId(), "Alfonso");
     HC hcSectorAnual = agenteSectorial.hcSectorAnual();
     double valorHc = hcSectorAnual.enKgCO2();
 
@@ -236,7 +242,8 @@ public class AgenteSectorialTests {
 
     // El agente esta en la Provincia de org1, org2, y org3, pero no org4
     Provincia provincia = org1.sectorProvincia();
-    AgenteSectorial agenteSectorial = new AgenteSectorial(provincia);
+    AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.PROVINCIA,
+        provincia.getId(), "Alfonso");
     HC hcSectorMensual = agenteSectorial.hcSectorMensual();
     double valorHc = hcSectorMensual.enKgCO2();
 
@@ -247,7 +254,6 @@ public class AgenteSectorialTests {
 
     RepositorioOrganizaciones.getInstance().clean();
   }
-  */
 
   private Organizacion crearOrg(String nombre, Ubicacion ubicacion) {
     return new Organizacion(nombre, "S.A.", TipoOrganizacion.EMPRESA, ubicacion, ClasificacionOrg.MINISTERIO);
