@@ -70,9 +70,6 @@ public class HcController {
     if(tipoCalculo.equals("Mensual")) {
       HC hcMensual = organizacion.hcMensual(mes);
 
-      double porcentajeGasNatural = organizacion.composicionHCMensual("Gas Natural", "05/2021", hcMensual);
-      model.put("porcentaje-gas", df.format(porcentajeGasNatural));
-
       if (unidadHC.equals("gCO2")) {
         model.put("mensual", df.format(hcMensual.enGCO2()));
       }

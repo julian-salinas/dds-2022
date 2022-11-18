@@ -1,12 +1,15 @@
 package domain.organizaciones.datos.actividades.tipos;
 
+import lombok.Getter;
+
+@Getter
 public class DataHelper {
-  public DataHelper (Integer porcentaje, String nombre){
+  Double porcentaje;
+  String nombre;
+
+  public DataHelper (Double porcentaje, String nombre){
     this.porcentaje = porcentaje;
     this.nombre = nombre;
   };
 
-
-  Integer porcentaje;
-  String nombre;
 }

@@ -215,11 +215,11 @@ public class Organizacion extends PersistenceEntity {
     return new HC(valorTotal, UnidadHC.kgCO2);
   }
 
-  public double composicionHCMensual(String tipo, String stringMes, HC hc){
-    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MM/yyyy");
-    YearMonth mes = YearMonth.parse(stringMes, formatter2);
-    double valorTipoConsumo = datosActividades.stream().filter(datosActividad -> (datosActividad.getPeriodoImputacion().equals(stringMes) && datosActividad.getTipoDeConsumo().getTipo().equals(tipo))).mapToDouble(DatosActividades::impactoHC).sum();
-    double porcentaje = 100*(valorTipoConsumo / hc.enKgCO2());
+  public double composicionHCMensual(String tipo){
+    HC hcTotal = this.hcTotal();
+
+    double valorTipoConsumo = datosActividades.stream().filter(datosActividad -> datosActividad.getTipoDeConsumo().getTipo().equals(tipo)).mapToDouble(DatosActividades::impactoHC).sum();
+    double porcentaje = 100*(valorTipoConsumo / hcTotal.enKgCO2());
 
     return porcentaje;
   }
