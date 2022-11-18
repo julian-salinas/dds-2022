@@ -39,16 +39,14 @@ public class Ubicacion extends PersistenceEntity {
     apiClient = ServicioGeoDds.getInstancia();
   }
 
-  @Deprecated
-  public Ubicacion(String calle, int altura, String nombreLocalidad, ServicioGeoDds apiClient) {
+  public Ubicacion(String calle, int altura, ServicioGeoDds apiClient) {
     this.apiClient = apiClient;
     this.calle = calle;
     this.altura = altura;
-    //this.nombreLocalidad = nombreLocalidad;
   }
 
   @Deprecated
-  public Ubicacion(String calle, int altura, String nombreLocalidad) {
+  public Ubicacion(String calle, int altura, String nombreLocalidad, ServicioGeoDds apiClient) {
     this.apiClient = ServicioGeoDds.getInstancia();
     this.calle = calle;
     this.altura = altura;

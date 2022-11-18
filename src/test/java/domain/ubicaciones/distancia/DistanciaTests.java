@@ -274,17 +274,8 @@ public class DistanciaTests {
     return new Distancia(valor, UnidadDistancia.KM);
   }
 
-  private Ubicacion crearUbicacion(String calle, int altura) throws IOException {
-    Ubicacion ubicacion;
-    //ServicioGeoDds api = mock(ServicioGeoDds.class);
-    when(apiClient.verificarNombreLocalidad(anyString())).thenReturn(2);  //id Localidad = 2
-    when(apiClient.nombreMunicipio(2)).thenReturn("Valcheta");
-    when(apiClient.verificarNombreMunicipio("Valcheta")).thenReturn(4);   //id Municipio = 4
-    when(apiClient.nombreProvincia(4)).thenReturn("Rio Negro");
-    when(apiClient.verificarNombreProvincia("Rio Negro")).thenReturn(7);  //id Provincia = 7
-
-    ubicacion = new Ubicacion(calle, altura, "Chacabuco", apiClient);
-    return ubicacion;
+  private Ubicacion crearUbicacion(String calle, int altura) {
+    return new Ubicacion(calle, altura, apiClient);
   }
 
 }
