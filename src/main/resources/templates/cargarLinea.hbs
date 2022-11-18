@@ -1,27 +1,22 @@
 {{#partial "content"}}
-<form action="/nuevaLinea" method="POST">
+<form action="/cargarLinea" method="POST">
 
-  <select class="select-field" id="tipo" name="tipo">
-      {{#each nombreTipos}}
-          <option value={{this}}> {{this}} </option>
-      {{/each}}
-  </select>
+    <select class="select-field" id="tipo" name="tipo">
+        {{#each nombreTipos}}
+            <option value={{this}}> {{this}} </option>
+        {{/each}}
+    </select>
+
     <div id="datos">
         <div class="big-title">
+            <br>
             <h2>Datos</h2>
         </div>
-
         <div class="input-field">
             <i class="fa fa-shield"></i>
             <input type="text" placeholder="nombre" id="nombre" name="nombre"/>
         </div>
-
     </div>
-
-
-
-
-
 
   <button name="cargar" type="submit" class="boton" value="fin">cargar Linea</button>
 

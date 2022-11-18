@@ -85,11 +85,11 @@ public class Router {
 
     // Admin
     Spark.get("/cargarParada", cargarParadaController::index, engineTemplate);
-    Spark.post("/nuevaParada", cargarParadaController::post, engineTemplate);
+    Spark.post("/cargarParada", cargarParadaController::post, engineTemplate);
     Spark.get("/cargarLinea", cargarLineaController::index, engineTemplate);
-    Spark.post("/nuevaLinea", cargarLineaController::post, engineTemplate);
+    Spark.post("/cargarLinea", cargarLineaController::post, engineTemplate);
     Spark.get("/cargarFe", cargarFeController::index, engineTemplate);
-    Spark.post("/nuevaFe", cargarFeController::post, engineTemplate);
+    Spark.post("/cargarFe", cargarFeController::post, engineTemplate);
 
   }
 }

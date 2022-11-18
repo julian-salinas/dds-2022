@@ -1,6 +1,5 @@
 {{#partial "content"}}
-<form action="/nuevaFe" method="POST">
-
+<form action="/cargarFe" method="POST">
 
     <select class="select-field" id="consumo" name="consumo">
         {{#each consumos}}
@@ -8,32 +7,30 @@
         {{/each}}
     </select>
 
-  <select class="select-field" id="tipo" name="tipo">
-      {{#each nombreTipos}}
-          <option value={{this}}> {{this}} </option>
-      {{/each}}
-  </select>
-
+    <select class="select-field" id="tipo" name="tipo">
+        {{#each nombreTipos}}
+            <option value={{this}}> {{this}} </option>
+        {{/each}}
+    </select>
 
     <div id="datos">
         <div class="big-title">
+            <br>
             <h2>Datos</h2>
         </div>
-
         <div class="input-field">
             <i class="fa fa-shield"></i>
             <input type="text" placeholder="valor" id="valor" name="valor"/>
         </div>
-
     </div>
 
+    <div>
+        {{#if error.error}}
+            <p style="color:red;"> Error: {{error.descripcion}} </p>
+        {{/if}}
+    </div>
 
-
-
-
-
-  <button name="cargar" type="submit" class="boton" value="fin">cargar Fe</button>
-
+    <button name="cargar" type="submit" class="boton" value="fin">cargar Fe</button>
 
 </form>
 

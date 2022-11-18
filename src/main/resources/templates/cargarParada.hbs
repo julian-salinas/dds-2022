@@ -1,5 +1,5 @@
 {{#partial "content"}}
-<form action="/nuevaParada" method="POST">
+<form action="/cargarParada" method="POST">
 
   <select class="select-field" id="idLinea" name="idLinea">
       {{#each lineas}}
@@ -18,7 +18,7 @@
 
         <div class="input-field">
             <i class="fa fa-shield"></i>
-            <input type="text" placeholder="siguiente" id="distancia" name="distancia"/>
+            <input type="text" placeholder="distancia a siguiente parada (metros)" id="distancia" name="distancia"/>
         </div>
     </div>
 

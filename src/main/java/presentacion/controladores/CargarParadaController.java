@@ -1,13 +1,11 @@
 package presentacion.controladores;
 
-import domain.database.EntityManagerHelper;
 import domain.trayecto.transporte.publico.Linea;
 import domain.trayecto.transporte.publico.Parada;
 import domain.trayecto.transporte.publico.TransportePublico;
 import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.distancia.UnidadDistancia;
-import presentacion.errores.Error;
 import repositorios.RepositorioTransportes;
 import spark.ModelAndView;
 import spark.Request;
