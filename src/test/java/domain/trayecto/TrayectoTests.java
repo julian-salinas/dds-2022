@@ -1,15 +1,11 @@
-package entrega2;
+package domain.trayecto;
 
 import domain.organizaciones.miembros.Miembro;
 import domain.organizaciones.miembros.TipoDeDocumento;
-import domain.servicios.geodds.ServicioGeoDds;
-import domain.trayecto.Tramo;
-import domain.trayecto.TrayectoCompartido;
 import domain.trayecto.transporte.nopublico.Bicicleta;
 import domain.trayecto.transporte.nopublico.ServicioContratado;
 import domain.trayecto.transporte.nopublico.TipoServicioContratado;
 import domain.ubicaciones.Ubicacion;
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,23 +14,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class TrayectoTests {
 
-  ServicioGeoDds apiClient;
   Ubicacion ubicacionDefault;
 
   @BeforeEach
-  void init() throws IOException {
-    apiClient = mock(ServicioGeoDds.class);
-    when(apiClient.verificarNombreLocalidad(anyString())).thenReturn(2);  //id Localidad = 2
-    when(apiClient.nombreMunicipio(2)).thenReturn("Valcheta");
-    when(apiClient.verificarNombreMunicipio("Valcheta")).thenReturn(4);   //id Municipio = 4
-    when(apiClient.nombreProvincia(4)).thenReturn("Rio Negro");
-    when(apiClient.verificarNombreProvincia("Rio Negro")).thenReturn(7);  //id Provincia = 7
-
-    ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
+  void init() {
+    ubicacionDefault = new Ubicacion();
   }
 
   // Trayecto Compartido -> Solo Vehiculos Particulares (VP) o Servicios Contratados (SC)
