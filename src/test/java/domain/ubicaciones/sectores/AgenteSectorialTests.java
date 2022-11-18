@@ -1,4 +1,4 @@
-package entrega3;
+package domain.ubicaciones.sectores;
 
 import domain.organizaciones.*;
 import domain.organizaciones.datos.actividades.UnidadConsumo;

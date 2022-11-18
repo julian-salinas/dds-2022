@@ -1,10 +1,6 @@
-package entrega3;
+package domain.notificaciones;
 
-import domain.notificaciones.NotificacionEmail;
-import domain.notificaciones.NotificacionWhatsapp;
 import domain.notificaciones.contactos.Contacto;
-import domain.notificaciones.Notificacion;
-import domain.notificaciones.Planificador;
 import domain.organizaciones.*;
 import repositorios.RepositorioNotificaciones;
 import repositorios.RepositorioOrganizaciones;

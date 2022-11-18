@@ -1,8 +1,7 @@
-package entrega3;
+package domain.organizaciones;
 
 import domain.organizaciones.miembros.Miembro;
 import domain.organizaciones.miembros.TipoDeDocumento;
-import domain.organizaciones.*;
 import domain.organizaciones.datos.actividades.DatosActividades;
 import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.hc.HC;
