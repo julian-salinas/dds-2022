@@ -1,4 +1,4 @@
-package entrega2;
+package domain.ubicaciones.distancia;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,9 +15,7 @@ import domain.trayecto.transporte.publico.Linea;
 import domain.trayecto.transporte.publico.Parada;
 import domain.trayecto.transporte.publico.TipoTransportePublico;
 import domain.trayecto.transporte.publico.TransportePublico;
-import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.Ubicacion;
-import domain.ubicaciones.distancia.UnidadDistancia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -53,10 +51,10 @@ public class DistanciaTests {
   public void init() throws IOException {
     apiClient = mock(ServicioGeoDds.class);
 
-    Ubicacion ubicacionSanPedrito = new Ubicacion("Rivadavia", 1800, null, null);
-    Ubicacion ubicacionFlores     = new Ubicacion("Rivadavia", 1900, null, null);
-    Ubicacion ubicacionCarabobo   = new Ubicacion("Rivadavia", 2000, null, null);
-    Ubicacion ubicacionPuan       = new Ubicacion("Rivadavia", 2100, null, null);
+    Ubicacion ubicacionSanPedrito = new Ubicacion("Rivadavia", 1800);
+    Ubicacion ubicacionFlores     = new Ubicacion("Rivadavia", 1900);
+    Ubicacion ubicacionCarabobo   = new Ubicacion("Rivadavia", 2000);
+    Ubicacion ubicacionPuan       = new Ubicacion("Rivadavia", 2100);
 
     Parada sanPedrito = new Parada("San Pedrito", ubicacionSanPedrito, distanciaMts(300.0));
     Parada flores     = new Parada("San Jose de Flores", ubicacionFlores, distanciaMts(200.0));
@@ -143,8 +141,8 @@ public class DistanciaTests {
 
   @Test
   public void laDistanciaDeUnTrayectoDeTramosDeTransportePublicoSeCalculaBien() {
-    Ubicacion ubicacionCarabobo1200 = new Ubicacion("Carabobo", 1200, null, null);
-    Ubicacion ubicacionCarabobo1400 = new Ubicacion("Carabobo", 1400, null, null);
+    Ubicacion ubicacionCarabobo1200 = new Ubicacion("Carabobo", 1200);
+    Ubicacion ubicacionCarabobo1400 = new Ubicacion("Carabobo", 1400);
     Parada carabobo1200 = new Parada("Carabobo1200", ubicacionCarabobo1200, distanciaMts(55.0));
     Parada carabobo1400 = new Parada("Carabobo1400", ubicacionCarabobo1400, distanciaMts(55.0));
     List<Parada> paradas132 = Stream.of(carabobo1200, carabobo1400).collect(Collectors.toList());
