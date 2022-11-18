@@ -49,9 +49,9 @@ public class CargarLineaController {
     else
       linea.setUnidireccional();
 
-    RepositorioLineas.getInstance().add(linea);
-    /*TransportePublico transportePublico = new TransportePublico(tipoTransporte, linea);
-    RepositorioTransportes.getInstance().add(transportePublico);*/
+    //RepositorioLineas.getInstance().add(linea);
+    TransportePublico transportePublico = new TransportePublico(tipoTransporte, linea);
+    RepositorioTransportes.getInstance().add(transportePublico);
 
     response.redirect("/home"); // si manda a login es xq no me logie dsp de ejecutar.
     return null;
