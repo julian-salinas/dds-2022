@@ -53,7 +53,8 @@ public class Linea extends PersistenceEntity {
   public Parada findParada(Ubicacion ubicacion) {
     List<Parada> paradasAux = paradas
         .stream()
-        .filter(parada -> parada.getUbicacionParada().equals(ubicacion))
+        .filter(parada -> parada.getUbicacionParada().getCalle().equals(ubicacion.getCalle()) &&
+            parada.getUbicacionParada().getAltura()==ubicacion.getAltura())
         .collect(Collectors.toList());
 
     if (paradasAux.isEmpty())
