@@ -90,28 +90,6 @@ public class MedicionesController {
     return null;
   }
 
-  public ModelAndView postFe(Request request, Response response) {
 
-    String username = request.session().attribute("usuario_logueado");
-    Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
-    Organizacion org = usuario.getOrg();
-    int idDA = Integer.parseInt(request.queryParams("idDA"));
-    UnidadConsumo unidadFE = UnidadConsumo.valueOf(request.queryParams("unidadFE"));
-    double valorFE = Double.parseDouble(request.queryParams("valorFE"));
-
-    FactorEmision fe = new FactorEmision(valorFE, unidadFE);
-    DatosActividades da = org
-        .getDatosActividades()
-        .stream()
-        .filter(datosActividades -> datosActividades.getId()==idDA)
-        .collect(Collectors.toList())
-        .get(0);
-
-    da.cargarFactorEmision(fe);
-    RepositorioOrganizaciones.getInstance().update(org);
-
-    response.redirect("/mediciones");
-    return null;
-  }
 
 }
