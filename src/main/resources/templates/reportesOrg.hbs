@@ -1,0 +1,31 @@
+{{#partial "content"}}
+  <div class="left">
+      <div class="big-title">
+      <h1> Guía de recomendaciones </h1>
+      <p> bla bla bla bla bla </p>
+      </div>
+
+
+          <div class="tab-pane container active" id="Usuarios">
+              <h2 class="text-center text-primary display-3">Tabla usuarios</h2>
+
+              <table class="table table-striped">
+                  <thead id="header_tabla_Usuarios">
+                  <th>consumo</th>
+                  <th>porcentaje</th>
+                  </thead>
+                  <tbody id="body_tabla_Usuarios">
+                  {{#each this}}
+                      <tr>
+                          <td>{{this.nombre}}</td>
+                          <td>{{this.porcentaje}}</td>
+                      </tr>
+                  {{/each}}
+                  </tbody>
+              </table>
+
+          </div>
+  </div>
+{{/partial}}
+
+{{>base.hbs}}

@@ -23,6 +23,7 @@ public class Router {
     AceptarMiembroController aceptarMiembroController = new AceptarMiembroController();
     PedirVinculacionController pedirVinculacionController = new PedirVinculacionController();
     MedicionesController medicionesController = new MedicionesController();
+    ReportesOrgController reportesOrgController = new ReportesOrgController();
 
 
     //DebugScreen.enableDebugScreen();
@@ -70,6 +71,7 @@ public class Router {
     Spark.post("/mediciones-csv", medicionesController::postCsv, engineTemplate);
     Spark.post("/mediciones-manual", medicionesController::postManual, engineTemplate);
     Spark.post("/cargar-fe", medicionesController::postFe, engineTemplate);
+    Spark.get("/reportesOrganizacion", reportesOrgController::index, engineTemplate);
 
     // Agente Sectorial
     Spark.get("/registrarAgSec", registrarAgSecController::redirect, engineTemplate);
@@ -79,6 +81,9 @@ public class Router {
     Spark.post("/registrarAgSec/sector", registrarAgSecController::post_sector, engineTemplate);
     Spark.get("/hc-agente", hcController::index_agente, engineTemplate);
     Spark.post("/hc-agente", hcController::post_agente, engineTemplate);
+
+
+
 
   }
 }
