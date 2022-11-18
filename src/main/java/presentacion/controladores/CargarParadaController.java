@@ -6,6 +6,7 @@ import domain.trayecto.transporte.publico.TransportePublico;
 import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.distancia.UnidadDistancia;
+import repositorios.RepositorioLineas;
 import repositorios.RepositorioTransportes;
 import spark.ModelAndView;
 import spark.Request;
@@ -26,9 +27,7 @@ public class CargarParadaController {
 //      response.redirect("/home");
 //    }
 
-    List<TransportePublico> transportePublicos = RepositorioTransportes.getInstance().allTransportePublico();
-    List<Linea> lineas = transportePublicos.stream().map(m -> m.getLinea()).collect(Collectors.toList());
-
+    List<Linea> lineas = RepositorioLineas.getInstance().all();
     Map<String, Object> model = new HashMap<>();
     model.put("lineas", lineas);
 

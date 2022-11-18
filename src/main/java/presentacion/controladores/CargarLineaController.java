@@ -7,6 +7,7 @@ import domain.trayecto.transporte.publico.TransportePublico;
 import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.distancia.UnidadDistancia;
+import repositorios.RepositorioLineas;
 import repositorios.RepositorioTransportes;
 import spark.ModelAndView;
 import spark.Request;
@@ -37,13 +38,20 @@ public class CargarLineaController {
   public ModelAndView post(Request request, Response response){
     String tipo = request.queryParams("tipo");
     String nombre = request.queryParams("nombre");
+    String bidireccional_s = request.queryParams("bidireccional");
+    boolean bidireccional = bidireccional_s.equals("Si");
 
     TipoTransportePublico tipoTransporte = TipoTransportePublico.valueOf(tipo);
 
     Linea linea = new Linea(nombre);
+    if(bidireccional)
+      linea.setBidireccional();
+    else
+      linea.setUnidireccional();
 
-    TransportePublico transportePublico = new TransportePublico(tipoTransporte, linea);
-    RepositorioTransportes.getInstance().add(transportePublico);
+    RepositorioLineas.getInstance().add(linea);
+    /*TransportePublico transportePublico = new TransportePublico(tipoTransporte, linea);
+    RepositorioTransportes.getInstance().add(transportePublico);*/
 
     response.redirect("/home"); // si manda a login es xq no me logie dsp de ejecutar.
     return null;
