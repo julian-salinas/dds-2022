@@ -67,14 +67,12 @@ public class DistanciaTests {
     lineaA.setUnidireccional();
 
     // Creo un recorrido que es solo de San Pedrito a Carabobo
-    TransportePublico recorridoConLineaA = new TransportePublico(TipoTransportePublico.SUBTE,
+    TransportePublico subteLineaA = new TransportePublico(TipoTransportePublico.SUBTE,
         lineaA);
-    tramoLineaA = new Tramo(recorridoConLineaA, sanPedrito, carabobo);
+    tramoLineaA = new Tramo(subteLineaA, sanPedrito, carabobo);
 
     // Con un recorrido que es solo de Carabobo a San Pedrito
-    TransportePublico recorridoConLineaAinverso = new TransportePublico(TipoTransportePublico.SUBTE,
-        lineaA);
-    tramoLineaAinverso = new Tramo(recorridoConLineaAinverso, carabobo, sanPedrito);
+    tramoLineaAinverso = new Tramo(subteLineaA, carabobo, sanPedrito);
 
     ubicacionInicioPie = crearUbicacion("Directorio", 1700);
     ubicacionInicioBici = crearUbicacion("Directorio", 100);
@@ -85,19 +83,19 @@ public class DistanciaTests {
     ubicacionFinVP = crearUbicacion("Yapeyu", 2400);
     ubicacionFinSC = crearUbicacion("Yapeyu", 700);
 
-    Pie recorridoAPie = new Pie();
-    tramoAPie   = new Tramo(recorridoAPie, ubicacionInicioPie, ubicacionFinPie);
+    Pie pie = new Pie();
+    tramoAPie   = new Tramo(pie, ubicacionInicioPie, ubicacionFinPie);
 
-    Bicicleta recorridoEnBici = new Bicicleta();
-    tramoEnBici = new Tramo(recorridoEnBici, ubicacionInicioBici, ubicacionFinBici);
+    Bicicleta bici = new Bicicleta();
+    tramoEnBici = new Tramo(bici, ubicacionInicioBici, ubicacionFinBici);
 
-    VehiculoParticular recorridoEnAuto = new VehiculoParticular(TipoDeVehiculo.AUTO,
+    VehiculoParticular auto = new VehiculoParticular(TipoDeVehiculo.AUTO,
         TipoDeCombustible.GASOIL, 400.0);
-    tramoEnAuto = new Tramo(recorridoEnAuto, ubicacionInicioVP, ubicacionFinVP);
+    tramoEnAuto = new Tramo(auto, ubicacionInicioVP, ubicacionFinVP);
 
-    TipoServicioContratado taxi = new TipoServicioContratado("taxi");
-    ServicioContratado recorridoEnTaxi = new ServicioContratado(taxi, 200.0);
-    tramoEnTaxi = new Tramo(recorridoEnTaxi, ubicacionInicioSC,
+    TipoServicioContratado tipoTaxi = new TipoServicioContratado("taxi");
+    ServicioContratado taxi = new ServicioContratado(tipoTaxi, 200.0);
+    tramoEnTaxi = new Tramo(taxi, ubicacionInicioSC,
         ubicacionFinSC);
 
   }
@@ -115,26 +113,26 @@ public class DistanciaTests {
 
   @Test
   public void laDistanciaDeUnTramoDeTransportePublicoIdaDistintaDeVueltaSeCalculaBien() {
-    //San Pedrito -> Carabobo, Unidireccional
+    //San Pedrito -> Carabobo, Unidireccional (San Pedrito, Flores, Carabobo)
     assertEquals(500.0, tramoLineaA.distancia().valorEnMetros());
   }
 
   @Test
   public void laDistanciaDeUnTramoInversoDeTransportePublicoIdaDistintaDeVueltaSeCalculaBien() {
-    //Carabobo -> San Pedrito, Unidireccional
+    //Carabobo -> San Pedrito, Unidireccional (Carabobo, Puan, San Pedrito)
     assertEquals(300.0, tramoLineaAinverso.distancia().valorEnMetros());
   }
 
   @Test
   public void laDistanciaDeUnTramoDeTransportePublicoIdaIgualAVueltaSeCalculaBien() {
-    //San Pedrito -> Carabobo, Bidireccional
+    //San Pedrito -> Carabobo, Bidireccional (San Pedrito, Flores, Carabobo)
     lineaA.setBidireccional();
     assertEquals(500.0, tramoLineaA.distancia().valorEnMetros());
   }
 
   @Test
   public void laDistanciaDeUnTramoInversoDeTransportePublicoIdaIgualAVueltaSeCalculaBien() {
-    //Carabobo -> San Pedrito, Bidireccional
+    //Carabobo -> San Pedrito, Bidireccional (Carabobo, Flores, San Pedrito)
     lineaA.setBidireccional();
     assertEquals(500.0, tramoLineaAinverso.distancia().valorEnMetros());
   }
@@ -147,8 +145,8 @@ public class DistanciaTests {
     Parada carabobo1400 = new Parada("Carabobo1400", ubicacionCarabobo1400, distanciaMts(55.0));
     List<Parada> paradas132 = Stream.of(carabobo1200, carabobo1400).collect(Collectors.toList());
     Linea linea132 = new Linea("132", paradas132);
-    TransportePublico recorridoCon132 = new TransportePublico(TipoTransportePublico.COLECTIVO, linea132);
-    Tramo tramoCon132 = new Tramo(recorridoCon132, carabobo1200, carabobo1400);
+    TransportePublico colectivo132 = new TransportePublico(TipoTransportePublico.COLECTIVO, linea132);
+    Tramo tramoCon132 = new Tramo(colectivo132, carabobo1200, carabobo1400);
 
     Trayecto trayecto = new Trayecto();
     trayecto.agregarTramos(tramoLineaA, tramoCon132);
