@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -85,9 +86,9 @@ public class NotificacionTest {
 
   @Test
   void enviarUnWhatsapp() {
-    when(mockNotificacionWhatsApp.notificar(unContacto)).thenReturn(202);
+    when(mockNotificacionWhatsApp.notificar(any(Contacto.class))).thenReturn(202);
 
-    int status =  notificacionWhatsApp.notificar(unContacto);
+    int status =  mockNotificacionWhatsApp.notificar(unContacto);
     assertEquals(202, status);
 
     RepositorioOrganizaciones.getInstance().clean();
@@ -95,9 +96,9 @@ public class NotificacionTest {
 
   @Test
   void testEnviarUnMail() {
-    when(mockNotificacionEmail.notificar(unContacto)).thenReturn(202);
+    when(mockNotificacionEmail.notificar(any(Contacto.class))).thenReturn(202);
 
-    int status = notificacionEmail.notificar(unContacto);
+    int status = mockNotificacionEmail.notificar(unContacto);
     assertEquals(202, status);
 
     RepositorioOrganizaciones.getInstance().clean();
