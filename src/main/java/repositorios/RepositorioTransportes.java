@@ -60,4 +60,12 @@ public class RepositorioTransportes extends Repositorio<MedioDeTransporte> {
     return todos;
   }
 
+  public TransportePublico findByLinea(int id){
+    String query = "from transporte_publico where linea_id = " + id;
+    EntityManagerHelper.getEntityManager().getTransaction().begin();
+    List<TransportePublico> todos = EntityManagerHelper.getEntityManager().createQuery(query).getResultList();
+    EntityManagerHelper.getEntityManager().getTransaction().commit();
+    return todos.get(0);
+  }
+
 }

@@ -40,7 +40,7 @@ public class RegistrarOrgController {
       error.setError(true);
       error.setDescripcion(e.getMessage() + " (en los datos ingresados correspondientes a la " +
           "ubicacion) ");
-      e.printStackTrace();
+      //e.printStackTrace();
       return new ModelAndView(error, "registrarOrg.hbs");
     }
 

@@ -57,7 +57,7 @@ public class Linea extends PersistenceEntity {
         .collect(Collectors.toList());
 
     if (paradasAux.isEmpty())
-      throw new ExcepcionParadasTransporteNoIncluidasEnLinea();
+      throw new ExcepcionParadasTransporteNoIncluidasEnLinea(); //TODO: Fix bug sobre esto
     else if (paradasAux.size()>1)
       throw new ExcepcionMultiplesParadasConMismaUbicacion();
     else
