@@ -90,6 +90,18 @@ public class CalculoHcTests {
   }
 
   @Test
+  public void sinDatosDeActividadesDa0() {
+
+    Organizacion org = new Organizacion("Panas", "S.A.", TipoOrganizacion.EMPRESA, null,
+        ClasificacionOrg.EMPRESA_SECTOR_SECUNDARIO);
+
+    HC hcMensualOrg = org.hcMensual();
+
+    assertEquals(0, (int) hcMensualOrg.enKgCO2());
+    RepositorioConsumos.getInstance().clean();
+  }
+
+  @Test
   public void SeCalculaElHCMensualDeUnaOrganizacion() {
 
     HC hcMensualOrg = organizacion.hcMensual();
