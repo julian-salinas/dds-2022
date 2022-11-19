@@ -25,7 +25,10 @@ public class TrayectoController {
   public ModelAndView index(Request request, Response response) {
     String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
-    Object model = user.getMiembro();
+    Miembro miembro = user.getMiembro();
+
+    Map<String, Object> model = new HashMap<>();
+    model.put("trayectos",miembro.getTrayectos());
     return new ModelAndView(model, "trayecto.hbs");
   }
 
