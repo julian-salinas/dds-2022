@@ -51,7 +51,13 @@ public class ReportesOrgController {
     org.getHistorialHCTotal().forEach(hcT -> valoresHistorial.add(hcT.enKgCO2()));
 
     Map<String, Object> model = new HashMap<>();
-    model.put("datos",datos);
+    //model.put("datos",datos);
+
+    String nombreOrg = org.getNombreOrg();
+
+    model.put("organizacion", nombreOrg);
+    model.put("nombres", nombres);
+    model.put("porcentajes", porcentajes);
     model.put("total", df.format(total.enKgCO2()));
     model.put("valoresHistorial", valoresHistorial);
     return new ModelAndView(model, "reportesOrg.hbs");

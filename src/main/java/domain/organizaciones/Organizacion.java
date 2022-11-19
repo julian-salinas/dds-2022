@@ -222,8 +222,8 @@ public class Organizacion extends PersistenceEntity {
     DecimalFormat df = new DecimalFormat("0.00");
 
     double valorTipoConsumo = datosActividades.stream().filter(datosActividad -> datosActividad.getTipoDeConsumo().getTipo().equals(tipo)).mapToDouble(DatosActividades::impactoHC).sum();
-    double porcentaje = 100*(valorTipoConsumo / hcTotal.enKgCO2());
+    //double porcentaje = 100*(valorTipoConsumo / hcTotal.enKgCO2());
 
-    return Math.round(porcentaje*100.0)/100.0;
+    return Math.round(valorTipoConsumo*100.0)/100.0;
   }
 }
