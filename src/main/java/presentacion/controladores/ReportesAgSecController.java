@@ -4,6 +4,7 @@ import domain.organizaciones.Organizacion;
 import domain.organizaciones.datos.actividades.tipos.DataHelper;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
 import domain.organizaciones.hc.HC;
+import domain.ubicaciones.sectores.AgenteSectorial;
 import presentacion.Usuario;
 import repositorios.RepositorioConsumos;
 import repositorios.RepositorioUsuarios;
@@ -19,7 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ReportesOrgController {
+public class ReportesAgSecController {
 
   public ModelAndView index(Request request, Response response) {
     DecimalFormat df = new DecimalFormat("0.00");
@@ -28,7 +29,8 @@ public class ReportesOrgController {
     String username = request.session().attribute("usuario_logueado");
 
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
-    Organizacion org = user.getOrg();
+    //Organizacion org = user.getOrg();
+    AgenteSectorial agente = user.getAgenteSectorial();
 
     List<Double> porcentajes = new ArrayList<>();
 
@@ -36,30 +38,29 @@ public class ReportesOrgController {
     List<String> nombres = consumos.stream().map(c -> c.getTipo()).collect(Collectors.toList());
 
     nombres.forEach(tipo -> {
-      double porcentajeTipo = org.composicionHCTotal(tipo);
+      List<Organizacion> organizaciones = agente.encontrarOrgs();
+      double porcentajeTipo = organizaciones.stream().mapToDouble(organizacion -> organizacion.composicionHCTotal(tipo)).sum();
       porcentajes.add(porcentajeTipo);
     });
 
-    List<DataHelper> datos = IntStream.range(0, nombres.size())
-        .mapToObj(i -> new DataHelper((i < porcentajes.size() ? porcentajes.get(i): null),
-            (i < nombres.size() ? nombres.get(i): null)))
-        .collect(Collectors.toList());
-
-    HC total = org.hcTotal();
+    HC total = agente.hcTotal();
 
     List<Double> valoresHistorial = new ArrayList<>();
-    org.getHistorialHCTotal().forEach(hcT -> valoresHistorial.add(hcT.enKgCO2()));
+    agente.getHistorialHCTotal().forEach(hcT -> valoresHistorial.add(hcT.enKgCO2()));
 
     Map<String, Object> model = new HashMap<>();
     //model.put("datos",datos);
 
-    String nombreOrg = org.getNombreOrg();
+    String nombreAgente = agente.getNombreAgente();
+    String ubicacion = agente.getNombreSectorTerritorial();
 
-    model.put("organizacion", nombreOrg);
+    model.put("agente", nombreAgente);
+    model.put("sector", ubicacion);
     model.put("nombres", nombres);
     model.put("porcentajes", porcentajes);
     model.put("total", df.format(total.enKgCO2()));
     model.put("valoresHistorial", valoresHistorial);
-    return new ModelAndView(model, "reportesOrg.hbs");
+    return new ModelAndView(model, "reportesAgSec.hbs");
   }
+
 }

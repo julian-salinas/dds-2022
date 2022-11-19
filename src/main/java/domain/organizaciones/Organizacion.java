@@ -217,7 +217,7 @@ public class Organizacion extends PersistenceEntity {
     return hc;
   }
 
-  public double composicionHCMensual(String tipo){
+  public double composicionHCTotal(String tipo){
     HC hcTotal = this.hcTotal();
     DecimalFormat df = new DecimalFormat("0.00");
 

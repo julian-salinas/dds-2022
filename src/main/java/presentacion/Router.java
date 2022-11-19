@@ -24,7 +24,7 @@ public class Router {
     PedirVinculacionController pedirVinculacionController = new PedirVinculacionController();
     MedicionesController medicionesController = new MedicionesController();
     ReportesOrgController reportesOrgController = new ReportesOrgController();
-
+    ReportesAgSecController reportesAgSecController = new ReportesAgSecController();
 
     //DebugScreen.enableDebugScreen();
 
@@ -81,9 +81,7 @@ public class Router {
     Spark.post("/registrarAgSec/sector", registrarAgSecController::post_sector, engineTemplate);
     Spark.get("/hc-agente", hcController::index_agente, engineTemplate);
     Spark.post("/hc-agente", hcController::post_agente, engineTemplate);
-
-
-
+    Spark.get("/reportes-agente", reportesAgSecController::index, engineTemplate);
 
   }
 }
