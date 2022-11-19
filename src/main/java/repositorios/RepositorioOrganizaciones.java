@@ -64,15 +64,16 @@ public class RepositorioOrganizaciones extends Repositorio<Organizacion> {
     }
 
     public double HCTotal(ClasificacionOrg clasificacionOrg) {
+        /*
         // Lo de abajo no es igual a esto? (q esta aca arriba): List<Organizacion> organizaciones = this.dao.all();
         EntityManagerHelper.getEntityManager().getTransaction().begin();
         CriteriaQuery query = EntityManagerHelper.getEntityManager().getCriteriaBuilder().createQuery(Organizacion.class);
         query.from(Organizacion.class);
-
+        */
         /*
             PREGUNTAR EL JUEVES 😎👌
          */
-        List<Organizacion> organizaciones = EntityManagerHelper.getEntityManager().createQuery(query).getResultList();
+        List<Organizacion> organizaciones = this.dao.all();
 
         return organizaciones.stream()
                 .filter(organizacion -> organizacion.getClasificacion() == clasificacionOrg)

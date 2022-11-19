@@ -23,39 +23,40 @@ public class ReportesOrgController {
 
   public ModelAndView index(Request request, Response response) {
     DecimalFormat df = new DecimalFormat("0.00");
-
-    List<TipoDeConsumo> consumos = RepositorioConsumos.getInstance().all();
     String username = request.session().attribute("usuario_logueado");
-
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+
     Organizacion org = user.getOrg();
 
+    // Consumos
+    List<TipoDeConsumo> consumos = RepositorioConsumos.getInstance().all();
+    List<String> nombres = consumos.stream().map(TipoDeConsumo::getTipo).collect(Collectors.toList());
+
+    // Valor que aporta al hc total cada tipo de consumo
     List<Double> porcentajes = new ArrayList<>();
-
-    //List<Integer> porcentajes = consumos.stream().map(c -> c.getId()).collect(Collectors.toList());
-    List<String> nombres = consumos.stream().map(c -> c.getTipo()).collect(Collectors.toList());
-
     nombres.forEach(tipo -> {
       double porcentajeTipo = org.composicionHCTotal(tipo);
       porcentajes.add(porcentajeTipo);
     });
-
+    /*
     List<DataHelper> datos = IntStream.range(0, nombres.size())
         .mapToObj(i -> new DataHelper((i < porcentajes.size() ? porcentajes.get(i): null),
             (i < nombres.size() ? nombres.get(i): null)))
         .collect(Collectors.toList());
-
+    */
+    // Hc total
     HC total = org.hcTotal();
 
+    // Historial de hc de organizacion para grafico de barras
     List<Double> valoresHistorial = new ArrayList<>();
     org.getHistorialHCTotal().forEach(hcT -> valoresHistorial.add(hcT.enKgCO2()));
 
-    Map<String, Object> model = new HashMap<>();
-    //model.put("datos",datos);
-
+    // Nombre org
     String nombreOrg = org.getNombreOrg();
 
-    model.put("organizacion", nombreOrg);
+    Map<String, Object> model = new HashMap<>();
+    //model.put("datos",datos);
+    model.put("nombreOrg", nombreOrg);
     model.put("nombres", nombres);
     model.put("porcentajes", porcentajes);
     model.put("total", df.format(total.enKgCO2()));
