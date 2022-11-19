@@ -55,6 +55,7 @@ public class TrayectoController {
 
     List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
     model.put("transportes", transportes);
+    model.put("trayecto",null);
     return new ModelAndView(model, "tramo.hbs");
   }
 
@@ -102,6 +103,7 @@ public class TrayectoController {
         transportes = transportes.stream().filter(MedioDeTransporte::admiteTrayectoCompartido).collect(Collectors.toList());
       }
 
+
       Map<String, Object> model = new HashMap<>();
       model.put("transportes", transportes);
       model.put("error", error);
@@ -113,6 +115,8 @@ public class TrayectoController {
     Tramo tramo = new Tramo(medio, ubicacionInicial, ubicacionFin);
 
     trayecto.agregarTramo(tramo);
+
+    List<Tramo> tramos = trayecto.getTramos();
 
     if(boton.equals("fin")) {
       String username = request.session().attribute("usuario_logueado");
@@ -133,6 +137,8 @@ public class TrayectoController {
       }
       Map<String, Object> model = new HashMap<>();
       model.put("transportes", transportes);
+
+      model.put("tramos",tramos);
       return new ModelAndView(model, "tramo.hbs");
     }
   }
