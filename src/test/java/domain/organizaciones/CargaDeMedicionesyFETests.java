@@ -7,22 +7,22 @@ import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.datos.actividades.tipos.NoCoincidenUnidadesFEYTC;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
-import repositorios.RepositorioConsumos;
 import domain.ubicaciones.Ubicacion;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import repositorios.RepositorioConsumos;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+
 
 public class CargaDeMedicionesyFETests {
 
   private Organizacion organizacionDefault;
   private Ubicacion ubicacionDefault;
+  String pathCsv = "src/test/resources/files/archivo-prueba.csv";
 
   @BeforeEach
   public void init() {
@@ -104,7 +104,7 @@ public class CargaDeMedicionesyFETests {
 
   @Test
   public void sePuedeCargarUnArchivoCSVCorrectamente(){
-    organizacionDefault.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
+    organizacionDefault.cargarMediciones(pathCsv);
     List<DatosActividades> datosActividadesExpected = new ArrayList<>();
     List<DatosActividades> datosActividadesLeidos = organizacionDefault.getDatosActividades();
 

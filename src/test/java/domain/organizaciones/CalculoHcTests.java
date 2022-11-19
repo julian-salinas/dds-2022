@@ -18,7 +18,6 @@ import domain.trayecto.transporte.nopublico.TipoServicioContratado;
 import domain.ubicaciones.Ubicacion;
 import java.io.IOException;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

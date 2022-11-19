@@ -7,9 +7,6 @@ import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
 import domain.organizaciones.hc.HC;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
-import org.junit.jupiter.api.Disabled;
-import repositorios.RepositorioConsumos;
-import repositorios.RepositorioOrganizaciones;
 import domain.servicios.geodds.ServicioGeoDds;
 import domain.ubicaciones.Ubicacion;
 import java.io.IOException;
@@ -17,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import repositorios.RepositorioConsumos;
+import repositorios.RepositorioOrganizaciones;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
@@ -206,14 +206,12 @@ public class AgenteSectorialTests {
     RepositorioConsumos.getInstance().clean();
   }
 
-  // TODO: fixear test
   @Test
-  @Disabled
   public void siHayUnaOrgQueNoEstaEnSuProvinciaNoLaCuenta() throws IOException {
-    when(apiClient.nombreProvincia(anyInt())).thenReturn("San Juan");
-    when(apiClient.verificarNombreProvincia("San Juan")).thenReturn(20);     //id Provincia = 20
+    when(apiClient.verificarNombreProvincia("San Juan", 9)).thenReturn(20);
 
-    Ubicacion ubicacion4 = new Ubicacion("Corrientes", 1200, "localidad", apiClient);
+    Ubicacion ubicacion4 = new Ubicacion("Corrientes", 1200, "Argentina", "San Juan",
+        "Avellaneda", "localidad", apiClient);
     Organizacion org4 = crearOrg("Jojo Donuts", ubicacion4);
 
     RepositorioOrganizaciones.getInstance().add(org1);
@@ -233,10 +231,11 @@ public class AgenteSectorialTests {
     HC hcSectorMensual = agenteSectorial.hcSectorMensual();
     double valorHc = hcSectorMensual.enKgCO2();
 
-    // el HC mensual de una org deberia dar 2.010,325
-    // el de las 3 (que estan en la misma provinvia) deberia dar 6.030,975 (porq org4 no deberia afectar)
+    // org4 no deberia afectar
+    // (1234 * 30.5 + 567 * 30.5 / 12 + 89 * 30.5) * 3
+    // 125377.875
 
-    assertEquals(6030.975, valorHc);
+    assertEquals(125377.875, valorHc);
 
     RepositorioOrganizaciones.getInstance().clean();
     RepositorioConsumos.getInstance().clean();
