@@ -72,7 +72,6 @@ public class Router {
     Spark.get("/mediciones", medicionesController::index, engineTemplate);
     Spark.post("/mediciones-csv", medicionesController::postCsv, engineTemplate);
     Spark.post("/mediciones-manual", medicionesController::postManual, engineTemplate);
-    Spark.post("/cargar-fe", medicionesController::postFe, engineTemplate);
 
     // Agente Sectorial
     Spark.get("/registrarAgSec", registrarAgSecController::redirect, engineTemplate);

@@ -25,6 +25,11 @@ public class TransportePublico extends MedioDeTransporte {
     this.descripcion = this.toString();
   }
 
+  public void validacionParadas(Parada paradaInicio, Parada paradaFin) {
+    linea.findParada(paradaInicio.getUbicacionParada());
+    linea.findParada(paradaFin.getUbicacionParada());
+  }
+
   @Override
   public Distancia distancia(Ubicacion ubicacionInicio, Ubicacion ubicacionFin) {
     Parada paradaInicio = linea.findParada(ubicacionInicio);
