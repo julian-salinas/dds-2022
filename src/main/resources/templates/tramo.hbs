@@ -155,6 +155,28 @@
 
 </form>
 
+<div class="tab-pane container active" id="recorrido">
+    <h2 class="text-center text-primary display-3">Tu Trayecto</h2>
+
+    <table class="table table-striped">
+        <thead id="header_tabla_recorrido">
+        <th>transporte</th>
+        <th>inicio</th>
+        <th>destino</th>
+        </thead>
+        <tbody id="body_tabla_recorrido">
+        {{#each tramos}}
+            <tr>
+                <td>{{medio.descripcion}}</td>
+                <td>{{ubicacionInicio.calle}} {{ubicacionInicio.altura}}</td>
+                <td>{{ubicacionFin.calle}} {{ubicacionFin.altura}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+</div>
+
 <script>
   function esconder() {
       switch (document.getElementById("medio").value) {
