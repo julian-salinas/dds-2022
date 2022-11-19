@@ -7,6 +7,7 @@ import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
 import domain.organizaciones.hc.HC;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
+import org.junit.jupiter.api.Disabled;
 import repositorios.RepositorioConsumos;
 import repositorios.RepositorioOrganizaciones;
 import domain.servicios.geodds.ServicioGeoDds;
@@ -29,6 +30,8 @@ public class AgenteSectorialTests {
   Ubicacion ubicacion1;
   Ubicacion ubicacion2;
   Ubicacion ubicacion3;
+
+  String pathCsv = "src/test/resources/files/archivo-prueba.csv";
 
   @BeforeEach
   public void init() throws IOException {
@@ -61,8 +64,6 @@ public class AgenteSectorialTests {
     cargarTiposDeConsumo();
   }
 
-  // TODOS LOS Fe valen 30.5 !!!
-
   @Test
   public void sePuedenPedirLasOrgDentroDeUnMunicipioCorrectamente() {
     RepositorioOrganizaciones.getInstance().add(org1);
@@ -75,6 +76,7 @@ public class AgenteSectorialTests {
     assertEquals(org1, orgs.get(0));
 
     RepositorioOrganizaciones.getInstance().clean();
+    RepositorioConsumos.getInstance().clean();
   }
 
   @Test
@@ -94,11 +96,14 @@ public class AgenteSectorialTests {
     assertEquals(todasLasOrgs, orgs);
 
     RepositorioOrganizaciones.getInstance().clean();
+    RepositorioConsumos.getInstance().clean();
   }
 
   // <--
 
   // Aca van los tests de Agente Sectorial
+
+  // NOTA: TODOS LOS Fe valen 30.5 !!!
 
   @Test
   public void seCalculaBienElhcMensualDeUnMunicipio() {
@@ -106,9 +111,9 @@ public class AgenteSectorialTests {
     RepositorioOrganizaciones.getInstance().add(org2);
     RepositorioOrganizaciones.getInstance().add(org3);
 
-    org1.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-    org2.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-    org3.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
+    org1.cargarMediciones(pathCsv);
+    org2.cargarMediciones(pathCsv);
+    org3.cargarMediciones(pathCsv);
 
     // El agente esta en el Municipio de org1, pero no de org2, y org3
     Municipio municipio = org1.sectorMunicipio();
@@ -117,19 +122,13 @@ public class AgenteSectorialTests {
     HC hcSectorMensual = agenteSectorial.hcSectorMensual();
     double valorHc = hcSectorMensual.enKgCO2();
 
-    // el HC mensual de una org deberia dar 2.010,325
-    // el de solo la org1 (que es la unica en ese municipio) deberia dar 2.010,325
-
     // 1234 * 30.5 + 567 * 30.5 / 12 + 89 * 30.5
-    // 41.792,625
-
+    // 41792.625
     assertEquals(41792.625, valorHc);
 
     RepositorioOrganizaciones.getInstance().clean();
     RepositorioConsumos.getInstance().clean();
   }
-
-  /*
 
   @Test
   public void seCalculaBienElhcAnualDeUnMunicipio() {
@@ -137,27 +136,24 @@ public class AgenteSectorialTests {
     RepositorioOrganizaciones.getInstance().add(org2);
     RepositorioOrganizaciones.getInstance().add(org3);
 
-    org1.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-    org2.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-    org3.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-
-    setFactoresDeEmision(org1);
-    setFactoresDeEmision(org2);
-    setFactoresDeEmision(org3);
+    org1.cargarMediciones(pathCsv);
+    org2.cargarMediciones(pathCsv);
+    org3.cargarMediciones(pathCsv);
 
     // El agente esta en el Municipio de org1, pero no de org2, y org3
     Municipio municipio = org1.sectorMunicipio();
     AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.MUNICIPIO,
-        municipio.getId(), "Alfonso");
+        municipio.getId(), municipio.getNombre());
     HC hcSectorAnual = agenteSectorial.hcSectorAnual();
     double valorHc = hcSectorAnual.enKgCO2();
 
-    // el HC anual de una org deberia dar 24.123,9
-    // el de solo la org1 (que es la unica en ese municipio) deberia dar 24.123,9
+    // (1234 * 30.5 + 567 * 30.5 / 12 + 89 * 30.5) * 12
+    // 501511.5
 
-    assertEquals(24123.9, valorHc);
+    assertEquals(501511.5, valorHc);
 
     RepositorioOrganizaciones.getInstance().clean();
+    RepositorioConsumos.getInstance().clean();
   }
 
   @Test
@@ -166,26 +162,23 @@ public class AgenteSectorialTests {
     RepositorioOrganizaciones.getInstance().add(org2);
     RepositorioOrganizaciones.getInstance().add(org3);
 
-    org1.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-    org2.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-    org3.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-
-    setFactoresDeEmision(org1);
-    setFactoresDeEmision(org2);
-    setFactoresDeEmision(org3);
+    org1.cargarMediciones(pathCsv);
+    org2.cargarMediciones(pathCsv);
+    org3.cargarMediciones(pathCsv);
 
     Provincia provincia = org1.sectorProvincia();
     AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.PROVINCIA,
-        provincia.getId(), "Alfonso");
+        provincia.getId(), provincia.getNombre());
     HC hcSectorMensual = agenteSectorial.hcSectorMensual();
     double valorHc = hcSectorMensual.enKgCO2();
 
-    // el HC mensual de una org deberia dar 2.010,325
-    // el de las 3 (que estan en la misma provinvia) deberia dar 6.030,975
+    // (1234 * 30.5 + 567 * 30.5 / 12 + 89 * 30.5) * 3
+    // 125377.875
 
-    assertEquals(6030.975, valorHc);
+    assertEquals(125377.875, valorHc);
 
     RepositorioOrganizaciones.getInstance().clean();
+    RepositorioConsumos.getInstance().clean();
   }
 
   @Test
@@ -194,30 +187,28 @@ public class AgenteSectorialTests {
     RepositorioOrganizaciones.getInstance().add(org2);
     RepositorioOrganizaciones.getInstance().add(org3);
 
-    org1.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-    org2.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-    org3.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-
-    setFactoresDeEmision(org1);
-    setFactoresDeEmision(org2);
-    setFactoresDeEmision(org3);
+    org1.cargarMediciones(pathCsv);
+    org2.cargarMediciones(pathCsv);
+    org3.cargarMediciones(pathCsv);
 
     Provincia provincia = org1.sectorProvincia();
     AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.PROVINCIA,
-        provincia.getId(), "Alfonso");
+        provincia.getId(), provincia.getNombre());
     HC hcSectorAnual = agenteSectorial.hcSectorAnual();
     double valorHc = hcSectorAnual.enKgCO2();
 
-    // el HC anual de una org deberia dar 24.123,9
-    // el de las 3 (que estan en la misma provinvia) deberia dar 72.371,7
+    // (1234 * 30.5 + 567 * 30.5 / 12 + 89 * 30.5) * 3 * 12
+    // 1504534.5
 
-    assertEquals(72371, ((int) valorHc));
+    assertEquals(1504534, ((int) valorHc));
 
     RepositorioOrganizaciones.getInstance().clean();
+    RepositorioConsumos.getInstance().clean();
   }
 
   // TODO: fixear test
   @Test
+  @Disabled
   public void siHayUnaOrgQueNoEstaEnSuProvinciaNoLaCuenta() throws IOException {
     when(apiClient.nombreProvincia(anyInt())).thenReturn("San Juan");
     when(apiClient.verificarNombreProvincia("San Juan")).thenReturn(20);     //id Provincia = 20
@@ -230,20 +221,15 @@ public class AgenteSectorialTests {
     RepositorioOrganizaciones.getInstance().add(org3);
     RepositorioOrganizaciones.getInstance().add(org4);
 
-    org1.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-    org2.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-    org3.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-    org4.cargarMediciones("src/test/resources/files/archivo-prueba.csv");
-
-    setFactoresDeEmision(org1);
-    setFactoresDeEmision(org2);
-    setFactoresDeEmision(org3);
-    setFactoresDeEmision(org4);
+    org1.cargarMediciones(pathCsv);
+    org2.cargarMediciones(pathCsv);
+    org3.cargarMediciones(pathCsv);
+    org4.cargarMediciones(pathCsv);
 
     // El agente esta en la Provincia de org1, org2, y org3, pero no org4
     Provincia provincia = org1.sectorProvincia();
     AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.PROVINCIA,
-        provincia.getId(), "Alfonso");
+        provincia.getId(), provincia.getNombre());
     HC hcSectorMensual = agenteSectorial.hcSectorMensual();
     double valorHc = hcSectorMensual.enKgCO2();
 
@@ -253,21 +239,11 @@ public class AgenteSectorialTests {
     assertEquals(6030.975, valorHc);
 
     RepositorioOrganizaciones.getInstance().clean();
+    RepositorioConsumos.getInstance().clean();
   }
-  */
 
   private Organizacion crearOrg(String nombre, Ubicacion ubicacion) {
     return new Organizacion(nombre, "S.A.", TipoOrganizacion.EMPRESA, ubicacion, ClasificacionOrg.MINISTERIO);
-  }
-
-  private void setFactoresDeEmision(Organizacion org) {
-    FactorEmision feGasNatural = new FactorEmision(1.5, UnidadConsumo.M3);
-    FactorEmision feElectricidad = new FactorEmision(1.3, UnidadConsumo.KWH);
-    FactorEmision feNafta = new FactorEmision(1.1, UnidadConsumo.LT);
-
-    org.getDatosActividades().get(0).cargarFactorEmision(feGasNatural);
-    org.getDatosActividades().get(1).cargarFactorEmision(feElectricidad);
-    org.getDatosActividades().get(2).cargarFactorEmision(feNafta);
   }
 
   private void cargarTiposDeConsumo() {
