@@ -31,8 +31,11 @@ public class Ubicacion extends PersistenceEntity {
   @Getter @Setter String nombreMunicipio;
   @Column(name = "nombre_localidad")
   @Getter @Setter String nombreLocalidad;
-  @Transient // va a quedar como Transient (no tiene sentido guardarlo en la db)
+  @Transient
   ServicioGeoDds apiClient;
+  @Transient
+  Localidad localidad;
+
 
   public Ubicacion() {
     // Puede q esto cambie si hacemos q no sea Singleton
@@ -45,6 +48,19 @@ public class Ubicacion extends PersistenceEntity {
     this.calle = calle;
     this.altura = altura;
     //this.nombreLocalidad = nombreLocalidad;
+  }
+
+  public Ubicacion(String calle, int altura, String nombrePais,
+                   String nombreProvincia,
+                   String nombreMunicipio,
+                   String nombreLocalidad) {
+    this.apiClient = ServicioGeoDds.getInstancia();
+    this.nombrePais = nombrePais;
+    this.nombreProvincia = nombreProvincia;
+    this.nombreMunicipio = nombreMunicipio;
+    this.nombreLocalidad = nombreLocalidad;
+    this.calle = calle;
+    this.altura = altura;
   }
 
   // Tests
@@ -61,12 +77,13 @@ public class Ubicacion extends PersistenceEntity {
     this.altura = altura;
   }
 
-  // O este
+  // Tests 3
   public Ubicacion(String calle, int altura, String nombrePais,
                    String nombreProvincia,
                    String nombreMunicipio,
-                   String nombreLocalidad) {
-    this.apiClient = ServicioGeoDds.getInstancia();
+                   String nombreLocalidad,
+                   ServicioGeoDds apiClient) {
+    this.apiClient = apiClient;
     this.nombrePais = nombrePais;
     this.nombreProvincia = nombreProvincia;
     this.nombreMunicipio = nombreMunicipio;
@@ -76,14 +93,19 @@ public class Ubicacion extends PersistenceEntity {
   }
 
   public Localidad getLocalidad() {
-    try {
-      Pais pais = new Pais(nombrePais, apiClient);
-      Provincia provincia = new Provincia(nombreProvincia, pais, apiClient);
-      Municipio municipio = new Municipio(nombreMunicipio, provincia, apiClient);
-      Localidad localidad = new Localidad(nombreLocalidad, municipio, apiClient);
+    if(localidad==null) {
+      try {
+        Pais pais = new Pais(nombrePais, apiClient);
+        Provincia provincia = new Provincia(nombreProvincia, pais, apiClient);
+        Municipio municipio = new Municipio(nombreMunicipio, provincia, apiClient);
+        Localidad localidad = new Localidad(nombreLocalidad, municipio, apiClient);
+        this.localidad = localidad;
+        return localidad;
+      } catch (IOException exception) {
+        throw new TimeoutException("Timeout");
+      }
+    } else {
       return localidad;
-    } catch (IOException exception) {
-      throw new TimeoutException("Timeout");
     }
   }
 
