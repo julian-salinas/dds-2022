@@ -3,6 +3,7 @@ package presentacion.controladores;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.datos.actividades.tipos.DataHelper;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
+import domain.organizaciones.hc.HC;
 import presentacion.Usuario;
 import repositorios.RepositorioConsumos;
 import repositorios.RepositorioUsuarios;
@@ -10,6 +11,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.stream.IntStream;
 public class ReportesOrgController {
 
   public ModelAndView index(Request request, Response response) {
+    DecimalFormat df = new DecimalFormat("0.00");
 
     List<TipoDeConsumo> consumos = RepositorioConsumos.getInstance().all();
     String username = request.session().attribute("usuario_logueado");
@@ -42,10 +45,15 @@ public class ReportesOrgController {
             (i < nombres.size() ? nombres.get(i): null)))
         .collect(Collectors.toList());
 
+    HC total = org.hcTotal();
 
+    List<Double> valoresHistorial = new ArrayList<>();
+    org.getHistorialHCTotal().forEach(hcT -> valoresHistorial.add(hcT.enKgCO2()));
 
     Map<String, Object> model = new HashMap<>();
     model.put("datos",datos);
+    model.put("total", df.format(total.enKgCO2()));
+    model.put("valoresHistorial", valoresHistorial);
     return new ModelAndView(model, "reportesOrg.hbs");
   }
 }

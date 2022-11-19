@@ -1,14 +1,11 @@
 {{#partial "content"}}
   <div class="left">
       <div class="big-title">
-      <h1> Guía de recomendaciones </h1>
-      <p> bla bla bla bla bla </p>
+      <h1> Reportes </h1>
       </div>
-
-
           <div class="tab-pane container active" id="Usuarios">
-              <h2 class="text-center text-primary display-3">Tabla usuarios</h2>
-
+              <h3>El HC Total es: {{total}}</h3>
+              <h2 class="text-center text-primary display-3">Composición HC Total de la Organización</h2>
               <table class="table table-striped">
                   <thead id="header_tabla_Usuarios">
                   <th>consumo</th>
@@ -23,9 +20,36 @@
                   {{/each}}
                   </tbody>
               </table>
-
           </div>
+      <canvas id="myChart" style="width:100%;max-width:1000px"></canvas>
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script>
+    var xValues = [];
+    var yValues = [];
+    //var barColors = ["red", "green","blue","orange","brown"];
+    {{#each valoresHistorial}}
+        xValues.push("")
+        yValues.push({{this}})
+    {{/each}}
+    new Chart("myChart", {
+      type: "bar",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: "blue",
+          data: yValues
+        }]
+      },
+      options: {
+        legend: {display: false},
+        title: {
+          display: true,
+          text: "Evolución de HC Total de la Organización"
+        }
+      }
+    });
+  </script>
 {{/partial}}
 
 {{>base.hbs}}

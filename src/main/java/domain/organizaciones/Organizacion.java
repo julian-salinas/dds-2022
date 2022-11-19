@@ -23,6 +23,7 @@ import javax.persistence.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
@@ -57,10 +58,7 @@ public class Organizacion extends PersistenceEntity {
   private List<Contacto> contactos = new ArrayList<>();
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
-  private List<HC> historialHCMensual = new ArrayList<>();
-
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "org_id")
-  private List<HC> historialHCAnual = new ArrayList<>();
+  private List<HC> historialHCTotal = new ArrayList<>();
 
   public Organizacion() {}
 
@@ -183,7 +181,6 @@ public class Organizacion extends PersistenceEntity {
     double valoresMensuales = datosActividades.stream().filter(datosActividad -> datosActividad.getPeriodicidad().equals("Mensual")).filter(datosActividad -> (YearMonth.parse(datosActividad.getPeriodoImputacion(), formatter2).equals(mes))).mapToDouble(DatosActividades::impactoHC).sum();
     HC hc = new HC(valoresMensuales, UnidadHC.kgCO2);
 
-    historialHCMensual.add(hc);
     return hc;
   }
 /*
@@ -206,21 +203,27 @@ public class Organizacion extends PersistenceEntity {
 
     HC hc = new HC(valoresAnuales+valoresMensuales, UnidadHC.kgCO2);
 
-    historialHCAnual.add(hc);
     return hc;
   }
 
   public HC hcTotal(){
     double valorTotal = datosActividades.stream().mapToDouble(DatosActividades::impactoHC).sum();
-    return new HC(valorTotal, UnidadHC.kgCO2);
+    HC hc = new HC(valorTotal, UnidadHC.kgCO2);
+    if (historialHCTotal.size() == 0){
+      historialHCTotal.add(hc);
+    } else if (historialHCTotal.get(historialHCTotal.size() - 1).enKgCO2() != valorTotal){
+      historialHCTotal.add(hc);
+    }
+    return hc;
   }
 
   public double composicionHCMensual(String tipo){
     HC hcTotal = this.hcTotal();
+    DecimalFormat df = new DecimalFormat("0.00");
 
     double valorTipoConsumo = datosActividades.stream().filter(datosActividad -> datosActividad.getTipoDeConsumo().getTipo().equals(tipo)).mapToDouble(DatosActividades::impactoHC).sum();
     double porcentaje = 100*(valorTipoConsumo / hcTotal.enKgCO2());
 
-    return porcentaje;
+    return Math.round(porcentaje*100.0)/100.0;
   }
 }
