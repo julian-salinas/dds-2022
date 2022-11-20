@@ -60,7 +60,11 @@ public class AgenteSectorial extends PersistenceEntity {
     double valorHC = orgInSectorTerr.stream().mapToDouble(org -> org.hcTotal().enKgCO2()).sum();
     HC hc = new HC(valorHC, UnidadHC.kgCO2);
 
-    historialHCTotal.add(hc);
+    if (historialHCTotal.size() == 0){
+      historialHCTotal.add(hc);
+    } else if (historialHCTotal.get(historialHCTotal.size() - 1).enKgCO2() != valorHC){
+      historialHCTotal.add(hc);
+    }
     return hc;
   }
 
