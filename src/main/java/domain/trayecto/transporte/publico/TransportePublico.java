@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class TransportePublico extends MedioDeTransporte {
   @Enumerated(EnumType.STRING)
   private TipoTransportePublico tipo;
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @Getter @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Linea linea;
   @Getter @Setter private double combustibleConsumidoPorKM = 0.0;
   //@Getter private String descripcion
@@ -23,6 +23,11 @@ public class TransportePublico extends MedioDeTransporte {
     this.tipo = tipo;
     this.linea = linea;
     this.descripcion = this.toString();
+  }
+
+  public void validacionParadas(Parada paradaInicio, Parada paradaFin) {
+    linea.findParada(paradaInicio.getUbicacionParada());
+    linea.findParada(paradaFin.getUbicacionParada());
   }
 
   @Override

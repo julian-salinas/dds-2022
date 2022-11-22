@@ -30,6 +30,8 @@
         <class>domain.ubicaciones.Ubicacion</class>
         <class>domain.ubicaciones.sectores.AgenteSectorial</class>
         <class>domain.organizaciones.hc.HC</class>
+        <class>domain.notificaciones.NotificacionWhatsapp</class>
+        <class>domain.notificaciones.NotificacionEmail</class>
         <class>presentacion.Usuario</class>
 
         <properties>

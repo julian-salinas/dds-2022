@@ -3,6 +3,7 @@ package domain.trayecto;
 import domain.database.PersistenceEntity;
 import domain.trayecto.transporte.MedioDeTransporte;
 import domain.trayecto.transporte.publico.Parada;
+import domain.trayecto.transporte.publico.TransportePublico;
 import domain.ubicaciones.Ubicacion;
 import domain.ubicaciones.distancia.Distancia;
 import lombok.Getter;
@@ -30,6 +31,8 @@ public class Tramo extends PersistenceEntity {
   }
 
   public Tramo(MedioDeTransporte medio, Parada paradaInicio, Parada paradaFin) {
+    TransportePublico transportePublico = (TransportePublico) medio;
+    transportePublico.validacionParadas(paradaInicio, paradaFin);
     this.medio = medio;
     this.ubicacionInicio = paradaInicio.getUbicacionParada();
     this.ubicacionFin = paradaFin.getUbicacionParada();

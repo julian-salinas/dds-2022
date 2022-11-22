@@ -1,6 +1,5 @@
-package entrega3;
+package domain.notificaciones.contactos;
 
-import domain.notificaciones.contactos.Contacto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

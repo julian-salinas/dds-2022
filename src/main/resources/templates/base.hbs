@@ -46,22 +46,13 @@
             <div class="links">
               <ul>
                 <!-- Aca meter lo de cada tipo de usuario -->
-                {{#if nombre}}
+                {{#if inicio}}
+                    <li><a href="/signin" class="boton">Sign Up</a></li>
+                    <li><a href="/login" class="boton">Log In</a></li>
+                {{else}}
                     <li><a href="/home">Home</a></li>
                     <li><a href="/inicio" class="boton">Log Out</a></li>
-                {{else}}
-                    {{#if nombreOrg}}
-                        <li><a href="/home">Home</a></li>
-                        <li><a href="/inicio" class="boton">Log Out</a></li>
-                    {{else}}
-                        {{#if nombreAgente}}
-                            <li><a href="/home">Home</a></li>
-                            <li><a href="/inicio" class="boton">Log Out</a></li>
-                        {{else}}
-                            <li><a href="/signin" class="boton">Sign Up</a></li>
-                            <li><a href="/login" class="boton">Log In</a></li>
-                        {{/if}}
-                    {{/if}}
+
                 {{/if}}
               </ul>
             </div>

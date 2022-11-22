@@ -3,8 +3,8 @@ package domain.organizaciones.datos.actividades;
 import domain.database.PersistenceEntity;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
-import domain.organizaciones.datos.actividades.tipos.TipoDeConsumoFactory;
 import lombok.Getter;
+import repositorios.RepositorioConsumos;
 
 import javax.persistence.*;
 
@@ -23,7 +23,7 @@ public class DatosActividades extends PersistenceEntity {
   public DatosActividades() {}
 
   public DatosActividades(String tipo, String valor, String periodicidad, String periodoImputacion) {
-      this.tipoDeConsumo = TipoDeConsumoFactory.instance().buildTipoDeConsumo(tipo);
+      this.tipoDeConsumo = RepositorioConsumos.getInstance().findByName(tipo);
       this.valor = Double.parseDouble(valor);
       this.periodicidad = periodicidad;
       this.periodoImputacion = periodoImputacion;
