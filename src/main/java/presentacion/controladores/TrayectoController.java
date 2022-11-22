@@ -49,6 +49,7 @@ public class TrayectoController {
       String username = request.session().attribute("usuario_logueado");
       Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
       List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
+      miembros.remove(user.getMiembro()); // Todos menos e'l mismo
       model.put("miembros",miembros);
       return new ModelAndView(model, "miembroTramo.hbs");
 
