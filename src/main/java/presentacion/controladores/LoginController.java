@@ -1,6 +1,6 @@
 package presentacion.controladores;
 
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioUsuarios;
 import presentacion.errores.Error;
 import presentacion.Usuario;
 import spark.ModelAndView;

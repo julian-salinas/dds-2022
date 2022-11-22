@@ -3,9 +3,7 @@ package presentacion.controladores;
 import domain.organizaciones.ClasificacionOrg;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.TipoOrganizacion;
-import domain.organizaciones.sectores.Sector;
-import domain.repositorios.RepositorioOrganizaciones;
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioUsuarios;
 import domain.ubicaciones.Ubicacion;
 import presentacion.Usuario;
 import presentacion.errores.Error;
@@ -16,9 +14,6 @@ import spark.Response;
 public class RegistrarOrgController {
 
   public ModelAndView index(Request request, Response response) {
-    String username = request.session().attribute("usuario_signeado");
-    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
-    request.session().attribute("usuario_signeado_literal", user);
     return new ModelAndView(null, "registrarOrg.hbs");
   }
 
@@ -45,18 +40,19 @@ public class RegistrarOrgController {
       error.setError(true);
       error.setDescripcion(e.getMessage() + " (en los datos ingresados correspondientes a la " +
           "ubicacion) ");
-      e.printStackTrace();
+      //e.printStackTrace();
       return new ModelAndView(error, "registrarOrg.hbs");
     }
 
     Organizacion org = new Organizacion(nombre, razonSocial, TipoOrganizacion.valueOf(tipo),
         ubicacion, ClasificacionOrg.valueOf(clasificacion));
 
-    Usuario usuario = request.session().attribute("usuario_signeado_literal");
+    String username = request.session().attribute("usuario_logueado");
+    Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     usuario.setOrg(org);
     RepositorioUsuarios.getInstance().update(usuario);
 
-    request.session().attribute("usuario_logueado", usuario.getUsername());
+    //request.session().attribute("usuario_logueado", usuario.getUsername());
     response.redirect("/home");
     return null;
   }

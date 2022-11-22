@@ -53,11 +53,12 @@ public class Linea extends PersistenceEntity {
   public Parada findParada(Ubicacion ubicacion) {
     List<Parada> paradasAux = paradas
         .stream()
-        .filter(parada -> parada.getUbicacionParada().equals(ubicacion))
+        .filter(parada -> parada.getUbicacionParada().getCalle().equals(ubicacion.getCalle()) &&
+            parada.getUbicacionParada().getAltura()==ubicacion.getAltura())
         .collect(Collectors.toList());
 
     if (paradasAux.isEmpty())
-      throw new ExcepcionParadasTransporteNoIncluidasEnLinea();
+      throw new ExcepcionParadasTransporteNoIncluidasEnLinea(); //TODO: Fix bug sobre esto
     else if (paradasAux.size()>1)
       throw new ExcepcionMultiplesParadasConMismaUbicacion();
     else

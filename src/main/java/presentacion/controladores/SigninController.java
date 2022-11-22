@@ -2,7 +2,7 @@ package presentacion.controladores;
 
 import domain.contrasenias.Validador;
 import domain.contrasenias.excepciones.PasswordException;
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioUsuarios;
 import presentacion.TipoUsuario;
 import presentacion.Usuario;
 import presentacion.errores.Error;
@@ -41,18 +41,19 @@ public class SigninController {
     }
 
     Usuario usuario = new Usuario(username, password, tipo);
-
     RepositorioUsuarios.getInstance().add(usuario);
-    request.session().attribute("usuario_signeado", username);
+    request.session().attribute("usuario_logueado", username);
 
     if(tipo == TipoUsuario.MIEMBRO)
       response.redirect("/registrarMiembro");
     if(tipo == TipoUsuario.ORGANIZACION)
       response.redirect("/registrarOrg");
-
+    if(tipo == TipoUsuario.AGENTE_SECTORIAL)
+      response.redirect("/registrarAgSec");
+    if(tipo == TipoUsuario.ADMINISTRADOR)
+      response.redirect("/home");
 
     response.redirect("/inicio");
     return null;
-
   }
 }

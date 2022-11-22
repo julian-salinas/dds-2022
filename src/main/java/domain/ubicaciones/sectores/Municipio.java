@@ -1,14 +1,9 @@
 package domain.ubicaciones.sectores;
 
-import domain.organizaciones.Organizacion;
-import domain.repositorios.RepositorioOrganizaciones;
-import domain.servicios.geodds.ServicioGeoDds;
-import lombok.Getter;
 
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import domain.servicios.geodds.ServicioGeoDds;
 import java.io.IOException;
-import java.util.List;
+import lombok.Getter;
 
 public class Municipio implements SectorTerritorial {
   @Getter private int id;
@@ -16,9 +11,10 @@ public class Municipio implements SectorTerritorial {
   @Getter private Provincia provincia;
   private ServicioGeoDds apiClient;
 
+  @Deprecated
   public Municipio(String nombre, ServicioGeoDds apiClient) throws IOException, RuntimeException {
     this.apiClient = apiClient;
-    this.id = this.apiClient.verificarNombreMunicipio(nombre);
+    //this.id = this.apiClient.verificarNombreMunicipio(nombre);
     this.provincia = new Provincia(apiClient.nombreProvincia(id), apiClient);
     this.nombre = nombre.toUpperCase();
   }
@@ -30,8 +26,4 @@ public class Municipio implements SectorTerritorial {
     this.provincia = provincia;
   }
 
-  @Override
-  public List<Organizacion> orgsDentroDeSector() {
-    return RepositorioOrganizaciones.getInstance().inMunicipio(this);
-  }
 }

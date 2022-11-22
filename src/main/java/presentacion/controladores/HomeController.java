@@ -1,6 +1,6 @@
 package presentacion.controladores;
 
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioUsuarios;
 import presentacion.TipoUsuario;
 import presentacion.Usuario;
 import spark.ModelAndView;
@@ -9,6 +9,7 @@ import spark.Response;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class HomeController {
 
@@ -21,21 +22,35 @@ public class HomeController {
       return null;
     }
 
-    response.cookie("username", username);
+    
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
     if (user.getTipo().equals(TipoUsuario.ORGANIZACION)) {
-      /*Map<String, Object> model = new HashMap<>();
-      model.put("org", user.getOrg());*/
       Object model = user.getOrg();
+      if (model==null)
+        response.redirect("/registrarOrg");
       return new ModelAndView(model, "homeOrganizacion.hbs");
-    } else if (user.getTipo().equals(TipoUsuario.MIEMBRO)) {
+    }
+    else if (user.getTipo().equals(TipoUsuario.MIEMBRO)) {
       Object model = user.getMiembro();
+      if (model==null)
+        response.redirect("/registrarMiembro");
       return new ModelAndView(model, "homeMiembro.hbs");
     }
-    else
+    else if (user.getTipo().equals(TipoUsuario.AGENTE_SECTORIAL)) {
+      Object model = user.getAgenteSectorial();
+      if (model==null)
+        response.redirect("/registrarAgSec");
+      return new ModelAndView(model, "homeAgenteSectorial.hbs");
+    }
+    else if (user.getTipo().equals(TipoUsuario.ADMINISTRADOR)) {
+      Map<String, Object> model = new HashMap<>();
+      model.put("nombre", username);
+      return new ModelAndView(model, "homeAdmin.hbs");
+    }
+    else {
       return null;
-
+    }
   }
 
 }

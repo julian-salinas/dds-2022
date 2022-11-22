@@ -5,9 +5,9 @@ import domain.organizaciones.datos.actividades.DatosActividades;
 import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
-import domain.repositorios.RepositorioConsumos;
-import domain.repositorios.RepositorioOrganizaciones;
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioConsumos;
+import repositorios.RepositorioOrganizaciones;
+import repositorios.RepositorioUsuarios;
 import org.apache.commons.io.FileUtils;
 import presentacion.Usuario;
 import spark.ModelAndView;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class MedicionesController {
 
   public ModelAndView index(Request request, Response response) {
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
 
     if (username == null) {
       response.redirect("/login");
@@ -56,7 +56,7 @@ public class MedicionesController {
     File targetFile = new File(pathToCSV);
 
     FileUtils.copyInputStreamToFile(inputStream, targetFile);
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
     org.cargarMediciones(pathToCSV);
@@ -69,7 +69,7 @@ public class MedicionesController {
 
   public ModelAndView postManual(Request request, Response response) {
 
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
     int tipoConsumoid = Integer.parseInt(request.queryParams("tipoConsumo"));
@@ -90,28 +90,6 @@ public class MedicionesController {
     return null;
   }
 
-  public ModelAndView postFe(Request request, Response response) {
 
-    String username = request.cookie("username");
-    Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
-    Organizacion org = usuario.getOrg();
-    int idDA = Integer.parseInt(request.queryParams("idDA"));
-    UnidadConsumo unidadFE = UnidadConsumo.valueOf(request.queryParams("unidadFE"));
-    double valorFE = Double.parseDouble(request.queryParams("valorFE"));
-
-    FactorEmision fe = new FactorEmision(valorFE, unidadFE);
-    DatosActividades da = org
-        .getDatosActividades()
-        .stream()
-        .filter(datosActividades -> datosActividades.getId()==idDA)
-        .collect(Collectors.toList())
-        .get(0);
-
-    da.cargarFactorEmision(fe);
-    RepositorioOrganizaciones.getInstance().update(org);
-
-    response.redirect("/mediciones");
-    return null;
-  }
 
 }

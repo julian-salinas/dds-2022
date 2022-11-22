@@ -3,9 +3,9 @@ package presentacion.controladores;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.miembros.Miembro;
 import domain.organizaciones.sectores.Sector;
-import domain.repositorios.RepositorioMiembros;
-import domain.repositorios.RepositorioOrganizaciones;
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioMiembros;
+import repositorios.RepositorioOrganizaciones;
+import repositorios.RepositorioUsuarios;
 import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -16,14 +16,14 @@ import java.util.stream.Collectors;
 public class AceptarMiembroController {
 
   public ModelAndView index(Request request, Response response) {
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
     return new ModelAndView(org, "aceptarMiembros.hbs");
   }
 
   public ModelAndView post(Request request, Response response) {
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Organizacion org = usuario.getOrg();
 

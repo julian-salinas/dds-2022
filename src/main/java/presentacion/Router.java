@@ -1,8 +1,10 @@
 package presentacion;
 
 import presentacion.controladores.*;
-import spark.Spark;
+import spark.*;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import javax.jws.WebParam;
 
 public class Router {
   public static void configure() {
@@ -17,16 +19,22 @@ public class Router {
     TrayectoController trayectoController = new TrayectoController();
     RegistrarOrgController registrarOrgController = new RegistrarOrgController();
     RegistrarMiembroController registrarMiembroController = new RegistrarMiembroController();
+    RegistrarAgSecController registrarAgSecController = new RegistrarAgSecController();
     SectoresController sectoresController = new SectoresController();
     HcController hcController = new HcController();
     AceptarMiembroController aceptarMiembroController = new AceptarMiembroController();
     PedirVinculacionController pedirVinculacionController = new PedirVinculacionController();
     MedicionesController medicionesController = new MedicionesController();
+    CargarParadaController cargarParadaController = new CargarParadaController();
+    CargarLineaController cargarLineaController = new CargarLineaController();
+    CargarFeController cargarFeController = new CargarFeController();
 
 
     //DebugScreen.enableDebugScreen();
 
     Spark.staticFiles.location("public");
+
+    // TODO: Mejorar las rutas/paths
 
     // Todos los requests
     Spark.get("/signin", signinController::index, engineTemplate);
@@ -54,19 +62,44 @@ public class Router {
     Spark.post("/vincularse", pedirVinculacionController::postOrg, engineTemplate);
     Spark.post("/mandar-postulamiento", pedirVinculacionController::mandar, engineTemplate);
     Spark.get("/hc-miembro",hcController::indexMiembro,engineTemplate);
-    Spark.post("/calculo-hc-miembro",hcController::postMiembro,engineTemplate);
+    Spark.post("/hc-miembro",hcController::postMiembro,engineTemplate);
 
     // Organizacion
     Spark.get("/sectores", sectoresController::index, engineTemplate);
     Spark.post("/sectores", sectoresController::post, engineTemplate);
     Spark.get("/aceptar-miembros", aceptarMiembroController::index, engineTemplate);
     Spark.post("/aceptar-miembros", aceptarMiembroController::post, engineTemplate);
-    Spark.get("/hc", hcController::index, engineTemplate);
-    Spark.post("/calculo-hc", hcController::post, engineTemplate);
+    Spark.get("/hc-org", hcController::index, engineTemplate);
+    Spark.post("/hc-org", hcController::post, engineTemplate);
     Spark.get("/mediciones", medicionesController::index, engineTemplate);
     Spark.post("/mediciones-csv", medicionesController::postCsv, engineTemplate);
     Spark.post("/mediciones-manual", medicionesController::postManual, engineTemplate);
-    Spark.post("/cargar-fe", medicionesController::postFe, engineTemplate);
 
+    // Agente Sectorial
+    Spark.get("/registrarAgSec", registrarAgSecController::redirect, engineTemplate);
+    Spark.get("/registrarAgSec/tipo", registrarAgSecController::index, engineTemplate);
+    Spark.post("/registrarAgSec/tipo", registrarAgSecController::post, engineTemplate);
+    Spark.get("/registrarAgSec/sector", registrarAgSecController::index_sector, engineTemplate);
+    Spark.post("/registrarAgSec/sector", registrarAgSecController::post_sector, engineTemplate);
+    Spark.get("/hc-agente", hcController::index_agente, engineTemplate);
+    Spark.post("/hc-agente", hcController::post_agente, engineTemplate);
+
+    // Admin
+    Spark.get("/cargarParada", cargarParadaController::index, engineTemplate);
+    Spark.post("/cargarParada", cargarParadaController::post, engineTemplate);
+    Spark.get("/cargarLinea", cargarLineaController::index, engineTemplate);
+    Spark.post("/cargarLinea", cargarLineaController::post, engineTemplate);
+    Spark.get("/cargarFe", cargarFeController::index, engineTemplate);
+    Spark.post("/cargarFe", cargarFeController::post, engineTemplate);
+
+    // Extra
+
+    Spark.redirect.any("/", "/home");
+
+    // 404 - Not found
+    Spark.notFound((req, res) -> {
+      res.type("text/html");
+      return engineTemplate.render(new ModelAndView(null, "notFound.hbs"));
+    });
   }
 }

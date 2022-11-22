@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import domain.database.PersistenceEntity;
 import domain.servicios.geodds.ServicioGeoDds;
+import domain.servicios.geodds.excepciones.TimeoutException;
 import domain.ubicaciones.distancia.Distancia;
 import domain.ubicaciones.sectores.Localidad;
 import domain.ubicaciones.sectores.Municipio;
@@ -30,38 +31,25 @@ public class Ubicacion extends PersistenceEntity {
   @Getter @Setter String nombreMunicipio;
   @Column(name = "nombre_localidad")
   @Getter @Setter String nombreLocalidad;
-  @Transient // va a quedar como Transient (no tiene sentido guardarlo en la db)
+  @Transient
   ServicioGeoDds apiClient;
+  @Transient
+  Localidad localidad;
+
 
   public Ubicacion() {
     // Puede q esto cambie si hacemos q no sea Singleton
     apiClient = ServicioGeoDds.getInstancia();
   }
 
-  // Deprecated
+  @Deprecated
   public Ubicacion(String calle, int altura, String nombreLocalidad, ServicioGeoDds apiClient) {
-    this.apiClient = apiClient;
-    this.calle = calle;
-    this.altura = altura;
-    //this.nombreLocalidad = nombreLocalidad;
-  }
-
-  // Deprecated
-  public Ubicacion(String calle, int altura, String nombreLocalidad) {
     this.apiClient = ServicioGeoDds.getInstancia();
     this.calle = calle;
     this.altura = altura;
     //this.nombreLocalidad = nombreLocalidad;
   }
 
-  // Este
-  public Ubicacion(String calle, int altura) {
-    this.apiClient = ServicioGeoDds.getInstancia();
-    this.calle = calle;
-    this.altura = altura;
-  }
-
-  // O este
   public Ubicacion(String calle, int altura, String nombrePais,
                    String nombreProvincia,
                    String nombreMunicipio,
@@ -75,30 +63,49 @@ public class Ubicacion extends PersistenceEntity {
     this.altura = altura;
   }
 
-  // Hacer esto para Localidad, Municipio, etc. O tal vez no.
-  /*public Localidad getLocalidad() {
-    try {
-      return new Localidad(nombreLocalidad, apiClient);
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }*/
+  // Tests
+  public Ubicacion(String calle, int altura, ServicioGeoDds apiClient) {
+    this.apiClient = apiClient;
+    this.calle = calle;
+    this.altura = altura;
+  }
+
+  // Tests 2
+  public Ubicacion(String calle, int altura) {
+    this.apiClient = ServicioGeoDds.getInstancia();
+    this.calle = calle;
+    this.altura = altura;
+  }
+
+  // Tests 3
+  public Ubicacion(String calle, int altura, String nombrePais,
+                   String nombreProvincia,
+                   String nombreMunicipio,
+                   String nombreLocalidad,
+                   ServicioGeoDds apiClient) {
+    this.apiClient = apiClient;
+    this.nombrePais = nombrePais;
+    this.nombreProvincia = nombreProvincia;
+    this.nombreMunicipio = nombreMunicipio;
+    this.nombreLocalidad = nombreLocalidad;
+    this.calle = calle;
+    this.altura = altura;
+  }
 
   public Localidad getLocalidad() {
-
-    //int idPais = apiClient.verificarNombrePais(nombrePais);
-    try {
-      Pais pais = new Pais(nombrePais, apiClient);
-      Provincia provincia = new Provincia(nombreProvincia, pais, apiClient);
-      Municipio municipio = new Municipio(nombreMunicipio, provincia, apiClient);
-      Localidad localidad = new Localidad(nombreLocalidad, municipio, apiClient);
+    if(localidad==null) {
+      try {
+        Pais pais = new Pais(nombrePais, apiClient);
+        Provincia provincia = new Provincia(nombreProvincia, pais, apiClient);
+        Municipio municipio = new Municipio(nombreMunicipio, provincia, apiClient);
+        Localidad localidad = new Localidad(nombreLocalidad, municipio, apiClient);
+        this.localidad = localidad;
+        return localidad;
+      } catch (IOException exception) {
+        throw new TimeoutException("Timeout");
+      }
+    } else {
       return localidad;
-    } catch (RuntimeException e) {
-      throw e;
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
     }
   }
 

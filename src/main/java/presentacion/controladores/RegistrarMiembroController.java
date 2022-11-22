@@ -2,8 +2,7 @@ package presentacion.controladores;
 
 import domain.organizaciones.miembros.Miembro;
 import domain.organizaciones.miembros.TipoDeDocumento;
-import domain.repositorios.RepositorioMiembros;
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioUsuarios;
 import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -12,9 +11,6 @@ import spark.Response;
 public class RegistrarMiembroController {
 
   public ModelAndView index(Request request, Response response) {
-    String username = request.session().attribute("usuario_signeado");
-    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
-    request.session().attribute("usuario_signeado_literal", user);
     return new ModelAndView(null, "registrarMiembro.hbs");
   }
 
@@ -27,11 +23,12 @@ public class RegistrarMiembroController {
     Miembro miembro = new Miembro(nombre, apellido, TipoDeDocumento.valueOf(tipoDocumento),
         nroDocumento);
 
-    Usuario usuario = request.session().attribute("usuario_signeado_literal");
+    String username = request.session().attribute("usuario_logueado");
+    Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     usuario.setMiembro(miembro);
     RepositorioUsuarios.getInstance().update(usuario);
 
-    request.session().attribute("usuario_logueado", usuario.getUsername());
+    //request.session().attribute("usuario_logueado", usuario.getUsername());
     response.redirect("/home");
     return null;
   }

@@ -3,9 +3,9 @@ package presentacion.controladores;
 import domain.organizaciones.Organizacion;
 import domain.organizaciones.miembros.Miembro;
 import domain.organizaciones.sectores.Sector;
-import domain.repositorios.RepositorioMiembros;
-import domain.repositorios.RepositorioOrganizaciones;
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioMiembros;
+import repositorios.RepositorioOrganizaciones;
+import repositorios.RepositorioUsuarios;
 import presentacion.Usuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -19,25 +19,42 @@ import java.util.stream.Collectors;
 public class PedirVinculacionController {
 
   public ModelAndView index(Request request, Response response) {
-//    String username = request.cookie("username");
-//    Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
+    String username = request.session().attribute("usuario_logueado");
+
+    if (username == null) {
+        response.redirect("/login");
+        return null;
+    }
+
+    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
     List<Organizacion> organizaciones = RepositorioOrganizaciones.getInstance().all();
+
     Map<String, Object> model = new HashMap<>();
     model.put("organizaciones", organizaciones);
+    model.put("nombre", user.getMiembro().getNombre());
+
     return new ModelAndView(model, "vincularAOrg.hbs");
   }
 
   public ModelAndView postOrg(Request request, Response response) {
     int id = Integer.parseInt(request.queryParams("id"));
+
+    String username = request.session().attribute("usuario_logueado");
+    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+
     Organizacion organizacion = RepositorioOrganizaciones.getInstance().get(id);
+    List<Sector> sectores = organizacion.getSectores();
+
     Map<String, Object> model = new HashMap<>();
     model.put("sectores", organizacion.getSectores());
+
     request.session().attribute("org-id", id);
+
     return new ModelAndView(model, "vincularASector.hbs");
   }
 
   public ModelAndView mandar(Request request, Response response) {
-    String username = request.cookie("username");
+    String username = request.session().attribute("usuario_logueado");
     Usuario usuario = RepositorioUsuarios.getInstance().findByUsername(username);
     Miembro miembro = usuario.getMiembro();
 
@@ -60,5 +77,4 @@ public class PedirVinculacionController {
     response.redirect("/home");
     return null;
   }
-
 }

@@ -1,148 +1,72 @@
-{{#partial "barra"}}
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/inicio"> Log Out </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/sectores"> Sectores </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/aceptar-miembros"> Aceptar Miembros </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/mediciones"> Cargar Mediciones </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/hc"> Calculadora HC </a>
-        </li>
-    </ul>
-{{/partial}}
+{{#partial "content"}}
+<div class="left">
+  <br/>
+  <h3> Cargar medicion de forma manual </h3>
 
-{{#partial "contenido"}}
-    <center>
-        <h1> MEDICIONES </h1>
-    </center>
+  <form action="/mediciones-manual" method="POST">
+    <select id="tipoId" name="tipoConsumo" class="select-field">
+        {{#each consumos}}
+            <option value={{id}}> {{tipo}} </option>
+        {{/each}}
+    </select>
 
-    <div class="titulo">
-        <h2> Agregar Medicion/es: </h2>
-        <br>
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input type="text" placeholder="Valor" name="valor" id="valorId" value="200.50"/>
     </div>
 
-    <div class="container">
-        <form action="/mediciones-manual" method="POST">
-            <div class = "mb-3">
-                <label for="tipoId" class="form-label"> Tipo </label>
-                <select id="tipoId" name="tipoConsumo">
-                    <!--<option value="Gas Natural" selected>Gas Natural</option>
-                    <option value="Diesel/Gasoil">Diesel/Gasoil</option>
-                    <option value="Nafta">Nafta</option>
-                    <option value="Carbon">Carbon</option>
-                    <option value="Combustible Gasoil">Combustible Consumido - Gasoil</option>
-                    <option value="Combustible Nafta">Combustible Consumido - Nafta</option>
-                    <option value="Electricidad">Electricidad</option>
-                    <option value="Camion de carga">Camion de carga</option>
-                    <option value="Utilitario liviano">Utilitario liviano</option>
-                    <option value="Distancia media">Distancia media</option>-->
-                    {{#each consumos}}
-                        <option value={{id}}> {{tipo}} </option>
-                    {{/each}}
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="valorId" class="form-label"> Valor </label>
-                <input type="text" class="form-control" name="valor" id="valorId" value="200.50">
-            </div>
-            <div class = "mb-3">
-                <label for="perId" class="form-label"> Periodicidad </label>
-                <select id="perId" name="periodicidad">
-                    <option value="Mensual" selected>Mensual</option>
-                    <option value="Anual">Anual</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="impId" class="form-label"> Periodo De Imputacion </label>
-                <input type="text" class="form-control" name="perImputacion" id="impId" value="05/2021">
-            </div>
-            <button type="submit" class="btn btn-primary"> Subir Medicion </button>
-        </form>
-        <p>
-            <b> o </b>
-        </p>
-        <form action="/mediciones-csv" method="POST" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="archId" class="form-label"> Archivo CSV </label>
-                <input type="file" class="form-control" name="archivoCSV" id="archId">
-            </div>
-            <button type="submit" class="btn btn-primary"> Subir Archivo </button>
-        </form>
+    <select class="select-field" id="perId" name="periodicidad">
+        <option value="Mensual" selected>Mensual</option>
+        <option value="Anual">Anual</option>
+    </select>
+
+    <div class="input-field">
+      <i class="fa fa-shield"></i>
+      <input typetype="text" class="form-control" name="perImputacion" id="impId" value="05/2021" placeholder="05/2021"/>
     </div>
 
-    <div class="titulo">
-        <br>
-        <h2> Listado de Mediciones: </h2>
-    </div>
+    <button type="submit" class="boton"> Subir Medicion </button>
+  </form>
 
-    <div class="mb-3">
-        <center>
-            <table>
-                <tr>
-                    <th> Tipo de Consumo </th>
-                    <th> Valor </th>
-                    <th> Periodicidad </th>
-                    <th> Periodo Imputacion </th>
-                    <th> FE </th>
-                </tr>
-                {{#each orgs }}
-                    {{#each datosActividades}}
-                        <tr>
-                            <td> {{tipoDeConsumo.tipo}} </td>
-                            <td> {{valor}} </td>
-                            <td> {{periodicidad}} </td>
-                            <td> {{periodoImputacion}} </td>
-                            <td> {{tipoDeConsumo.fe.valor}} </td>
-                        </tr>
-                    {{/each}}
-                {{/each}}
-            </table>
-        </center>
-    </div>
-    <!--
-    <div class="titulo">
-        <br>
-        <h2> Cargar Factor de Emision (FE): </h2>
-        <br>
-    </div>
+  <br/><br/>
 
-    <div class="container">
-        <form action="/cargar-fe" method="POST">
-            <div class="mb-3">
-                <label for="idInput" class="form-label">Id</label>
-                <input type="text" class="form-control" id="idInput" name="idDA">
-            </div>
+  <h3> Cargar la medición usando un archivo CSV </h3>
+  <form action="/mediciones-csv" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+          <input type="file" class="form-control" name="archivoCSV" id="archId">
+      </div>
+      <button type="submit" class="btn btn-primary"> Subir Archivo </button>
+  </form>
 
-            <div class = "mb-3">
-                <label for="unidad">Unidad FE: </label>
-                <select id="unidad" name="unidadFE">
-                    <option value="M3" selected>M3</option>
-                    <option value="LT">LT</option>
-                    <option value="KG">KG</option>
-                    <option value="KWH">KWH</option>
-                    <option value="KM">KM</option>
-                    <option value="NINGUNA">NINGUNA</option>
-                </select>
-            </div>
+  <br/><br/>
 
-            <div class="mb-3">
-                <label for="valorInput" class="form-label">Valor FE</label>
-                <input type="text" class="form-control" id="valorInput" name="valorFE">
-            </div>
+  <h3> Listado de mediciones cargadas </h3>
 
-            <button type="submit" class="btn btn-primary">Cargar FE</button>
-        </form>
-    </div>
-    -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"> Tipo de Consumo </th>
+        <th scope="col"> Valor </th>
+        <th scope="col"> Periodicidad </th>
+        <th scope="col"> Periodo Imputacion </th>
+        <th scope="col"> FE </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each orgs }}
+          {{#each datosActividades}}
+              <tr>
+                  <th scope="row"> {{tipoDeConsumo.tipo}} </td>
+                  <td> {{valor}} </td>
+                  <td> {{periodicidad}} </td>
+                  <td> {{periodoImputacion}} </td>
+                  <td> {{tipoDeConsumo.fe.valor}} </td>
+              </tr>
+          {{/each}}
+      {{/each}}
+    </tbody>
+  </table>
 
 {{/partial}}
-
-
-{{>layout.hbs}}
+{{>base.hbs}}

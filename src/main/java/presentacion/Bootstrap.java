@@ -5,9 +5,9 @@ import domain.organizaciones.datos.actividades.Alcance;
 import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
-import domain.repositorios.RepositorioConsumos;
-import domain.repositorios.RepositorioTransportes;
-import domain.repositorios.RepositorioUsuarios;
+import repositorios.RepositorioConsumos;
+import repositorios.RepositorioTransportes;
+import repositorios.RepositorioUsuarios;
 import domain.trayecto.transporte.MedioDeTransporte;
 import domain.trayecto.transporte.nopublico.*;
 import domain.trayecto.transporte.publico.Linea;
@@ -23,8 +23,9 @@ import java.util.List;
 public class Bootstrap {
   public static void init() {
     // Cosas que queramos que pasen al iniciar el server.
-    Usuario mati = new Usuario("Matias", "1234", TipoUsuario.MIEMBRO);
-    Usuario gonza = new Usuario("Gonzalo", "abcd", TipoUsuario.MIEMBRO);
+
+    Usuario mati = new Usuario("Matias", "1234", TipoUsuario.ADMINISTRADOR);
+    Usuario gonza = new Usuario("Gonzalo", "abcd", TipoUsuario.ADMINISTRADOR);
 
     if(RepositorioUsuarios.getInstance().findByUsername("Matias") == null) {
       RepositorioUsuarios.getInstance().add(mati);
@@ -37,9 +38,9 @@ public class Bootstrap {
     Bicicleta bicicleta = new Bicicleta();
     ServicioContratado servicioContratado = new ServicioContratado(new TipoServicioContratado("taxi"), 200.0);
     VehiculoParticular vehiculoParticular = new VehiculoParticular(TipoDeVehiculo.AUTO, TipoDeCombustible.GASOIL, 430.0);
-    Ubicacion ubicacion = new Ubicacion("Rivadavia", 500, "ARGENTINA", "BUENOS AIRES",
+    Ubicacion ubicacion = new Ubicacion("Bonifacio", 1231, "ARGENTINA", "BUENOS AIRES",
         "AVELLANEDA", "AVELLANEDA");
-    Ubicacion ubicacion2 = new Ubicacion("Rivadavia", 700, "ARGENTINA", "BUENOS AIRES",
+    Ubicacion ubicacion2 = new Ubicacion("Bonifacio", 1231, "ARGENTINA", "BUENOS AIRES",
         "AVELLANEDA", "AVELLANEDA");
     Parada parada  = new Parada("San Pedrito", ubicacion, new Distancia(660.0, UnidadDistancia.MTS));
     Parada parada2 = new Parada("Flores", ubicacion2, new Distancia(660.0, UnidadDistancia.MTS));
