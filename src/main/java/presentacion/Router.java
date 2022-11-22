@@ -25,6 +25,9 @@ public class Router {
     AceptarMiembroController aceptarMiembroController = new AceptarMiembroController();
     PedirVinculacionController pedirVinculacionController = new PedirVinculacionController();
     MedicionesController medicionesController = new MedicionesController();
+    CargarParadaController cargarParadaController = new CargarParadaController();
+    CargarLineaController cargarLineaController = new CargarLineaController();
+    CargarFeController cargarFeController = new CargarFeController();
 
 
     //DebugScreen.enableDebugScreen();
@@ -71,7 +74,6 @@ public class Router {
     Spark.get("/mediciones", medicionesController::index, engineTemplate);
     Spark.post("/mediciones-csv", medicionesController::postCsv, engineTemplate);
     Spark.post("/mediciones-manual", medicionesController::postManual, engineTemplate);
-    Spark.post("/cargar-fe", medicionesController::postFe, engineTemplate);
 
     // Agente Sectorial
     Spark.get("/registrarAgSec", registrarAgSecController::redirect, engineTemplate);
@@ -81,6 +83,16 @@ public class Router {
     Spark.post("/registrarAgSec/sector", registrarAgSecController::post_sector, engineTemplate);
     Spark.get("/hc-agente", hcController::index_agente, engineTemplate);
     Spark.post("/hc-agente", hcController::post_agente, engineTemplate);
+
+    // Admin
+    Spark.get("/cargarParada", cargarParadaController::index, engineTemplate);
+    Spark.post("/cargarParada", cargarParadaController::post, engineTemplate);
+    Spark.get("/cargarLinea", cargarLineaController::index, engineTemplate);
+    Spark.post("/cargarLinea", cargarLineaController::post, engineTemplate);
+    Spark.get("/cargarFe", cargarFeController::index, engineTemplate);
+    Spark.post("/cargarFe", cargarFeController::post, engineTemplate);
+
+    // Extra
 
     Spark.redirect.any("/", "/home");
 

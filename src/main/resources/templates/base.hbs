@@ -43,19 +43,19 @@
               <a href="/home"><img src="./img/logo.png" alt="Logo" /><h3>Mi Impacto ambiental</h3></a>
             </div>
 
-              <div class="links">
-                  <ul>
-                      <!-- Aca meter lo de cada tipo de usuario -->
-                      {{#if inicio}}
-                          <li><a href="/signin" class="boton">Sign Up</a></li>
-                          <li><a href="/login" class="boton">Log In</a></li>
-                      {{else}}
-                          <li><a href="/home">Home</a></li>
-                          <li><a href="/inicio" class="boton">Log Out</a></li>
+            <div class="links">
+              <ul>
+                <!-- Aca meter lo de cada tipo de usuario -->
+                {{#if inicio}}
+                    <li><a href="/signin" class="boton">Sign Up</a></li>
+                    <li><a href="/login" class="boton">Log In</a></li>
+                {{else}}
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/inicio" class="boton">Log Out</a></li>
 
-                      {{/if}}
-                  </ul>
-              </div>
+                {{/if}}
+              </ul>
+            </div>
 
             <div class="overlay"></div>
 

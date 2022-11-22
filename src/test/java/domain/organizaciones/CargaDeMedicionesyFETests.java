@@ -1,35 +1,32 @@
-package entrega2;
+package domain.organizaciones;
 
-import domain.organizaciones.ClasificacionOrg;
 import domain.organizaciones.datos.actividades.Actividad;
 import domain.organizaciones.datos.actividades.Alcance;
 import domain.organizaciones.datos.actividades.DatosActividades;
-import domain.organizaciones.Organizacion;
-import domain.organizaciones.TipoOrganizacion;
 import domain.organizaciones.datos.actividades.UnidadConsumo;
 import domain.organizaciones.datos.actividades.tipos.FactorEmision;
 import domain.organizaciones.datos.actividades.tipos.NoCoincidenUnidadesFEYTC;
 import domain.organizaciones.datos.actividades.tipos.TipoDeConsumo;
-import repositorios.RepositorioConsumos;
 import domain.ubicaciones.Ubicacion;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import repositorios.RepositorioConsumos;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+
 
 public class CargaDeMedicionesyFETests {
 
   private Organizacion organizacionDefault;
   private Ubicacion ubicacionDefault;
+  String pathCsv = "src/test/resources/files/archivo-prueba.csv";
 
   @BeforeEach
   public void init() {
-    organizacionDefault = new Organizacion("Manaos", "?", TipoOrganizacion.EMPRESA, ubicacionDefault, ClasificacionOrg.MINISTERIO);
+    organizacionDefault = new Organizacion("Manaos", "S.A", TipoOrganizacion.EMPRESA, ubicacionDefault, ClasificacionOrg.MINISTERIO);
 
     // Cargo Tipos De Consumo
     FactorEmision feM3 = new FactorEmision(30.5, UnidadConsumo.M3);
@@ -107,7 +104,7 @@ public class CargaDeMedicionesyFETests {
 
   @Test
   public void sePuedeCargarUnArchivoCSVCorrectamente(){
-    organizacionDefault.cargarMediciones("src/test/java/archivo-prueba.csv");
+    organizacionDefault.cargarMediciones(pathCsv);
     List<DatosActividades> datosActividadesExpected = new ArrayList<>();
     List<DatosActividades> datosActividadesLeidos = organizacionDefault.getDatosActividades();
 
@@ -118,6 +115,16 @@ public class CargaDeMedicionesyFETests {
     Assertions.assertEquals(datosActividadesExpected.get(0).getValor(), datosActividadesLeidos.get(0).getValor());
     Assertions.assertEquals(datosActividadesExpected.get(1).getValor(), datosActividadesLeidos.get(1).getValor());
     Assertions.assertEquals(datosActividadesExpected.get(2).getValor(), datosActividadesLeidos.get(2).getValor());
+    RepositorioConsumos.getInstance().clean();
+  }
+
+  @Test
+  public void sePuedeCargarUnNuevoFECorrectamente(){
+    //TipoDeConsumo gasNatural = TipoDeConsumoFactory.instance().buildTipoDeConsumo("Gas Natural");
+    TipoDeConsumo gasNatural = RepositorioConsumos.getInstance().findByName("Gas Natural");
+    FactorEmision fe = new FactorEmision(27, UnidadConsumo.M3);
+    assertDoesNotThrow(() -> gasNatural.cargarFactorEmision(fe));
+    assertEquals(27, gasNatural.getFe().getValor());
     RepositorioConsumos.getInstance().clean();
   }
 

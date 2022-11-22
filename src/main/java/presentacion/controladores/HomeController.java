@@ -22,7 +22,7 @@ public class HomeController {
       return null;
     }
 
-    request.session().attribute("usuario_logueado", username);
+    
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
 
     if (user.getTipo().equals(TipoUsuario.ORGANIZACION)) {

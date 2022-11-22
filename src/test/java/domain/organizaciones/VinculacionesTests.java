@@ -1,40 +1,25 @@
-package entrega1;
+package domain.organizaciones;
 
 import domain.organizaciones.excepciones.ExcepcionNoExisteElMiembroAacptarEnLaOrg;
 import domain.organizaciones.excepciones.ExcepcionNoExisteElSectorEnLaOrganizacion;
 import domain.organizaciones.miembros.Miembro;
 import domain.organizaciones.miembros.TipoDeDocumento;
-import domain.organizaciones.ClasificacionOrg;
-import domain.organizaciones.Organizacion;
 import domain.organizaciones.sectores.Sector;
-import domain.organizaciones.TipoOrganizacion;
-import domain.servicios.geodds.ServicioGeoDds;
 import domain.ubicaciones.Ubicacion;
-import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class VinculacionesTests {
-  ServicioGeoDds apiClient;
   Organizacion organizacionDefault;
   Sector sectorDefault;
   Miembro miembroDefault;
   Ubicacion ubicacionDefault;
 
   @BeforeEach
-  void init() throws IOException {
-    apiClient = mock(ServicioGeoDds.class);
-    when(apiClient.verificarNombreLocalidad(anyString())).thenReturn(2);  //id Localidad = 2
-    when(apiClient.nombreMunicipio(2)).thenReturn("Valcheta");
-    when(apiClient.verificarNombreMunicipio("Valcheta")).thenReturn(4);   //id Municipio = 4
-    when(apiClient.nombreProvincia(4)).thenReturn("Rio Negro");
-    when(apiClient.verificarNombreProvincia("Rio Negro")).thenReturn(7);  //id Provincia = 7
-
-    ubicacionDefault = new Ubicacion("Corrientes", 1200, "PUERTO LEONI", apiClient);
-
+  void init() {
+    ubicacionDefault = new Ubicacion();
     organizacionDefault = new Organizacion("Mc", "S.A.", TipoOrganizacion.EMPRESA ,ubicacionDefault, ClasificacionOrg.MINISTERIO);
     sectorDefault = new Sector();
     miembroDefault = new Miembro("Juan", "Martin", TipoDeDocumento.DNI, 43208556);
