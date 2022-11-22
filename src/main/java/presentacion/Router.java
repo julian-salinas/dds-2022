@@ -82,7 +82,9 @@ public class Router {
     Spark.get("/hc-agente", hcController::index_agente, engineTemplate);
     Spark.post("/hc-agente", hcController::post_agente, engineTemplate);
 
-    // 404 - Not found - custom template notFound.hbs
+    Spark.redirect.any("/", "/home");
+
+    // 404 - Not found
     Spark.notFound((req, res) -> {
       res.type("text/html");
       return engineTemplate.render(new ModelAndView(null, "notFound.hbs"));
