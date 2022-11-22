@@ -1,8 +1,10 @@
 package presentacion;
 
 import presentacion.controladores.*;
-import spark.Spark;
+import spark.*;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import javax.jws.WebParam;
 
 public class Router {
   public static void configure() {
@@ -90,5 +92,14 @@ public class Router {
     Spark.get("/cargarFe", cargarFeController::index, engineTemplate);
     Spark.post("/cargarFe", cargarFeController::post, engineTemplate);
 
+    // Extra
+
+    Spark.redirect.any("/", "/home");
+
+    // 404 - Not found
+    Spark.notFound((req, res) -> {
+      res.type("text/html");
+      return engineTemplate.render(new ModelAndView(null, "notFound.hbs"));
+    });
   }
 }

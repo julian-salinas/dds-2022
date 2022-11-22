@@ -10,7 +10,7 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.io.IOException;
-
+@Getter
 @Entity
 public class Tramo extends PersistenceEntity {
 
@@ -18,9 +18,9 @@ public class Tramo extends PersistenceEntity {
   private MedioDeTransporte medio;
 
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_inicio")
-  @Getter private Ubicacion ubicacionInicio;
+  private Ubicacion ubicacionInicio;
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) @JoinColumn(name = "ubicacion_fin")
-  @Getter private Ubicacion ubicacionFin;
+  private Ubicacion ubicacionFin;
 
   public Tramo() {}
 
