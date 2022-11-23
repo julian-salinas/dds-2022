@@ -1,0 +1,66 @@
+{{#partial "content"}}
+  <div class="left">
+      <div class="big-title">
+      </div>
+          <div class="tab-pane container active" id="Usuarios">
+              <h2 class="text-center text-primary display-3">Reportes</h2>
+              <h3>El HC Total de <i>{{nombreOrg}}</i> es: {{total}} KgCO2</h3>
+              <canvas id="composicion" style="width:100%;max-width:600px"></canvas>
+              <canvas id="myChart" style="width:100%;max-width:1000px"></canvas>
+          </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script>
+    var xValues = ["Gas Natural", "Diesel/Gasoil", "Nafta", "Carbon", "Comb. Gasoil", "Comb. Nafta", "Electricidad", "Camion de carga", "Utilitario Liviano", "Distancia media"];
+    // No se como hacerlo para que no rompa, si use {{nombres}} me rompe :S
+    var yValues = [];
+    var barColors = ["#fe7f0e", "#2ba02d", "#d52728", "#9466bc", "#8c564a", "#e377c2", "#7f7f7f", "#bcbd23", "#17bed0","#1f77b4"];
+    {{#each porcentajes}}
+      yValues.push({{this}})
+    {{/each}}
+    new Chart("composicion", {
+      type: "pie",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "Composición del HC Total"
+        }
+      }
+    });
+  </script>
+  <script>
+    var xValues = [];
+    var yValues = [];
+    //var barColors = ["red", "green","blue","orange","brown"];
+    {{#each valoresHistorial}}
+        xValues.push("")
+        yValues.push({{this}})
+    {{/each}}
+    new Chart("myChart", {
+      type: "bar",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: "blue",
+          data: yValues
+        }]
+      },
+      options: {
+        legend: {display: false},
+        title: {
+          display: true,
+          text: "Evolución de HC Total de la Organización"
+        }
+      }
+    });
+  </script>
+{{/partial}}
+
+{{>base.hbs}}

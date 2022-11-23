@@ -39,7 +39,7 @@ public class TestMain {
 
     AgenteSectorial agenteSectorial = new AgenteSectorial(TipoSectorTerritorial.PROVINCIA, 168, "Pana");
 
-    HC hc = agenteSectorial.hcSectorMensual();
+    HC hc = agenteSectorial.hcSectorMensual("2020"); //string prueba
 
     System.out.println(hc.enKgCO2());
 

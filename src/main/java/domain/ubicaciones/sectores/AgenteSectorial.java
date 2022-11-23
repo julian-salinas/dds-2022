@@ -8,9 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import repositorios.RepositorioOrganizaciones;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "agente_sectorial")
@@ -21,6 +20,8 @@ public class AgenteSectorial extends PersistenceEntity {
   String nombreSectorTerritorial;
   @Enumerated(EnumType.STRING)
   TipoSectorTerritorial tipoSectorTerritorial;
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "idSectorTerritorial")
+  private List<HC> historialHCTotal = new ArrayList<>();
 
   public AgenteSectorial() {
 
@@ -42,16 +43,29 @@ public class AgenteSectorial extends PersistenceEntity {
     }
   }
 
-  public HC hcSectorMensual() {
+  public HC hcSectorMensual(String mes) {
     List<Organizacion> orgInSectorTerr = encontrarOrgs();
-    double hcEnKgCO2 = orgInSectorTerr.stream().mapToDouble(org -> org.hcMensual().enKgCO2()).sum();
+    double hcEnKgCO2 = orgInSectorTerr.stream().mapToDouble(org -> org.hcMensual(mes).enKgCO2()).sum();
     return new HC(hcEnKgCO2, UnidadHC.kgCO2);
   }
 
-  public HC hcSectorAnual() {
+  public HC hcSectorAnual(String anio) {
     List<Organizacion> orgInSectorTerr = encontrarOrgs();
-    double hcEnKgCO2 = orgInSectorTerr.stream().mapToDouble(org -> org.hcAnual().enKgCO2()).sum();
+    double hcEnKgCO2 = orgInSectorTerr.stream().mapToDouble(org -> org.hcAnual(anio).enKgCO2()).sum();
     return new HC(hcEnKgCO2, UnidadHC.kgCO2);
+  }
+
+  public HC hcTotal(){
+    List<Organizacion> orgInSectorTerr = encontrarOrgs();
+    double valorHC = orgInSectorTerr.stream().mapToDouble(org -> org.hcTotal().enKgCO2()).sum();
+    HC hc = new HC(valorHC, UnidadHC.kgCO2);
+
+    if (historialHCTotal.size() == 0){
+      historialHCTotal.add(hc);
+    } else if (historialHCTotal.get(historialHCTotal.size() - 1).enKgCO2() != valorHC){
+      historialHCTotal.add(hc);
+    }
+    return hc;
   }
 
 }

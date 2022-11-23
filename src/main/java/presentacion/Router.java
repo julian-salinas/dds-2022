@@ -25,6 +25,8 @@ public class Router {
     AceptarMiembroController aceptarMiembroController = new AceptarMiembroController();
     PedirVinculacionController pedirVinculacionController = new PedirVinculacionController();
     MedicionesController medicionesController = new MedicionesController();
+    ReportesOrgController reportesOrgController = new ReportesOrgController();
+    ReportesAgSecController reportesAgSecController = new ReportesAgSecController();
     CargarParadaController cargarParadaController = new CargarParadaController();
     CargarLineaController cargarLineaController = new CargarLineaController();
     CargarFeController cargarFeController = new CargarFeController();
@@ -74,6 +76,8 @@ public class Router {
     Spark.get("/mediciones", medicionesController::index, engineTemplate);
     Spark.post("/mediciones-csv", medicionesController::postCsv, engineTemplate);
     Spark.post("/mediciones-manual", medicionesController::postManual, engineTemplate);
+    // Spark.post("/cargar-fe", medicionesController::postFe, engineTemplate); // TODO: ver que onda
+    Spark.get("/reportesOrganizacion", reportesOrgController::index, engineTemplate);
 
     // Agente Sectorial
     Spark.get("/registrarAgSec", registrarAgSecController::redirect, engineTemplate);
@@ -83,6 +87,7 @@ public class Router {
     Spark.post("/registrarAgSec/sector", registrarAgSecController::post_sector, engineTemplate);
     Spark.get("/hc-agente", hcController::index_agente, engineTemplate);
     Spark.post("/hc-agente", hcController::post_agente, engineTemplate);
+    Spark.get("/reportes-agente", reportesAgSecController::index, engineTemplate);
 
     // Admin
     Spark.get("/cargarParada", cargarParadaController::index, engineTemplate);
