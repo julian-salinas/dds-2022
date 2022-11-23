@@ -4,11 +4,15 @@ import domain.contrasenias.excepciones.PasswordException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Scanner;
 
 public class ValidacionContraseniaComun implements Validacion {
+
+  static final String COMMON_PASSWORDS_LOCATION = "public/files/common-passwords.txt";
 
   @Override
   public boolean condicion(String password) {
@@ -16,32 +20,33 @@ public class ValidacionContraseniaComun implements Validacion {
     Devuelve true si la contraseña no está en la lista de contraseñas comunes
     */
 
-    //TODO: fix path para el .jar
-    try {
-      String pathToFile = new File(".")
-          .getCanonicalPath()
-          .concat("/src/main/java/domain/files/common-passwords.txt");
-      // lo cambie a la carpeta 'public' porque ahi van a estar todas las static files
-      // (es necesario mandarlo ahi para que se haga bien el .jar)
-      // para correr sin el .jar (dandole a run), poner "/src/main/resources/public/common-passwords.txt"
-      // para correr con el .jar (dandole a run), poner "/public/common-passwords.txt"
+    return !palabraEstaEnArchivo(password);
 
-      File file = new File(pathToFile);
-      List<String> passwords = Files.readAllLines(file.toPath(), Charset.forName("UTF-8"));
+  }
 
-      return !passwords.stream().anyMatch(pass -> pass.equals(password));
+  private InputStream getFileFromResourceAsStream() {
+    // The class loader that loaded the class
+    ClassLoader classLoader = getClass().getClassLoader();
+    InputStream inputStream = classLoader.getResourceAsStream(COMMON_PASSWORDS_LOCATION);
 
-    } catch (FileNotFoundException exception) {
-
-      exception.printStackTrace();
-      return false;
-
-    } catch (IOException exception) {
-
-      exception.printStackTrace();
-      return false;
-
+    // the stream holding the file content
+    if (inputStream == null) {
+      throw new IllegalArgumentException("Archivo no encontrado en la ruta: " + COMMON_PASSWORDS_LOCATION);
+    } else {
+      return inputStream;
     }
+  }
+
+  public boolean palabraEstaEnArchivo(String unPassword) {
+    Scanner unArchivo = new Scanner(getFileFromResourceAsStream(), "UTF-8");
+    while (unArchivo.hasNextLine()) {
+      String line = unArchivo.nextLine();
+      if (line.equals(unPassword)) {
+        unArchivo.close();
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override

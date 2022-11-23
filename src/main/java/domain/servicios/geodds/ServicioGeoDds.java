@@ -26,7 +26,7 @@ public class ServicioGeoDds {
     // set apiKey value from local.properties
     try{
       // InputStream input = new FileInputStream("src/main/java/domain/local.properties");
-      InputStream input = new FileInputStream("classes/files/local.properties");
+      InputStream input = new FileInputStream("classes/public/files/local.properties");
       Properties properties = new Properties();
       properties.load(input);
       this.apiKey = "Bearer " + properties.getProperty("GEO_DDS_API_KEY");
