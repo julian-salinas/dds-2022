@@ -16,11 +16,15 @@ public class ValidacionContraseniaComun implements Validacion {
     Devuelve true si la contraseña no está en la lista de contraseñas comunes
     */
 
+    //TODO: fix path para el .jar
     try {
-
       String pathToFile = new File(".")
           .getCanonicalPath()
-          .concat("/src/main/java/domain/contrasenias/validaciones/common-passwords.txt");
+          .concat("/src/main/java/domain/files/common-passwords.txt");
+      // lo cambie a la carpeta 'public' porque ahi van a estar todas las static files
+      // (es necesario mandarlo ahi para que se haga bien el .jar)
+      // para correr sin el .jar (dandole a run), poner "/src/main/resources/public/common-passwords.txt"
+      // para correr con el .jar (dandole a run), poner "/public/common-passwords.txt"
 
       File file = new File(pathToFile);
       List<String> passwords = Files.readAllLines(file.toPath(), Charset.forName("UTF-8"));

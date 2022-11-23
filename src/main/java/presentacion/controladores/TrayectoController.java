@@ -25,7 +25,10 @@ public class TrayectoController {
   public ModelAndView index(Request request, Response response) {
     String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
-    Object model = user.getMiembro();
+    Miembro miembro = user.getMiembro();
+
+    Map<String, Object> model = new HashMap<>();
+    model.put("trayectos",miembro.getTrayectos());
     return new ModelAndView(model, "trayecto.hbs");
   }
 
@@ -46,6 +49,7 @@ public class TrayectoController {
       String username = request.session().attribute("usuario_logueado");
       Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
       List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
+      miembros.remove(user.getMiembro()); // Todos menos e'l mismo
       model.put("miembros",miembros);
       return new ModelAndView(model, "miembroTramo.hbs");
 
@@ -55,6 +59,7 @@ public class TrayectoController {
 
     List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
     model.put("transportes", transportes);
+    model.put("trayecto",null);
     return new ModelAndView(model, "tramo.hbs");
   }
 
@@ -102,6 +107,7 @@ public class TrayectoController {
         transportes = transportes.stream().filter(MedioDeTransporte::admiteTrayectoCompartido).collect(Collectors.toList());
       }
 
+
       Map<String, Object> model = new HashMap<>();
       model.put("transportes", transportes);
       model.put("error", error);
@@ -113,6 +119,8 @@ public class TrayectoController {
     Tramo tramo = new Tramo(medio, ubicacionInicial, ubicacionFin);
 
     trayecto.agregarTramo(tramo);
+
+    List<Tramo> tramos = trayecto.getTramos();
 
     if(boton.equals("fin")) {
       String username = request.session().attribute("usuario_logueado");
@@ -133,6 +141,8 @@ public class TrayectoController {
       }
       Map<String, Object> model = new HashMap<>();
       model.put("transportes", transportes);
+
+      model.put("tramos",tramos);
       return new ModelAndView(model, "tramo.hbs");
     }
   }

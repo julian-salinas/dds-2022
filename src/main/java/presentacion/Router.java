@@ -1,8 +1,10 @@
 package presentacion;
 
 import presentacion.controladores.*;
-import spark.Spark;
+import spark.*;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import javax.jws.WebParam;
 
 public class Router {
   public static void configure() {
@@ -25,6 +27,10 @@ public class Router {
     MedicionesController medicionesController = new MedicionesController();
     ReportesOrgController reportesOrgController = new ReportesOrgController();
     ReportesAgSecController reportesAgSecController = new ReportesAgSecController();
+    CargarParadaController cargarParadaController = new CargarParadaController();
+    CargarLineaController cargarLineaController = new CargarLineaController();
+    CargarFeController cargarFeController = new CargarFeController();
+
 
     //DebugScreen.enableDebugScreen();
 
@@ -70,7 +76,7 @@ public class Router {
     Spark.get("/mediciones", medicionesController::index, engineTemplate);
     Spark.post("/mediciones-csv", medicionesController::postCsv, engineTemplate);
     Spark.post("/mediciones-manual", medicionesController::postManual, engineTemplate);
-    Spark.post("/cargar-fe", medicionesController::postFe, engineTemplate);
+    // Spark.post("/cargar-fe", medicionesController::postFe, engineTemplate); // TODO: ver que onda
     Spark.get("/reportesOrganizacion", reportesOrgController::index, engineTemplate);
 
     // Agente Sectorial
@@ -83,5 +89,22 @@ public class Router {
     Spark.post("/hc-agente", hcController::post_agente, engineTemplate);
     Spark.get("/reportes-agente", reportesAgSecController::index, engineTemplate);
 
+    // Admin
+    Spark.get("/cargarParada", cargarParadaController::index, engineTemplate);
+    Spark.post("/cargarParada", cargarParadaController::post, engineTemplate);
+    Spark.get("/cargarLinea", cargarLineaController::index, engineTemplate);
+    Spark.post("/cargarLinea", cargarLineaController::post, engineTemplate);
+    Spark.get("/cargarFe", cargarFeController::index, engineTemplate);
+    Spark.post("/cargarFe", cargarFeController::post, engineTemplate);
+
+    // Extra
+
+    Spark.redirect.any("/", "/home");
+
+    // 404 - Not found
+    Spark.notFound((req, res) -> {
+      res.type("text/html");
+      return engineTemplate.render(new ModelAndView(null, "notFound.hbs"));
+    });
   }
 }

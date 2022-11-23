@@ -12,6 +12,27 @@
       <button name="trayecto" value="trayecto-comp" type="submit" class="boton" style="border: none;cursor:pointer;">Crear trayecto compartido</button>
     </form>
 
+    <br/><br/>
+
+    <h4> Mis trayectos </h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"> Origen </th>
+          <th scope="col"> Destino </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{#each trayectos}}
+            <tr>
+                <td>{{ubicacionInicio.calle}} {{ubicacionInicio.altura}}</td>
+                <td>{{ubicacionFin.calle}} {{ubicacionFin.altura}}</td>
+            </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
     </div>
 
     <div class="right">

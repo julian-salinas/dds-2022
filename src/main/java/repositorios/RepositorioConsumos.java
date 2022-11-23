@@ -34,5 +34,17 @@ public class RepositorioConsumos extends Repositorio<TipoDeConsumo> {
       return null;
     return consumos.get(0);
   }
+  public TipoDeConsumo findByID(int id) {
+    EntityManagerHelper.getEntityManager().getTransaction().begin();
+    String query =
+        "FROM TipoDeConsumo " +
+            "WHERE id LIKE " + "'" + id + "'";
+    List<TipoDeConsumo> consumos = EntityManagerHelper.getEntityManager().createQuery(query).getResultList();
+    EntityManagerHelper.getEntityManager().getTransaction().commit();
+
+    if(consumos.isEmpty())
+      return null;
+    return consumos.get(0);
+  }
 
 }
