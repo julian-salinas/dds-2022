@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServicioGeoDds {
   private static ServicioGeoDds instancia = null;
   private static final String urlAPI = "https://ddstpa.com.ar/api/";
+  static final String PROPERTIES_LOCATION = "public/files/local.properties";
   private Retrofit retrofit;
   private String apiKey;
 
@@ -24,18 +25,24 @@ public class ServicioGeoDds {
         .build();
 
     // set apiKey value from local.properties
-    try{
-      // InputStream input = new FileInputStream("src/main/java/domain/local.properties");
-      InputStream input = new FileInputStream("classes/public/files/local.properties");
-      Properties properties = new Properties();
-      properties.load(input);
-      this.apiKey = "Bearer " + properties.getProperty("GEO_DDS_API_KEY");
-    }
-    catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    catch (IOException e) {
-      e.printStackTrace();
+
+    ClassLoader classLoader = getClass().getClassLoader();
+    InputStream input = classLoader.getResourceAsStream(PROPERTIES_LOCATION);
+
+    // the stream holding the file content
+    if (input == null) {
+      throw new IllegalArgumentException("Archivo no encontrado en la ruta: " + PROPERTIES_LOCATION);
+    } else {
+      try {
+        Properties properties = new Properties();
+        properties.load(input);
+        this.apiKey = "Bearer " + properties.getProperty("GEO_DDS_API_KEY");
+      } catch (FileNotFoundException e) {
+        e.printStackTrace();
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
     }
 
   }
