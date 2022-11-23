@@ -177,6 +177,7 @@ public class HcController {
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
     AgenteSectorial agenteSectorial = user.getAgenteSectorial();
     String unidadHC = request.queryParams("unidadHC");
+    String mes = request.queryParams("mes");
     Map<String, Object> model = new HashMap<>();
 
     HC hcAgente;
@@ -185,7 +186,7 @@ public class HcController {
 
     // Validar q no haya Timeout
     try {
-      hcAgente= agenteSectorial.hcSectorMensual("2020"); // string prueba
+      hcAgente= agenteSectorial.hcSectorMensual(mes); // string prueba
     } catch (TimeoutException e) {
       e.printStackTrace();
       error.setError(true);
