@@ -26,16 +26,15 @@ public class TrayectoController {
     String username = request.session().attribute("usuario_logueado");
     Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
     Miembro miembro = user.getMiembro();
-
     Map<String, Object> model = new HashMap<>();
-    model.put("trayectos",miembro.getTrayectos());
+    model.put("trayectos", miembro.getTrayectos());
     return new ModelAndView(model, "trayecto.hbs");
   }
 
   public ModelAndView post(Request request, Response response) {
     String tipo = request.queryParams("trayecto");
     Trayecto trayecto;
-    Map<String, Object> model = new HashMap<>();
+
     if(tipo.equals("trayecto")) {
       trayecto = new Trayecto();
       request.session().attribute("trayecto", trayecto);
@@ -46,26 +45,32 @@ public class TrayectoController {
       request.session().attribute("trayecto", trayecto);
       request.session().attribute("compartido", true);
 
-      String username = request.session().attribute("usuario_logueado");
-      Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
-      List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
-      if (miembros!=null)
-        miembros.remove(user.getMiembro()); // Todos menos e'l mismo
-      model.put("miembros",miembros);
-      return new ModelAndView(model, "miembroTramo.hbs");
+      response.redirect("/agregarMiembro");
+      return null;
 
     } else {
       return null;
     }
 
+    response.redirect("/tramo");
+    return null;
+  }
+
+  public ModelAndView indexTramo(Request request, Response response) {
     List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
+    Trayecto trayecto = request.session().attribute("trayecto");
+    boolean compartido = request.session().attribute("compartido");
+    Map<String, Object> model = new HashMap<>();
+    if(compartido) {
+      transportes = transportes.stream().filter(MedioDeTransporte::admiteTrayectoCompartido).collect(Collectors.toList());
+    }
+    List<Tramo> tramos = trayecto.getTramos();
     model.put("transportes", transportes);
-    model.put("trayecto",null);
+    model.put("tramos", tramos);
     return new ModelAndView(model, "tramo.hbs");
   }
 
-  public ModelAndView agregarTramo(Request request, Response response) {
-
+  public ModelAndView postTramo(Request request, Response response) {
     Trayecto trayecto = request.session().attribute("trayecto");
 
     String paisInicio = request.queryParams("paisInicio");
@@ -108,7 +113,6 @@ public class TrayectoController {
         transportes = transportes.stream().filter(MedioDeTransporte::admiteTrayectoCompartido).collect(Collectors.toList());
       }
 
-
       Map<String, Object> model = new HashMap<>();
       model.put("transportes", transportes);
       model.put("error", error);
@@ -121,8 +125,6 @@ public class TrayectoController {
 
     trayecto.agregarTramo(tramo);
 
-    List<Tramo> tramos = trayecto.getTramos();
-
     if(boton.equals("fin")) {
       String username = request.session().attribute("usuario_logueado");
       Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
@@ -132,23 +134,28 @@ public class TrayectoController {
 
       RepositorioMiembros.getInstance().update(miembro);
 
-      return new ModelAndView(miembro, "trayecto.hbs");
+      response.redirect("/trayecto");
+      return null;
     }
     else
     {
-      List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
-      if (request.session().attribute("compartido")) {
-        transportes = transportes.stream().filter(MedioDeTransporte::admiteTrayectoCompartido).collect(Collectors.toList());
-      }
-      Map<String, Object> model = new HashMap<>();
-      model.put("transportes", transportes);
-
-      model.put("tramos",tramos);
-      return new ModelAndView(model, "tramo.hbs");
+      response.redirect("/tramo");
+      return null;
     }
   }
 
-  public ModelAndView agregarMiembros(Request request, Response response) {
+  public ModelAndView indexAgregarMiembros(Request request, Response response) {
+    String username = request.session().attribute("usuario_logueado");
+    Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
+    Map<String, Object> model = new HashMap<>();
+    List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
+    if (miembros!=null)
+      miembros.remove(user.getMiembro()); // Todos menos e'l mismo
+    model.put("miembros",miembros);
+    return new ModelAndView(model, "miembroTramo.hbs");
+  }
+
+  public ModelAndView postAgregarMiembros(Request request, Response response) {
     int miembroID = Integer.parseInt(request.queryParams("miembro"));
     Miembro miembro = RepositorioMiembros.getInstance().get(miembroID);
     TrayectoCompartido trayecto = request.session().attribute("trayecto");
@@ -156,27 +163,21 @@ public class TrayectoController {
     trayecto.agregarAcompanantes(miembro);
 
     String boton = request.queryParams("agregar");
-    Map<String, Object> model = new HashMap<>();
 
     if(boton.equals("fin")) {
-      List<MedioDeTransporte> transportes = RepositorioTransportes.getInstance().all();
-      transportes = transportes.stream().filter(t -> t.admiteTrayectoCompartido()).collect(Collectors.toList());
-      model.put("transportes", transportes);
-      return new ModelAndView(model, "tramo.hbs");
+      response.redirect("/tramo");
+      return null;
     }
     else
     {
-      String username = request.session().attribute("usuario_logueado");
+      /*String username = request.session().attribute("usuario_logueado");
       Usuario user = RepositorioUsuarios.getInstance().findByUsername(username);
       List<Miembro> miembros = RepositorioMiembros.getInstance().miembrosMismaOrg(user.getMiembro());
       model.put("miembros",miembros);
-      return new ModelAndView(model, "miembroTramo.hbs");
+      return new ModelAndView(model, "miembroTramo.hbs");*/
+      response.redirect("/agregarMiembro");
+      return null;
     }
-
   }
 
-
 }
-
-
-

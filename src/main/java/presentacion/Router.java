@@ -58,8 +58,11 @@ public class Router {
     // Miembro
     Spark.get("/trayecto", trayectoController::index, engineTemplate);
     Spark.post("/trayecto", trayectoController::post, engineTemplate);
-    Spark.post("/agregarMiembro", trayectoController::agregarMiembros, engineTemplate);
-    Spark.post("/agregarTramo", trayectoController::agregarTramo, engineTemplate);
+    Spark.get("/tramo", trayectoController::indexTramo, engineTemplate);
+    Spark.post("/tramo", trayectoController::postTramo, engineTemplate);
+    Spark.get("/agregarMiembro", trayectoController::indexAgregarMiembros, engineTemplate);
+    Spark.post("/agregarMiembro", trayectoController::postAgregarMiembros, engineTemplate);
+    //Spark.post("/agregarTramo", trayectoController::agregarTramo, engineTemplate);
     Spark.get("/vincularse", pedirVinculacionController::index, engineTemplate);
     Spark.post("/vincularse", pedirVinculacionController::postOrg, engineTemplate);
     Spark.post("/mandar-postulamiento", pedirVinculacionController::mandar, engineTemplate);
@@ -76,7 +79,6 @@ public class Router {
     Spark.get("/mediciones", medicionesController::index, engineTemplate);
     Spark.post("/mediciones-csv", medicionesController::postCsv, engineTemplate);
     Spark.post("/mediciones-manual", medicionesController::postManual, engineTemplate);
-    // Spark.post("/cargar-fe", medicionesController::postFe, engineTemplate); // TODO: ver que onda
     Spark.get("/reportesOrganizacion", reportesOrgController::index, engineTemplate);
 
     // Agente Sectorial
