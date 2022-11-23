@@ -1,64 +1,53 @@
 {{#partial "content"}}
 
-<div class="left">
-<h3>Cálculo HC Mensual</h3>
-<form action="/hc-org" method="post">
+    <div class="left">
+        <h3>Cálculo HC Mensual</h3>
+        <form action="/hc-org" method="post">
 
-    <select id="unidadHCMId" name="unidadHC" class="select-field">
-        <option value="gCO2">gCO2</option>
-        <option value="kgCO2" selected>KgCO2</option>
-        <option value="tnCO2">TnCO2</option>
-    </select>
+            <select id="unidadHCMId" name="unidadHC" class="select-field">
+                <option value="gCO2">gCO2</option>
+                <option value="kgCO2" selected>KgCO2</option>
+                <option value="tnCO2">TnCO2</option>
+            </select>
 
-    <button value="Mensual" type="submit" class="boton" name="tipoCalculo">
-        Calcular
-    </button>
-</form>
+            <input class="input-field" type="text" id="mes" name="mes" placeholder="MM/AAAA"/>
 
-    <div class="col p-2">
-        <div class="card shadow-sm p-2">
-            <!--<h3>Calculo Mensual</h3>-->
-            <form action="/hc-org" method="post">
-                <button value="Mensual" type="submit" class="btn btn-primary" name="tipoCalculo">
-                    Calculo HC Mensual
-                </button>
-                <select id="unidadHCMId" name="unidadHC">
-                    <option value="gCO2">gCO2</option>
-                    <option value="kgCO2" selected>KgCO2</option>
-                    <option value="tnCO2">TnCO2</option>
-                </select>
-                <input type="text" id="mes" name="mes" placeholder="MM/AAAA"/>
-            </form>
-            <h3 class="text">
-                {{#if error.error}}
-                    <p style="color:red;"> Error: {{error.descripcion}} </p>
-                {{else}}
-                    {{#if esMensual}} {{ mensual }} {{ unidad }} {{else}} {{/if}}
-                {{/if}}
-            </h3>
-            <h5>{{porcentaje-gas}}</h5>
-        </div>
-        <div class="card shadow-sm p-2">
-            <!--<h3>Calculo Anual</h3>-->
-            <form action="/hc-org" method="post">
-                <button value="Anual" type="submit" class="btn btn-primary" name="tipoCalculo">
-                    Calculo HC Anual
-                </button>
-                <select id="unidadHCAId" name="unidadHC">
-                    <option value="gCO2">gCO2</option>
-                    <option value="kgCO2" selected>KgCO2</option>
-                    <option value="tnCO2">TnCO2</option>
-                </select>
-                <input type="text" id="anio" name="anio" placeholder="AAAA"/>
-            </form>
-            <h3 class="text">
-                {{#if error.error}}
-                    <p style="color:red;"> Error: {{error.descripcion}} </p>
-                {{else}}
-                    {{#if esMensual}} {{else}} {{ anual }} {{ unidad }} {{/if}}
-                {{/if}}
-            </h3>
-        </div>
+            <button value="Mensual" type="submit" class="boton" name="tipoCalculo">
+                Calcular
+            </button>
+        </form>
+
+        <h3 class="text">
+            {{#if error.error}}
+                <p style="color:red;"> Error: {{error.descripcion}} </p>
+            {{else}}
+                {{#if esMensual}} {{ mensual }} {{ unidad }} {{else}} {{/if}}
+            {{/if}}
+        </h3>
+    </div>
+    <div class="right">
+        <h3>Cálculo HC Anual</h3>
+        <form action="/hc-org" method="post">
+
+            <select id="unidadHCAId" name="unidadHC" class="select-field">
+                <option value="gCO2">gCO2</option>
+                <option value="kgCO2" selected>KgCO2</option>
+                <option value="tnCO2">TnCO2</option>
+            </select>
+
+            <input class="input-field" type="text" id="anio" name="anio" placeholder="AAAA"/>
+
+            <button value="Anual" type="submit" class="boton" name="tipoCalculo">
+                Calcular
+            </button>
+        </form>
+        <h3 class="text">
+            {{#if error.error}}
+                <p style="color:red;"> Error: {{error.descripcion}} </p>
+            {{else}}
+                {{#if esMensual}} {{else}} {{ anual }} {{ unidad }} {{/if}}
+            {{/if}}
+        </h3>
     </div>
 
 {{/partial}}
