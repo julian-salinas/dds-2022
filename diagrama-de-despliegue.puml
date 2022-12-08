@@ -1,0 +1,26 @@
+@startuml despliegue
+left to right direction
+
+actor usuario
+cloud internet
+
+usuario --> internet : HTTP
+
+node ec2 {
+    component AplicacionSpark
+}
+node rds {
+    database BaseDeDatos
+}
+
+node externo {
+    component GeoDDSAPI
+}
+
+internet --> ec2 : HTTP
+ec2 --> rds
+ec2 --> externo : HTTP
+
+cloud internet
+
+@enduml
