@@ -11,7 +11,7 @@ import domain.notificaciones.Suscriptor;
 import java.io.IOException;
 
 public class EmailAdapter implements MensajeriaAdapter {
-  private String SENDGRID_API_KEY;;
+  private String SENDGRID_API_KEY;
   private String EMAIL;
   private SendGrid sendGrid;
 

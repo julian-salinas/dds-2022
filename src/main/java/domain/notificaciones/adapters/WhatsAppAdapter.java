@@ -12,7 +12,7 @@ public class WhatsAppAdapter implements MensajeriaAdapter {
   public WhatsAppAdapter(String accountSID, String authToken, String twilioPhoneNumber) {
     this.ACCOUNT_SID = accountSID;
     this.AUTH_TOKEN = authToken;
-    this.TWILIO_PHONE_NUMBER = twilioPhoneNumber;  // 5491152573517
+    this.TWILIO_PHONE_NUMBER = twilioPhoneNumber; 
     Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
   }
 
