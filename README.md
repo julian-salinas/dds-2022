@@ -6,7 +6,7 @@
 mvn test
 ```
 
-# Validar el proyecto de forma exahustiva
+# Validar el proyecto
 
 ```
 mvn clean verify
